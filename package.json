@@ -1,0 +1,15 @@
+{
+  "name": "badjs-web",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.9.8",
+    "jade": "^1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+  },
+  "author": "",
+  "license": "MIT"
+}
