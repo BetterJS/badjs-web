@@ -5,11 +5,10 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.9.8",
-    "jade": "^1.7.0"
+    "express-micro-tpl": "^0.2.0"
   },
   "devDependencies": {},
-  "scripts": {
-  },
+  "scripts": {},
   "author": "",
   "license": "MIT"
 }
