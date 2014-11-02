@@ -6,6 +6,7 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , cookieParser = require('cookie-parser')
   , LocalStrategy = require('passport-local').Strategy
+  , serveStatic = require('serve-static')
   , app = express();
 
 var users = [
@@ -67,7 +68,7 @@ app
   .use(passport.session())
   .use(flash())
   .get('/', function (req, res) {
-    res.render('index', { users: 'miniflycn' })
+    res.render('index', { user: req.user })
   })
   .get('/account', ensureAuthenticated, function (req, res) {
     res.render('account', { user: req.user });
@@ -86,6 +87,7 @@ app
     req.logout();
     res.redirect('/');
   })
+  .use(serveStatic('static'))
   .use(function (err, req, res, next) {
     res.send(err.stack);
   })
