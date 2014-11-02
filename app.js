@@ -68,7 +68,11 @@ app
   .use(passport.session())
   .use(flash())
   .get('/', function (req, res) {
-    res.render('index', { user: req.user })
+    req.user ?
+      // log page
+      res.render('log', { user: req.user }) :
+      // introduce page
+      res.render('index', { user: req.user });
   })
   .get('/account', ensureAuthenticated, function (req, res) {
     res.render('account', { user: req.user });
