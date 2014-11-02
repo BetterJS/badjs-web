@@ -36,10 +36,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if (!it.user) { %>
-                    <li><a href="/login" >Login</a></li>
+                    <li><a href="/login" ><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 <% } else { %>
-                    <li><a href="/account" ><%=it.user.username%></a></li>
-                    <li><a href="/logout" >Logout</a></li>
+                    <li><a href="/account" ><span class="glyphicon glyphicon-user"></span> <%=it.user.username%></a></li>
+                    <li><a href="/logout" ><span class="glyphicon glyphicon-off"></span> Logout</a></li>
                 <% } %>
             </ul>
         </nav>

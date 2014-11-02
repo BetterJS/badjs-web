@@ -1,16 +1,25 @@
-<% if (it.message) { %>
-<p><%= it.message %></p>
-<% } %>
-<form action="/login" method="post">
-    <div>
-    <label>Username:</label>
-    <input type="text" name="username"/><br/>
-    </div>
-    <div>
-    <label>Password:</label>
-    <input type="password" name="password"/>
-    </div>
-    <div>
-    <input type="submit" value="Submit"/>
-    </div>
-</form>
+<%=include('./header.html')(it, opt)%>
+
+<div class="container">
+    <% if (it.message.length) { %>
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <strong>Warning!</strong> <%= it.message %>
+        </div>
+    <% } %>
+    <form role="form" action="/login" method="post">
+        <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>
+
+<%=include('./footer.html')(it)%>
+</body>
+</html>
