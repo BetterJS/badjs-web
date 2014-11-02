@@ -4,19 +4,30 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
-            <select class="form-control">
-                <option>教育平台</option>
-                <option>群公告</option>
-                <option>群支付</option>
-                <option>吃喝玩乐</option>
+            <select class="form-control" id="sel-business">
+                <option value="1">教育平台</option>
+                <option value="2">群公告</option>
+                <option value="3">群支付</option>
+                <option value="4">吃喝玩乐</option>
             </select>
         </div>
         <div class="col-md-10">
-            <button type="button" class="btn btn-default">查看历史</button>
-            <button type="button" class="btn btn-primary">查看当前</button>
+            <button type="button" class="btn btn-default" data-event-click="showHistory">查看历史</button>
+            <button type="button" class="btn btn-primary" data-event-click="showCurrent">查看当前</button>
             <label class="checkbox-inline pull-right">
-                <input type="checkbox"> 匹配配置
+                <input type="checkbox" data-event-click="toggleMore"> 更多设置
             </label>
+        </div>
+    </div>
+
+    <div class="row unshow" id="more-container">
+        <div class="col-lg-6">
+            <div class="input-group">
+            <input type="text" class="form-control" placeholder="匹配规则">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="button" data-event-click="addRule"><span class="glyphicon glyphicon-plus"></span></button>
+            </span>
+            </div>
         </div>
     </div>
 
@@ -35,5 +46,6 @@
 </div>
 </main>
 <%=include('./footer.html')(it)%>
+<script src="/js/log.js"></script>
 </body>
 </html>
