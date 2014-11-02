@@ -1,16 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<title>badjs</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
 <%=include('./header.html')(it, opt)%>
-hello, I'm log page!
-<script src="http://7.url.cn/edu/jslib/jquery/1.9.1/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+
+<main id="content" role="main">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <select class="form-control">
+                <option>教育平台</option>
+                <option>群公告</option>
+                <option>群支付</option>
+                <option>吃喝玩乐</option>
+            </select>
+        </div>
+        <div class="col-md-10">
+            <button type="button" class="btn btn-default">查看历史</button>
+            <button type="button" class="btn btn-primary">查看当前</button>
+            <label class="checkbox-inline pull-right">
+                <input type="checkbox"> 匹配配置
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <pre>
+            aaaaaaaaaaaaaaaaa
+            </pre>
+        </div>
+        <div class="col-md-6">
+            <pre>
+            aaaaaaaaaaaaaaaaa
+            </pre>
+        </div>
+    </div>
+</div>
+</main>
+<%=include('./footer.html')(it)%>
 </body>
 </html>
