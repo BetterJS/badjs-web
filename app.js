@@ -7,7 +7,11 @@ var express = require('express')
   , cookieParser = require('cookie-parser')
   , LocalStrategy = require('passport-local').Strategy
   , serveStatic = require('serve-static')
-  , app = express();
+  , middlewarePipe = require('middleware-pipe')
+  , sass = require('gulp-sass')
+  , app = express()
+  , server = require('http').createServer(app)
+  , io = require('socket.io')(server);
 
 var users = [
   { id: 1, username: 'admin', password: 'pass', email: 'donaldyang@tencent.com' }
@@ -31,6 +35,11 @@ function findByUsername(username, fn) {
     }
   }
   return fn(null, null);
+}
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
 }
 
 passport.serializeUser(function(user, done) {
@@ -91,13 +100,16 @@ app
     req.logout();
     res.redirect('/');
   })
+  .use('/css', middlewarePipe('./static/css', 
+    /\.css$/, function (url) {
+      return url.replace(/\.css$/, '.scss');
+    }).pipe(function () {
+      return sass()
+    })
+  )
   .use(serveStatic('static'))
   .use(function (err, req, res, next) {
     res.send(err.stack);
-  })
-  .listen(3000);
+  });
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
+server.listen(3000);
