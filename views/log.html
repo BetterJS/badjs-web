@@ -1,49 +1,169 @@
 <%=include('./header.html')(it, opt)%>
 
 <main id="content" role="main">
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <select class="form-control" id="sel-business">
-                <option value="1">教育平台</option>
-                <option value="2">群公告</option>
-                <option value="3">群支付</option>
-                <option value="4">吃喝玩乐</option>
-            </select>
+    <div class="wrap">
+        <div class="left-side">
+            <section>
+                <label>日志</label>
+                <ul>
+                    <li class="active"><i></i>历史日志</li>
+                    <li><i></i>实时日志</li>
+                </ul>
+            </section>
+            <section>
+                <label>个人</label>
+                <ul>
+                    <li><i></i>个人中心</li>
+                </ul>
+            </section>
+            <section>
+                <label>系统</label>
+                <ul>
+                    <li><i></i>系统介绍</li>
+                    <li><i></i>接入指南</li>
+                </ul>
+            </section>
         </div>
-        <div class="col-md-10">
-            <button type="button" class="btn btn-default" data-event-click="showHistory">查看历史</button>
-            <button type="button" class="btn btn-primary" data-event-click="showCurrent">查看当前</button>
-            <label class="checkbox-inline pull-right">
-                <input type="checkbox" data-event-click="toggleMore"> 更多设置
-            </label>
-        </div>
-    </div>
-
-    <div class="row unshow" id="more-container">
-        <div class="col-lg-6">
-            <div class="input-group">
-            <input type="text" class="form-control" placeholder="匹配规则">
-            <span class="input-group-btn">
-            <button class="btn btn-default" type="button" data-event-click="addRule"><span class="glyphicon glyphicon-plus"></span></button>
-            </span>
+        <div class="mid-side">
+            <div class="main-top">
+                <h4 class="main-title">腾讯课堂</h4><span class="main-count">共查找到<em>324</em>条记录</span>
             </div>
+            <div class="main-mid">
+                <table class="main-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>时间</th>
+                            <th>信息</th>
+                            <th>uin</th>
+                            <th>ip</th>
+                            <th>来源</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="info-type-err">1</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ie"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="info-type-debug">2</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-chrome"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="info-type-info">3</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ff"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="info-type-err">1</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ie"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="info-type-debug">2</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-chrome"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="info-type-info">3</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ff"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="info-type-err">1</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ie"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="info-type-debug">2</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-chrome"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="info-type-info">3</td>
+                            <td>2014-11-10 10:07:21.667399</td>
+                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
+                            <td>454823101</td>
+                            <td>127.0.0.1</td>
+                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ff"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <nav class="page-nav">
+                <a class="extend prev" rel="next" href="javascript:void(0);">« 上一页</a>
+                <a class="page-number current">1</span>
+                <a class="page-number" href="javascript:void(0);">2</a>
+                <a class="page-number" href="javascript:void(0);">3</a>
+                <span class="space">…</span>
+                <a class="page-number" href="javascript:void(0);">5</a>
+                <a class="extend next" rel="next" href="javascript:void(0);">下一页 »</a>
+            </nav>
+        </div>
+        <div class="right-side">
+            <section>
+                <p class="setting-title">消息类型<input type="checkbox" id="select-all" checked="checked" /><label for="select-all">全选</label></p>
+                <ul class="setting-msg">
+                    <li class="msg-error">error</li>
+                    <li class="msg-log">log</li>
+                    <li class="msg-debug">debug</li>
+                </ul>
+                <div class="clear"></div>
+            </section>
+            <section>
+                <p class="setting-title">起始时间</p>
+                <p class="setting-title">结束时间</p>
+            </section>
+            <section>
+                <p class="setting-title">包含关键词</p>
+                <div class="keyword-ctn">
+                    <input type="text" class="keyword-ipt"/><button class="keyword-btn">添加</button><button class="keyword-btn">清空</button>
+                    <div class="keyword-tag-ctn">
+                        <a class="keyword-tag">chrome<span class="keyword-del">x</span></a>
+                        <a class="keyword-tag">ice<span class="keyword-del">x</span></a>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <p class="setting-title">排除关键词</p>
+                <div class="keyword-ctn">
+                    <input type="text" class="keyword-ipt"/><button class="keyword-btn">添加</button><button class="keyword-btn">清空</button>
+                    <div class="keyword-tag-ctn">
+                        <a class="keyword-tag">seajs<span class="keyword-del">x</span></a>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="setting-search">查询日志</div>
+            </section>
         </div>
     </div>
-
-    <div class="row log-container">
-        <div class="col-md-6">
-            <pre>
-            aaaaaaaaaaaaaaaaa
-            </pre>
-        </div>
-        <div class="col-md-6">
-            <pre>
-            aaaaaaaaaaaaaaaaa
-            </pre>
-        </div>
-    </div>
-</div>
 </main>
 <%=include('./footer.html')(it)%>
 <script src="/js/log.js"></script>
