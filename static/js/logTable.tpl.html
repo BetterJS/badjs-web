@@ -1,0 +1,30 @@
+<% 
+var urls;
+for (var i = 0 , l = it.length, type; i < l; i++) {
+switch(it[i].level) {
+    case 8:
+        type = 'warning';
+        break;
+    case 4:
+        type = 'err';
+        break;
+    case 2:
+        type = 'info';
+        break;
+    case 1:
+        type = 'debug';
+        break;
+}
+%>
+<tr>
+    <td class="info-type-<%=type%>"><%=i + 1%></td>
+    <td><%=(new Date(it[i].timestmp)).toLocaleString()%></td>
+    <td><%==it[i].msg%></td>
+    <td><%==it[i].uin%></td>
+    <td><%==it[i].ip%></td>
+    <%
+        urls = it[i].target.split(':');
+    %>
+    <td><a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>"><%==urls[0] + ':' + urls[1]%></a><span class="err-where"><%=urls[2]%>行<%=urls[3]%>列</span></td>
+</tr>
+<% } %>

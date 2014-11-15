@@ -40,16 +40,8 @@
                             <th>来源</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="info-type-err">1</td>
-                            <td>2014-11-10 10:07:21.667399</td>
-                            <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
-                            <td>454823101</td>
-                            <td>127.0.0.1</td>
-                            <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ie"></span></td>
-                        </tr>
-                        <tr>
+                    <tbody id="log-table">
+<!--                         <tr>
                             <td class="info-type-debug">2</td>
                             <td>2014-11-10 10:07:21.667399</td>
                             <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
@@ -66,7 +58,7 @@
                             <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ff"></span></td>
                         </tr>
                         <tr>
-                            <td class="info-type-err">1</td>
+                            <td class="info-type-err">4</td>
                             <td>2014-11-10 10:07:21.667399</td>
                             <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
                             <td>454823101</td>
@@ -74,7 +66,7 @@
                             <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ie"></span></td>
                         </tr>
                         <tr>
-                            <td class="info-type-debug">2</td>
+                            <td class="info-type-debug">5</td>
                             <td>2014-11-10 10:07:21.667399</td>
                             <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
                             <td>454823101</td>
@@ -82,7 +74,7 @@
                             <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-chrome"></span></td>
                         </tr>
                         <tr>
-                            <td class="info-type-info">3</td>
+                            <td class="info-type-info">6</td>
                             <td>2014-11-10 10:07:21.667399</td>
                             <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
                             <td>454823101</td>
@@ -90,7 +82,7 @@
                             <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ff"></span></td>
                         </tr>
                         <tr>
-                            <td class="info-type-err">1</td>
+                            <td class="info-type-err">7</td>
                             <td>2014-11-10 10:07:21.667399</td>
                             <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
                             <td>454823101</td>
@@ -98,7 +90,7 @@
                             <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ie"></span></td>
                         </tr>
                         <tr>
-                            <td class="info-type-debug">2</td>
+                            <td class="info-type-debug">8</td>
                             <td>2014-11-10 10:07:21.667399</td>
                             <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
                             <td>454823101</td>
@@ -106,13 +98,13 @@
                             <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-chrome"></span></td>
                         </tr>
                         <tr>
-                            <td class="info-type-info">3</td>
+                            <td class="info-type-info">9</td>
                             <td>2014-11-10 10:07:21.667399</td>
                             <td>Script Error:ReferenceError: OnExtensionsChanged is not defined at <anonymous>:1:1</td>
                             <td>454823101</td>
                             <td>127.0.0.1</td>
                             <td>http://7.url.cn/edu/agencyManage/js/main.56143.js<span class="err-where">4行5列</span><span class="ico-browser ico-ff"></span></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -143,29 +135,32 @@
             <section>
                 <p class="setting-title">包含关键词</p>
                 <div class="keyword-ctn">
-                    <input type="text" class="keyword-ipt"/><button class="keyword-btn">添加</button><button class="keyword-btn">清空</button>
-                    <div class="keyword-tag-ctn">
-                        <a class="keyword-tag">chrome<span class="keyword-del">x</span></a>
-                        <a class="keyword-tag">ice<span class="keyword-del">x</span></a>
+                    <input type="text" class="keyword-ipt" id="keyword-ipt" data-event-keyup="addKeyword"/><button class="keyword-btn" data-event-click="addKeyword">添加</button><button class="keyword-btn" data-event-click="removeKeywords">清空</button>
+                    <div class="keyword-tag-ctn" id="keyword-group">
                     </div>
                 </div>
             </section>
             <section>
                 <p class="setting-title">排除关键词</p>
                 <div class="keyword-ctn">
-                    <input type="text" class="keyword-ipt"/><button class="keyword-btn">添加</button><button class="keyword-btn">清空</button>
-                    <div class="keyword-tag-ctn">
-                        <a class="keyword-tag">seajs<span class="keyword-del">x</span></a>
+                    <input type="text" class="keyword-ipt" id="debar-ipt" data-event-keyup="addDebar"/><button class="keyword-btn" data-event-click="addDebar">添加</button><button class="keyword-btn" data-event-click="removeDebars">清空</button>
+                    <div class="keyword-tag-ctn" id="debar-group">
                     </div>
                 </div>
             </section>
             <section>
-                <div class="setting-search">查询日志</div>
+                <div class="setting-search" data-event-click="showLogs">查询日志</div>
             </section>
         </div>
     </div>
 </main>
 <%=include('./footer.html')(it)%>
+<script src="http://jsbeautifier.org/js/lib/beautify.js"></script>
+<script src="/js/logTable.tpl.js"></script>
+<script src="/js/keyword.tpl.js"></script>
+<script src="/js/debar.tpl.js"></script>
+<script src="/js/modal.tpl.js"></script>
+<script src="/js/dialog.js"></script>
 <script src="/js/log.js"></script>
 </body>
 </html>

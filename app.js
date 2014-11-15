@@ -1,5 +1,6 @@
 var express = require('express')
   , tpl = require('express-micro-tpl')
+  , valid = require('url-valid')
   , passport = require('passport')
   , flash = require('connect-flash')
   , session = require('express-session')
@@ -9,6 +10,7 @@ var express = require('express')
   , serveStatic = require('serve-static')
   , middlewarePipe = require('middleware-pipe')
   , sass = require('gulp-sass')
+  , tplPlugin = require('./gulp/tpl')
   , app = express()
   , server = require('http').createServer(app)
   , io = require('socket.io')(server);
@@ -100,11 +102,33 @@ app
     req.logout();
     res.redirect('/');
   })
+  .use('/code', function (req, res, next) {
+    var urls = req.query.target.split(':')
+      , body = [];
+    valid(urls[0] + ':' + urls[1])
+      .on('check', function (err, valid) {
+        if (err || !valid) return next(err);
+      }).on('data', function (err, data) {
+        if (err) return next(err);
+        body.push(data);
+      }).on('end', function (err) {
+        if (err) return next(err);
+        body = Buffer.concat(body).toString();
+        res.end(body);
+      });
+  })
   .use('/css', middlewarePipe('./static/css', 
     /\.css$/, function (url) {
       return url.replace(/\.css$/, '.scss');
     }).pipe(function () {
       return sass()
+    })
+  )
+  .use('/js', middlewarePipe('./static/js',
+    /\.tpl\.js$/, function (url) {
+      return url.replace(/\.js/, '.html');
+    }).pipe(function () {
+      return tplPlugin();
     })
   )
   .use(serveStatic('static'))

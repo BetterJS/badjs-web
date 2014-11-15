@@ -15,9 +15,9 @@
     <div class="head-rightside">
         <div class="head-search">
             <input type="text" class="head-input" placeholder="选择业务"/>
-            <div class="head-btn"></div>
+            <div class="head-btn" data-event-click="searchBusiness"><span class="glyphicon glyphicon-search"></span></div>
         </div>
-        <div class="head-add">添加新业务</div>
+        <div class="head-add" data-event-click="addBusiness">添加新业务</div>
         <div class="head-user">
             <% if (it.user) { %>
             <a href="/logout">退出</a>

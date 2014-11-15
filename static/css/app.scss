@@ -54,6 +54,12 @@ header{
             width: 36px;
             background: #bdc2ca;
             cursor: pointer;
+            span {
+                font-size: 25px;
+                line-height: 35px;
+                margin-left: 5px;
+                color: #eee;
+            }
         }
     }
     .head-add{
@@ -199,7 +205,6 @@ form{
                 margin: 0 3px;
                 padding: 1px 3px;
                 display: inline-block;
-                float: left;
             }
             .ico-browser{
                 display: inline-block;
