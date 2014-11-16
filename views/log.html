@@ -155,12 +155,15 @@
     </div>
 </main>
 <%=include('./footer.html')(it)%>
-<script src="/js/beautify.js"></script>
-<script src="/js/logTable.tpl.js"></script>
-<script src="/js/keyword.tpl.js"></script>
-<script src="/js/debar.tpl.js"></script>
-<script src="/js/modal.tpl.js"></script>
-<script src="/js/dialog.js"></script>
-<script src="/js/log.js"></script>
+<script>
+require.config({
+    paths: {
+        log: '/js/log.js'
+    }
+});
+require(['log'], function (log) {
+    log.init();
+});
+</script>
 </body>
 </html>

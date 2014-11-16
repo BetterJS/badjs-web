@@ -1,4 +1,12 @@
-!function (root, $, Delegator, Dialog, logTable, keyword, debar) {
+define([
+    'require',
+    'jquery', 
+    './delegator', 
+    './dialog', 
+    './logTable.tpl', 
+    './keyword.tpl', 
+    './debar.tpl'
+], function (require, $, Delegator, Dialog, logTable, keyword, debar) {
     var logConfig = {
             keywords: [],
             debars: []
@@ -66,9 +74,18 @@
             }).on('click', 'showLogs', showLogs)
             .on('click', 'showSource', function (e, data) {
                 var urls = data.target.split(':');
-                $.get('/code?target=' + encodeURIComponent(data.target), function (code) {
+                require([
+                    './beautify',
+                    function (done) {
+                        $.get('/code?target=' + encodeURIComponent(data.target), function (code) {
+                            done(null, code);
+                        }).error(function (xhr, type, msg) {
+                            done(msg);
+                        });
+                    }
+                ], function (beautify, code) {
                     var codes = code.split(/\r?\n/),
-                        line = js_beautify(codes[+urls[2]]),
+                        line = beautify.js_beautify(codes[+urls[2]]),
                         current;
 
                     for (var i = 0, c = 0, l = line.length; i < l; i++) {
@@ -88,15 +105,29 @@
                         line.slice(current - 1),
                         '</strong>', 
                         '</pre>',
-                        '<button type="button" class="btn btn-default">上传SourceMap</button>',
-                        '<button type="button" class="btn btn-default">上传源文件</button>'
+                        '<button type="button" class="btn btn-default" data-event-click="uploadSourceMap">上传SourceMap</button>',
+                        '<button type="button" class="btn btn-default" data-event-click="uploadSrc">上传源文件</button>'
                     ].join('')
 
                     Dialog({
                         header: '错误定位',
-                        body: line
+                        body: line,
+                        on: {
+                            'click/uploadSourceMap': function () {
+                                console.log('upload sourceMap');
+                            },
+                            'click/uploadSrc': function () {
+                                console.log('upload src');
+                            }
+                        }
+                    });
+                }, function (err) {
+                    Dialog({
+                        header: err,
+                        body: err
                     });
                 });
+                
             });
     }
 
@@ -122,6 +153,8 @@
         showLogs();
     }
 
-    init();
+    return {
+        init: init
+    }
 
-}(window, jQuery, Delegator, Dialog, logTable, keyword, debar);
+});

@@ -1,4 +1,8 @@
-!function (root, $, Delegator, modal) {
+define([
+    'jquery',
+    './delegator',
+    './modal.tpl'
+], function ($, Delegator, modal) {
     var container;
 
     function hide() {
@@ -6,10 +10,11 @@
         container.find('.modal-backdrop').removeClass('in');
         setTimeout(function () {
             container.remove();
+            container = undefined;
         }, 300);
     }
 
-    root.Dialog = function (param) {
+    function Dialog (param) {
         if (container) {
             container.remove();
             container = undefined;
@@ -18,13 +23,26 @@
             .appendTo(document.body)
             .show();
 
-        (new Delegator(container))
+        var key,
+            action,
+            delegator,
+            on = param.on || {};
+
+        delegator = (new Delegator(container))
             .on('click', 'close', hide);
+
+        for (key in on) {
+            action = key.split('/');
+            delegator.on(action[0], action[1], on[key]);
+        }
 
         setTimeout(function () {
             container.addClass('in');
             container.find('.modal-backdrop').addClass('in');
         }, 0);
+    }
 
-    };
-}(window, jQuery, Delegator, modal);
+    Dialog.hide = hide;
+
+    return Dialog;
+});

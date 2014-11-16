@@ -13,11 +13,13 @@ module.exports = function () {
 
     if (file.isBuffer()) {
       file.contents = new Buffer([
-        '!function (root) {',
-        'root.' + file.path.match(/(\w+)\.tpl\.html/)[1] + ' = ',
+        'define(',
+        'function () {',
+        'return ',
         tpl(file.contents.toString()),
         ';',
-        '}(window);'
+        '}',
+        ');'
       ].join(''));
       fn(null, file);
     }
