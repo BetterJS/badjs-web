@@ -73,7 +73,6 @@ define([
                 removeValue(value, logConfig.debars);
             }).on('click', 'showLogs', showLogs)
             .on('click', 'showSource', function (e, data) {
-                var urls = data.target.split(':');
                 require([
                     './beautify',
                     function (done) {
@@ -85,11 +84,11 @@ define([
                     }
                 ], function (beautify, code) {
                     var codes = code.split(/\r?\n/),
-                        line = beautify.js_beautify(codes[+urls[2]]),
+                        line = beautify.js_beautify(codes[+data.rowNum]),
                         current;
 
                     for (var i = 0, c = 0, l = line.length; i < l; i++) {
-                        if (c === +urls[3]) {
+                        if (c === +data.colNum) {
                             current = i;
                             break;
                         }

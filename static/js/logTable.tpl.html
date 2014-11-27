@@ -22,9 +22,6 @@ switch(it[i].level) {
     <td><%==it[i].msg%></td>
     <td><%==it[i].uin%></td>
     <td><%==it[i].ip%></td>
-    <%
-        urls = it[i].target.split(':');
-    %>
-    <td><a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>"><%==urls[0] + ':' + urls[1]%></a><span class="err-where"><%=urls[2]%>行<%=urls[3]%>列</span></td>
+    <td><a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>"><%==it[i].target%></a><span class="err-where"><%=it[i].rowNum%>行<%=it[i].colNum%>列</span></td>
 </tr>
 <% } %>
