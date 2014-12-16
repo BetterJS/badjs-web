@@ -10,7 +10,6 @@
     "express": "^4.9.8",
     "express-micro-tpl": "^0.3.1",
     "express-session": "^1.9.0",
-    "gulp-sass": "1.1.0",
     "map-stream": "0.0.5",
     "micro-tpl": "^0.4.0",
     "middleware-pipe": "^0.0.5",

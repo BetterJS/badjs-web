@@ -139,12 +139,36 @@ define([
     }
 
     function showLogs() {
-        $.get('/mockup/log.json', function (data) {
-            $('#log-table').html(logTable(data, { 
-                encodeHtml: encodeHtml,
-                set: Delegator.set 
-            }));
+        //$.get('/mockup/log.json', function (data) {
+        //    $('#log-table').html(logTable(data, {
+        //        encodeHtml: encodeHtml,
+        //        set: Delegator.set
+        //    }));
+        //});
+        var url = 'http://183.60.70.234:9000/query;
+        $.ajax({
+            url: url,
+            data: {
+                id:'990',
+                startDate:1417104000000,
+                endDate:1417190400000,
+                include:[],
+                exclude:[],
+                page:0,
+                level:[4]
+            },
+            success: function(data) {
+                console.log(data);
+                $('#log-table').html(logTable(data, {
+                    encodeHtml: encodeHtml,
+                    set: Delegator.set
+                }));
+            },
+            error: function() {
+
+            }
         });
+
     }
 
     function init() {

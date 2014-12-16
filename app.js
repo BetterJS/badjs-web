@@ -13,7 +13,8 @@ var express = require('express')
   , tplPlugin = require('./gulp/tpl')
   , app = express()
   , server = require('http').createServer(app)
-  , io = require('socket.io')(server);
+  , io = require('socket.io')(server)
+  , logServlet = require('servlet/logServelt');
 
 var users = [
   { id: 1, username: 'admin', password: 'pass', email: 'donaldyang@tencent.com' }
@@ -137,3 +138,5 @@ app
   });
 
 server.listen(3000);
+
+
