@@ -3,7 +3,7 @@ define([
     'jquery', 
     './delegator', 
     './dialog', 
-    './logTable.tpl', 
+    './logTable.tpl',
     './keyword.tpl', 
     './debar.tpl'
 ], function (require, $, Delegator, Dialog, logTable, keyword, debar) {
@@ -145,7 +145,34 @@ define([
         //        set: Delegator.set
         //    }));
         //});
+        var url = 'http://localhost:3000/controller/action/queryLogList.do'
+        $.ajax({
+            url: url,
+            data: {
+                id:'990',
+                startDate:1417104000000,
+                endDate:1417190400000,
+                include:[],
+                exclude:[],
+                index:0,
+                level:[4]
+            },
+            success: function(data) {
 
+                var ret = data.ret;
+
+                if(ret==0){
+                    $('#log-table').html(logTable(data.data, {
+                        encodeHtml: encodeHtml,
+                        set: Delegator.set
+                    }));
+                }
+
+            },
+            error: function() {
+
+            }
+        });
 
     }
 
