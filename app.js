@@ -14,7 +14,7 @@ var express = require('express')
   , app = express()
   , server = require('http').createServer(app)
   , io = require('socket.io')(server)
-  , logServlet = require('servlet/logServelt');
+  , logService = require('service/LogService');
 
 var users = [
   { id: 1, username: 'admin', password: 'pass', email: 'donaldyang@tencent.com' }
@@ -80,11 +80,28 @@ app
   .use(passport.session())
   .use(flash())
   .get('/', function (req, res) {
-    req.user ?
-      // log page
-      res.render('log', { user: req.user }) :
-      // introduce page
-      res.render('index', { user: req.user });
+      if(req.user){
+
+        var params = {
+            id:990,
+            startDate:1417104000000,
+            endDate:1417190400000,
+            include:[],
+            exclude:[],
+            page:0,
+            level:[4]
+        };
+        logService.query(params,function(err, data){
+           if(err){
+             console.log(err);
+           }else{
+             res.render('log', { user: req.user, logData:data });
+           }
+        });
+      }else{
+        res.render('index', { user: req.user });
+      }
+
   })
   .get('/account', ensureAuthenticated, function (req, res) {
     res.render('account', { user: req.user });
