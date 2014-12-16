@@ -20,12 +20,12 @@ LogService.prototype = {
         }
         strParams +='_=1'
         http.get( this.url + '?'+ strParams , function (res){
-            var buffer = []
+            var buffer = '';
            res.on('data' , function (chunk){
-               buffer.push(chunk);
+               buffer += chunk.toString();
            }).on('end' , function (){
                try{
-                    callback(null , JSON.parse(buffer.join()))
+                    callback(null , JSON.parse(buffer))
                }catch(e){
                    callback(e );
                }
@@ -40,16 +40,15 @@ LogService.prototype = {
 
 modules.export = LogServce;
 
-/*
-new LogService().query({
-    id : 990,
-    startDate : 1417104000000,
-    endDate : 1417190400000,
-    include : [],
-    exclude : [],
-    page : 0,
-    level : [4]
-} , function (err , data){
-    console.log(data)
-    console.log('err' + err);
-});*/
+//new LogService().query({
+//    id : 990,
+//    startDate : 1417104000000,
+//    endDate : 1417190400000,
+//    include : [],
+//    exclude : [],
+//    page : 0,
+//    level : [4]
+//} , function (err , data){
+//    console.log(data)
+//    console.log('err' + err);
+//});
