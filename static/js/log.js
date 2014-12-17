@@ -16,7 +16,7 @@ define([
         };
 
 
-    var currentSelectId = -1, currentIndex = 0  , noData = false;
+    var currentSelectId = -1, currentIndex = 0  , noData = false , MAX_LIMIT = 500;
 
     function addKeyword() {
         var value = $.trim($('#keyword-ipt').val());
@@ -198,10 +198,10 @@ define([
                     $('#log-table').append(logTable(data.data, {
                         encodeHtml: encodeHtml,
                         set: Delegator.set,
-                        startIndex : currentIndex
+                        startIndex : currentIndex * MAX_LIMIT
                     }));
 
-                    currentIndex += data.data.length;
+                    currentIndex ++;
                     if(data.data.length == 0){
                         noData = true;
                     }
