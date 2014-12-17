@@ -22,12 +22,10 @@ module.exports = function(app){
     * 查看log列表
     * */
     app.get('/controller/action/queryLogList.do', function(req, res){
-            console.log(req.query)
         logAction.getLogList(req.query,function(err,data){
             if(isError(res, err)){
                return;
             }
-            console.log(data);
             res.json({ret:0, data: data});
         });
 
