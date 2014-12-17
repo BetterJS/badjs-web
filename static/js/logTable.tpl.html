@@ -17,11 +17,11 @@ switch(it[i].level) {
 }
 %>
 <tr>
-    <td class="info-type-<%=type%>"><%=i + 1%></td>
+    <td class="info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
     <td><%=(new Date(it[i].timestmp)).toLocaleString()%></td>
     <td><%==it[i].msg%></td>
     <td><%==it[i].uin%></td>
     <td><%==it[i].ip%></td>
-    <td><a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>"><%==it[i].target%></a><span class="err-where"><%=it[i].rowNum%>行<%=it[i].colNum%>列</span></td>
+    <td><a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>"><%==it[i].target || it[i].url%></a><span class="err-where"><%=it[i].rowNum%>行<%=it[i].colNum%>列</span></td>
 </tr>
 <% } %>

@@ -14,8 +14,13 @@
     <div class="head-logo">BetterJs</div>
     <div class="head-rightside">
         <div class="head-search">
-            <input type="text" class="head-input" placeholder="选择业务"/>
-            <div class="head-btn" data-event-click="searchBusiness"><span class="glyphicon glyphicon-search"></span></div>
+          <!--  <input type="text" class="head-input" placeholder="选择业务"/>
+            <div class="head-btn" data-event-click="searchBusiness"><span class="glyphicon glyphicon-search"></span></div>-->
+            <select class="form-control " data-event-change="selectBusiness" id="select-business">
+                <option value="-1">-- 请选择项目 --</option>
+                <option value="990"> 电影票 - 撒娇女人活动</option>
+                <option value="991"> mobile app</option>
+            </select>
         </div>
         <div class="head-add" data-event-click="addBusiness">添加新业务</div>
         <div class="head-user">

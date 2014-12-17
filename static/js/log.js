@@ -15,6 +15,9 @@ define([
             return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
         };
 
+
+    var currentSelectId = -1, currentIndex = 0  , noData = false;
+
     function addKeyword() {
         var value = $.trim($('#keyword-ipt').val());
         if (value !== '') {
@@ -46,6 +49,8 @@ define([
             $('#debar-ipt').val('');
         }
     }
+
+
 
     function bindEvent() {
         new Delegator(document.body)
@@ -127,7 +132,32 @@ define([
                     });
                 });
                 
+            }).on('change' ,'selectBusiness' , function (){
+                var val = $(this).val()-0;
+
+                currentSelectId = val;
+                $('#log-table').html('');
+                currentIndex = 0;
+                noData = false;
+
+                showLogs(val);
             });
+
+
+        var throttled = _.throttle(function (e){
+            var $this = $(this);
+            var top = $this.scrollTop();
+            var height = $this.height();
+            var scrollHeight =  $this.prop('scrollHeight');
+
+            if(scrollHeight - height - top <= 200 &&　!noData){
+                showLogs(currentSelectId);
+            }
+
+
+        }, 100);
+        $('.main-mid').scroll(throttled);
+
     }
 
     function removeValue(value, arr) {
@@ -138,23 +168,26 @@ define([
         }
     }
 
-    function showLogs() {
+    function showLogs(id) {
+        if(id <= 0){
+            return ;
+        }
         //$.get('/mockup/log.json', function (data) {
         //    $('#log-table').html(logTable(data, {
         //        encodeHtml: encodeHtml,
         //        set: Delegator.set
         //    }));
         //});
-        var url = 'http://localhost:3000/controller/action/queryLogList.do'
+        var url = '/controller/action/queryLogList.do'
         $.ajax({
             url: url,
             data: {
-                id:'990',
+                id:id,
                 startDate:1417104000000,
                 endDate:1417190400000,
                 include:[],
                 exclude:[],
-                index:0,
+                index:currentIndex,
                 level:[4]
             },
             success: function(data) {
@@ -162,10 +195,16 @@ define([
                 var ret = data.ret;
 
                 if(ret==0){
-                    $('#log-table').html(logTable(data.data, {
+                    $('#log-table').append(logTable(data.data, {
                         encodeHtml: encodeHtml,
-                        set: Delegator.set
+                        set: Delegator.set,
+                        startIndex : currentIndex
                     }));
+
+                    currentIndex += data.data.length;
+                    if(data.data.length == 0){
+                        noData = true;
+                    }
                 }
 
             },
@@ -178,7 +217,7 @@ define([
 
     function init() {
         bindEvent();
-        showLogs();
+        //showLogs();
     }
 
     return {
