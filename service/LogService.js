@@ -16,10 +16,10 @@ LogService.prototype = {
 
         var strParams = '';
         for(var key in params) {
-            strParams += key +'='+ JSON.stringify(params[key] ) + '&'
+            strParams += key +'='+ JSON.stringify(params[key] ) + '&';
         }
-        strParams +='_=1'
-
+        strParams +='_=1';
+        console.log('strParams:',strParams);
         http.get( this.url + '?'+ strParams , function (res){
             var buffer = '';
            res.on('data' , function (chunk){

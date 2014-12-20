@@ -8,9 +8,15 @@ define([
     './debar.tpl'
 ], function (require, $, Delegator, Dialog, logTable, keyword, debar) {
     var logConfig = {
-            keywords: [],
-            debars: []
+            id: 0,
+            startDate: 1417104000000,
+            endDate: 1417190400000,
+            include: [],
+            exclude: [],
+            index: 0,
+            level:[4],
         },
+
         encodeHtml = function (str) {
             return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
         };
@@ -21,7 +27,7 @@ define([
     function addKeyword() {
         var value = $.trim($('#keyword-ipt').val());
         if (value !== '') {
-            if (!removeValue(value, logConfig.keywords)) {
+            if (!removeValue(value, logConfig.include)) {
                 $('#keyword-group').append(keyword({
                     value: value
                 }, {
@@ -29,7 +35,7 @@ define([
                     set: Delegator.set
                 }));
             }
-            logConfig.keywords.push(value);
+            logConfig.include.push(value);
             $('#keyword-ipt').val('');
         }
     }
@@ -37,7 +43,7 @@ define([
     function addDebar() {
         var value = $.trim($('#debar-ipt').val());
         if (value !== '') {
-            if (!removeValue(value, logConfig.debars)) {
+            if (!removeValue(value, logConfig.exclude)) {
                 $('#debar-group').append(debar({
                     value: value
                 }, {
@@ -45,7 +51,7 @@ define([
                     set: Delegator.set
                 }));
             }
-            logConfig.debars.push(value);
+            logConfig.exclude.push(value);
             $('#debar-ipt').val('');
         }
     }
@@ -62,21 +68,27 @@ define([
             .on('keyup', 'addKeyword', function (e) {
                 if (e.which === 13) addKeyword();
             }).on('click', 'removeKeywords', function () {
-                logConfig.keywords.length = 0;
+                logConfig.include.length = 0;
                 $('#keyword-group').empty();
             }).on('click', 'removeKeyword', function (e, value) {
                 $(this).closest('.keyword-tag').remove();
-                removeValue(value, logConfig.keywords);
+                removeValue(value, logConfig.include);
             }).on('click', 'addDebar', addDebar)
             .on('keyup', 'addDebar', function (e) {
                 if (e.which === 13) addDebar();
             }).on('click', 'removeDebars', function () {
-                logConfig.debars.length = 0;
+                logConfig.exclude.length = 0;
                 $('#debar-group').empty();
             }).on('click', 'removeDebar', function (e, value) {
                 $(this).closest('.keyword-tag').remove();
-                removeValue(value, logConfig.debars);
-            }).on('click', 'showLogs', showLogs)
+                removeValue(value, logConfig.exclude);
+            }).on('click', 'showLogs', function () {
+                var startTime = $('#startTime').val(),
+                    endTime = $('#endTime').val();
+                logConfig.startDate = new Date(startTime).getTime();
+                logConfig.endDate = new Date(endTime).getTime();
+                showLogs(logConfig);
+            })
             .on('click', 'showSource', function (e, data) {
                 require([
                     './beautify',
@@ -139,8 +151,37 @@ define([
                 $('#log-table').html('');
                 currentIndex = 0;
                 noData = false;
+                logConfig.id = val;
+                showLogs(logConfig);
+            }).on('click', 'errorTypeClick', function () {
+                if($(this).hasClass('msg-dis')){
+                    logConfig.level.push(4);
+                    $(this).removeClass('msg-dis');
+                }else{
+                    logConfig.level.pop(4);
+                    $(this).addClass('msg-dis');
+                }
+                showLogs(logConfig);
 
-                showLogs(val);
+            }).on('click', 'logTypeClick', function(){
+                if($(this).hasClass('msg-dis')){
+                    logConfig.level.push(2);
+                    $(this).removeClass('msg-dis');
+                }else{
+                    logConfig.level.pop(2);
+                    $(this).addClass('msg-dis');
+                }
+                showLogs(logConfig);
+
+            }).on('click', 'debugTypeClick', function () {
+                if($(this).hasClass('msg-dis')){
+                    logConfig.level.push(1);
+                    $(this).removeClass('msg-dis');
+                }else{
+                    logConfig.level.pop(1);
+                    $(this).addClass('msg-dis');
+                }
+                showLogs(logConfig);
             });
 
 
@@ -151,7 +192,8 @@ define([
             var scrollHeight =  $this.prop('scrollHeight');
 
             if(scrollHeight - height - top <= 200 &&　!noData){
-                showLogs(currentSelectId);
+                logConfig.id = currentSelectId;
+                addLogs(logConfig);
             }
 
 
@@ -160,6 +202,7 @@ define([
 
     }
 
+
     function removeValue(value, arr) {
         for (var l = arr.length; l--;) {
             if (arr[l] === value) {
@@ -167,57 +210,86 @@ define([
             }
         }
     }
-
-    function showLogs(id) {
-        if(id <= 0){
+    function addLogs(opts){
+        if(opts.id <= 0){
             return ;
         }
-        //$.get('/mockup/log.json', function (data) {
-        //    $('#log-table').html(logTable(data, {
-        //        encodeHtml: encodeHtml,
-        //        set: Delegator.set
-        //    }));
-        //});
         var url = '/controller/action/queryLogList.do'
         $.ajax({
             url: url,
             data: {
-                id:id,
-                startDate:1417104000000,
-                endDate:1417190400000,
-                include:[],
-                exclude:[],
-                index:currentIndex,
-                level:[4]
+                id: opts.id,
+                startDate: opts.startDate,
+                endDate: opts.endDate,
+                include: opts.include,
+                exclude: opts.exclude,
+                index: currentIndex ,
+                _t: new Date()-0,
+                level:opts.level
             },
             success: function(data) {
-
                 var ret = data.ret;
-
                 if(ret==0){
                     $('#log-table').append(logTable(data.data, {
                         encodeHtml: encodeHtml,
                         set: Delegator.set,
                         startIndex : currentIndex * MAX_LIMIT
                     }));
-
                     currentIndex ++;
                     if(data.data.length == 0){
                         noData = true;
                     }
                 }
+            },
+            error: function() {
+                console.log('error');
+            }
+        });
+    }
+    function showLogs(opts) {
+        console.log(opts);
+        if(opts.id <= 0){
+            return ;
+        }
+        var url = '/controller/action/queryLogList.do'
+        $.ajax({
+            url: url,
+            data: {
+                id: opts.id,
+                startDate: opts.startDate,
+                endDate: opts.endDate,
+                include: opts.include,
+                exclude: opts.exclude,
+                index: 0 ,
+                _t: new Date()-0,
+                level:opts.level
+            },
+            success: function(data) {
+                currentIndex =0;
+                var ret = data.ret;
+                if(ret==0){
+                    $('#log-table').html(logTable(data.data, {
+                        encodeHtml: encodeHtml,
+                        set: Delegator.set,
+                        startIndex : currentIndex * MAX_LIMIT
+                    }));
+                    currentIndex ++;
+                    if(data.data.length == 0){
+                        noData = true;
+                    }
+                }
+                console.log(data);
 
             },
             error: function() {
-
+                console.log(1);
             }
         });
-
     }
 
     function init() {
         bindEvent();
-        //showLogs();
+
     }
 
     return {
