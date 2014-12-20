@@ -214,6 +214,7 @@ define([
         if(opts.id <= 0){
             return ;
         }
+
         var url = '/controller/action/queryLogList.do'
         $.ajax({
             url: url,
