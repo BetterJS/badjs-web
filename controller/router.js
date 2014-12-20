@@ -22,9 +22,6 @@ module.exports = function(app){
     * 查看log列表
     * */
     app.get('/controller/action/queryLogList.do', function(req, res){
-
-        paramsStr = decodeURI(req.url.split('?')[1]);
-        console.log('query', paramsStr);
         logAction.getLogList(req.query,function(err,data){
             if(isError(res, err)){
                return;

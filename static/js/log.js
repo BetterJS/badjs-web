@@ -14,7 +14,7 @@ define([
             include: [],
             exclude: [],
             index: 0,
-            level:[4]
+            level:[4],
         },
 
         encodeHtml = function (str) {
@@ -87,7 +87,7 @@ define([
                     endTime = $('#endTime').val();
                 logConfig.startDate = new Date(startTime).getTime();
                 logConfig.endDate = new Date(endTime).getTime();
-                showLogs(logConfig, false);
+                showLogs(logConfig);
             })
             .on('click', 'showSource', function (e, data) {
                 require([
@@ -146,44 +146,42 @@ define([
                 
             }).on('change' ,'selectBusiness' , function (){
                 var val = $(this).val()-0;
+
                 currentSelectId = val;
                 $('#log-table').html('');
                 currentIndex = 0;
                 noData = false;
                 logConfig.id = val;
-                showLogs(logConfig, false);
-
+                showLogs(logConfig);
             }).on('click', 'errorTypeClick', function () {
                 if($(this).hasClass('msg-dis')){
                     logConfig.level.push(4);
                     $(this).removeClass('msg-dis');
                 }else{
-                    logConfig.level.splice($.inArray(4,logConfig.level),1);
+                    logConfig.level.pop(4);
                     $(this).addClass('msg-dis');
                 }
-                console.log('log', logConfig.level);
-                showLogs(logConfig, false);
+                showLogs(logConfig);
 
             }).on('click', 'logTypeClick', function(){
                 if($(this).hasClass('msg-dis')){
                     logConfig.level.push(2);
                     $(this).removeClass('msg-dis');
                 }else{
-                    logConfig.level.splice($.inArray(2,logConfig.level),1);
+                    logConfig.level.pop(2);
                     $(this).addClass('msg-dis');
                 }
-
-                showLogs(logConfig, false);
+                showLogs(logConfig);
 
             }).on('click', 'debugTypeClick', function () {
                 if($(this).hasClass('msg-dis')){
                     logConfig.level.push(1);
                     $(this).removeClass('msg-dis');
                 }else{
-                    logConfig.level.splice($.inArray(1,logConfig.level),1);
+                    logConfig.level.pop(1);
                     $(this).addClass('msg-dis');
                 }
-                showLogs(logConfig, false);
+                showLogs(logConfig);
             });
 
 
@@ -195,7 +193,7 @@ define([
 
             if(scrollHeight - height - top <= 200 &&　!noData){
                 logConfig.id = currentSelectId;
-                showLogs(logConfig, true);
+                addLogs(logConfig);
             }
 
 
@@ -204,11 +202,7 @@ define([
 
     }
 
-    function isInDay(begin, end){
-        if(begin > end){
 
-        }
-    }
     function removeValue(value, arr) {
         for (var l = arr.length; l--;) {
             if (arr[l] === value) {
@@ -216,16 +210,48 @@ define([
             }
         }
     }
-
-
-
-
-    function showLogs(opts,  isAdd) {
+    function addLogs(opts){
+        if(opts.id <= 0){
+            return ;
+        }
+        var url = '/controller/action/queryLogList.do'
+        $.ajax({
+            url: url,
+            data: {
+                id: opts.id,
+                startDate: opts.startDate,
+                endDate: opts.endDate,
+                include: opts.include,
+                exclude: opts.exclude,
+                index: currentIndex ,
+                _t: new Date()-0,
+                level:opts.level
+            },
+            success: function(data) {
+                var ret = data.ret;
+                if(ret==0){
+                    $('#log-table').append(logTable(data.data, {
+                        encodeHtml: encodeHtml,
+                        set: Delegator.set,
+                        startIndex : currentIndex * MAX_LIMIT
+                    }));
+                    currentIndex ++;
+                    if(data.data.length == 0){
+                        noData = true;
+                    }
+                }
+            },
+            error: function() {
+                console.log('error');
+            }
+        });
+    }
+    function showLogs(opts) {
         console.log(opts);
         if(opts.id <= 0){
             return ;
         }
-        var url = '/controller/action/queryLogList.do';
+        var url = '/controller/action/queryLogList.do'
         $.ajax({
             url: url,
             data: {
@@ -239,28 +265,21 @@ define([
                 level:opts.level
             },
             success: function(data) {
-                if(!isAdd){
-                    currentIndex =0;
-                }
-
+                currentIndex =0;
                 var ret = data.ret;
                 if(ret==0){
-                    var param = {
+                    $('#log-table').html(logTable(data.data, {
                         encodeHtml: encodeHtml,
                         set: Delegator.set,
                         startIndex : currentIndex * MAX_LIMIT
-                    }
-                    if(isAdd){
-                        $('#log-table').append(logTable(data.data, param));
-                    }else{
-                        $('#log-table').html(logTable(data.data, param));
-                    }
-
+                    }));
                     currentIndex ++;
                     if(data.data.length == 0){
                         noData = true;
                     }
                 }
+                console.log(data);
+
             },
             error: function() {
                 console.log(1);
