@@ -2,7 +2,7 @@ define([
     'require',
     'jquery', 
     './delegator', 
-    './dialog', 
+    './dialog',
     './logTable.tpl',
     './keyword.tpl', 
     './debar.tpl'
@@ -85,9 +85,15 @@ define([
             }).on('click', 'showLogs', function () {
                 var startTime = $('#startTime').val(),
                     endTime = $('#endTime').val();
-                logConfig.startDate = new Date(startTime).getTime();
-                logConfig.endDate = new Date(endTime).getTime();
-                showLogs(logConfig, false);
+                console.log('data', endTime);
+                logConfig.startDate =  startTime == '' ?new Date().getTime()-3600000 : new Date(startTime).getTime();
+                logConfig.endDate = endTime == '' ? new Date().getTime() : new Date(endTime).getTime();
+                console.log('data', logConfig);
+                //测试时间是否符合
+                if(isTimeRight(logConfig.startDate, logConfig.endDate)){
+                    showLogs(logConfig, false);
+                }
+
             })
             .on('click', 'showSource', function (e, data) {
                 require([
@@ -204,10 +210,22 @@ define([
 
     }
 
-    function isInDay(begin, end){
+    function isTimeRight(begin, end){
         if(begin > end){
-
+            Dialog({
+                header: '时间范围错误',
+                body:'结束时间必须在开始时间之后！'
+            });
+            return false;
+        }else{
+            if(end - 3600000 > begin){
+                Dialog({
+                    header: '时间范围错误',
+                    body:'结束时间和开始时间间隔需在一小时之内！'
+                });
+            }
         }
+
     }
     function removeValue(value, arr) {
         for (var l = arr.length; l--;) {
@@ -216,6 +234,7 @@ define([
             }
         }
     }
+
 
 
     function showLogs(opts,  isAdd) {
@@ -265,6 +284,22 @@ define([
                 console.log(1);
             }
         });
+    }
+
+    function init() {
+        bindEvent();
+        $('.datetimepicker').datetimepicker({
+            dayOfWeekStart : 1,
+            lang:'en',
+            disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
+            startDate:	'1986/01/05'
+        });
+        $('.datetimepicker').datetimepicker({value:'2015/04/15 05:03',step:10});
+
+    }
+
+    return {
+        init: init
     }
 
 });

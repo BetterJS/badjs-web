@@ -1,7 +1,7 @@
 var express = require('express')
   , tpl = require('express-micro-tpl')
   , valid = require('url-valid')
-  , passport = require('passport')
+  //, passport = require('passport')
   , flash = require('connect-flash')
   , session = require('express-session')
   , bodyParser = require('body-parser')
@@ -45,64 +45,66 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login')
 }
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
+//passport.serializeUser(function(user, done) {
+//  done(null, user.id);
+//});
+//
+//passport.deserializeUser(function(id, done) {
+//  findById(id, function (err, user) {
+//    done(err, user);
+//  });
+//});
 
-passport.deserializeUser(function(id, done) {
-  findById(id, function (err, user) {
-    done(err, user);
-  });
-});
-
-passport.use(new LocalStrategy(
-  function (username, password, done) {
-    process.nextTick(function () {
-      findByUsername(username, function (err, user) {
-        if (err) return done(err);
-        if (!user) return done(null, false, { message: 'Unknown user ' + username });
-        if (user.password != password) return done(null, false, { message: 'Invalid password' });
-        return done(null, user);
-      })      
-    })
-  }
-));
+//passport.use(new LocalStrategy(
+//  function (username, password, done) {
+//    process.nextTick(function () {
+//      findByUsername(username, function (err, user) {
+//        if (err) return done(err);
+//        if (!user) return done(null, false, { message: 'Unknown user ' + username });
+//        if (user.password != password) return done(null, false, { message: 'Invalid password' });
+//        return done(null, user);
+//      })
+//    })
+//  }
+//));
 
 
 app
   .set('views', __dirname + '/views')
   .set('view engine', 'html')
   .engine('html', tpl.__express)
-  .use(session({ secret: 'keyboard cat' }))
+  .use(session({ secret: 'keyboard cat', cookie: { maxAge: 30 * 60 * 1000 } }))
   .use(bodyParser.urlencoded({ extended: false }))
   .use(cookieParser())
-  .use(passport.initialize())
-  .use(passport.session())
+  //.use(passport.initialize())
+  //.use(passport.session())
   .use(flash())
-  .get('/', function (req, res) {
-    req.user ?
-      // log page
-      res.render('log', { user: req.user }) :
-      // introduce page
-      res.render('index', { user: req.user });
-  })
-  .get('/account', ensureAuthenticated, function (req, res) {
-    res.render('account', { user: req.user });
-  })
-  .get('/login', function (req, res) {
-    res.render('login', { user: req.user, message: req.flash('error') });
-  })
-  .post(
-    '/login', 
-    passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-    function (req, res) {
-      res.redirect('/');
-    }
-  )
-  .get('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/');
-  })
+  //.get('/', function (req, res) {
+  //  req.user ?
+  //    // log page
+  //    res.render('log', { user: req.user }) :
+  //    // introduce page
+  //    res.render('index', { user: req.user });
+  //})
+  //.get('/account', ensureAuthenticated, function (req, res) {
+  //  res.render('account', { user: req.user });
+  //})
+  //.get('/login', function (req, res) {
+  //  res.render('login', { user: req.user, message: req.flash('error') });
+  //})
+  //.post(
+  //  '/login',
+  //  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+  //  function (req, res) {
+  //    res.redirect('/');
+  //  }
+  //)
+  //.get('/logout', function (req, res) {
+  //  req.logout();
+  //  res.redirect('/');
+  //})
+
+
   .use('/code', function (req, res, next) {
     var urls = req.query.target.split(':')
       , body = [];
