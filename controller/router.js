@@ -9,10 +9,12 @@ var auth = require('../utils/auth');
 var users = {};
 var tof = require('../oa/node-tof');
 
+var log4js = require('log4js'),
+    logger = log4js.getLogger();
+
 module.exports = function(app){
     var isError = function (res , error){
         if(error){
-            console.log(error);
             res.json({ret : 1 , err_msg : error});
             return true;
         }
@@ -26,7 +28,7 @@ module.exports = function(app){
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
-        if(/^\/login.html/i.test(req.url)){ // 登录
+        if(/^\/login/i.test(req.url)){ // 登录
             var redirectUrl = req.headers.referer || req.indexUrl;
             res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url='+redirectUrl);
             return ;
@@ -84,7 +86,8 @@ module.exports = function(app){
     app.get('/controller/action/queryLogList.do', function(req, res){
 
         paramsStr = decodeURI(req.url.split('?')[1]);
-        console.log('query', paramsStr);
+
+        logger.debug('query param :' + paramsStr);
         logAction.getLogList(req.query,function(err,data){
             if(isError(res, err)){
                return;

@@ -6,10 +6,13 @@
 
 var LogService = require('../../service/LogService');
 
+var  log4js = require('log4js'),
+    logger = log4js.getLogger();
+
 var LogAction = {
 
     getLogList : function (params,cb) {
-        console.log('action-parmas：', params);
+        logger.debug('action query:' + params)
         for(var key in params){
             params['endDate'] -=0;
             params['startDate'] -=0;

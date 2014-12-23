@@ -4,9 +4,20 @@
 
 var http = require('http');
 
+var  log4js = require('log4js'),
+    logger = log4js.getLogger();
+
+
 
 var LogService = function (){
-    this.url = 'http://183.60.70.234:9000/query';
+
+    if(GLOBAL.DEBUG){
+        this.url = 'http://183.60.70.234:9000/query';
+    }else {
+        this.url = 'http://10.143.132.205:9000/query';
+    }
+
+    logger.debug('query url : ' + this.url)
 //    this.url = 'http://127.0.0.1:9000/query';
 }
 
@@ -25,7 +36,7 @@ LogService.prototype = {
             }
         }
         strParams +='_=1';
-        console.log('strParams:',strParams);
+        logger.debug('query param : ' +strParams );
         http.get( this.url + '?'+ strParams , function (res){
             var buffer = '';
            res.on('data' , function (chunk){
@@ -39,6 +50,7 @@ LogService.prototype = {
            })
 
         }).on('error' , function (err){
+            logger.warn('error :' + err);
             callback(err)
         })
     }

@@ -17,7 +17,8 @@
     "passport-local": "^1.0.0",
     "serve-static": "^1.7.1",
     "socket.io": "^1.2.0",
-    "url-valid": "^0.3.0"
+    "url-valid": "^0.3.0",
+    "log4js": "^0.6.2"
   },
   "devDependencies": {},
   "scripts": {},
