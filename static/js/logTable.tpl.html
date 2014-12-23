@@ -25,3 +25,10 @@ switch(it[i].level) {
     <td><a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>"><%==it[i].target || it[i].url%></a><span class="err-where"><%=it[i].rowNum%>行<%=it[i].colNum%>列</span></td>
 </tr>
 <% } %>
+
+<% if(it.length == 0 ){%>
+<td colspan="6" style="
+    text-align: center;
+    background: rgb(221, 221, 221);
+">无更多数据</td>
+<%}%>

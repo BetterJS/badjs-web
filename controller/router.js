@@ -6,10 +6,8 @@
 
 var logAction = require('./action/LogAction')
 var auth = require('../utils/auth');
-var signinUrl = 'http://passport.oa.com/modules/passport/signin.ashx?url={yourWebsite}';
-var signoutUrl = 'http://passport.oa.com/modules/passport/signout.ashx?url={yourWebsite}';
-var decryptTicketUrl = 'http://api.tof.oa.com/api/v1/Passport/DecryptTicketWithClientIP?appkey={appkey}&encryptedTicket={encryptedTicket}&browseIP={browseIP}';
 var users = {};
+var tof = require('../oa/node-tof');
 
 module.exports = function(app){
     var isError = function (res , error){
@@ -21,94 +19,62 @@ module.exports = function(app){
         return false;
 
     };
-    /**
-     * 登录
-     * */
-     app.get('/', function(req, res){
 
-         var clientIp = req.header('x-forwarded-for') || req.connection.remoteAddress;
-         //clientIp = '10.2.64.97';// only for dev time, because when in dev time, clientIp will always be 127.0.0.1, but in real time, you dont need this line
-         var user = users[clientIp] || req.session.user;
-         console.log('\\', req.session.user);
-         //var user = users[clientIp] || req.session.user;
-         if (user) {
-             req.session.user = user;
-             delete users[clientIp];
-             res.render('log', { layout: false, user: user });
-         } else {
+    app.use(function (req , res , next){
+        var params = req.query,
+            user  = req.session.user;
 
-             var homeUrl = req.protocol + "://" + req.get('host');
-             console.log('homeurl', homeUrl);
-             signinUrl = signinUrl.replace('{yourWebsite}', encodeURIComponent(homeUrl));
-             res.redirect(signinUrl);
+        req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
-             if (req.query.ticket) {
-                 var headers = auth.info();
-                 var appkey = headers.appkey;
-                 var encryptedTicket = req.query.ticket;
-                 var url = decryptTicketUrl.replace('{appkey}', appkey).replace('{encryptedTicket}', encryptedTicket).replace('{browseIP}', clientIp);
-                 request.get({ url: url,  headers: headers }, function (error, response, body) {
-                     if (!error && response.statusCode == 200) {
-                         var data = JSON.parse(body).Data;
-                         users[clientIp] = {
-                             loginName: data.LoginName,
-                             chinessName: data.ChineseName
-                         };
-                     } else {
-                         console.log(error, body);
-                     }
-                 });
-             }
-             users[clientIp] = {
-                 loginName: 'coverguo',
-                 chinessName: '郭锋棉'
-             };
-         }
+        if(/^\/login.html/i.test(req.url)){ // 登录
+            var redirectUrl = req.headers.referer || req.indexUrl;
+            res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url='+redirectUrl);
+            return ;
+        }
+
+
+        if ( params && params.ticket) { // oa 登录跳转
+            tof.passport(params.ticket , function (result){
+                if(result){
+                    req.session.user = {loginName : result.LoginName , chinessName : result.ChineseName};
+                    next();
+                }else {
+                    res.send(403, 'Sorry! you can not see that.');
+                }
+            });
+        } else  if(req.session.user){ // 跳转OA 登录
+            next();
+        }else {
+            res.redirect(req.protocol + "://" + req.get('host') + '/login');
+        }
+    });
+     app.get('/index.html', function(req, res){
+
+         var params = req.query,
+             user  = req.session.user;
+
+
+         res.render('log', { layout: false, user: user });
+
      });
-     app.get('/login', function(req, res){
-         console.log('login', user);
-         var clientIp = req.header('x-forwarded-for') || req.connection.remoteAddress;
-         //clientIp = '10.2.64.97';// only for dev time, because when in dev time, clientIp will always be 127.0.0.1, but in real time, you dont need this line
-         var user = users[clientIp] || req.session.user;
-         if (user) {
-             req.session.user = user;
-             delete users[clientIp];
-             res.render('log', { layout: false, user: user });
-         } else {
-             var homeUrl = req.protocol + "://" + req.get('host');
-             signinUrl = signinUrl.replace('{yourWebsite}', encodeURIComponent(homeUrl));
-             res.redirect(signinUrl);
 
-             if (req.query.ticket) {
-                 var headers = auth.info();
-                 var appkey = headers.appkey;
-                 var encryptedTicket = req.query.ticket;
-                 var url = decryptTicketUrl.replace('{appkey}', appkey).replace('{encryptedTicket}', encryptedTicket).replace('{browseIP}', clientIp);
-                 request.get({ url: url,  headers: headers }, function (error, response, body) {
-                     if (!error && response.statusCode == 200) {
-                         var data = JSON.parse(body).Data;
-                         users[clientIp] = {
-                             loginName: data.LoginName,
-                             chinessName: data.ChineseName
-                         };
-                     } else {
-                         console.log(error, body);
-                     }
-                 });
-             }
-             users[clientIp] = {
-                 loginName: 'coverguo',
-                 chinessName: '郭锋棉'
-             };
-         }
+    app.get('/', function(req, res){
+
+        var params = req.query,
+            user  = req.session.user;
+
+        res.render('log', { layout: false, user: user });
+
+
     });
     /**
      * 登录
      * */
     app.get('/logout', function(req, res){
+
+        var signoutUrl = 'http://passport.oa.com/modules/passport/signout.ashx?url={yourWebsite}';
         req.session.user = null;
-        console.log('user', req.session.user);
-        var homeUrl = req.protocol + "://" + req.get('host');
+        var homeUrl = req.protocol + "://" + req.get('host')+'/';
         signoutUrl = signoutUrl.replace('{yourWebsite}', encodeURIComponent(homeUrl));
         res.redirect(signoutUrl);
     });

@@ -1,16 +1,14 @@
 define([
-    'require',
-    'jquery', 
-    './delegator', 
+    './delegator',
     './dialog',
     './logTable.tpl',
     './keyword.tpl', 
     './debar.tpl'
-], function (require, $, Delegator, Dialog, logTable, keyword, debar) {
+], function ( Delegator, Dialog, logTable, keyword, debar) {
     var logConfig = {
             id: 0,
-            startDate: 1417104000000,
-            endDate: 1417190400000,
+            startDate: 0,
+            endDate: 0,
             include: [],
             exclude: [],
             index: 0,
@@ -22,7 +20,10 @@ define([
         };
 
 
-    var currentSelectId = -1, currentIndex = 0  , noData = false , MAX_LIMIT = 500;
+    var maxDate = 60*60*1000*24 *2;
+
+
+    var currentSelectId = -1, currentIndex = 0  , noData = false , MAX_LIMIT = 500 , loading = false;
 
     function addKeyword() {
         var value = $.trim($('#keyword-ipt').val());
@@ -86,7 +87,7 @@ define([
                 var startTime = $('#startTime').val(),
                     endTime = $('#endTime').val();
                 console.log('data', endTime);
-                logConfig.startDate =  startTime == '' ?new Date().getTime()-3600000 : new Date(startTime).getTime();
+                logConfig.startDate =  startTime == '' ? new Date().getTime()-maxDate : new Date(startTime).getTime();
                 logConfig.endDate = endTime == '' ? new Date().getTime() : new Date(endTime).getTime();
                 console.log('data', logConfig);
                 //测试时间是否符合
@@ -157,7 +158,7 @@ define([
                 currentIndex = 0;
                 noData = false;
                 logConfig.id = val;
-                showLogs(logConfig, false);
+              //  showLogs(logConfig, false);
 
             }).on('click', 'errorTypeClick', function () {
                 if($(this).hasClass('msg-dis')){
@@ -168,7 +169,7 @@ define([
                     $(this).addClass('msg-dis');
                 }
                 console.log('log', logConfig.level);
-                showLogs(logConfig, false);
+               // showLogs(logConfig, false);
 
             }).on('click', 'logTypeClick', function(){
                 if($(this).hasClass('msg-dis')){
@@ -179,7 +180,7 @@ define([
                     $(this).addClass('msg-dis');
                 }
 
-                showLogs(logConfig, false);
+             //   showLogs(logConfig, false);
 
             }).on('click', 'debugTypeClick', function () {
                 if($(this).hasClass('msg-dis')){
@@ -189,7 +190,7 @@ define([
                     logConfig.level.splice($.inArray(1,logConfig.level),1);
                     $(this).addClass('msg-dis');
                 }
-                showLogs(logConfig, false);
+           //     showLogs(logConfig, false);
             });
 
 
@@ -217,14 +218,14 @@ define([
                 body:'结束时间必须在开始时间之后！'
             });
             return false;
-        }else{
-            if(end - 3600000 > begin){
+        }else if(end - maxDate  > begin){
                 Dialog({
                     header: '时间范围错误',
-                    body:'结束时间和开始时间间隔需在一小时之内！'
+                    body:'结束时间和开始时间间隔需在三天之内！'
                 });
-            }
+            return false;
         }
+        return true;
 
     }
     function removeValue(value, arr) {
@@ -239,10 +240,17 @@ define([
 
     function showLogs(opts,  isAdd) {
 
-        console.log(opts);
-        if(opts.id <= 0){
+        if(opts.id <= 0 || loading){
             return ;
         }
+
+        loading = true;
+
+        if(!isAdd){
+            currentIndex =0;
+            noData = false;
+        }
+
         var url = '/controller/action/queryLogList.do';
         $.ajax({
             url: url,
@@ -252,14 +260,12 @@ define([
                 endDate: opts.endDate,
                 include: opts.include,
                 exclude: opts.exclude,
-                index: 0 ,
+                index: currentIndex ,
                 _t: new Date()-0,
                 level:opts.level
             },
             success: function(data) {
-                if(!isAdd){
-                    currentIndex =0;
-                }
+
 
                 var ret = data.ret;
                 if(ret==0){
@@ -279,22 +285,21 @@ define([
                         noData = true;
                     }
                 }
+                loading = false;
             },
             error: function() {
-                console.log(1);
+
+                loading = false;
             }
         });
     }
 
     function init() {
         bindEvent();
-        $('.datetimepicker').datetimepicker({
-            dayOfWeekStart : 1,
-            lang:'en',
-            disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
-            startDate:	'1986/01/05'
-        });
-        $('.datetimepicker').datetimepicker({value:'2015/04/15 05:03',step:10});
+        $(".datetimepicker").datetimepicker({format: 'YYYY-MM-DD HH:mm'}).data("DateTimePicker").setMaxDate(new Date());
+
+        $('#startTime').data("DateTimePicker").setDate( new Date(new Date() - maxDate));
+        $('#endTime').data("DateTimePicker").setDate( new Date());
 
     }
 

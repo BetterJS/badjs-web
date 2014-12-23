@@ -6,7 +6,8 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <title>BetterJs - 前端代码异常监控系统</title>
 <link href="/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/css/jquery.datetimepicker.css"/>
+<link href="/css/bootstrap-theme.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css"/>
 <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
@@ -27,7 +28,7 @@
         <div class="head-user">
             <% if (it.user) { %>
             <a href="/logout">退出</a>
-            <span class="head-face">姚明(Mingyao)</span>
+            <span class="head-face"><%= it.user.chinessName %>(<%= it.user.loginName %>)</span>
             <img src="/img/face.jpg" />
             <% } else { %>
             <a href="/login">登录</a>

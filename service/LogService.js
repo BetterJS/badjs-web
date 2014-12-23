@@ -7,6 +7,7 @@ var http = require('http');
 
 var LogService = function (){
     this.url = 'http://183.60.70.234:9000/query';
+//    this.url = 'http://127.0.0.1:9000/query';
 }
 
 
@@ -16,7 +17,12 @@ LogService.prototype = {
 
         var strParams = '';
         for(var key in params) {
-            strParams += key +'='+ JSON.stringify(params[key] ) + '&';
+            if(key == 'index'){
+                strParams += key +'='+ params[key]  + '&';
+            }else {
+                strParams += key +'='+ JSON.stringify(params[key] ) + '&';
+
+            }
         }
         strParams +='_=1';
         console.log('strParams:',strParams);
@@ -41,15 +47,3 @@ LogService.prototype = {
 
 module.exports =  LogService;
 
-//new LogService().query({
-//    id : 990,
-//    startDate : 1417104000000,
-//    endDate : 1417190400000,
-//    include : [],
-//    exclude : [],
-//    page : 0,
-//    level : [4]
-//} , function (err , data){
-//    console.log(data)
-//    console.log('err' + err);
-//});
