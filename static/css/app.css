@@ -188,8 +188,14 @@ form {
     background: url(../img/ico-sougou.png) no-repeat; }
 #content .mid-side .main-table .ico-360 {
     background: url(../img/ico-360.png) no-repeat; }
+#content .mid-side .main-table .ico-qb {
+    background: url(../img/ico-qb.png) no-repeat; }
 #content .mid-side .main-table .ico-liebao {
     background: url(../img/ico-liebao.png) no-repeat; }
+#content .mid-side .main-table .ico-android {
+    background: url(../img/ico-android.png) no-repeat; }
+#content .mid-side .main-table .ico-ios {
+    background: url(../img/ico-ios.png) no-repeat; }
 #content .right-side {
     width: 250px;
     height: 100%;

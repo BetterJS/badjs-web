@@ -15,19 +15,46 @@ switch(it[i].level) {
         type = 'debug';
         break;
 }
+
+ function getBrowserType(ua){
+        if(!ua){
+            return '';
+        }
+        ua = ua.toLowerCase();
+
+        if(ua.indexOf('qq')>0){
+            return  'ico-qq';
+        }else if(ua.indexOf('android')>0){
+            return  'ico-android';
+        }else if(ua.indexOf('iphone')>0){
+            return  'ico-ios';
+        }else if(ua.indexOf('chrome')>0){
+            return  'ico-chrome';
+        }else if(ua.indexOf('msie')>0){
+            return 'ico-ie';
+        }else if(ua.indexOf('firefox')>0){
+            return 'ico-ff';
+        }else if(ua.indexOf('safari')>0){
+            return 'ico-safari';
+        }
+}
 %>
 <tr>
     <td class="info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
-    <td><%=(new Date(it[i].timestmp)).toLocaleString()%></td>
+    <td width="200px"><%= _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') %></td>
     <td><%==it[i].msg%></td>
-    <td><%==it[i].uin%></td>
+    <td><%== it[i].uin == 'NaN' ? '-' : it[i].uin%></td>
     <td><%==it[i].ip%></td>
-    <td><a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>"><%==it[i].target || it[i].url%></a><span class="err-where"><%=it[i].rowNum%>行<%=it[i].colNum%>列</span></td>
+    <td width="50px"><span class="ico-browser <%=getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
+    <td>
+        <a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
+        <%==it[i].target || it[i].url || ''%></a>
+        <span class="err-where"><%=it[i].rowNum || 0 %>行<%=it[i].colNum || 0%>列</span></td>
 </tr>
 <% } %>
 
 <% if(it.length == 0 ){%>
-<td colspan="6" style="
+<td colspan="7" style="
     text-align: center;
     background: rgb(221, 221, 221);
 ">无更多数据</td>
