@@ -9,11 +9,11 @@ var express = require('express')
   , serveStatic = require('serve-static')
   , middlewarePipe = require('middleware-pipe')
   , tplPlugin = require('./gulp/tpl')
-  , app = express()
   , server = require('http').createServer(app)
   , io = require('socket.io')(server)
-  , router = require('./controller/router') ;
-
+  , router = require('./controller/router')
+  , orm = require('orm')
+  , app = express();
 
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
@@ -27,29 +27,49 @@ if(argv.indexOf('--debug') >= 0){
 }
 
 
-app
-  .set('views', __dirname + '/views')
-  .set('view engine', 'html')
-  .engine('html', tpl.__express)
-  .use(session({ secret: 'keyboard cat', cookie: { maxAge: 30 * 60 * 1000 } }))
-  .use(bodyParser.urlencoded({ extended: false }))
-  .use(cookieParser())
-  .use('/css', middlewarePipe('./static/css',
+app.set('views', __dirname + '/views');
+app.set('view engine', 'html');
+app.engine('html', tpl.__express);
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 30 * 60 * 1000 } }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use('/css', middlewarePipe('./static/css',
     /\.css$/, function (url) {
       return url.replace(/\.css$/, '.scss');
     })
-  )
-  .use('/js', middlewarePipe('./static/js',
+);
+app.use('/js', middlewarePipe('./static/js',
     /\.tpl\.js$/, function (url) {
       return url.replace(/\.js/, '.html');
     }).pipe(function () {
       return tplPlugin();
     })
-  )
-  .use(serveStatic('static'))
-  .use(function (err, req, res, next) {
+);
+app.use(serveStatic('static'));
+
+
+var msqlUrl ="mysql://root:123456@localhost:3306/badjs";
+console.log(msqlUrl);
+app.use(orm.express(msqlUrl, {
+  define: function (db, models, next) {
+
+    db.use(require("orm-transaction"));
+
+    models.userDao = require('./dao/UserDao')(db);
+    models.applyDao = require('./dao/ApplyDao')(db);
+    models.approveDao = require('./dao/ApproveDao')(db);
+
+    models.db = db;
+
+    next();
+  }}));
+
+app.use(function (err, req, res, next) {
     res.send(err.stack);
-  });
+});
+
+
+
 
 router(app);
 

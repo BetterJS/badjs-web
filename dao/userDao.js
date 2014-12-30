@@ -2,7 +2,7 @@
 /**
  *  @info: userDao
  *  @author: coverGuo
- *  @date: 14-12-30
+ *  @date: 2014-12-30
  */
 
 module.exports  = function (db){
