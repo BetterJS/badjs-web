@@ -4,7 +4,8 @@
  * @date : 2014-12-16
  */
 
-var logAction = require('./action/LogAction')
+var logAction = require('./action/LogAction'),
+    applyAction = require('./actuib/LogAction');
 var auth = require('../utils/auth');
 var users = {};
 var tof = require('../oa/node-tof');
@@ -24,7 +25,9 @@ module.exports = function(app){
 
     app.use(function (req , res , next){
         var params = req.query,
-            user  = req.session.user;
+            user  = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1},
+            //获取用户model
+            userDao = req.models.userDao;
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
@@ -33,32 +36,85 @@ module.exports = function(app){
             res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url='+redirectUrl);
             return ;
         }
-
-
         if ( params && params.ticket) { // oa 登录跳转
             tof.passport(params.ticket , function (result){
                 if(result){
-                    req.session.user = {loginName : result.LoginName , chinessName : result.ChineseName};
-                    next();
+                    req.session.user = {loginName : result.LoginName , chineseName : result.ChineseName, role : 0};
+                    userDao.one({ loginName : result.LoginName} ,function (err , user) {
+                        if(isError(res,err)){
+                            return;
+                        }
+                        //第一次登陆
+                        if(!user){
+
+                            userDao.create(req.session.user, function(err, result){
+                               if(isError(res, err)){
+                                   return;
+                               }
+                                logger.info("New User:"+ req.session.user + "insert into db-badjs");
+                            });
+                        }else{
+                           logger.info("Old User:"+ req.session.user);
+                           req.session.user.role = user.role;
+                        }
+                        next();
+                    })
+
                 }else {
                     res.send(403, 'Sorry! you can not see that.');
                 }
             });
-        } else  if(req.session.user){ // 跳转OA 登录
+        } else  if(req.session.user){ // 已经登录
             next();
         }else {
             res.redirect(req.protocol + "://" + req.get('host') + '/login');
         }
-    });
-     app.get('/index.html', function(req, res){
 
+        /*  游客 访问 */
+        if(!/^\/manage\/.*/i.test(req.url)){
+            next();
+            return ;
+        }
+
+        //管理员访问
+        if(user){
+            userDao.one({ loginName : user.loginName} , function (error , result){
+                if(isError(res,error)){
+                    return;
+                }
+
+                // not admin ,  response error
+                if(/^\/manage\/admin\/.*/i.test(req.url) && result.role !== 1){
+                    res.json({ec : 1 , em : 'Sorry! you can not invoke. '});
+                    return ;
+                }
+
+                next();
+            });
+        }else if(!req.session.user){ // 跳转OA 登录
+            res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url='+req.actrulUrl);
+        }
+    });
+
+
+
+
+
+
+
+     app.get('/index.html', function(req, res){
          var params = req.query,
              user  = req.session.user;
-
 
          res.render('log', { layout: false, user: user });
 
      });
+    app.get('/apply.html', function(req, res){
+        var params = req.query,
+            user  = req.session.user;
+        res.render('apply', { layout: false, user: user });
+
+    });
 
     app.get('/', function(req, res){
 
@@ -96,4 +152,22 @@ module.exports = function(app){
         });
 
     });
+
+    /**
+     * 查看log列表
+     * */
+
+    app.post('/controller/action/addApply.do', function(req, res){
+
+
+        applyAction.addApply(req.query,function(err,data){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, data: data});
+        });
+
+    });
+
+
  };

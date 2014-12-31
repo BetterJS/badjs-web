@@ -8,7 +8,7 @@
 module.exports  = function (db){
     var user = db.define("b_user", {
         id          : Number,
-        name        : String,
+        loginName        : String,
         chineseName : String,
         role        : Number
     });

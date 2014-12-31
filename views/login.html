@@ -1,4 +1,4 @@
-<%=include('./header.html')(it, opt)%>
+<%=include('./common/header.html')(it, opt)%>
 
 <div class="container">
     <% if (it.message.length) { %>
@@ -20,7 +20,7 @@
     </form>
 </div>
 
-<%=include('./footer.html')(it)%>
+<%=include('./common/footer.html')(it)%>
 <script>
 $('#username').focus();
 </script>

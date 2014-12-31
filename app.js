@@ -9,11 +9,12 @@ var express = require('express')
   , serveStatic = require('serve-static')
   , middlewarePipe = require('middleware-pipe')
   , tplPlugin = require('./gulp/tpl')
+  , app = express()
   , server = require('http').createServer(app)
   , io = require('socket.io')(server)
   , router = require('./controller/router')
   , orm = require('orm')
-  , app = express();
+
 
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
@@ -54,11 +55,9 @@ app.use(orm.express(msqlUrl, {
   define: function (db, models, next) {
 
     db.use(require("orm-transaction"));
-
     models.userDao = require('./dao/UserDao')(db);
     models.applyDao = require('./dao/ApplyDao')(db);
     models.approveDao = require('./dao/ApproveDao')(db);
-
     models.db = db;
 
     next();
@@ -67,8 +66,6 @@ app.use(orm.express(msqlUrl, {
 app.use(function (err, req, res, next) {
     res.send(err.stack);
 });
-
-
 
 
 router(app);

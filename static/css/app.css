@@ -322,3 +322,14 @@ form {
 .page-nav .extend {
     color: #4d4d4d;
     margin: 0 27px; }
+
+
+/*@apply  coverguo 2014-12-31*/
+#applyContainer{
+    padding-top: 10px;
+}
+#applyContainer .applyTitle{
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 40px;
+}

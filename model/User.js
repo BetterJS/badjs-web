@@ -16,13 +16,13 @@ var User = function(args){
     if(!args){
         return;
     }
-    _.defaults(this, _.pick(args, 'id', 'name', 'chineseName', 'role'));
+    _.defaults(this, _.pick(args, 'id', 'loginName', 'chineseName', 'role'));
 }
 
 User.prototype  = {
     id : undefined,
-    name : undefined,
-    chinese: undefined,
+    loginName : undefined,
+    chineseName: undefined,
     role : undefined
 }
 
