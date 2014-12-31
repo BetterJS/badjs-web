@@ -5,10 +5,8 @@
  */
 
 var logAction = require('./action/LogAction'),
-    applyAction = require('./actuib/LogAction');
-var auth = require('../utils/auth');
-var users = {};
-var tof = require('../oa/node-tof');
+    auth = require('../utils/auth'),
+    tof = require('../oa/node-tof');
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
@@ -106,13 +104,13 @@ module.exports = function(app){
          var params = req.query,
              user  = req.session.user;
 
-         res.render('log', { layout: false, user: user });
+         res.render('log', { layout: false, user: user, index:"log" });
 
      });
     app.get('/apply.html', function(req, res){
         var params = req.query,
             user  = req.session.user;
-        res.render('apply', { layout: false, user: user });
+        res.render('apply', { layout: false, user: user, index:'apply' });
 
     });
 
@@ -158,13 +156,21 @@ module.exports = function(app){
      * */
 
     app.post('/controller/action/addApply.do', function(req, res){
+        var apply = req.body;
+            logger.info(apply);
+            apply.userName = req.session.user.loginName;
 
-
-        applyAction.addApply(req.query,function(err,data){
-            if(isError(res, err)){
-                return;
+        logger.debug('action query:' + apply);
+        apply.createTime = new Date();
+        apply.status = 0;
+        var applyDao = req.models.applyDao;
+        applyDao.create(apply , function (err , items){
+            if(err){
+                //dataBase 错误
+                res.json({ret:1, data: {msg:"DATABASE_ERROR"}});
             }
-            res.json({ret:0, data: data});
+
+            res.json({ret:0, data: {msg:"SUCCESS"}});
         });
 
     });

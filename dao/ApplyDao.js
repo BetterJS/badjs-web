@@ -9,17 +9,14 @@ module.exports  = function (db){
     var apply = db.define("b_apply", {
         id          : Number,
         userName    : String,
-        nlogId      : String,
         status      : Number,
         name        : String,
         url         : String,
         description : String,
-        mailSender  : String,
-        mailCopy    : String,
+        mail        : String,
         published   : Number,
         createTime  : Date,
-        passTime    : Date,
-        consumeIp    : String
+        passTime    : Date
     });
 
     return apply;

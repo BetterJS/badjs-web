@@ -8,7 +8,7 @@
 var _ = require('underscore')._;
 
 /**
- * status 0 不通过  , 1 通过  , 2 审核中
+ * status 0 审核中 , 1 通过  , 2 不通过
  * @param args
  * @constructor
  */
@@ -23,15 +23,13 @@ var Apply = function (args){
 Apply.prototype  = {
     userName : undefined,
     name : undefined,
-    appCode : undefined,
+    url : undefined,
     status : undefined,
     id : undefined,
-    mailSender : undefined,
-    mailCopy : undefined,
+    mail : undefined,
     description : undefined,
     createTime : undefined,
-    passTime : undefined,
-    consumeIp : undefined
+    passTime : undefined
 }
 
 module.exports =  Apply;
