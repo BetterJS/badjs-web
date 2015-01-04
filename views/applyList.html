@@ -1,0 +1,66 @@
+<%=include('./common/header.html')(it, opt)%>
+
+<main id="content" role="main">
+    <div class="wrap">
+        <%=include('./common/leftSide.html')(it, opt)%>
+        <div class="mid-side">
+            <div class="">审核表</div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox"/></th>
+                        <th>项目名称</th>
+                        <th>项目申请人</th>
+                        <th>申请时间</th>
+                        <th>联系邮箱</th>
+                        <th>项目描述</th>
+                        <th>审核状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="checkbox"/></td>
+                        <td>灰机很帅</td>
+                        <td>coverguo</td>
+                        <td>2014-12-12 12:33</td>
+                        <td>44@qq.com</td>
+                        <td>dwadawdawdawdawdwadwa</td>
+                        <td style="color:#fff;background-color:#E79256;">审核中</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"/></td>
+                        <td>
+                            <a href=""></a>灰机很帅</td>
+                        <td>coverguo</td>
+                        <td>2014-12-12 12:33</td>
+                        <td>44@qq.com</td>
+                        <td>dwadawdawdaw..</td>
+                        <td style="color:#fff;background-color:#689B28;">审核通过</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"/></td>
+                        <td>灰机很帅</td>
+                        <td>coverguo</td>
+                        <td>2014-12-12 12:33</td>
+                        <td>44@qq.com</td>
+                        <td>dwadawdawdawdawdwadwa</td>
+                        <td style="color:#fff;background-color:#B3A8A8;">不通过</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+        <div class="right-side">
+
+        </div>
+    </div>
+</main>
+
+<%=include('./common/footer.html')(it)%>
+
+</body>
+
+</html>

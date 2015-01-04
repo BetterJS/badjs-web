@@ -14,7 +14,6 @@ module.exports  = function (db){
         url         : String,
         description : String,
         mail        : String,
-        published   : Number,
         createTime  : Date,
         passTime    : Date
     });

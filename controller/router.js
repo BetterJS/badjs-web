@@ -20,7 +20,6 @@ module.exports = function(app){
         return false;
 
     };
-
     app.use(function (req , res , next){
         var params = req.query,
             user  = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1},
@@ -96,10 +95,6 @@ module.exports = function(app){
 
 
 
-
-
-
-
      app.get('/index.html', function(req, res){
          var params = req.query,
              user  = req.session.user;
@@ -111,6 +106,12 @@ module.exports = function(app){
         var params = req.query,
             user  = req.session.user;
         res.render('apply', { layout: false, user: user, index:'apply' });
+
+    });
+    app.get('/applyList.html', function(req, res){
+        var params = req.query,
+            user  = req.session.user;
+        res.render('applyList', { layout: false, user: user, index:'applyList', role:'1' });
 
     });
 
@@ -134,6 +135,34 @@ module.exports = function(app){
         signoutUrl = signoutUrl.replace('{yourWebsite}', encodeURIComponent(homeUrl));
         res.redirect(signoutUrl);
     });
+
+    /**
+     * 增添申请表
+     * */
+
+    app.post('/controller/action/addApply.do', function(req, res){
+        var apply = req.body;
+        apply.userName = req.session.user.loginName;
+
+        logger.debug('action query:' + apply);
+        apply.createTime = new Date();
+        apply.status = 0;
+
+        var applyDao = req.models.applyDao;
+        applyDao.create(apply , function (err , items){
+
+
+            if(err){
+                //dataBase 错误
+
+                res.json({ret:1, data: {msg:"DATABASE_ERROR"}});
+                return;
+            }
+            console.log(items);
+            res.json({ret:0, data: {msg:"SUCCESS"}});
+        });
+
+    });
     /**
     * 查看log列表
     * */
@@ -151,29 +180,7 @@ module.exports = function(app){
 
     });
 
-    /**
-     * 查看log列表
-     * */
 
-    app.post('/controller/action/addApply.do', function(req, res){
-        var apply = req.body;
-            logger.info(apply);
-            apply.userName = req.session.user.loginName;
-
-        logger.debug('action query:' + apply);
-        apply.createTime = new Date();
-        apply.status = 0;
-        var applyDao = req.models.applyDao;
-        applyDao.create(apply , function (err , items){
-            if(err){
-                //dataBase 错误
-                res.json({ret:1, data: {msg:"DATABASE_ERROR"}});
-            }
-
-            res.json({ret:0, data: {msg:"SUCCESS"}});
-        });
-
-    });
 
 
  };

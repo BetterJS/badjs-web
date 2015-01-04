@@ -23,10 +23,10 @@ define([ '../dialog'], function ( Dialog) {
                 name: $('.apply-name').val(),
                 description: $('.apply-description').val(),
                 url: $(".apply-url").val(),
-                email: $(".apply-email").val()
+                mail: $(".apply-mail").val()
             });
 
-            $.post('/controller/action/addApply.do', params, function (data) {
+            $.post('./controller/action/addApply.do', params, function (data) {
                 var ret = data.ret;
                 switch(ret){
                     case 0://成功
