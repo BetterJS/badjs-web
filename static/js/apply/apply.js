@@ -22,8 +22,8 @@ define([ '../dialog'], function ( Dialog) {
             $.extend(params, {
                 name: $('.apply-name').val(),
                 description: $('.apply-description').val(),
-                url: $(".apply-url").val(),
-                mail: $(".apply-mail").val()
+                url: $(".apply-url").val()
+                //mail: $(".apply-mail").val()
             });
 
             $.post('./controller/action/addApply.do', params, function (data) {

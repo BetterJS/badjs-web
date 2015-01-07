@@ -1,9 +1,9 @@
 define([
     '../delegator',
     '../dialog'//,
-    //'./module/logTable.tpl',
-    //'./module/keyword.tpl',
-    //'./module/debar.tpl'
+    './module/logTable.tpl',
+    './module/keyword.tpl',
+    './module/debar.tpl'
 ], function ( Delegator, Dialog, logTable, keyword, debar) {
     var logConfig = {
             id: 0,

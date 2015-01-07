@@ -63,6 +63,7 @@ module.exports = function(app){
             });
         } else  if(req.session.user){ // 已经登录
             next();
+            return;
         }else {
             res.redirect(req.protocol + "://" + req.get('host') + '/login');
         }
@@ -87,6 +88,7 @@ module.exports = function(app){
                 }
 
                 next();
+                return;
             });
         }else if(!req.session.user){ // 跳转OA 登录
             res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url='+req.actrulUrl);
@@ -111,21 +113,28 @@ module.exports = function(app){
     app.get('/applyList.html', function(req, res){
         var params = req.query,
             user  = req.session.user;
-        res.render('applyList', { layout: false, user: user, index:'applyList', role:'1' });
+        res.render('applyList', { layout: false, user: user, index:'applyList' });
 
     });
+    app.get('/userManage.html', function(req, res){
+        var params = req.query,
+            user  = req.session.user;
+        res.render('userManage', { layout: false, user: user, index:'userManage' });
+
+    });
+
 
     app.get('/', function(req, res){
 
         var params = req.query,
             user  = req.session.user;
 
-        res.render('log', { layout: false, user: user });
+        res.render('log', { layout: false, user: user, index:'log' });
 
 
     });
     /**
-     * 登录
+     * 登出
      * */
     app.get('/logout', function(req, res){
 
@@ -137,8 +146,60 @@ module.exports = function(app){
     });
 
     /**
+     * 查看log列表
+     * */
+    app.get('/controller/action/queryLogList.do', function(req, res){
+
+        paramsStr = decodeURI(req.url.split('?')[1]);
+
+        logger.debug('query param :' + paramsStr);
+        logAction.getLogList(req.query,function(err,data){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, data: data});
+        });
+
+    });
+    /**
+     * 获取申请表
+     * */
+
+    app.get('/manage/admin/apply/applyList.do', function(req, res){
+        var applyDao = request.models.applyDao;
+        if(req.session.user.role == '1'){
+
+        }
+        applyDao.all(['createTime' , 'Z']  ,   function (err , applys){
+            if(isError(response , err)){
+                return ;
+            }
+            response.json({ec : 0 , applys : applys  });
+        });
+
+    });
+
+    /**
+     * 获取用户表
+     * */
+
+    app.get('/manage/admin/user/userList.do', function(req, res){
+        var applyDao = request.models.applyDao;
+        if(req.session.user.role == '1'){
+
+        }
+        applyDao.all(['createTime' , 'Z']  ,   function (err , applys){
+            if(isError(response , err)){
+                return ;
+            }
+            response.json({ec : 0 , applys : applys  });
+        });
+
+    });
+    /**
      * 增添申请表
      * */
+
 
     app.post('/controller/action/addApply.do', function(req, res){
         var apply = req.body;
@@ -150,35 +211,15 @@ module.exports = function(app){
 
         var applyDao = req.models.applyDao;
         applyDao.create(apply , function (err , items){
-
-
-            if(err){
-                //dataBase 错误
-
-                res.json({ret:1, data: {msg:"DATABASE_ERROR"}});
+            if(isError(res, err)){
                 return;
             }
-            console.log(items);
             res.json({ret:0, data: {msg:"SUCCESS"}});
         });
 
     });
-    /**
-    * 查看log列表
-    * */
-    app.get('/controller/action/queryLogList.do', function(req, res){
 
-        paramsStr = decodeURI(req.url.split('?')[1]);
 
-        logger.debug('query param :' + paramsStr);
-        logAction.getLogList(req.query,function(err,data){
-            if(isError(res, err)){
-               return;
-            }
-            res.json({ret:0, data: data});
-        });
-
-    });
 
 
 

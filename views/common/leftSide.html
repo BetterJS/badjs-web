@@ -13,17 +13,31 @@
             </li>
         </ul>
     </section>
+    <% if(it.user.role != 1){%>
     <section>
         <label>个人</label>
         <ul>
             <li class="<%= it.index=='personal'?'active':''%>">
                 <a href=""><i></i>个人中心</a>
             </li>
-            <li class="<%= it.index=='apply'?'active':''%>">
-                <a href="apply.html"><i></i>业务申请</a>
+            <li class="<%= it.index=='applyList'?'active':''%>">
+                <a href="applyList.html"><i></i>申请记录</a>
+            </li>ist
+        </ul>
+    </section>
+    <%}else{%>
+    <section>
+        <label>管理</label>
+        <ul>
+            <li class="<%= it.index=='userManage'?'active':''%>">
+                <a href="userManage.html"><i></i>用户管理</a>
+            </li>
+            <li class="<%= it.index=='applyList'?'active':''%>">
+                <a href="applyList.html"><i></i>申请记录</a>
             </li>
         </ul>
     </section>
+    <%}%>
     <section>
         <label>系统</label>
         <ul>
