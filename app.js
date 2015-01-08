@@ -60,6 +60,7 @@ app.use(orm.express(msqlUrl, {
     models.approveDao = require('./dao/ApproveDao')(db);
     models.db = db;
 
+    GLOBAL.models = models;
     next();
   }}));
 

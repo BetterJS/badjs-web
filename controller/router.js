@@ -45,9 +45,9 @@ module.exports = function(app){
                         if(!user){
 
                             userDao.create(req.session.user, function(err, result){
-                               if(isError(res, err)){
-                                   return;
-                               }
+                                if(isError(res, err)){
+                                    return;
+                                }
                                 logger.info("New User:"+ req.session.user + "insert into db-badjs");
                             });
                         }else{
@@ -165,17 +165,18 @@ module.exports = function(app){
      * 获取申请表
      * */
 
-    app.get('/manage/admin/apply/applyList.do', function(req, res){
-        var applyDao = request.models.applyDao;
-        if(req.session.user.role == '1'){
+    app.get('/controller/action/queryApplyList.do', function(req, res){
 
+        var applyDao = request.models.applyDao;
+        console.log(0);
+        if(req.session.user.role == 1){
+            applyDao.all({} , function (err , items){
+                if(isError(res, err)){
+                    return;
+                }
+                res.json({ret:0, data: items});
+            });
         }
-        applyDao.all(['createTime' , 'Z']  ,   function (err , applys){
-            if(isError(response , err)){
-                return ;
-            }
-            response.json({ec : 0 , applys : applys  });
-        });
 
     });
 
@@ -184,16 +185,7 @@ module.exports = function(app){
      * */
 
     app.get('/manage/admin/user/userList.do', function(req, res){
-        var applyDao = request.models.applyDao;
-        if(req.session.user.role == '1'){
 
-        }
-        applyDao.all(['createTime' , 'Z']  ,   function (err , applys){
-            if(isError(response , err)){
-                return ;
-            }
-            response.json({ec : 0 , applys : applys  });
-        });
 
     });
     /**

@@ -1,6 +1,6 @@
 define([
     '../delegator',
-    '../dialog'//,
+    '../dialog',
     './module/logTable.tpl',
     './module/keyword.tpl',
     './module/debar.tpl'
@@ -63,8 +63,6 @@ define([
         new Delegator(document.body)
             .on('click', 'searchBusiness', function () {
                 // search business
-            }).on('click', 'addBusiness', function () {
-                window.location.href = "http://localhost/apply.html";
             }).on('click', 'addKeyword', addKeyword)
             .on('keyup', 'addKeyword', function (e) {
                 if (e.which === 13) addKeyword();
