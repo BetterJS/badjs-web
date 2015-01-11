@@ -54,14 +54,15 @@ console.log(msqlUrl);
 app.use(orm.express(msqlUrl, {
   define: function (db, models, next) {
 
-    db.use(require("orm-transaction"));
-    models.userDao = require('./dao/UserDao')(db);
-    models.applyDao = require('./dao/ApplyDao')(db);
-    models.approveDao = require('./dao/ApproveDao')(db);
-    models.db = db;
+        db.use(require("orm-transaction"));
+        models.userDao = require('./dao/UserDao')(db);
+        models.applyDao = require('./dao/ApplyDao')(db);
+        models.approveDao = require('./dao/ApproveDao')(db);
+        models.db = db;
 
-    GLOBAL.models = models;
-    next();
+        global.models = models;
+        console.log("start");
+        next();
   }}));
 
 app.use(function (err, req, res, next) {

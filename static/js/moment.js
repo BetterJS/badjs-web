@@ -2917,7 +2917,7 @@
         }
     }
 
-    // CommonJS module is defined
+    // CommonJS template is defined
     if (hasModule) {
         module.exports = moment;
     } else if (typeof define === 'function' && define.amd) {

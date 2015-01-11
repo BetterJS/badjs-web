@@ -4,7 +4,8 @@
  * @date : 2014-12-16
  */
 
-var logAction = require('./action/LogAction'),
+var logAction = require('./action/logAction'),
+    applyAction = require('./action/applyAction'),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
 
@@ -167,19 +168,35 @@ module.exports = function(app){
 
     app.get('/controller/action/queryApplyList.do', function(req, res){
 
-        var applyDao = request.models.applyDao;
-        console.log(0);
-        if(req.session.user.role == 1){
-            applyDao.all({} , function (err , items){
-                if(isError(res, err)){
-                    return;
-                }
-                res.json({ret:0, data: items});
-            });
-        }
+        var params = req.query;
+        params.user = req.session.user;
+
+        applyAction.queryList(params,function(err,data){
+            if(isError(res, err)){
+                return;
+            }
+            res.json(data);
+        });
 
     });
+    /**
+     * 增添申请表
+     * */
 
+    app.post('/controller/action/addApply.do', function(req, res){
+        var apply = req.body;
+        apply.userName = req.session.user.loginName;
+        apply.createTime = new Date();
+        apply.status = 0;
+        logger.debug('add_apply param :' + apply);
+        applyAction.addApply(apply,function(err,data){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, msg:"success add"});
+        });
+
+    });
     /**
      * 获取用户表
      * */
@@ -188,28 +205,7 @@ module.exports = function(app){
 
 
     });
-    /**
-     * 增添申请表
-     * */
 
-
-    app.post('/controller/action/addApply.do', function(req, res){
-        var apply = req.body;
-        apply.userName = req.session.user.loginName;
-
-        logger.debug('action query:' + apply);
-        apply.createTime = new Date();
-        apply.status = 0;
-
-        var applyDao = req.models.applyDao;
-        applyDao.create(apply , function (err , items){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, data: {msg:"SUCCESS"}});
-        });
-
-    });
 
 
 

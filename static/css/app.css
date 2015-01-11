@@ -91,12 +91,13 @@ form {
 
 #content {
     height: 100%;
+    padding-top: 80px;
     background: #f7f7f7;
     position: relative; }
 #content .wrap {
-    margin-top: 80px;
-    padding-bottom: 190px;
-    height: 100%; }
+    position: relative;
+    height: 100%;
+}
 #content .left-side {
     position: absolute;
     left: 0;
@@ -353,4 +354,47 @@ form {
 }
 
 /*@applyList  coverguo 2014-01-07*/
+
+/*common */
+.tableSelectCheckBox{
+    width: 17px;
+    height: 17px;
+    vertical-align: sub;
+}
+.parentCheckBox{
+    width:20px;
+    height: 20px;
+}
+
+
+/*@userpanel */
+.contentPanel{
+
+}
+.marginLeftSideBar{
+    margin-left: 207px;
+}
+ .ListTable{
+    padding:40px 20px ;
+    font-family: "微软雅黑";
+}
+.ListTable .tableTitle{
+    font-size: 24px;
+    font-weight: bold;
+
+    line-height: 40px;
+    display: block;
+    background: #3a3d42;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+    padding-left: 10px;
+    border-bottom: 2px solid #ddd;
+}
+.tableWrapper{
+    margin: -2px 1px 0 1px;
+    padding: 20px 10px;
+}
+.dataTable .listRow:hover{
+    background: #ddd;
+}
 

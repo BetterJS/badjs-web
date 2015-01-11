@@ -266,8 +266,8 @@
     }
 
     /**
-     * define(module, deps, factory)
-     * define(module, factory)
+     * define(template, deps, factory)
+     * define(template, factory)
      * define(deps, factory)
      * define(factory)
      */

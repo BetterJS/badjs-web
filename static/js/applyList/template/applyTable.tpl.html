@@ -1,0 +1,40 @@
+<%
+    var len = it.length;
+
+%>
+<% if(len !=0){%>
+<thead>
+<tr>
+    <th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>
+    <th>项目id</th>
+    <th>项目名称</th>
+    <th>项目申请人</th>
+    <th>申请时间</th>
+    <th>当前状态</th>
+</tr>
+</thead>
+
+<tbody id="applyListTbody">
+<% for(var i = 0; i<len; i++){%>
+<tr class="listRow" >
+    <td><input class="tableSelectCheckBox" type="checkbox"/></td>
+    <td><%==it[i].id%></td>
+    <td><%==it[i].name%></td>
+    <td><%==it[i].userName%></td>
+    <td><%==it[i].createTime%></td>
+    <td>
+        <%
+        var statue = "";
+        switch(it[i].status){
+                case 0 : status = "审核中";
+                         break;
+                case 1 : status = "审核通过";
+                         break;
+                case 2 : status = "审核不通过";
+        }%>
+        <%==status%>
+    </td>
+</tr>
+<%}%>
+</tbody>
+<%}%>

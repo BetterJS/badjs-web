@@ -6,20 +6,28 @@
 
 
 var  log4js = require('log4js'),
-    logger = log4js.getLogger();
-var applyDao = global.models.applyDao;
+     logger = log4js.getLogger(),
+     ApplyService = require('../../service/ApplyService');
+
+
 
 var applyAction = {
 
     addApply: function(params, cb){
-        var ls = new LogService();
-        ls.query(params,cb);
+        var as = new ApplyService();
+        as.add(params,cb);
     },
     queryList : function (params,cb) {
+        var as = new ApplyService();
+        as.query(params,cb);
     },
     update:function(){
+        var as = new ApplyService();
+        as.update(params,cb);
     },
-    delete: function(){
+    remove: function(){
+        var as = new ApplyService();
+        as.remove(params,cb);
 
     }
 

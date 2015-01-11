@@ -7,42 +7,60 @@ var http = require('http');
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
 
-var applyDao = GLOBAL.models.applyDao;
+
 
 var ApplyService = function (){
-
-
-}
+    this.applyDao = global.models.applyDao;
+};
 
 
 
 ApplyService.prototype = {
     query : function (target , callback){
-        applyDao.find(target , function (err , items){
+        if(!target.cmd || target.cmd == ""){
+            callback(null, {ret:1002, msg:"缺少cmd参数"});
+        }
+        if(target.cmd == "get_all_applyList"){
+            //管理员
+            if(target.user.role ==1){
+                this.applyDao.all({} , function (err , items){
+                    if(err){
+                        callback(err);
+                    }
+                    callback(null,{ret:0, msg:"success", data: items});
+                });
+            }else{
+                this.applyDao.find({userName: target.user.loginName} , function (err , items){
+                    if(err){
+                        callback(err);
+                    }
+                    callback(null,{ret:0, msg:"success", data: items});
+                });
+            }
+        }
+
+    },
+    add: function(target, callback){
+        if(target.name == "" || target.url ==""){
+            callback(null, {ret:1002, msg:"params error"})
+        }
+        this.applyDao.create(target , function (err , items){
             if(err){
                 callback(err);
             }
-            callback(null,items)
-        });
-    },
-    add: function(targer, callback){
-
-        applyDao.create(targer , function (err , items){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, data: {msg:"SUCCESS"}});
+            logger.info("Insert into b_apply success! target1: ",target);
+            callback(null,{ret:0, msg:"success add"});
         });
     },
     remove : function(target, callback){
 
     },
     update : function(target, callback){
-        applyDao.find({id: target.id }, function (err, apply) {
+        this.applyDao.find({id: target.id }, function (err, apply) {
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
             params[0].each(function(key, value){
                 apply[key] = value;
-            })
+            });
             apply[0].save(function (err) {
                 // err.msg = "under-age";
             });
@@ -51,5 +69,5 @@ ApplyService.prototype = {
 }
 
 
-module.exports =  LogService;
+module.exports =  ApplyService;
 
