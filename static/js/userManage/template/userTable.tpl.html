@@ -1,0 +1,30 @@
+<% for(var i =0, len = it.length;i<len; i++){
+    var role ="普通用户";
+    if(it[i].role ==1){
+        role ="管理员";
+    }
+%>
+<tr class="listRow">
+    <td><%== it[i].id%></td>
+    <td><%== it[i].loginName%></td>
+    <td><%== it[i].chineseName%></td>
+    <td><%== it[i].role%></a></td>
+    <td>
+        <div class="userEditor">
+            <form>
+                <div>
+                    <div class="input-group">
+                        <label class="sr-only"  >权限</label>
+                        <select name="" id="">
+                            <option value="">普通用户</option>
+                            <option value="">管理员</option>
+                        </select>
+                        <button type="submit" class="btn btn-default modifyBtn">修改</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </td>
+</tr>
+<%}%>

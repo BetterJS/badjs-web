@@ -365,17 +365,25 @@ form {
     width:20px;
     height: 20px;
 }
-
-
+.searchPanel{
+    background: #EDEDED;
+    padding: 10px;
+    margin: 0 20px;
+    border: 1px solid #cdcaca;
+}
+.btn-long{
+    min-width: 100px;
+}
 /*@userpanel */
 .contentPanel{
 
 }
 .marginLeftSideBar{
     margin-left: 207px;
+    padding-top: 50px;
 }
  .ListTable{
-    padding:40px 20px ;
+    padding:10px 20px ;
     font-family: "微软雅黑";
 }
 .ListTable .tableTitle{
@@ -397,4 +405,11 @@ form {
 .dataTable .listRow:hover{
     background: #ddd;
 }
+.userEditor form{
+    margin:0;
+}
+.userEditor .modifyBtn{
+    margin-left: 30px;
+}
+
 

@@ -1,13 +1,13 @@
 /**
- * @info 申请列表js
+ * @info 用户列表js
  * @author coverguo
  * */
 
 define([ '../dialog',
-         'template/applyTable.tpl'
-], function ( Dialog, applyTable ) {
+    'template/userTable.tpl'
+], function ( Dialog, userTable ) {
 
-    var maxDate = 60*60*1000*24 *2;
+
     var   encodeHtml = function (str) {
         return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
     };
@@ -16,19 +16,18 @@ define([ '../dialog',
     }
 
     //获取列表页信息
-    function getApplyList(cb){
+    function getUserList(cb){
         var params = {
-            cmd: "get_all_applyList"
         };
-        $.get('./controller/action/queryApplyList.do',params, function (data) {
+        $.get('/controller/action/queryUserList.do',params, function (data) {
             var ret = data.ret;
             switch(ret){
                 case 0://成功
                     //执行成功回调函数.
                     cb(data.data);
                     break;
-                case 1://没有登陆态或登陆态失效
-                    alert("失败");
+                default ://没有登陆态或登陆态失效
+                    alert(data.msg);
             }
         }).fail(function () {
             // 错误处理
@@ -36,16 +35,13 @@ define([ '../dialog',
     }
 
     function init() {
-        $(".datetimepicker").datetimepicker({format: 'YYYY-MM-DD HH:mm'}).data("DateTimePicker").setMaxDate(new Date());
 
-        $('.fromTime').data("DateTimePicker").setDate( new Date(new Date() - maxDate));
-        $('.toTime').data("DateTimePicker").setDate( new Date());
-        getApplyList(function(data){
+        getUserList(function(data){
             console.log(data);
             var param = {
                 encodeHtml: encodeHtml
             };
-            $('.dataTable').html(applyTable(data, param));
+            $('#userList').html(userTable(data, param));
         });
         bindEvent();
 

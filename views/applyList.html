@@ -5,6 +5,26 @@
     <div class="wrap">
         <%=include('./common/leftSide.html')(it, opt)%>
         <div class="contentpanel marginLeftSideBar">
+            <div class="searchPanel clearfix">
+                <label for="">搜索信息</label>
+                <input type="text"  placeholder="姓名或id">
+                <label for="">From</label>
+                <input type="text" value="" readonly class="datetimepicker fromTime" />
+                <label for="">to</label>
+                <input type="text" value="" readonly class="datetimepicker toTime" />
+                <label for="">状态类型</label>
+                <select name="" id="">
+                    <option value="">全部</option>
+                    <option value="">审核中</option>
+                    <option value="">已通过</option>
+                    <option value="">已拒绝</option>
+                </select>
+
+
+
+                <button type="button" class="btn btn-default searchBtn">搜索</button>
+
+            </div>
             <div class="applyTable ListTable">
                 <div class="tableTitle">申请记录</div>
                 <div class="tableWrapper table-responsive">
@@ -19,23 +39,6 @@
                         <!--</tr>-->
                         <!--</thead>-->
                         <!--<tbody>-->
-                        <!--<tr class="listRow">-->
-                            <!--<td><input class="tableSelectCheckBox" type="checkbox"/></td>-->
-                            <!--<td>灰机很帅</td>-->
-                            <!--<td>coverguo</td>-->
-                            <!--<td>2014-12-12 12:33</td>-->
-                            <!--<td>-->
-                               <!--审核中-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--<tr class="listRow">-->
-                            <!--<td><input class="tableSelectCheckBox" type="checkbox"/></td>-->
-                            <!--<td>-->
-                                <!--<a href=""></a>灰机很帅</td>-->
-                            <!--<td>coverguo</td>-->
-                            <!--<td>2014-12-12 12:33</td>-->
-                            <!--<td>审核通过</td>-->
-                        <!--</tr>-->
                         <!--<tr class="listRow">-->
                             <!--<td><input class="tableSelectCheckBox" type="checkbox"/></td>-->
                             <!--<td>灰机很帅</td>-->

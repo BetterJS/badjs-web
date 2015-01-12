@@ -1,6 +1,8 @@
 <%
     var len = it.length;
 
+    var statue = "";
+
 %>
 <% if(len !=0){%>
 <thead>
@@ -15,7 +17,15 @@
 </thead>
 
 <tbody id="applyListTbody">
-<% for(var i = 0; i<len; i++){%>
+<% for(var i = 0; i<len; i++){
+switch(it[i].status){
+case 0 : status = "审核中";
+break;
+case 1 : status = "审核通过";
+break;
+case 2 : status = "审核不通过";
+}
+%>
 <tr class="listRow" >
     <td><input class="tableSelectCheckBox" type="checkbox"/></td>
     <td><%==it[i].id%></td>
@@ -23,17 +33,25 @@
     <td><%==it[i].userName%></td>
     <td><%==it[i].createTime%></td>
     <td>
-        <%
-        var statue = "";
-        switch(it[i].status){
-                case 0 : status = "审核中";
-                         break;
-                case 1 : status = "审核通过";
-                         break;
-                case 2 : status = "审核不通过";
-        }%>
-        <%==status%>
-    </td>
+        <div class="userEditor">
+        <form>
+
+            <div>
+                <div class="input-group">
+                    <label class="sr-only"  >权限</label>
+                    <select name="" id="" value="<%== it[i].status%>">
+                        <option value="0">审核中</option>
+                        <option value="1">通过</option>
+                        <option value="2">拒绝</option>
+                    </select>
+                    <button type="submit" class="btn btn-default">修改</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
 </tr>
 <%}%>
 </tbody>

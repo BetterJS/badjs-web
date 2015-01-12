@@ -5,6 +5,19 @@
     <div class="wrap">
         <%=include('/common/leftSide.html')(it, opt)%>
         <div class="cotentPanel marginLeftSideBar">
+            <div class="searchPanel clearfix">
+                <label for="">搜索信息</label>
+                <input type="text"  placeholder="姓名或id">
+                <label for="">用户类型</label>
+                <select name="" id="">
+                        <option value="">全部</option>
+                        <option value="">管理员</option>
+                        <option value="">普通用户</option>
+                </select>
+                <button type="button" class="btn btn-default searchBtn">搜索</button>
+
+            </div>
+
             <div class="userTable ListTable">
                 <div class="tableTitle">用户表</div>
                 <div class="tableWrapper table-responsive">
@@ -15,44 +28,14 @@
                             <th>用户登录名</th>
                             <th>用户中文名</th>
                             <th>用户权限</th>
-                            <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>coverguo</td>
-                            <td>郭锋棉</td>
-                            <td>管理员</td>
-                            <td>
-                                <button>编辑</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>002</td>
-                            <td>coverguo</td>
-                            <td>郭锋棉</td>
-                            <td>管理员</td>
-                            <td>
-                                <button>编辑</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>002</td>
-                            <td>coverguo</td>
-                            <td>郭锋棉</td>
-                            <td>管理员</td>
-                            <td>
-                                <button>编辑</button>
-                            </td>
-                        </tr>
+                        <tbody id="userList">
+
                         </tbody>
                     </table>
                 </div>
             </div>
-
-
-
 
         </div>
 
@@ -60,7 +43,14 @@
 </main>
 
 <%=include('/common/footer.html')(it)%>
-
+<script type="text/javascript">
+    require.config({
+        baseUrl : 'js/userManage'
+    });
+    require(['userManage'], function (userManage) {
+        userManage.init();
+    });
+</script>
 </body>
 
 </html>

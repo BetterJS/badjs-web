@@ -6,6 +6,7 @@
 
 var logAction = require('./action/logAction'),
     applyAction = require('./action/applyAction'),
+    userAction = require("./action/userAction"),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
 
@@ -163,6 +164,24 @@ module.exports = function(app){
 
     });
     /**
+     * 获取用户表
+     * */
+
+    app.get('/controller/action/queryUserList.do', function(req, res){
+        var params = req.query;
+        params.user = req.session.user;
+        if(req.session.user.role !=1){
+            res.json({ret:1003, msg:"权限不足"});
+        }
+        userAction.queryList(params,function(err,data){
+            if(isError(res, err)){
+                return;
+            }
+            res.json(data);
+        });
+
+    });
+    /**
      * 获取申请表
      * */
 
@@ -197,14 +216,7 @@ module.exports = function(app){
         });
 
     });
-    /**
-     * 获取用户表
-     * */
 
-    app.get('/manage/admin/user/userList.do', function(req, res){
-
-
-    });
 
 
 
