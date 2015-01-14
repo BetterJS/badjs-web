@@ -32,4 +32,8 @@ Apply.prototype  = {
     passTime : undefined
 }
 
+Apply.STATUS_APPLYING = 0 ; // 审核中
+Apply.STATUS_PASS = 1 ; // 通过
+Apply.STATUS_FAIL = 2 ; // 拒绝
+
 module.exports =  Apply;
