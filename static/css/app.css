@@ -1,6 +1,8 @@
 body, html {
     height: 100%;
-    overflow: hidden; }
+    overflow: hidden;
+    background: #f7f7f7;
+}
 
 .clear {
     clear: both; }
@@ -13,7 +15,9 @@ header {
     width: 100%;
     background: #fff;
     color: #333;
-    z-index: 1; }
+    z-index: 1;
+    margin-bottom: 10px;
+}
 header .head-logo {
     height: 100%;
     width: 207px;
@@ -80,9 +84,9 @@ header .head-logo {
     display: none;
     position: absolute;
     left: 0;
-    top: 25px;
+    top: 30px;
     z-index: 99;
-    border: 1px solid #999;
+    border: 1px solid #b8b8b8;
     border-top: 1px solid #fff;
     padding: 0;
     background: #fff;
@@ -91,55 +95,7 @@ header .head-logo {
 .items .subNav .item{
     line-height: 35px;
 }
-header .head-rightside {
-    display: none;
-    height: 100%;
-    /*position: relative;*/
-    padding-top: 22px;
-    border-bottom: 1px solid #cecece; }
-header .head-search {
-    height: 36px;
-    width: 380px;
-    position: relative;
-    float: left;
-    margin-left: 50px; }
-header .head-search .head-input {
-    background: #f7f7f7;
-    border-radius: 3px;
-    height: 100%;
-    width: 100%;
-    border: none;
-    outline: none;
-    padding: 5px 10px; }
-header .head-search .head-btn {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 36px;
-    background: #bdc2ca;
-    cursor: pointer; }
-header .head-search .head-btn span {
-    font-size: 25px;
-    line-height: 35px;
-    margin-left: 5px;
-    color: #eee; }
-header .head-add {
-    width: 137px;
-    height: 37px;
-    background: #e6614f;
-    color: #fff;
-    float: left;
-    text-align: center;
-    line-height: 36px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-left: 100px; }
-header .head-add a{
-    color:#fff;
-}
-header .head-add:hover {
-    background: #f25a45; }
+
 header .head-user {
     position: absolute;
     right: 20px;
@@ -413,6 +369,35 @@ form {
     font-weight: bold;
     margin-bottom: 40px;
 }
+#applyForm{
+    max-width: 800px;
+}
+
+/*@log  */
+.log-operation{
+    margin-bottom: 30px;
+}
+.log-operation .log-select{
+    width: 450px;
+    display: inline-block;
+    height: 45px;
+}
+.log-operation .log-searchBtn{
+    display: inline-block;
+    width: 120px;
+    height: 43px;
+    background: #88b6f2;
+    border-radius: 3px;
+    margin-left: 40px;
+
+}
+.log-operation .log-searchBtn a{
+    color: #fff;
+    line-height: 43px;
+    text-align: center;
+    display: block;
+}
+
 
 /*@applyList  coverguo 2014-01-07*/
 
