@@ -61,7 +61,7 @@ app.use(orm.express(msqlUrl, {
         models.db = db;
 
         global.models = models;
-        console.log("start");
+        console.log("mysql dao");
         next();
   }}));
 

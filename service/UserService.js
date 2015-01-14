@@ -42,12 +42,12 @@ UserService.prototype = {
 
     },
     update : function(target, callback){
-        this.userDao.find({id: target.id }, function (err, apply) {
+        this.userDao.one({id: target.id }, function (err, user) {
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
-            params[0].each(function(key, value){
-                apply[key] = value;
+            user.each(function(key, value){
+                user[key] = value;
             });
-            apply[0].save(function (err) {
+            user.save(function (err) {
                 // err.msg = "under-age";
             });
         });

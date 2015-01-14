@@ -18,7 +18,10 @@ var Approve = function (args){
 Approve.prototype = {
     id : undefined,
     reply : undefined,
-    applyId : undefined
+    applyId : undefined,
+    userName : undefined,
+    createTime : undefined,
+    applyStatus : undefined
 }
 
 module.exports =  Approve;

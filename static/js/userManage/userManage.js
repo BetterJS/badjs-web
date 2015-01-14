@@ -12,7 +12,12 @@ define([ '../dialog',
         return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
     };
     function bindEvent() {
+        $(".userEditor .modifyBtn").on("click", function (){
+            var params ={
+                userid: $(this).data("userid")
+            };
 
+        })
     }
 
     //获取列表页信息

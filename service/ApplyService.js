@@ -37,6 +37,8 @@ ApplyService.prototype = {
                     callback(null,{ret:0, msg:"success", data: items});
                 });
             }
+        }else{
+
         }
 
     },
@@ -53,16 +55,25 @@ ApplyService.prototype = {
         });
     },
     remove : function(target, callback){
-
+        this.applyDao.one({id: target.id }, function (err, apply) {
+            // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
+            for(key in target){
+                apply[key] = target[key];
+            };
+            apply.remove(function (err) {
+                callback(null,{ret:0, msg:"success remove"});
+            });
+        });
     },
     update : function(target, callback){
-        this.applyDao.find({id: target.id }, function (err, apply) {
+        this.applyDao.one({id: target.id }, function (err, apply) {
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
-            params[0].each(function(key, value){
-                apply[key] = value;
-            });
-            apply[0].save(function (err) {
+            for(key in target){
+                apply[key] = target[key];
+            };
+            apply.save(function (err) {
                 // err.msg = "under-age";
+                callback(null,{ret:0, msg:"success remove"});
             });
         });
     }

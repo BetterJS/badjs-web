@@ -7,6 +7,7 @@
 var logAction = require('./action/logAction'),
     applyAction = require('./action/applyAction'),
     userAction = require("./action/userAction"),
+    approveAction = require("./action/approveAction"),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
 
@@ -16,7 +17,7 @@ var log4js = require('log4js'),
 module.exports = function(app){
     var isError = function (res , error){
         if(error){
-            res.json({ret : 1 , err_msg : error});
+            res.json({ret : 1 , msg : error});
             return true;
         }
         return false;
@@ -72,12 +73,13 @@ module.exports = function(app){
 
         /*  游客 访问 */
         if(!/^\/manage\/.*/i.test(req.url)){
+
             next();
             return ;
         }
-
         //管理员访问
         if(user){
+            console.log("manage");
             userDao.one({ loginName : user.loginName} , function (error , result){
                 if(isError(res,error)){
                     return;
@@ -214,6 +216,23 @@ module.exports = function(app){
             }
             res.json({ret:0, msg:"success add"});
         });
+
+    });
+    /**
+     * 审核申请表
+     * */
+    app.post('/controller/action/approve.do', function(req, res){
+        var approve = req.body;
+        approve.createTime = new Date();
+        approve.userName = req.session.user.loginName;
+        logger.debug('add_approve param :' + approve);
+        approveAction.addApprove(approve,function(err,data){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, msg:"success add"});
+        });
+
 
     });
 

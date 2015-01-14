@@ -10,7 +10,8 @@ module.exports  = function (db){
         userName    : String,
         reply       : String,
         createTime  : Date,
-        applyId     : Number
+        applyId     : Number,
+        applyStatus : Number
     });
     return approve;
 }

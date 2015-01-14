@@ -21,14 +21,13 @@ var applyAction = {
         var as = new ApplyService();
         as.query(params,cb);
     },
-    update:function(){
+    update:function(params,cb){
         var as = new ApplyService();
         as.update(params,cb);
     },
     remove: function(){
         var as = new ApplyService();
         as.remove(params,cb);
-
     }
 
 };
