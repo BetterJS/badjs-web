@@ -1,6 +1,57 @@
 
 <header>
     <div class="head-logo"><a href="index.html">BetterJs</a></div>
+    <div class="head-user">
+        <% if (it.user) { %>
+        <a href="/logout">退出</a>
+        <span class="head-face"><%= it.user.chineseName %>(<%= it.user.loginName %>)</span>
+        <img src="/img/face.jpg" />
+        <% } else { %>
+        <a href="/login">登录</a>
+        <% } %>
+    </div>
+    <nav id="navbar">
+        <ul class="nav">
+            <li class="item ">
+                <a class="<%= it.index=='log'?'active':''%>" href="index.html">历史日志</a>
+            </li>
+            <li class="item">
+                <a href="">实时日志</a>
+            </li>
+            <li class="item">
+                <a class="<%= it.index=='apply'?'active':''%>" href="apply.html">申请接入</a>
+            </li>
+            <li class="item items">
+                <div>管理</div>
+                <ul class="subNav">
+                    <li class="item">
+                        <a class="<%= it.index=='userManage'?'active':''%>" href="userManage.html">用户列表</a>
+                    </li>
+                    <li class="item">
+                        <a class="<%= it.index=='applyList'?'active':''%>" href="applyList.html">申请列表</a>
+                    </li>
+                    <!--<li class="item">-->
+                        <!--<a href=""></a>-->
+                    <!--</li>-->
+                </ul>
+            </li>
+            <li class="items">
+                <div>帮助</div>
+                <ul class="subNav">
+                    <li class="item">
+                        <a class="<%= it.index=='userManage'?'active':''%>" href="userManage.html">系统介绍</a>
+                    </li>
+                    <li class="item">
+                        <a class="<%= it.index=='applyList'?'active':''%>" href="applyList.html">接入指南</a>
+                    </li>
+                    <!--<li class="item">-->
+                    <!--<a href=""></a>-->
+                    <!--</li>-->
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
     <div class="head-rightside">
         <div class="head-search">
           <!--  <input type="text" class="head-input" placeholder="选择业务"/>

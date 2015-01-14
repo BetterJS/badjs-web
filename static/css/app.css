@@ -15,21 +15,84 @@ header {
     color: #333;
     z-index: 1; }
 header .head-logo {
-    background: #88b6f2;
     height: 100%;
     width: 207px;
     font-size: 40px;
     text-align: center;
-    font-family: "宋体";
-    line-height: 75px;
+    line-height: 80px;
     cursor: pointer;
 }
 
 .head-logo a{
-    color: #fff;
+    color: #000;
+    font-weight: bold;
+    font-family: -webkit-pictograph;
+}
+#navbar{
+    /*background: #D3D3D3;*/
+}
+.nav{
+    position: relative;
+    padding-left:40px;
+    border: solid #B8B8B8;
+    border-width: 1px 0;
+}
+.nav .item{
+    display: inline-block;
+    width: 150px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: -3px;
+}
+.nav .item a{
+    color: #494C54;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+}
+.nav .item a.active{
+    /*color: #000;*/
+    /*background: #F7F7F7;*/
+    color: #FFF;
+    background: #353434;
+}
+.nav .item a:hover{
+    /*color: #000;*/
+    /*background: #F7F7F7;*/
+    color: #FFF;
+    background:#353434;
+}
+.nav .items{
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: -3px;
+    height: 30px;
+    line-height: 30px;
+}
+.nav .items:hover .subNav{
+    display: block;
+}
+.nav .items .subNav{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    z-index: 99;
+    border: 1px solid #999;
+    border-top: 1px solid #fff;
+    padding: 0;
+    background: #fff;
+}
+
+.items .subNav .item{
+    line-height: 35px;
 }
 header .head-rightside {
-
+    display: none;
     height: 100%;
     /*position: relative;*/
     padding-top: 22px;
@@ -89,7 +152,6 @@ form {
 
 #content {
     height: 100%;
-    padding-top: 80px;
     background: #f7f7f7;
     position: relative; }
 #content .wrap {
@@ -135,7 +197,8 @@ form {
     color: #fff; }
 #content .mid-side {
     height: 100%;
-    margin-left: 207px;
+    /*margin-left: 207px;*/
+    padding: 10px 25px;
     margin-right: 250px;
     position: relative; }
 #content .mid-side .main-top {
@@ -384,7 +447,7 @@ form {
 
 }
 .marginLeftSideBar{
-    margin-left: 207px;
+    /*margin-left: 207px;*/
     padding-top: 50px;
 }
  .ListTable{
