@@ -49,7 +49,15 @@ app.use('/js', middlewarePipe('./static/js',
 app.use(serveStatic('static'));
 
 
-var msqlUrl ="mysql://root:root@localhost:3306/badjs";
+var msqlUrl = "";
+
+if( GLOBAL.DEBUG){
+    msqlUrl ="mysql://root:root@localhost:3306/badjs";
+}else {
+    msqlUrl = 'mysql://badjs:pass4badjs@10.134.5.103:3306/badjs';
+}
+
+
 console.log(msqlUrl);
 app.use(orm.express(msqlUrl, {
   define: function (db, models, next) {

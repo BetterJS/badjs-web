@@ -26,9 +26,13 @@ module.exports = function(app){
     };
     app.use(function (req , res , next){
         var params = req.query,
-            user  = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1},
+            user  = req.session.user,
             //获取用户model
             userDao = req.models.userDao;
+
+//        if(GLOBAL.DEBUG ){
+//            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1}
+//        }
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
@@ -40,7 +44,7 @@ module.exports = function(app){
         if ( params && params.ticket) { // oa 登录跳转
             tof.passport(params.ticket , function (result){
                 if(result){
-                    req.session.user = {loginName : result.LoginName , chineseName : result.ChineseName, role : 0};
+                    user = req.session.user = {loginName : result.LoginName , chineseName : result.ChineseName, role : 0};
                     userDao.one({ loginName : result.LoginName} ,function (err , user) {
                         if(isError(res,err)){
                             return;
@@ -72,32 +76,8 @@ module.exports = function(app){
             res.redirect(req.protocol + "://" + req.get('host') + '/login');
         }
 
-        /*  游客 访问 */
-        if(!/^\/manage\/.*/i.test(req.url)){
 
-            next();
-            return ;
-        }
-        //管理员访问
-        if(user){
-            console.log("manage");
-            userDao.one({ loginName : user.loginName} , function (error , result){
-                if(isError(res,error)){
-                    return;
-                }
 
-                // not admin ,  response error
-                if(/^\/manage\/admin\/.*/i.test(req.url) && result.role !== 1){
-                    res.json({ec : 1 , em : 'Sorry! you can not invoke. '});
-                    return ;
-                }
-
-                next();
-                return;
-            });
-        }else if(!req.session.user){ // 跳转OA 登录
-            res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url='+req.actrulUrl);
-        }
     });
 
 
