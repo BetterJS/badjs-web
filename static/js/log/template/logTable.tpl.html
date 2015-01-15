@@ -43,7 +43,7 @@ switch(it[i].level) {
 %>
 <tr>
     <td class="info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
-    <td width="200px"><%= _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') %></td>
+    <td ><%= _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') %></td>
     <td><%==it[i].msg%></td>
     <td><%== it[i].uin == 'NaN' ? '-' : it[i].uin%></td>
     <td><%==it[i].ip%></td>

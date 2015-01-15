@@ -47,13 +47,12 @@ StatisticsService.prototype = {
                         startDate : new Date(result.startDate),
                         endDate : new Date(result.endDate),
                         content : JSON.stringify(result.result),
+                        projectId : id,
                         total : 0
                     };
 
                     _.each(result.result , function (value ,key ){
-                        for(var key : result.result){
                             saveModel.total += result.result[key];
-                        }
                     })
 
                 }catch(e){
@@ -84,11 +83,11 @@ StatisticsService.prototype = {
 
 
         var getTomrrowDay = function (){
-            return new Date(nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1)  + "-" + (nowDate.getDay()+1) + "01:00:00");
+            return new Date(nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1)  + "-" + (nowDate.getDate()+1) + " 01:00:00");
         }
 
         var getStartDay = function (){
-            return new Date(nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) +  "-" + (nowDate.getDay()) + "00:00:00");
+            return new Date(nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) +  "-" + (nowDate.getDate()) + " 00:00:00");
         }
 
         var nowDate = new Date ;
@@ -102,7 +101,7 @@ StatisticsService.prototype = {
                         logger.error("find apply erro  :  " +  err);
                     }
                     _.each(item , function (value ,key ){
-                        self.fetchStatistics(value.id , startDate );
+                        self.fetchAndSave(value.id , startDate );
                     })
 
                     nowDate = new Date();
@@ -114,14 +113,17 @@ StatisticsService.prototype = {
 
 
 
-            } , targetDate - nowDate)
+            } , targetDate - nowDate);
+
+            logger.info( "after " + ((targetDate - nowDate )/1000) + "s will fetch again ");
         }
 
         startTimeout();
 
-
     }
 };
+
+
 
 
 module.exports =  StatisticsService;

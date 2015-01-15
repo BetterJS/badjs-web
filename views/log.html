@@ -5,29 +5,12 @@
     <div class="wrap">
         <!--<%=include('./common/leftSide.html')(it, opt)%>-->
         <div class="mid-side">
-            <div class="main-top">
-                <div class="log-operation">
-                    <div class="log-select">
-                        <!--  <input type="text" class="head-input" placeholder="选择业务"/>
-                          <div class="head-btn" data-event-click="searchBusiness"><span class="glyphicon glyphicon-search"></span></div>-->
-                        <select class="form-control " data-event-change="selectBusiness" id="select-business">
-                            <option value="-1">-- 请选择项目 --</option>
-                            <option value="990"> 电影票 - 撒娇女人活动</option>
-                            <option value="991"> mobile app</option>
-                        </select>
-                    </div>
-                    <div class="log-searchBtn" >
-                        <a href="apply.html" data-event-click="showLogs">查询日志</a>
-                    </div>
-                </div>
-                <h4 class="main-title">腾讯课堂</h4><span class="main-count">共查找到<em>324</em>条记录</span>
-            </div>
             <div class="main-mid">
                 <table class="main-table">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>时间</th>
+                            <th >#</th>
+                            <th style="width:200px;">时间</th>
                             <th>信息</th>
                             <th>uin</th>
                             <th>ip</th>
@@ -114,6 +97,18 @@
             </nav>-->
         </div>
         <div class="right-side">
+            <section>
+                <div class="log-select">
+                    <!--  <input type="text" class="head-input" placeholder="选择业务"/>
+                      <div class="head-btn" data-event-click="searchBusiness"><span class="glyphicon glyphicon-search"></span></div>-->
+                    <select class="form-control " data-event-change="selectBusiness" id="select-business">
+                        <option value="-1">-- 请选择项目 --</option>
+                        <option value="990"> 电影票 - 撒娇女人活动</option>
+                        <option value="991"> mobile app</option>
+                    </select>
+                </div>
+                <div class="clear"></div>
+            </section>
             <section>
                 <p class="setting-title">消息类型
                 <ul class="setting-msg">

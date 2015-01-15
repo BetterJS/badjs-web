@@ -6,7 +6,8 @@
 
 
 var BussiessService = function (){
-    this.url = 'http://183.60.70.234:9000/query';
+
+    this.approveDao = global.models.approveDao;
 }
 
 

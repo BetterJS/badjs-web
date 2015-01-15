@@ -177,6 +177,7 @@ form {
     width: 99%;
     border: 1px solid #dedede;
     margin: 15px auto;
+    margin-top:0;
     border-collapse: collapse; }
 #content .mid-side .main-table tr, #content .mid-side .main-table td {
     height: 35px; }
@@ -375,10 +376,9 @@ form {
 
 /*@log  */
 .log-operation{
-    margin-bottom: 30px;
 }
 .log-operation .log-select{
-    width: 450px;
+    width: 200px;
     display: inline-block;
     height: 45px;
 }

@@ -16,7 +16,7 @@ var Apply = function (args){
     if(!args){
         return ;
     }
-    _.defaults( this ,  _.pick(args , 'userName' ,'name' , 'appCode' , 'status' , 'id' , 'approves' , 'mailSender' , 'mailCopy' , 'description' , 'createTime' , 'passTime' , 'consumeIp') );
+    _.defaults( this ,  _.pick(args , 'userName' ,'name' ,  'id' ,  'description' , 'main', 'createTime' , 'passTime' ) );
 }
 
 
