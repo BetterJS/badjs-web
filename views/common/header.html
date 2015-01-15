@@ -3,8 +3,9 @@
     <div class="head-logo"><a href="index.html">BetterJs</a></div>
     <div class="head-user">
         <% if (it.user) { %>
-        <a href="/logout">退出</a>
         <span class="head-face"><%= it.user.chineseName %>(<%= it.user.loginName %>)</span>
+        <a href="/logout">退出</a>
+
         <img src="/img/face.jpg" />
         <% } else { %>
         <a href="/login">登录</a>

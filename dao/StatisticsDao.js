@@ -1,8 +1,8 @@
 
 /**
- *  @info: userDao
- *  @author: coverGuo
- *  @date: 2014-12-30
+ *  @info: DtatisticsDao
+ *  @author: chriscai
+ *  @date: 2014-01-14
  */
 
 module.exports  = function (db){
