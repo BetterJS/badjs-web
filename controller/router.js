@@ -7,6 +7,7 @@
 var logAction = require('./action/logAction'),
     applyAction = require('./action/applyAction'),
     userAction = require("./action/userAction"),
+    IndexAction = require("./action/IndexAction"),
     approveAction = require("./action/approveAction"),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
@@ -101,13 +102,8 @@ module.exports = function(app){
 
 
 
-     app.get('/index.html', function(req, res){
-         var params = req.query,
-             user  = req.session.user;
+    app.get('/index.html',IndexAction.index  );
 
-         res.render('log', { layout: false, user: user, index:"log" });
-
-     });
     app.get('/apply.html', function(req, res){
         var params = req.query,
             user  = req.session.user;

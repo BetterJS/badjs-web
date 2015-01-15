@@ -103,8 +103,13 @@
                       <div class="head-btn" data-event-click="searchBusiness"><span class="glyphicon glyphicon-search"></span></div>-->
                     <select class="form-control " data-event-change="selectBusiness" id="select-business">
                         <option value="-1">-- 请选择项目 --</option>
-                        <option value="990"> 电影票 - 撒娇女人活动</option>
-                        <option value="991"> mobile app</option>
+
+                        <%  for(var i = 0 ; i < it.items.length ;i ++){
+                            var itemOne = it.items[i];
+
+                        %>
+                        <option value=" <%=itemOne.id%>"> <%=itemOne.name%></option>
+                        <%}%>
                     </select>
                 </div>
                 <div class="clear"></div>

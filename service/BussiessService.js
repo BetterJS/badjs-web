@@ -3,20 +3,28 @@
  */
 
 
-
+var  Apply = require('../model/Apply');
 
 var BussiessService = function (){
 
     this.approveDao = global.models.approveDao;
+    this.applyDao = global.models.applyDao;
 }
 
 
 BussiessService.prototype = {
 
-    findSercieByUser : function (username , callback){
-        callback(null , [
-            {id : 990 , name : '电影票 - 撒娇女人活动' },
-            {id : 991 , name : 'mobile app' }
-        ])
+    findBussiessByUser : function (username , callback){
+
+        this.applyDao.find({status: Apply.STATUS_PASS , userName: username} , function (err , item){
+
+            callback(err , item);
+
+        })
+
+
+
     }
 }
+
+module.exports = BussiessService;
