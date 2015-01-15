@@ -3,55 +3,54 @@
 
 <main id="content" role="main">
     <div class="wrap">
-        <!--<%=include('./common/leftSide.html')(it, opt)%>-->
-        <div class="mid-side">
-            <div id="applyContainer">
+        <div id="applyContainer">
 
-                <form id="applyForm" class="form-horizontal" role="form">
-                    <h3 class="applyTitle">新业务申请</h3>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label">业务名称</label>
-                        <div class="col-sm-6">
-                            <input  type="text" class="apply-name form-control" placeholder="申请业务名">
+            <form id="applyForm" class="form-horizontal" role="form">
+                <h3 class="applyTitle">新业务申请</h3>
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label">业务名称</label>
+                    <div class="col-sm-6">
+                        <input  type="text" class="apply-name form-control" placeholder="申请业务名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label">业务URL</label>
+                    <div class="col-sm-6">
+                        <input type="url" class="apply-url form-control"  placeholder="业务url">
+                    </div>
+                </div>
+                <!--<div class="form-group">-->
+                <!--<label class="col-sm-4 control-label">通知邮箱</label>-->
+                <!--<div class="col-sm-6">-->
+                <!--<input type="email" class="apply-mail form-control"  placeholder="通知邮箱">-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label" >业务详情描述</label>
+                    <div class="col-sm-6">
+                        <textarea class="apply-description form-control" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input class="apply-rule" type="checkbox" > 是否遵守本网站的相关规章协议
+                            </label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label">业务URL</label>
-                        <div class="col-sm-6">
-                            <input type="url" class="apply-url form-control"  placeholder="业务url">
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-6">
+                        <button class="col-sm-3 btn btn-primary apply-submit" >申请</button>
+                        <button type="reset" class="col-sm-offset-1 col-sm-3 btn btn-default" >重置</button>
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label class="col-sm-4 control-label">通知邮箱</label>-->
-                        <!--<div class="col-sm-6">-->
-                            <!--<input type="email" class="apply-mail form-control"  placeholder="通知邮箱">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" >业务详情描述</label>
-                        <div class="col-sm-6">
-                            <textarea class="apply-description form-control" rows="4"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-4 col-sm-6">
-                            <div class="checkbox">
-                                <label>
-                                    <input class="apply-rule" type="checkbox" > 是否遵守本网站的相关规章协议
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-4 col-sm-6">
-                            <button class="col-sm-3 btn btn-primary apply-submit" >申请</button>
-                            <button type="reset" class="col-sm-offset-1 col-sm-3 btn btn-default" >重置</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
+                </div>
+            </form>
         </div>
+
+
+
     </div>
 </main>
 

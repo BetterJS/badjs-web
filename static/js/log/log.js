@@ -272,6 +272,7 @@ define([
                         set: Delegator.set,
                         startIndex : currentIndex * MAX_LIMIT
                     }
+
                     if(isAdd){
                         $('#log-table').append(logTable(data.data, param));
                     }else{
@@ -286,7 +287,6 @@ define([
                 loading = false;
             },
             error: function() {
-
                 loading = false;
             }
         });

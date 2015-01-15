@@ -371,6 +371,7 @@ form {
 }
 #applyForm{
     max-width: 800px;
+    margin: 60px auto;
 }
 
 /*@log  */
@@ -389,14 +390,12 @@ form {
     background: #88b6f2;
     border-radius: 3px;
     margin-left: 40px;
-
-}
-.log-operation .log-searchBtn a{
     color: #fff;
     line-height: 43px;
     text-align: center;
-    display: block;
+    cursor: pointer;
 }
+
 
 
 /*@applyList  coverguo 2014-01-07*/
