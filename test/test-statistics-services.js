@@ -3,7 +3,10 @@ var mysql = require('mysql'),
     orm = require('orm');
 
 GLOBAL.DEBUG = true;
-orm.connect( "mysql://root:root@localhost:3306/badjs", function(err , db) {
+var mysql = "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs";
+//var mysql = "mysql://root:root@localhost:3306/badjs";
+
+orm.connect( mysql, function(err , db) {
     if(err){
         throw err;
     }
@@ -20,7 +23,23 @@ orm.connect( "mysql://root:root@localhost:3306/badjs", function(err , db) {
     var aa = new StatisticsService();
 
 
-    aa.startMonitor();
+    var startDate = new Date('2014-12-09 00:00:00');
+    var nowDate = new Date;
+
+    var fetch = function (id , startDate){
+        aa.fetchAndSave(id , startDate , function (){
+            console.log(startDate.toLocaleDateString() + " ok ");
+            if((startDate -0) > (nowDate - 0) ){
+                console.log("out today");
+                return ;
+            }
+            fetch(id , new Date(startDate.getFullYear() + "-" + (startDate.getMonth()+1)+"-"+ (startDate.getDate()+1)+" 00:00:00"));
+
+        })
+    }
+
+    fetch(991 , startDate);
+
 });
 
 

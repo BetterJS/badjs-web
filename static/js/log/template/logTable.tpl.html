@@ -42,14 +42,14 @@ switch(it[i].level) {
 }
 %>
 <tr>
-    <td class="info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
-    <td ><%= _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') %></td>
-    <td><%==it[i].msg%></td>
-    <td><%== it[i].uin == 'NaN' ? '-' : it[i].uin%></td>
-    <td><%==it[i].ip%></td>
-    <td width="50px"><span class="ico-browser <%=getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
-    <td>
-        <a href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
+    <td   class="td-1 info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
+    <td   class="td-2"><%= _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') %></td>
+    <td style="" class="td-3"><%==it[i].msg%></td>
+    <td  class="td-4"><%== it[i].uin == 'NaN' ? '-' : it[i].uin%></td>
+    <td  class="td-5"><%==it[i].ip%></td>
+    <td  class="td-6"><span class="ico-browser <%=getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
+    <td class="td-7">
+        <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
         <%==it[i].target || it[i].url || ''%></a>
         <span class="err-where"><%=it[i].rowNum || 0 %>行<%=it[i].colNum || 0%>列</span></td>
 </tr>

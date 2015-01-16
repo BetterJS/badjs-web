@@ -32,7 +32,7 @@ StatisticsService.prototype = {
 
 
     },
-    fetchAndSave : function (id , startDate){
+    fetchAndSave : function (id , startDate , cb){
         var self = this;
         http.get((this.url + '?id=' + id + '&startDate=' + (startDate -0 ))  , function(res){
             var buffer = '';
@@ -70,6 +70,7 @@ StatisticsService.prototype = {
                         logger.error("Insert into b_statistics error(id=", id + ") :  " +  err);
                     }
                     logger.info("Insert into b_statistics success(id=", id + ") :  " + buffer.toString());
+                    cb && cb(err);
                 });
             })
 

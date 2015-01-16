@@ -2,8 +2,7 @@
  * Created by coverguo on 2015/01/12.
  */
 
-var http = require('http'),
-    applyAction = require('../controller/action/applyAction');
+var http = require('http');
 
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
@@ -43,6 +42,7 @@ ApproveService.prototype = {
 
     },
     add: function(target, callback){
+        var self = this;
         this.approveDao.create(target , function (err , items){
             if(err){
                 callback(err);
@@ -56,7 +56,7 @@ ApproveService.prototype = {
             if(target.applyStatus ==1) {
                 apply.passTime = target.createTime;
             }
-            applyAction.update(apply, function(err, data){
+            self.update(apply, function(err, data){
                 if(err){
                     callback(err);
                 }

@@ -4,11 +4,11 @@
  * @date : 2014-12-16
  */
 
-var logAction = require('./action/logAction'),
-    applyAction = require('./action/applyAction'),
-    userAction = require("./action/userAction"),
+var logAction = require('./action/LogAction'),
+    applyAction = require('./action/ApplyAction'),
+    userAction = require("./action/UserAction"),
     IndexAction = require("./action/IndexAction"),
-    approveAction = require("./action/approveAction"),
+    approveAction = require("./action/ApproveAction"),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
 

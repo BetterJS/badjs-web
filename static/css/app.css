@@ -99,17 +99,23 @@ header .head-logo {
 header .head-user {
     position: absolute;
     right: 20px;
-    top: 16px; }
+    top: 16px;
+}
 header .head-face {
-    margin-right: 10px; }
+    margin-right: 10px;
+}
 
 form {
     margin-top: 100px; }
 
 #content {
-    height: 100%;
     background: #f7f7f7;
-    position: relative; }
+    position: absolute;
+    bottom:0;
+    top:120px;
+    width:100%;
+
+}
 #content .wrap {
     position: relative;
     height: 100%;
@@ -120,7 +126,8 @@ form {
     width: 207px;
     background: #2a2d33;
     height: 100%;
-    color: #7f8083; }
+    color: #7f8083;
+}
 .left-side a{
     color: #7f8083;
 }
@@ -129,9 +136,11 @@ form {
     font-weight: normal;
     padding: 20px 0 10px 20px;
     width: 100%;
-    border-bottom: 1px solid #3a3d42; }
+    border-bottom: 1px solid #3a3d42;
+}
 #content .left-side ul {
-    padding: 0; }
+    padding: 0;
+}
 #content .left-side li {
     list-style: none;
 }
@@ -432,7 +441,7 @@ form {
 }
 .marginLeftSideBar{
     /*margin-left: 207px;*/
-    padding-top: 50px;
+    padding-top: 10px;
 }
  .ListTable{
     padding:10px 20px ;
@@ -461,6 +470,34 @@ form {
 
 .userEditor form{
     margin:0;
+}
+
+.td-1 {
+    width:50px;
+}
+
+.td-2 {
+    width:180px;
+}
+
+.td-3 {
+    width:400px;
+    word-break: break-all;
+}
+
+.td-4 {
+    width:130px;
+}
+
+.td-5 {
+    width:135px;
+}
+
+.td-6 {
+    width:50px;
+}
+
+.td-7 {
 }
 
 
