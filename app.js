@@ -52,7 +52,7 @@ app.use(serveStatic('static'));
 var msqlUrl = "";
 
 if( GLOBAL.DEBUG){
-    msqlUrl ="mysql://root:root@localhost:3306/badjs";
+    msqlUrl ="mysql://root:123456@localhost:3306/badjs";
 }else {
     msqlUrl = 'mysql://badjs:pass4badjs@10.134.5.103:3306/badjs';
 }

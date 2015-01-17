@@ -23,8 +23,9 @@ define([ '../dialog',
     //获取列表页信息
     function getUserList(cb){
         var params = {
+            abc:123
         };
-        $.get('/controller/action/queryUserList.do',params, function (data) {
+        $.post('/controller/userAction/queryListByProject.do',params, function (data) {
             var ret = data.ret;
             switch(ret){
                 case 0://成功

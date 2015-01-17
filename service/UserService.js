@@ -17,15 +17,15 @@ var UserService = function (){
 
 
 UserService.prototype = {
-    query : function (target , callback){
-        if(target.user.role ==1){
-            this.userDao.all({} , function (err , items){
-                if(err){
-                    callback(err);
-                }
-                callback(null,{ret:0, msg:"success", data: items});
-            });
-        }
+    queryListByProject : function (target , callback){
+
+        //var parmas = {applyId : target.applyId};
+        this.userDao.all({}, function (err , items){
+            if(err){
+                callback(err);
+            }
+            callback(null,items);
+        });
 
     },
     add: function(target, callback){

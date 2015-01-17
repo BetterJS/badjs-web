@@ -2,29 +2,41 @@
  * Created by coverguo on 2015/1/12.
  */
 
-var  log4js = require('log4js'),
+var log4js = require('log4js'),
     logger = log4js.getLogger(),
-    UserService = require('../../service/UserService');
-
+    UserService = require('../../service/UserService'),
+    isError = function (res , error){
+        if(error){
+            res.json({ret : 1 , msg : error});
+            return true;
+        }
+        return false;
+    };
 
 
 var userAction = {
 
-    addApply: function(params, cb){
+    addUser: function(params, cb){
         var us = new UserService();
         us.add(params,cb);
     },
-    queryList : function (params,cb) {
-        var us = new UserService();
-        us.query(params,cb);
+    queryListByProject : function (params, res) {
+
+        var userService = new UserService();
+        //用户根据项目查询项目成员
+        userService.queryListByProject(params,function(err, items){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, data:items, msg:"success"});
+        });
     },
-    update:function(){
-        var us = new UserService();
-        us.update(params,cb);
+
+    update:function(req, res){
+
     },
     remove: function(){
-        var us = new UserService();
-        us.remove(params,cb);
+
 
     }
 

@@ -4,9 +4,9 @@
  * @date : 2014-12-16
  */
 
-var logAction = require('./action/LogAction'),
-    applyAction = require('./action/ApplyAction'),
-    userAction = require("./action/UserAction"),
+var LogAction = require('./action/LogAction'),
+    ApplyAction = require('./action/ApplyAction'),
+    UserAction = require("./action/UserAction"),
     IndexAction = require("./action/IndexAction"),
     approveAction = require("./action/ApproveAction"),
     auth = require('../utils/auth'),
@@ -16,7 +16,7 @@ var log4js = require('log4js'),
     logger = log4js.getLogger();
 
 module.exports = function(app){
-    var isError = function (res , error){
+    var isError = GLOBAL.isError = function (res , error){
         if(error){
             res.json({ret : 1 , msg : error});
             return true;
@@ -30,9 +30,9 @@ module.exports = function(app){
             //获取用户model
             userDao = req.models.userDao;
 
-//        if(GLOBAL.DEBUG ){
-//            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1}
-//        }
+        if(GLOBAL.DEBUG ){
+            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1}
+        }
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
@@ -81,43 +81,27 @@ module.exports = function(app){
     });
 
 
+    //html页面请求
+    app.get('/', IndexAction.index);
 
     app.get('/index.html',IndexAction.index  );
 
     app.get('/apply.html', function(req, res){
-        var params = req.query,
-            user  = req.session.user;
+        var user  = req.session.user;
         res.render('apply', { layout: false, user: user, index:'apply' });
-
     });
     app.get('/applyList.html', function(req, res){
-        var params = req.query,
-            user  = req.session.user;
+        var user = req.session.user;
         res.render('applyList', { layout: false, user: user, index:'applyList' });
-
     });
     app.get('/userManage.html', function(req, res){
-        var params = req.query,
-            user  = req.session.user;
+        var user  = req.session.user;
         res.render('userManage', { layout: false, user: user, index:'userManage' });
-
-    });
-
-
-    app.get('/', function(req, res){
-
-        var params = req.query,
-            user  = req.session.user;
-
-        res.render('log', { layout: false, user: user, index:'log' });
-
-
     });
     /**
      * 登出
      * */
     app.get('/logout', function(req, res){
-
         var signoutUrl = 'http://passport.oa.com/modules/passport/signout.ashx?url={yourWebsite}';
         req.session.user = null;
         var homeUrl = req.protocol + "://" + req.get('host')+'/';
@@ -125,75 +109,34 @@ module.exports = function(app){
         res.redirect(signoutUrl);
     });
 
-    /**
-     * 查看log列表
-     * */
-    app.get('/controller/action/queryLogList.do', function(req, res){
-
-        paramsStr = decodeURI(req.url.split('?')[1]);
-
-        logger.debug('query param :' + paramsStr);
-        logAction.getLogList(req.query,function(err,data){
-            if(isError(res, err)){
-                return;
+    // 调用controller/action
+    app.use(function(req, res , next){
+        //controller 请求action
+        if(/^\/controller/i.test(req.url)){
+            var url = req.url;
+            var action = url.match(/controller\/(\w+)Action/i)[1];
+            var operation = url.match(/\/(\w+)\.do/i)[1];
+            if(GLOBAL.DEBUG){
+                logger.info("the operation is: " + action + " --operation: "+ operation);
             }
-            res.json({ret:0, data: data});
-        });
+            //判断是get还是post请求， 获取参数params
+            var method = req.method.toLowerCase();
+            var params = method =="post"? req.body : req.query;
+            params.user = req.session.user;
 
-    });
-    /**
-     * 获取用户表
-     * */
-
-    app.get('/controller/action/queryUserList.do', function(req, res){
-        var params = req.query;
-        params.user = req.session.user;
-        if(req.session.user.role !=1){
-            res.json({ret:1003, msg:"权限不足"});
+            //根据不同actionName 调用不同action
+            switch(action){
+                case "user": UserAction[operation](params, res);break;
+                case "apply": ApplyAction[operation](params, res);break;
+                case "approve": ApproveAction[operation](params, res);break;
+                case "log" : LogAction[operation](params, res); break;
+            }
+            return;
+        }else{
+            next();
         }
-        userAction.queryList(params,function(err,data){
-            if(isError(res, err)){
-                return;
-            }
-            res.json(data);
-        });
-
     });
-    /**
-     * 获取申请表
-     * */
 
-    app.get('/controller/action/queryApplyList.do', function(req, res){
-
-        var params = req.query;
-        params.user = req.session.user;
-
-        applyAction.queryList(params,function(err,data){
-            if(isError(res, err)){
-                return;
-            }
-            res.json(data);
-        });
-
-    });
-    /**
-     * 增添申请表
-     * */
-
-    app.post('/controller/action/addApply.do', function(req, res){
-        var apply = req.body;
-        apply.userName = req.session.user.loginName;
-        apply.createTime = new Date();
-        apply.status = 0;
-        logger.debug('add_apply param :' + apply);
-        applyAction.addApply(apply,function(err,data){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, msg:"success add"});
-        });
-
-    });
     /**
      * 审核申请表
      * */
@@ -211,10 +154,6 @@ module.exports = function(app){
 
 
     });
-
-
-
-
 
 
 
