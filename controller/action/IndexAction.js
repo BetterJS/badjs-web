@@ -15,10 +15,9 @@ var IndexAction = {
         var params = req.query,
             user  = req.session.user;
 
-        var bussiessService =  new BussiessService()
+        var bussiessService =  new BussiessService();
 
         bussiessService.findBussiessByUser(user.loginName , function (err, item){
-            console.log(item)
             res.render('log', { layout: false, user: user, index:"log" , items : item} );
         });
 

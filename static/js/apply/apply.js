@@ -26,7 +26,7 @@ define([ '../dialog'], function ( Dialog) {
                 //mail: $(".apply-mail").val()
             });
 
-            $.post('./controller/action/addApply.do', params, function (data) {
+            $.post('./controller/applyAction/addApply.do', params, function (data) {
                 var ret = data.ret;
                 switch(ret){
                     case 0://成功

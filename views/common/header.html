@@ -13,37 +13,37 @@
     </div>
     <nav id="navbar">
         <ul class="nav">
-            <li class="item ">
-                <a class="<%= it.index=='log'?'active':''%>" href="index.html">历史日志</a>
+            <li class="item <%= it.index=='log'?'active':''%>">
+                <a href="index.html">历史日志</a>
             </li>
             <li class="item">
                 <a href="">实时日志</a>
             </li>
-            <li class="item">
-                <a class="<%= it.index=='apply'?'active':''%>" href="apply.html">申请接入</a>
+            <li class="item <%= it.index=='apply'?'active':''%>">
+                <a href="apply.html">申请接入</a>
             </li>
-            <li class="item items">
-                <div>管理</div>
+            <li class="item items <%= it.index=='manage'?'active':''%>">
+                <a><%= it.title?it.title:"管理" %></a>
                 <ul class="subNav">
                     <li class="item">
-                        <a class="<%= it.index=='userManage'?'active':''%>" href="userManage.html">用户列表</a>
+                        <a  href="userManage.html">用户列表</a>
                     </li>
                     <li class="item">
-                        <a class="<%= it.index=='applyList'?'active':''%>" href="applyList.html">申请列表</a>
+                        <a  href="applyList.html">申请列表</a>
                     </li>
                     <!--<li class="item">-->
                         <!--<a href=""></a>-->
                     <!--</li>-->
                 </ul>
             </li>
-            <li class="items">
-                <div>帮助</div>
+            <li class="item items <%= it.index==('systemIntroduce'||'guide')?'active':''%>">
+                <a>帮助</a>
                 <ul class="subNav">
                     <li class="item">
-                        <a class="<%= it.index=='userManage'?'active':''%>" href="userManage.html">系统介绍</a>
+                        <a href="userManage.html">系统介绍</a>
                     </li>
                     <li class="item">
-                        <a class="<%= it.index=='applyList'?'active':''%>" href="applyList.html">接入指南</a>
+                        <a href="applyList.html">接入指南</a>
                     </li>
                     <!--<li class="item">-->
                     <!--<a href=""></a>-->

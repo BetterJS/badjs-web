@@ -84,10 +84,10 @@ define([
             }).on('click', 'showLogs', function () {
                 var startTime = $('#startTime').val(),
                     endTime = $('#endTime').val();
-                console.log('data', endTime);
+                //console.log('data', endTime);
                 logConfig.startDate =  startTime == '' ? new Date().getTime()-maxDate : new Date(startTime).getTime();
                 logConfig.endDate = endTime == '' ? new Date().getTime() : new Date(endTime).getTime();
-                console.log('data', logConfig);
+                //console.log('data', logConfig);
                 //测试时间是否符合
                 if(isTimeRight(logConfig.startDate, logConfig.endDate)){
                     showLogs(logConfig, false);
@@ -249,7 +249,7 @@ define([
             noData = false;
         }
 
-        var url = '/controller/action/queryLogList.do';
+        var url = '/controller/logAction/queryLogList.do';
         $.ajax({
             url: url,
             data: {

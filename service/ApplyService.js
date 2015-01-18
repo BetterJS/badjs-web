@@ -16,42 +16,23 @@ var ApplyService = function (){
 
 
 ApplyService.prototype = {
-    query : function (target , callback){
-        if(!target.cmd || target.cmd == ""){
-            callback(null, {ret:1002, msg:"缺少cmd参数"});
-        }
-        if(target.cmd == "get_all_applyList"){
-            //管理员
-            if(target.user.role ==1){
-                this.applyDao.all({} , function (err , items){
-                    if(err){
-                        callback(err);
-                    }
-                    callback(null,{ret:0, msg:"success", data: items});
-                });
-            }else{
-                this.applyDao.find({userName: target.user.loginName} , function (err , items){
-                    if(err){
-                        callback(err);
-                    }
-                    callback(null,{ret:0, msg:"success", data: items});
-                });
+    queryListByUser : function (target , callback){
+        this.applyDao.find({userName: target.user.loginName} , function (err , items){
+            if(err){
+                callback(err);
             }
-        }else{
-
-        }
-
+            callback(null,items);
+        });
     },
     add: function(target, callback){
-        if(target.name == "" || target.url ==""){
-            callback(null, {ret:1002, msg:"params error"})
-        }
         this.applyDao.create(target , function (err , items){
             if(err){
                 callback(err);
             }
-            logger.info("Insert into b_apply success! target1: ",target);
-            callback(null,{ret:0, msg:"success add"});
+            if(GLOBAL.DEBUG){
+                logger.info("Insert into b_apply success! target1: ",target);
+            }
+            callback(null);
         });
     },
     remove : function(target, callback){

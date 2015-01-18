@@ -45,7 +45,7 @@ LogService.prototype = {
                try{
                     callback(null , JSON.parse(buffer))
                }catch(e){
-                   callback(e );
+                   callback(e);
                }
            })
 

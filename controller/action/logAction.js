@@ -4,23 +4,33 @@
  * @date : 2014-12-16
  */
 
-var LogService = require('../../service/LogService');
-
-var  log4js = require('log4js'),
-    logger = log4js.getLogger();
+var LogService = require('../../service/LogService'),
+    log4js = require('log4js'),
+    logger = log4js.getLogger(),
+    isError = function (res , error){
+        if(error){
+            res.json({ret : 1 , msg : error});
+            return true;
+        }
+        return false;
+    };
 
 var LogAction = {
+    queryLogList : function (params,res) {
 
-    getLogList : function (params,cb) {
-        logger.debug('action query:' + params)
+        var logService = new LogService();
+
         for(var key in params){
             params['endDate'] -=0;
             params['startDate'] -=0;
             params['id'] -=0;
-
         }
-        var ls = new LogService();
-        ls.query(params,cb);
+        logService.query(params,function(err, items){
+            if(isError(res, err)){
+                return;
+            };
+            res.json({ret:0, msg:"success-query", data:items});
+        });
     }
 };
 

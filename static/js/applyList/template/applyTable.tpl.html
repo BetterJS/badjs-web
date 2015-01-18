@@ -10,42 +10,67 @@
     <!--<th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>-->
     <th>#</th>
     <th>项目名称</th>
-
+    <th>项目申请人</th>
     <th>申请时间</th>
     <th style="width:30%;">业务描述</th>
     <th>业务网址</th>
+    <th>操作</th>
 
-    <th>项目申请人</th>
-    <th>当前状态</th>
+
 </tr>
 </thead>
 
 <tbody id="applyListTbody">
 <%for(var i = 0; i<len; i++){
-switch(it[i].status){
-case 0 : status = "审核中";
-break;
-case 1 : status = "审核通过";
-break;
-case 2 : status = "审核不通过";
-}
+    it[i].status -= 0;
+    var STATUS_BLOCK_HEIGHT = 24;
+    var status = 'applying-active';
+    if(it[i].status != 0){
+        status = it[i].status ==1 ? 'agree-active' : 'disagree-active';
+    }
 %>
 <tr class="listRow" >
     <!--<td><input class="tableSelectCheckBox" type="checkbox"/></td>-->
     <td class="apply_id"><%==it[i].id%></td>
-
+    <td class="apply_name"><%==it[i].name%></td>
     <td class="apply_userName"><%==it[i].userName%></td>
     <td class="apply_createTime"><%== it[i].createTime%></td>
     <td  class="apply_description"><%== it[i].description%></td>
     <td class="apply_url"><%==it[i].url%></td>
-    <td class="apply_name"><%==it[i].name%></td>
-    <td class="apply_state"><%== status%> <td>
-    <td class="apply_operation"> <span class="modifyBtn btn-default">审核</span></td>
+
+    <td class="apply_operation">
+        <div class="modifyBtn">
+            编辑
+        </div>
+        <div class="approveBlock">
+            <div class="closeBtn">关闭</div>
+            <form action="">
+                <div class="rowBlock">
+                    <input type="text" name="description" placeholder="操作描述"/>
+                </div>
+                <div class="rowBlock">
+
+                    <div id="statusPanel" class=" <%== status%>">
+                        <div class="statusBtn applying" data-type="applying">待审核</div>
+                        <div class="statusBtn agree" data-type="agree">通过</div>
+                        <div class="statusBtn disagree" data-type="disagree">失败</div>
+                    </div>
+                    <select style="display: none" name="status"  value="<%== it[i].status%>">
+                        <option value="0">待审核</option>
+                        <option value="1">通过</option>
+                        <option value="2">拒绝</option>
+                    </select>
+                </div>
+                <div class="operation">
+                    <button type="submit">确定</button>
+                </div>
+            </form>
+
+        </div>
 
 
 
-
-
+    </td>
 </tr>
 <%}%>
 </tbody>

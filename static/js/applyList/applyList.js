@@ -28,19 +28,20 @@ define([
         });
     }
     function bindEvent() {
-        $(".infoWrapper .closeBtn").on("click", function(){
-           $(this).parent().parent().hide();
-        });
+
         //审核
         $(".modifyBtn").on("click", function(){
-            var parent =  $(this).parent();
-            $(".approvePanel .apply_id").text(parent.siblings(".apply_id").text());
-            $(".approvePanel .apply_name").text(parent.siblings(".apply_name").text());
-            $(".approvePanel .apply_userName").text(parent.siblings(".apply_userName").text());
-            $(".approvePanel .apply_createTime").text(parent.siblings(".apply_createTime").text());
-            $(".approvePanel .apply_description").text(parent.siblings(".apply_description").text());
-            $(".approvePanel .apply_url").text(parent.siblings(".apply_url").text());
-            $(".approvePanel").show();
+            $(this).siblings(".approveBlock").show();
+            console.log(112);
+        });
+        $(".approveBlock .closeBtn").on("click", function(e){
+            $(this).parent().hide();
+            console.log(11);
+            e.stopPropagation();
+        });
+        $("#statusPanel .statusBtn").on("click", function(e){
+            $(this).parent().removeClass().addClass($(this).data("type") +"-active");
+            e.stopPropagation();
         });
 
     }
@@ -48,9 +49,8 @@ define([
     //获取列表页信息
     function getApplyList(cb){
         var params = {
-            cmd: "get_all_applyList"
         };
-        $.get('./controller/action/queryApplyList.do',params, function (data) {
+        $.get('./controller/applyAction/queryListByUser.do',params, function (data) {
             var ret = data.ret;
             switch(ret){
                 case 0://成功
@@ -66,10 +66,10 @@ define([
     }
 
     function init() {
-        $(".datetimepicker").datetimepicker({format: 'YYYY-MM-DD HH:mm'}).data("DateTimePicker").setMaxDate(new Date());
-
-        $('.fromTime').data("DateTimePicker").setDate( new Date(new Date() - maxDate));
-        $('.toTime').data("DateTimePicker").setDate( new Date());
+        //$(".datetimepicker").datetimepicker({format: 'YYYY-MM-DD HH:mm'}).data("DateTimePicker").setMaxDate(new Date());
+        //
+        //$('.fromTime').data("DateTimePicker").setDate( new Date(new Date() - maxDate));
+        //$('.toTime').data("DateTimePicker").setDate( new Date());
         getApplyList(function(data){
             console.log(data);
             var param = {

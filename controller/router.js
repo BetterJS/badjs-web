@@ -92,11 +92,11 @@ module.exports = function(app){
     });
     app.get('/applyList.html', function(req, res){
         var user = req.session.user;
-        res.render('applyList', { layout: false, user: user, index:'applyList' });
+        res.render('applyList', { layout: false, user: user, index:'manage', title: '申请列表'});
     });
     app.get('/userManage.html', function(req, res){
         var user  = req.session.user;
-        res.render('userManage', { layout: false, user: user, index:'userManage' });
+        res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' });
     });
     /**
      * 登出
@@ -109,7 +109,7 @@ module.exports = function(app){
         res.redirect(signoutUrl);
     });
 
-    // 调用controller/action
+    // 请求路径为： controller/xxxAction/xxx.do (get || post)
     app.use(function(req, res , next){
         //controller 请求action
         if(/^\/controller/i.test(req.url)){
@@ -151,8 +151,6 @@ module.exports = function(app){
             }
             res.json({ret:0, msg:"success add"});
         });
-
-
     });
 
 
