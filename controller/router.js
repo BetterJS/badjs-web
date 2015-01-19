@@ -8,7 +8,7 @@ var LogAction = require('./action/LogAction'),
     ApplyAction = require('./action/ApplyAction'),
     UserAction = require("./action/UserAction"),
     IndexAction = require("./action/IndexAction"),
-    approveAction = require("./action/ApproveAction"),
+    ApproveAction = require("./action/ApproveAction"),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
 
@@ -138,21 +138,7 @@ module.exports = function(app){
         }
     });
 
-    /**
-     * 审核申请表
-     * */
-    app.post('/controller/action/approve.do', function(req, res){
-        var approve = req.body;
-        approve.createTime = new Date();
-        approve.userName = req.session.user.loginName;
-        logger.debug('add_approve param :' + approve);
-        approveAction.addApprove(approve,function(err,data){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, msg:"success add"});
-        });
-    });
+
 
 
 

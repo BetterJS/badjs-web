@@ -18,7 +18,7 @@ define([
 
 
     function doApprove(params , cb){
-        $.post('/controller/action/approve.do',params, function (data) {
+        $.post('/controller/approveAction/doApprove.do',params, function (data) {
             var ret = data.ret;
             switch(ret){
                 case 0://成功
