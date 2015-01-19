@@ -8,6 +8,7 @@ var LogAction = require('./action/LogAction'),
     ApplyAction = require('./action/ApplyAction'),
     UserAction = require("./action/UserAction"),
     IndexAction = require("./action/IndexAction"),
+    StatisticsAction = require("./action/StatisticsAction"),
     ApproveAction = require("./action/ApproveAction"),
     UserApplyAction = require("./action/UserApplyAction"),
     auth = require('../utils/auth'),
@@ -95,7 +96,10 @@ module.exports = function(app){
         var user = req.session.user;
         res.render('applyList', { layout: false, user: user, index:'manage', title: '申请列表'});
     });
+
     app.get('/userManage.html', UserAction.index);
+
+    app.get('/statistics.html',  StatisticsAction.index );
 
     /**
      * 登出
@@ -130,6 +134,8 @@ module.exports = function(app){
                 case "approve": ApproveAction[operation](params, res);break;
                 case "log" : LogAction[operation](params, res); break;
                 case "userApply": UserApplyAction[operation](params, res);break;
+                case "statistics" : StatisticsAction[operation](params, req, res); break;
+
                 default  : next();
             }
             return;

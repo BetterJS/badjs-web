@@ -198,7 +198,7 @@ define([
             var height = $this.height();
             var scrollHeight =  $this.prop('scrollHeight');
 
-            if(scrollHeight - height - top <= 200 &&　!noData){
+            if(scrollHeight - height - top <= 200 && !noData){
                 logConfig.id = currentSelectId;
                 showLogs(logConfig, true);
             }
