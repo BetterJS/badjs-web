@@ -114,7 +114,7 @@ module.exports = function(app){
         //controller 请求action
         if(/^\/controller/i.test(req.url)){
             var url = req.url;
-            var action = url.match(/controller\/(\w+)Action/i)[1];
+            var action = url.match(/controller\/(\w*)Action/i)[1];
             var operation = url.match(/\/(\w+)\.do/i)[1];
             if(GLOBAL.DEBUG){
                 logger.info("the operation is: " + action + " --operation: "+ operation);
@@ -130,6 +130,7 @@ module.exports = function(app){
                 case "apply": ApplyAction[operation](params, res);break;
                 case "approve": ApproveAction[operation](params, res);break;
                 case "log" : LogAction[operation](params, res); break;
+                default  : next();
             }
             return;
         }else{

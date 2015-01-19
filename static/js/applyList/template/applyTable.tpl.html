@@ -25,8 +25,10 @@
     it[i].status -= 0;
     var STATUS_BLOCK_HEIGHT = 24;
     var status = 'applying-active';
+    var statusText = '待审核';
     if(it[i].status != 0){
         status = it[i].status ==1 ? 'agree-active' : 'disagree-active';
+        statusText = it[i].status ==1 ? '已通过' : '已拒绝';
     }
 %>
 <tr class="listRow" >
@@ -40,31 +42,23 @@
 
     <td class="apply_operation">
         <div class="modifyBtn">
-            编辑
+            <%== statusText%>
         </div>
-        <div class="approveBlock">
+        <div class="approveBlock" >
             <div class="closeBtn">关闭</div>
-            <form action="">
-                <div class="rowBlock">
-                    <input type="text" name="description" placeholder="操作描述"/>
-                </div>
-                <div class="rowBlock">
 
-                    <div id="statusPanel" class=" <%== status%>">
-                        <div class="statusBtn applying" data-type="applying">待审核</div>
-                        <div class="statusBtn agree" data-type="agree">通过</div>
-                        <div class="statusBtn disagree" data-type="disagree">失败</div>
-                    </div>
-                    <select style="display: none" name="status"  value="<%== it[i].status%>">
-                        <option value="0">待审核</option>
-                        <option value="1">通过</option>
-                        <option value="2">拒绝</option>
-                    </select>
-                </div>
-                <div class="operation">
-                    <button type="submit">确定</button>
-                </div>
-            </form>
+            <input  class="rowBlock replyText" type="text" name="description" placeholder="操作描述"/>
+
+            <div id="statusPanel" class="<%== status%>" data-value="<%== it[i].status%>">
+                <div class="statusBtn applying" data-type="applying" data-value="0">待审核</div>
+                <div class="statusBtn agree" data-type="agree" data-value="1">通过</div>
+                <div class="statusBtn disagree" data-type="disagree" data-value="2">失败</div>
+            </div>
+
+            <div class="operation" data-apply_id="<%==it[i].id%>">
+                <button class="submitBtn" >确定</button>
+            </div>
+
 
         </div>
 
