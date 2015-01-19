@@ -13,9 +13,18 @@ var  log4js = require('log4js'),
 
 var approveAction = {
 
-    addApprove: function(params, cb){
-        var as = new ApproveService();
-        as.add(params,cb);
+   doApprove: function(params, res){
+        var approve = params;
+        approve.createTime = new Date();
+        approve.userName = params.user.loginName;
+        logger.debug('add_approve param :' + approve);
+        var approveService = new ApproveService();
+        approveService.add(params, function (err, items) {
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, msg:"审核完成"});
+        });
     },
     queryList : function (params,cb) {
         var as = new ApproveService();

@@ -7,22 +7,20 @@
         <div class="contentPanel">
             <div class="searchPanel clearfix">
                 <label for="">搜索信息</label>
-                <input type="text"  placeholder="姓名或id">
+                <input id="apply_searchText" type="text"  placeholder="姓名或id">
                 <!--<label for="">From</label>-->
                 <!--<input type="text" value="" readonly class="datetimepicker fromTime" />-->
                 <!--<label for="">to</label>-->
                 <!--<input type="text" value="" readonly class="datetimepicker toTime" />-->
                 <label for="">状态类型</label>
-                <select name="" id="">
-                    <option value="">全部</option>
-                    <option value="">审核中</option>
-                    <option value="">已通过</option>
-                    <option value="">已拒绝</option>
+                <select id="apply_searchType">
+                    <option value="3">全部</option>
+                    <option value="0">审核中</option>
+                    <option value="1">已通过</option>
+                    <option value="2">已拒绝</option>
                 </select>
 
-
-
-                <button type="button" class="btn btn-default searchBtn">搜索</button>
+                <button type="button" id="apply_searchBtn" class="btn btn-default searchBtn">搜索</button>
 
             </div>
             <div class="applyTable ListTable">

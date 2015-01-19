@@ -9,7 +9,7 @@ var LogAction = require('./action/LogAction'),
     UserAction = require("./action/UserAction"),
     IndexAction = require("./action/IndexAction"),
     StatisticsAction = require("./action/StatisticsAction"),
-    approveAction = require("./action/ApproveAction"),
+    ApproveAction = require("./action/ApproveAction"),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
 
@@ -116,7 +116,7 @@ module.exports = function(app){
         //controller 请求action
         if(/^\/controller/i.test(req.url)){
             var url = req.url;
-            var action = url.match(/controller\/(\w+)Action/i)[1];
+            var action = url.match(/controller\/(\w*)Action/i)[1];
             var operation = url.match(/\/(\w+)\.do/i)[1];
             if(GLOBAL.DEBUG){
                 logger.info("the operation is: " + action + " --operation: "+ operation);
@@ -133,6 +133,7 @@ module.exports = function(app){
                 case "approve": ApproveAction[operation](params, res);break;
                 case "log" : LogAction[operation](params, res); break;
                 case "statistics" : StatisticsAction[operation](params, req, res); break;
+                default  : next();
             }
             return;
         }else{
@@ -140,21 +141,7 @@ module.exports = function(app){
         }
     });
 
-    /**
-     * 审核申请表
-     * */
-    app.post('/controller/action/approve.do', function(req, res){
-        var approve = req.body;
-        approve.createTime = new Date();
-        approve.userName = req.session.user.loginName;
-        logger.debug('add_approve param :' + approve);
-        approveAction.addApprove(approve,function(err,data){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, msg:"success add"});
-        });
-    });
+
 
 
 

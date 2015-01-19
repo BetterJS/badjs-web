@@ -10,7 +10,8 @@ var  log4js = require('log4js'),
 
 
 var ApproveService = function (){
-    this.approveDao = global.models.approveDao;
+    this.approveDao = GLOBAL.models.approveDao;
+    this.applyDao = GLOBAL.models.applyDao;
 
 };
 
@@ -18,10 +19,8 @@ var ApproveService = function (){
 
 ApproveService.prototype = {
     query : function (target , callback){
-        if(!target.cmd || target.cmd == ""){
-            callback(null, {ret:1002, msg:"缺少cmd参数"});
-        }
-        if(target.cmd == "get_all_applyList"){
+
+
             //管理员
             if(target.user.role ==1){
                 this.approveDao.all({} , function (err , items){
@@ -38,7 +37,7 @@ ApproveService.prototype = {
                     callback(null,{ret:0, msg:"success", data: items});
                 });
             }
-        }
+
 
     },
     add: function(target, callback){
@@ -60,6 +59,7 @@ ApproveService.prototype = {
                 if(err){
                     callback(err);
                 }
+                logger.info("Update b_apply success! apply: ",apply);
                 callback(null,{ret:0, msg:"success add"});
             })
 
@@ -70,13 +70,16 @@ ApproveService.prototype = {
 
     },
     update : function(target, callback){
-        this.approveDao.find({id: target.id }, function (err, apply) {
+        this.applyDao.one({id: target.id }, function (err, apply) {
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
-            params[0].each(function(key, value){
-                apply[key] = value;
-            });
-            apply[0].save(function (err) {
-                // err.msg = "under-age";
+            for(key in target){
+                apply[key] = target[key];
+            }
+            apply.save(function (err) {
+                if(err){
+                    callback(err);
+                }
+                callback(null);
             });
         });
     }
