@@ -52,7 +52,7 @@ app.use(serveStatic('static'));
 var msqlUrl = "";
 
 if( GLOBAL.DEBUG){
-    msqlUrl ="mysql://root:123456@localhost:3306/badjs";
+    msqlUrl ="mysql://root:root@localhost:3306/badjs";
 }else {
     msqlUrl = 'mysql://badjs:pass4badjs@10.134.5.103:3306/badjs';
 }
@@ -66,6 +66,7 @@ app.use(orm.express(msqlUrl, {
         models.userDao = require('./dao/UserDao')(db);
         models.applyDao = require('./dao/ApplyDao')(db);
         models.approveDao = require('./dao/ApproveDao')(db);
+        models.statisticsDao = require('./dao/StatisticsDao')(db);
         models.db = db;
 
         global.models = models;

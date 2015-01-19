@@ -8,6 +8,7 @@ var LogAction = require('./action/LogAction'),
     ApplyAction = require('./action/ApplyAction'),
     UserAction = require("./action/UserAction"),
     IndexAction = require("./action/IndexAction"),
+    StatisticsAction = require("./action/StatisticsAction"),
     approveAction = require("./action/ApproveAction"),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
@@ -98,6 +99,7 @@ module.exports = function(app){
         var user  = req.session.user;
         res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' });
     });
+    app.get('/statistics.html',  StatisticsAction.index );
     /**
      * 登出
      * */
@@ -130,6 +132,7 @@ module.exports = function(app){
                 case "apply": ApplyAction[operation](params, res);break;
                 case "approve": ApproveAction[operation](params, res);break;
                 case "log" : LogAction[operation](params, res); break;
+                case "statistics" : StatisticsAction[operation](params, req, res); break;
             }
             return;
         }else{
