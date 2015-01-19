@@ -40,9 +40,17 @@ var applyAction = {
         });
     },
     queryListByUser : function (params,res) {
-
         var applyService = new ApplyService();
         applyService.queryListByUser(params,function(err, items){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, msg: "success", data:items});
+        });
+    },
+    queryListBySearch : function (params,res) {
+        var applyService = new ApplyService();
+        applyService.queryListBySearch(params,function(err, items){
             if(isError(res, err)){
                 return;
             }

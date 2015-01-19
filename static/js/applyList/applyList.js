@@ -34,6 +34,22 @@ define([
     }
     function bindEvent() {
 
+        //搜索
+        $("#apply_searchBtn").on("click", function () {
+            var searchParam = {
+                searchText:$("#apply_searchText").val(),
+                statusType:parseInt($("#apply_searchType").val(),10)
+            };
+            getSearchList(searchParam, function(data){
+                console.log(data);
+                var param = {
+                    encodeHtml: encodeHtml
+                };
+                $('.dataTable').html(applyTable(data, param));
+                //bindEvent();
+            });
+        });
+
         //审核
         $(".modifyBtn").on("click", function(){
             $(this).siblings(".approveBlock").show();
@@ -69,10 +85,24 @@ define([
                 location.reload();
             });
             e.stopPropagation();
-        })
+        });
 
     }
-
+    function getSearchList(params,cb){
+        $.get('./controller/applyAction/queryListBySearch.do',params, function (data) {
+            var ret = data.ret;
+            switch(ret){
+                case 0://成功
+                    //执行成功回调函数.
+                    cb(data.data);
+                    break;
+                case 1://没有登陆态或登陆态失效
+                    alert("失败");
+            }
+        }).fail(function () {
+            // 错误处理
+        });
+    }
     //获取列表页信息
     function getApplyList(cb){
         var params = {
