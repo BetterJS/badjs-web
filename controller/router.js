@@ -9,6 +9,7 @@ var LogAction = require('./action/LogAction'),
     UserAction = require("./action/UserAction"),
     IndexAction = require("./action/IndexAction"),
     ApproveAction = require("./action/ApproveAction"),
+    UserApplyAction = require("./action/UserApplyAction"),
     auth = require('../utils/auth'),
     tof = require('../oa/node-tof');
 
@@ -31,7 +32,7 @@ module.exports = function(app){
             userDao = req.models.userDao;
 
         if(GLOBAL.DEBUG ){
-            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1}
+            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
         }
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
@@ -94,10 +95,8 @@ module.exports = function(app){
         var user = req.session.user;
         res.render('applyList', { layout: false, user: user, index:'manage', title: '申请列表'});
     });
-    app.get('/userManage.html', function(req, res){
-        var user  = req.session.user;
-        res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' });
-    });
+    app.get('/userManage.html', UserAction.index);
+
     /**
      * 登出
      * */
@@ -130,6 +129,7 @@ module.exports = function(app){
                 case "apply": ApplyAction[operation](params, res);break;
                 case "approve": ApproveAction[operation](params, res);break;
                 case "log" : LogAction[operation](params, res); break;
+                case "userApply": UserApplyAction[operation](params, res);break;
                 default  : next();
             }
             return;

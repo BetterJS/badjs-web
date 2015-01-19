@@ -66,6 +66,7 @@ app.use(orm.express(msqlUrl, {
         models.userDao = require('./dao/UserDao')(db);
         models.applyDao = require('./dao/ApplyDao')(db);
         models.approveDao = require('./dao/ApproveDao')(db);
+        models.userApplyDao = require('./dao/UserApplyDao')(db);
         models.db = db;
 
         global.models = models;

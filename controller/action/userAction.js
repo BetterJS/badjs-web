@@ -5,6 +5,7 @@
 var log4js = require('log4js'),
     logger = log4js.getLogger(),
     UserService = require('../../service/UserService'),
+    BussiessService = require('../../service/BussiessService'),
     isError = function (res , error){
         if(error){
             res.json({ret : 1 , msg : error});
@@ -15,16 +16,43 @@ var log4js = require('log4js'),
 
 
 var userAction = {
+    index: function(req, res){
+        var params = req.query,
+            user  = req.session.user;
 
+        var bussiessService =  new BussiessService();
+
+        bussiessService.findBussiessByUser(user.loginName , function (err, item){
+            res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
+        });
+    },
     addUser: function(params, cb){
         var us = new UserService();
         us.add(params,cb);
     },
-    queryListByProject : function (params, res) {
+    queryListByCondition : function (params, res) {
+        var userService = new UserService();
+        //用户根据项目查询项目成员
+        if(params.applyId && params.role){
+            params.applyId -=0;
+            params.role -=0;
+        }else{
+            res.json({ret:1002, msg:"need some params"});
+            return;
+        }
+
+        userService.queryListByCondition(params,function(err, items){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, data:items, msg:"success"});
+        });
+    },
+    queryAllList : function (params, res) {
 
         var userService = new UserService();
         //用户根据项目查询项目成员
-        userService.queryListByProject(params,function(err, items){
+        userService.queryAllList(params,function(err, items){
             if(isError(res, err)){
                 return;
             }

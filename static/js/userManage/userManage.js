@@ -8,47 +8,77 @@ define([ '../dialog',
 ], function ( Dialog, userTable ) {
 
 
-    var   encodeHtml = function (str) {
+    var encodeHtml = function (str) {
         return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
     };
     function bindEvent() {
-        $(".userEditor .modifyBtn").on("click", function (){
+        $(".searchBtn").on("click", function (){
             var params ={
-                userid: $(this).data("userid")
+                userText : $(".search-userText").val(),
+                applyId  : $(".search-applyId").val() ,
+                role : $(".search-userType").val()
             };
-
-        })
-    }
-
-    //获取列表页信息
-    function getUserList(cb){
-        var params = {
-            abc:123
-        };
-        $.post('/controller/userAction/queryListByProject.do',params, function (data) {
-            var ret = data.ret;
-            switch(ret){
-                case 0://成功
-                    //执行成功回调函数.
-                    cb(data.data);
-                    break;
-                default ://没有登陆态或登陆态失效
-                    alert(data.msg);
+            //console.log(params);
+            $ajax("/controller/userAction/queryListByCondition.do",params,function(data){
+                console.log(data);
+                var param = {
+                    encodeHtml: encodeHtml
+                };
+                $('#userList').html(userTable(data, param));
+            });
+            //设置info
+            if(params.applyId ==-1){
+                $(".add-userName").attr("disabled","disabled");
+            }else{
+                $(".add-userName").removeAttr("disabled");
             }
-        }).fail(function () {
-            // 错误处理
+            $(".projectName").text( $(".search-applyId").find("option:selected").text());
+        });
+
+        $("#add-btn").on("click", function () {
+            var params ={
+                userName : $(".add-userName").val(),
+                applyId  : $(".search-applyId").val()
+            };
+            $ajax("/controller/userApplyAction/addUserApply.do", params, function(){
+                console.log(data);
+            })
+        })
+
+
+    }
+    function $ajax(url, params, cb,type){
+        $.ajax({
+            url: url,
+            data:params,
+            type: type?type:'post',
+            success: function(data) {
+                var ret = data.ret;
+                switch(ret){
+                    case 0://成功
+                        //执行成功回调函数.
+                        cb(data.data);
+                        break;
+                    default ://没有登陆态或登陆态失效
+                        alert(data.msg);
+                }
+            },
+            error: function() {
+               alert(data.msg);
+            }
         });
     }
 
-    function init() {
 
-        getUserList(function(data){
+    function init() {
+        $ajax("controller/userAction/queryAllList.do",{},function(data){
             console.log(data);
             var param = {
                 encodeHtml: encodeHtml
             };
             $('#userList').html(userTable(data, param));
         });
+
         bindEvent();
 
     }

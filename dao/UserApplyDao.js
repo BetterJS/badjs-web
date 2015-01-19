@@ -12,4 +12,4 @@ module.exports  = function (db){
         createTime  : Date
     });
     return user_apply;
-}
+};

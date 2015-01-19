@@ -8,19 +8,42 @@ var http = require('http'),
 
 
 
-var ApproveService = function (){
-    this.approveDao = global.models.approveDao;
-
+var userApplyService = function (){
+    this.userApplyDao = global.models.userApplyDao;
+    this.userDao = global.models.userDao;
 };
 
 
 
-ApproveService.prototype = {
+userApplyService.prototype = {
     query : function (target , callback){
 
 
     },
     add: function(target, callback){
+        var self = this;
+        var userApply ={
+            applyId : target.applyId,
+            role : 0,
+            createTime : new Date()
+        }
+        this.userDao.one({loginName:target.userName}, function(err, item){
+            if(err){
+                callback(err);
+            }
+            console.log(item)
+            if(item != []){
+                userApply.userId = item.id;
+                self.userApplyDao.create(userApply , function (err , items){
+                    if(err){
+                        callback(err);
+                    }
+                    logger.info("Insert into b_user_apply success! target1: ",items);
+                    callback(null);
+                });
+            }
+
+        })
 
 
     },
@@ -33,5 +56,5 @@ ApproveService.prototype = {
 }
 
 
-module.exports =  ApproveService;
+module.exports =  userApplyService;
 

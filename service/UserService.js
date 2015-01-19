@@ -12,19 +12,89 @@ var  log4js = require('log4js'),
 
 var UserService = function (){
     this.userDao = global.models.userDao;
+    this.userApplyDao = global.models.userApplyDao;
 };
 
 
 
 UserService.prototype = {
-    queryListByProject : function (target , callback){
+    queryListByCondition : function (target , callback){
+        var users;
+        var self = this,
+            params = {};
+        if(target !={}){
+            if(target.applyId !=-1){
+                params.applyId = target.applyId;
+            }
+            if(target.role !=-1){
+                params.role = target.role;
+            }
+        }
 
-        //var parmas = {applyId : target.applyId};
-        this.userDao.all({}, function (err , items){
+        console.log(params);
+        this.userApplyDao.find(params, function(err, userApply){
+            if(err){
+               callback(err);
+            }else{
+                users = userApply;
+                console.log(userApply);
+            }
+            self.userDao.all({}, function (err , userData){
+
+                if(err){
+                    callback(err);
+                }
+
+                if(users !=[]){
+                    var newItems = [];
+                    for(var i = 0, len= userData.length; i<len; i++){
+                        for(var j = 0, length = users.length; j<length; j++){
+                            if(userData[i].id == users[j].userId){
+                                userData[i].projectRole = users[j].role;
+                                newItems.push(userData[i]);
+                            }
+                        }
+
+                    }
+                    userData = newItems;
+                }
+                callback(null,userData);
+            });
+        });
+
+
+    },
+    queryAllList : function (target , callback){
+        var self = this;
+        params ={};
+        this.userApplyDao.find(params, function(err, userApply){
             if(err){
                 callback(err);
+            }else{
+                users = userApply;
+                console.log(userApply);
             }
-            callback(null,items);
+            self.userDao.all({}, function (err , userData){
+
+                if(err){
+                    callback(err);
+                }
+
+                if(users !=[]){
+                    var newItems = [];
+                    for(var i = 0, len= userData.length; i<len; i++){
+                        for(var j = 0, length = users.length; j<length; j++){
+                            if(userData[i].id == users[j].userId){
+                                userData[i].projectRole = users[j].role;
+                                newItems.push(userData[i]);
+                            }
+                        }
+
+                    }
+                    userData = newItems;
+                }
+                callback(null,userData);
+            });
         });
 
     },

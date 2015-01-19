@@ -51,7 +51,7 @@ define([
         });
 
         //审核
-        $(".modifyBtn").on("click", function(){
+        $("#approveBtn").on("click", function(){
             $(this).siblings(".approveBlock").show();
             tempStatus = $(this).siblings(".approveBlock").find("#statusPanel").data("value");
             oldClass = $(this).siblings(".approveBlock").find("#statusPanel").attr("class");

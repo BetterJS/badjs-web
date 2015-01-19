@@ -26,13 +26,14 @@ var applyAction = {
             res.json({ret:1002, msg:"params error"});
             return;
         }
+
         var apply = params;
         apply.userName = params.user.loginName;
         apply.createTime = new Date();
         apply.status = 0;
 
         var applyService = new ApplyService();
-        applyService.add(params,function(err, items){
+        applyService.add(apply,function(err, items){
             if(isError(res, err)){
                 return;
             }

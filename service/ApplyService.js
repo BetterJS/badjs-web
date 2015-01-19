@@ -11,6 +11,7 @@ var  log4js = require('log4js'),
 
 var ApplyService = function (){
     this.applyDao = global.models.applyDao;
+    this.userApplyDao = global.models.userApplyDao;
 };
 
 
@@ -54,14 +55,30 @@ ApplyService.prototype = {
         });
     },
     add: function(target, callback){
-        this.applyDao.create(target , function (err , items){
+        var self = this;
+        var userId = target.user.id;
+        this.applyDao.create(target , function (err , newApply){
             if(err){
                 callback(err);
             }
             if(GLOBAL.DEBUG){
-                logger.info("Insert into b_apply success! target1: ",target);
+                logger.info("Insert into b_apply success! target1: ",newApply);
             }
-            callback(null);
+            //创建项目的即为管理员 故role ==1
+            var userApply = {
+                userId : userId,
+                applyId : newApply.id,
+                role: 1,
+                createTime : new Date()
+            };
+            console.log(userApply);
+            self.userApplyDao.create(userApply, function (err, items) {
+                if(err){
+                    callback(err);
+                }
+                callback(null);
+            })
+
         });
     },
     remove : function(target, callback){

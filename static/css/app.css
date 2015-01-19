@@ -433,7 +433,7 @@ form {
     border: 1px solid #aaa;
     cursor: pointer;
     border-radius: 12px;
-    width: 70px;
+    padding: 3px 15px;
     height: 26px;
     text-align: center;
     position: relative;
@@ -511,6 +511,21 @@ form {
     padding:10px 20px ;
     font-family: "微软雅黑";
 }
+ .ListTable .operationPanel{
+     display: inline-block;
+     vertical-align: text-bottom;
+     margin-left: 30px;
+ }
+.infoPanel .info{
+     font-size: 18px;
+     font-family: "微软雅黑";
+     line-height: 45px;
+     font-weight: bold;
+ }
+
+ .ListTable .infoPanel .projectName{
+     font-size: 22px;
+ }
 .ListTable .tableTitle{
     font-size: 24px;
     font-weight: bold;
