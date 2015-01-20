@@ -32,9 +32,9 @@ module.exports = function(app){
             //获取用户model
             userDao = req.models.userDao;
 
-        if(GLOBAL.DEBUG ){
-            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
-        }
+//        if(GLOBAL.DEBUG ){
+//            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
+//        }
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
@@ -63,6 +63,7 @@ module.exports = function(app){
                         }else{
                            logger.info("Old User:"+ req.session.user);
                            req.session.user.role = user.role;
+                           req.session.user.id = user.id;
                         }
                         next();
                     })
@@ -71,11 +72,11 @@ module.exports = function(app){
                     res.send(403, 'Sorry! you can not see that.');
                 }
             });
-        } else  if(req.session.user){ // 已经登录
-            next();
-            return;
-        }else {
+        } else  if(!req.session.user){
             res.redirect(req.protocol + "://" + req.get('host') + '/login');
+            return ;
+        } else {
+            next();
         }
 
 

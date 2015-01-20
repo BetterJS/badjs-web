@@ -3,7 +3,7 @@
  */
 
 
-var BussiessService = require('../../service/BussiessService');
+var BusinessService = require('../../service/BusinessService');
 
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
@@ -15,9 +15,9 @@ var IndexAction = {
         var params = req.query,
             user  = req.session.user;
 
-        var bussiessService =  new BussiessService();
+        var businessService =  new BusinessService();
 
-        bussiessService.findBussiessByUser(user.loginName , function (err, item){
+        businessService.findBusinessByUser(user.loginName , function (err, item){
             res.render('log', { layout: false, user: user, index:"log" , items : item} );
         });
 

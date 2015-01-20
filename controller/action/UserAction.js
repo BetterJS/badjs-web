@@ -5,7 +5,7 @@
 var log4js = require('log4js'),
     logger = log4js.getLogger(),
     UserService = require('../../service/UserService'),
-    BussiessService = require('../../service/BussiessService'),
+    BusinessService = require('../../service/BusinessService'),
     isError = function (res , error){
         if(error){
             res.json({ret : 1 , msg : error});
@@ -20,9 +20,9 @@ var userAction = {
         var params = req.query,
             user  = req.session.user;
 
-        var bussiessService =  new BussiessService();
+        var businessService =  new BusinessService();
 
-        bussiessService.findBussiessByUser(user.loginName , function (err, item){
+        businessService.findBusinessByUser(user.loginName , function (err, item){
             res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
         });
     },

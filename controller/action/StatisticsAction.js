@@ -3,7 +3,7 @@
  */
 
 
-var BussiessService = require('../../service/BussiessService'),
+var BusinessService = require('../../service/BusinessService'),
     _ = require('underscore'),
     StatisticsService = require('../../service/StatisticsService');
 
@@ -17,9 +17,9 @@ var StatisticsAction = {
         var params = req.query,
             user  = req.session.user;
 
-        var bussiessService =  new BussiessService();
+        var businessService =  new BusinessService();
 
-        bussiessService.findBussiessByUser(user.loginName , function (err, item){
+        businessService.findBusinessByUser(user.loginName , function (err, item){
             res.render('statistics', { layout: false, user: user, index:'statistics', title: '日志统计' ,  items : item});
         });
     },
