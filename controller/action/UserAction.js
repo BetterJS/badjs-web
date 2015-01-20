@@ -22,7 +22,7 @@ var userAction = {
 
         var businessService =  new BusinessService();
 
-        businessService.findBusinessByUser(user.loginName , function (err, item){
+        businessService.findBusinessByProjectOwner(user.loginName , function (err, item){
             res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
         });
     },
