@@ -58,7 +58,11 @@ module.exports = function(app){
                                 if(isError(res, err)){
                                     return;
                                 }
+
+                                req.session.user.role = result.role;
+                                req.session.user.id = result.id;
                                 logger.info("New User:"+ req.session.user + "insert into db-badjs");
+                                next();
                             });
                         }else{
                            logger.info("Old User:"+ req.session.user);
@@ -71,9 +75,9 @@ module.exports = function(app){
                                 user.save( function(err, result){
                                 });
                             }
-
+                            next();
                         }
-                        next();
+
                     })
 
                 }else {
