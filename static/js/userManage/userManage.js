@@ -43,16 +43,17 @@ define([ '../dialog',
                 userName : $(".add-userName").val(),
                 applyId  : $(".search-applyId").val()
             };
-            $ajax("/controller/userApplyAction/addUserApply.do", params, function(){
-                console.log(data);
+            $ajax("/controller/userApplyAction/addUserApply.do", params, function(data){
+                alert(data.msg);
+                location.reload();
             })
         });
-
-        $(".user-deleteBtn").on("click", function (){
+        //事件委托哈
+        $("#userList").on("click",'.user-deleteBtn', function (){
             var param = {
-                id : $(this).data('uad')
+                id : $(this).data().uaid
             };
-            console.log(param);
+
         });
     };
 
@@ -87,9 +88,10 @@ define([ '../dialog',
                 encodeHtml: encodeHtml
             };
             $('#userList').html(userTable(data, param));
-        });
 
+        });
         bindEvent();
+
 
     }
 

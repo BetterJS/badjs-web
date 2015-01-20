@@ -26,17 +26,21 @@ userApplyService.prototype = {
             applyId : target.applyId,
             role : 0,
             createTime : new Date()
-        }
+        };
+
         this.userDao.one({loginName:target.userName}, function(err, item){
             if(err){
                 callback(err);
             }
+
            // console.log(item);
-            if(item&& item.length >0){
+            if(item){
                 userApply.userId = item.id;
+
                 self.userApplyDao.create(userApply , function (err , items){
                     if(err){
                         callback(err);
+                        return;
                     }
                     logger.info("Insert into b_user_apply success! target1: ",items);
                     callback(null);

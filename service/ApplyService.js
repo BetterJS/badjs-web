@@ -17,6 +17,16 @@ var ApplyService = function (){
 
 
 ApplyService.prototype = {
+
+    queryListByAdmin : function (target , callback){
+
+        this.applyDao.find(["createTime", "Z"], function (err , items){
+            if(err){
+                callback(err);
+            }
+            callback(null,items);
+        });
+    },
     queryListByUser : function (target , callback){
         this.applyDao.find({userName: target.user.loginName},["createTime", "Z"], function (err , items){
             if(err){

@@ -51,7 +51,7 @@ define([
         });
 
         //审核
-        $("#approveBtn").on("click", function(){
+        $("#applyList").on("click",".approveBtn", function(){
             $(this).siblings(".approveBlock").show();
             tempStatus = $(this).siblings(".approveBlock").find("#statusPanel").data("value");
             oldClass = $(this).siblings(".approveBlock").find("#statusPanel").attr("class");
@@ -107,7 +107,7 @@ define([
     function getApplyList(cb){
         var params = {
         };
-        $.get('./controller/applyAction/queryListByUser.do',params, function (data) {
+        $.get('./controller/applyAction/queryListByAdmin.do',params, function (data) {
             var ret = data.ret;
             switch(ret){
                 case 0://成功

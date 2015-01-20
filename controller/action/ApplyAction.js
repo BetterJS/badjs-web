@@ -49,6 +49,20 @@ var applyAction = {
             res.json({ret:0, msg: "success", data:items});
         });
     },
+    queryListByAdmin : function (params,res) {
+        var applyService = new ApplyService();
+        //不是管理员的话直接返回错误提示
+        if(params.user.role !=1){
+            res.json({ret:1003, msg: "权限不足"});
+            return;
+        }
+        applyService.queryListByAdmin(params,function(err, items){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, msg: "success", data:items});
+        });
+    },
     queryListBySearch : function (params,res) {
         var applyService = new ApplyService();
         applyService.queryListBySearch(params,function(err, items){
