@@ -37,7 +37,7 @@ userApplyService.prototype = {
             if(item){
                 userApply.userId = item.id;
 
-                self.userApplyDao.create(userApply , function (err , items){
+                this.userApplyDao.create(userApply , function (err , items){
                     if(err){
                         callback(err);
                         return;
@@ -45,6 +45,8 @@ userApplyService.prototype = {
                     logger.info("Insert into b_user_apply success! target1: ",items);
                     callback(null);
                 });
+            }else {
+                callback();
             }
 
 

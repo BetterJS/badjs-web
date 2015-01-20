@@ -15,7 +15,7 @@ BusinessService.prototype = {
 
     findBusinessByUser : function (userName , callback){
 
-        var string = "select ua.id, u.loginName, u.chineseName, ua.applyId, ua.role, a.name "+
+        var string = "select a.id, u.loginName, u.chineseName, ua.role, a.name "+
             "from  b_user as u join b_user_apply as ua on(ua.userId = u.id) "+
             "join b_apply as a on (a.id =ua.applyId) "+
             "where  a.status=? and u.loginName=? ";
