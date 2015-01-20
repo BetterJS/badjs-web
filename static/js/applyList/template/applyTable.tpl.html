@@ -26,9 +26,11 @@
     var STATUS_BLOCK_HEIGHT = 24;
     var status = 'applying-active';
     var statusText = '待审核';
+    var statusClass = 'applyingBtn'
     if(it[i].status != 0){
         status = it[i].status ==1 ? 'agree-active' : 'disagree-active';
         statusText = it[i].status ==1 ? '已通过' : '已拒绝';
+        statusClass = it[i].status ==1 ? 'passBtn' : 'rejectedBtn';
     }
 %>
 <tr class="listRow" >
@@ -41,7 +43,7 @@
     <td class="apply_url"><%==it[i].url%></td>
 
     <td class="apply_operation">
-        <div  class="modifyBtn approveBtn">
+        <div  class="modifyBtn approveBtn <%=statusClass%>">
             <%== statusText%>
         </div>
         <div class="approveBlock" >
@@ -52,7 +54,7 @@
             <div id="statusPanel" class="<%== status%>" data-value="<%== it[i].status%>">
                 <div class="statusBtn applying" data-type="applying" data-value="0">待审核</div>
                 <div class="statusBtn agree" data-type="agree" data-value="1">通过</div>
-                <div class="statusBtn disagree" data-type="disagree" data-value="2">失败</div>
+                <div class="statusBtn disagree" data-type="disagree" data-value="2">拒绝</div>
             </div>
 
             <div class="operation" data-apply_id="<%==it[i].id%>">

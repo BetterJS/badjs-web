@@ -583,4 +583,20 @@ form {
     padding: 10px 0 ;
 }
 
+.approveBtn {
+    background: white;
+}
+
+.applyingBtn{
+    color: orange;
+}
+
+.passBtn{
+    color:green;
+}
+
+.rejectedBtn{
+    color:red;
+}
+
 

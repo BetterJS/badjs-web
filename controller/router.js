@@ -32,9 +32,9 @@ module.exports = function(app){
             //获取用户model
             userDao = req.models.userDao;
 
-        if(GLOBAL.DEBUG ){
-            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
-        }
+//        if(GLOBAL.DEBUG ){
+//            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
+//        }
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
@@ -68,7 +68,7 @@ module.exports = function(app){
                             // 尚未登录过， 但是添加过，分配中文名字
                             if(!user.chineseName){
                                 user.chineseName = result.ChineseName;
-                                userDao.update(user, function(err, result){
+                                user.save( function(err, result){
                                 });
                             }
 

@@ -5,6 +5,8 @@
 
 var http = require('http');
 
+var  Apply = require('../model/Apply');
+
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
 
@@ -112,8 +114,8 @@ UserService.prototype = {
             "from  b_user as u join b_user_apply as ua on(ua.userId = u.id) "+
             "join b_apply as a on (a.id =ua.applyId) "+
             "where applyId in(select applyId from b_user_apply where userId =? "+
-            " and role = 1) ";
-        var condition = [target.user.id];
+            " and role = 1) and  a.status=? ";
+        var condition = [target.user.id , Apply.STATUS_PASS ];
         if(target.applyId !=-1){
             string += "and applyId =? ";
             condition.push(target.applyId);
