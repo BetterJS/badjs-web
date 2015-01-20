@@ -7,11 +7,11 @@
 <tr class="listRow">
     <td><%== i+1%></td>
     <td><%== it[i].loginName%></td>
-    <td><%== it[i].chineseName%></td>
+    <td><%== it[i].chineseName?it[i].chineseName:"无"%></td>
     <td><%== it[i].name%></td>
     <td><%== role%></a></td>
     <td>
-        <button class="user-modifyBtn btn-default modifyBtn" data-uaid = "<%== it[i].id%>">修改</button>
+        <!--<button class="user-modifyBtn btn-default modifyBtn" data-uaid = "<%== it[i].id%>">修改</button>-->
         <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "<%== it[i].id%>">删除</button>
     </td>
 </tr>

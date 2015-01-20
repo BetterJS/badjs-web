@@ -32,9 +32,9 @@ module.exports = function(app){
             //获取用户model
             userDao = req.models.userDao;
 
-//        if(GLOBAL.DEBUG ){
-//            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
-//        }
+        if(GLOBAL.DEBUG ){
+            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
+        }
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 

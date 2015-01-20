@@ -17,6 +17,10 @@ var log4js = require('log4js'),
 var userAction = {
     addUserApply: function(userApply, res){
 
+        if(userApply.userName ==""){
+            res.json({ret: 1002, msg: "userName为空"});
+            return;
+        }
         userApply.createTime = new Date();
         var userApplyService = new UserApplyService();
         userApplyService.add(userApply,function(err, items) {
@@ -28,11 +32,21 @@ var userAction = {
     },
 
 
-    update:function(req, res){
-
-    },
-    remove: function(){
-
+    //update:function(req, res){
+    //
+    //},
+    remove: function(remove, res){
+        if(remove.id ==""){
+            res.json({ret: 1002, msg: "id为空"});
+            return;
+        }
+        var userApplyService = new UserApplyService();
+        userApplyService.remove(remove,function(err, items) {
+            if (isError(res, err)) {
+                return;
+            }
+            res.json({ret: 0, msg: "success-add"});
+        });
 
     }
 

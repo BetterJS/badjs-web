@@ -27,26 +27,36 @@ userApplyService.prototype = {
             role : 0,
             createTime : new Date()
         };
-
         this.userDao.one({loginName:target.userName}, function(err, item){
             if(err){
                 callback(err);
             }
-
-           // console.log(item);
             if(item){
                 userApply.userId = item.id;
 
-                this.userApplyDao.create(userApply , function (err , items){
+                self.userApplyDao.create(userApply , function (err , items){
                     if(err){
                         callback(err);
                         return;
                     }
                     logger.info("Insert into b_user_apply success! target1: ",items);
                     callback(null);
+                    return;
                 });
             }else {
-                callback();
+               var newUser = {
+                   loginName : target.userName,
+                   role : 0,
+                   createTime : new Date()
+               };
+               self.userDao.create(newUser,function(err, newUser){
+                   if(err){
+                       callback(err);
+                       return;
+                   }
+                   logger.info("Insert into b_user success! target1: ",newUser);
+                   self.add(target, callback);
+               })
             }
 
 
@@ -55,7 +65,22 @@ userApplyService.prototype = {
 
     },
     remove : function(target, callback){
-
+        this.userApplyDao.one({id: target.id}, function (err, item) {
+            if(err){
+                callback(err);
+                return;
+            }
+            item.remove(function(err) {
+                if (err) {
+                    callback(err);
+                    return;
+                }
+                if (GLOBAL.DEBUG) {
+                    logger.info("remove success item: " + item);
+                }
+                callback(null);
+            });
+        })
     },
     update : function(target, callback){
 

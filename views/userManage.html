@@ -13,9 +13,8 @@
                     <option value="-1">全部</option>
                     <%  for(var i = 0 ; i < it.items.length ;i ++){
                     var itemOne = it.items[i];
-
                     %>
-                    <option value=" <%=itemOne.id%>"> <%=itemOne.name%></option>
+                    <option value="<%=itemOne.id%>"> <%=itemOne.name%></option>
                     <%}%>
                 </select>
                 <label >用户类型</label>

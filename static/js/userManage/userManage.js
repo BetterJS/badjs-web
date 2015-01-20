@@ -14,28 +14,7 @@ define([ '../dialog',
     function bindEvent() {
 
         $(".searchBtn").on("click", function (){
-            var params ={
-                userText : $(".search-userText").val(),
-                applyId  : $(".search-applyId").val() ,
-                role : $(".search-userType").val()
-            };
-            //console.log(params);
-            $ajax("/controller/userAction/queryListByCondition.do",params,function(data){
-                console.log(data);
-                var param = {
-                    encodeHtml: encodeHtml
-                };
-                $('#userList').html(userTable(data, param));
-            });
-            //设置info
-            if(params.applyId ==-1){
-                $(".add-userName").attr("disabled","disabled");
-                $("#add-btn").attr("disabled","disabled");
-            }else{
-                $(".add-userName").removeAttr("disabled");
-                $("#add-btn").removeAttr("disabled");
-            }
-            $(".projectName").text( $(".search-applyId").find("option:selected").text());
+            reloadPage();
         });
 
         $("#add-btn").on("click", function () {
@@ -43,20 +22,37 @@ define([ '../dialog',
                 userName : $(".add-userName").val(),
                 applyId  : $(".search-applyId").val()
             };
+            console.log(params);
             $ajax("/controller/userApplyAction/addUserApply.do", params, function(data){
-                alert(data.msg);
-                location.reload();
-            })
+                reloadPage();
+            });
         });
         //事件委托哈
         $("#userList").on("click",'.user-deleteBtn', function (){
-            var param = {
+            var params = {
                 id : $(this).data().uaid
             };
+            if(window.confirm('你确定要删除该用户吗？')){
+                $ajax("/controller/userApplyAction/remove.do", params, function(data){
+                    location.reload();
+                });
+            }else{
+                return false;
+            }
 
         });
     };
 
+    function reloadPage(){
+        var params ={
+            userText : $(".search-userText").val(),
+            applyId  : $(".search-applyId").val(),
+            role : $(".search-userType").val()
+        };
+        var url = "/userManage.html";
+        url += "?applyId=" + params.applyId + "&role=" + params.role + "&userText=" + params.userText;
+        location.href = url;
+    }
     function $ajax(url, params, cb,type){
         $.ajax({
             url: url,
@@ -67,7 +63,7 @@ define([ '../dialog',
                 switch(ret){
                     case 0://成功
                         //执行成功回调函数.
-                        cb(data.data);
+                        cb(data);
 
                         break;
                     default ://没有登陆态或登陆态失效
@@ -75,21 +71,56 @@ define([ '../dialog',
                 }
             },
             error: function() {
-               alert(data.msg);
+               console(data);
             }
         });
     }
-
+    $.extend({
+        getUrlVars: function(){
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        },
+        getUrlVar: function(name){
+            return $.getUrlVars()[name];
+        }
+    });
 
     function init() {
-        $ajax("controller/userAction/queryListByUserProject.do",{},function(data){
-            console.log(data);
+        var urlParams = $.getUrlVars();
+        var params ={
+            userText :urlParams.userText || '' ,
+            applyId  : urlParams.applyId || -1 ,
+            role : urlParams.role || -1
+        };
+        $ajax("controller/userAction/queryListByCondition.do",params,function(items){
+            console.log(items);
             var param = {
                 encodeHtml: encodeHtml
             };
-            $('#userList').html(userTable(data, param));
+            $('#userList').html(userTable(items.data, param));
 
         });
+        //设置初始搜索框内容
+        $(".search-userText").val(params.userText);
+        $(".search-applyId").val(params.applyId);
+        $(".search-userType").val(params.role);
+
+        //设置info
+        if(params.applyId ==-1){
+            $(".add-userName").attr("disabled","disabled");
+            $("#add-btn").attr("disabled","disabled");
+        }else{
+            $(".add-userName").removeAttr("disabled");
+            $("#add-btn").removeAttr("disabled");
+        }
+        $(".projectName").text( $(".search-applyId").find("option:selected").text());
         bindEvent();
 
 

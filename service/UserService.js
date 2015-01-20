@@ -115,14 +115,14 @@ UserService.prototype = {
             " and role = 1) ";
         var condition = [target.user.id];
         if(target.applyId !=-1){
-            string += "and applyId =?";
+            string += "and applyId =? ";
             condition.push(target.applyId);
         }
         if(target.role !=-1){
-            string += "and ua.role =?";
+            string += "and ua.role =? ";
             condition.push(target.role);
         }
-       // console.log(string);
+        console.log(string);
         this.db.driver.execQuery(string,condition, function (err, data) {
             if(err){
                 callback(err);
