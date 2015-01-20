@@ -1,17 +1,18 @@
 <% for(var i =0, len = it.length;i<len; i++){
     var role ="参与者";
-    if(it[i].projectRole ==1){
+    if(it[i].role ==1){
         role ="项目管理员";
     }
 %>
 <tr class="listRow">
-    <td><%== it[i].id%></td>
+    <td><%== i+1%></td>
     <td><%== it[i].loginName%></td>
     <td><%== it[i].chineseName%></td>
+    <td><%== it[i].name%></td>
     <td><%== role%></a></td>
     <td>
-        <button data-userid = "<%== it[i].id%>"  class="btn-default modifyBtn">修改</button>
-        <button data-userid = "<%== it[i].id%>"  class="btn-default modifyBtn">删除</button>
+        <button class="user-modifyBtn btn-default modifyBtn"data-uad = "<%== it[i].uad%>">修改</button>
+        <button class="user-deleteBtn btn-default modifyBtn"data-uad = "<%== it[i].uad%>">删除</button>
     </td>
 </tr>
 <%}%>

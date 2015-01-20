@@ -31,8 +31,8 @@ userApplyService.prototype = {
             if(err){
                 callback(err);
             }
-            console.log(item)
-            if(item != []){
+           // console.log(item);
+            if(item&& item.length >0){
                 userApply.userId = item.id;
                 self.userApplyDao.create(userApply , function (err , items){
                     if(err){
@@ -42,6 +42,7 @@ userApplyService.prototype = {
                     callback(null);
                 });
             }
+
 
         })
 

@@ -59,7 +59,16 @@ var userAction = {
             res.json({ret:0, data:items, msg:"success"});
         });
     },
-
+    queryListByUserProject : function(params, res){
+        var userService = new UserService();
+        //用户根据项目查询项目成员
+        userService.queryListByUserProject(params,function(err, items){
+            if(isError(res, err)){
+                return;
+            }
+            res.json({ret:0, data:items, msg:"success"});
+        });
+    },
     update:function(req, res){
 
     },

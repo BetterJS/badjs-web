@@ -22,9 +22,8 @@ BussiessService.prototype = {
 
         })
 
-
-
     }
+
 }
 
 module.exports = BussiessService;
