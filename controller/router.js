@@ -64,6 +64,14 @@ module.exports = function(app){
                            logger.info("Old User:"+ req.session.user);
                            req.session.user.role = user.role;
                            req.session.user.id = user.id;
+
+                            // 尚未登录过， 但是添加过，分配中文名字
+                            if(!user.chineseName){
+                                user.chineseName = result.ChineseName;
+                                userDao.update(user, function(err, result){
+                                });
+                            }
+
                         }
                         next();
                     })
