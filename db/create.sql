@@ -76,10 +76,11 @@ DROP TABLE IF EXISTS `b_user`;
 CREATE TABLE `b_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `loginName` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `chineseName` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `chineseName` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `role` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 
 --
