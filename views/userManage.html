@@ -6,9 +6,9 @@
         <!--<%=include('/common/leftSide.html')(it, opt)%>-->
         <div class="contentPanel">
             <div class="searchPanel clearfix">
-                <label>搜索信息</label>
-                <input type="text" class="search-userText" placeholder="姓名或id">
-                <label >当前项目</label>
+                <label class="search-info">搜索信息</label>
+                <input type="text" class="search-userText" placeholder="姓名（此功能暂时没有用)">
+                <label class="search-info">当前项目</label>
                 <select class="search-applyId">
                     <option value="-1">全部</option>
                     <%  for(var i = 0 ; i < it.items.length ;i ++){
@@ -17,7 +17,7 @@
                     <option value="<%=itemOne.id%>"> <%=itemOne.name%></option>
                     <%}%>
                 </select>
-                <label >用户类型</label>
+                <label class="search-info">用户类型</label>
                 <select class="search-userType">
                         <option value="-1">全部</option>
                         <option value="1">管理员</option>

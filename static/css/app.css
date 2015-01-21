@@ -424,6 +424,28 @@ form {
     padding: 10px;
     margin: 0 20px;
     border: 1px solid #cdcaca;
+    font-family: "微软雅黑";
+    font-size: 16px;
+}
+.searchPanel .search-info{
+    margin:0 10px 0 20px;
+}
+.searchPanel select{
+    width: 160px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.searchPanel button{
+    vertical-align: bottom;
+    margin-left: 20px;
+    width: 80px;
 }
 .btn-long{
     min-width: 100px;

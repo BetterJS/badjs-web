@@ -20,7 +20,7 @@ var StatisticsAction = {
         var businessService =  new BusinessService();
 
         businessService.findBusinessByUser(user.loginName , function (err, item){
-            res.render('statistics', { layout: false, user: user, index:'statistics', title: '日志统计' ,  items : item});
+            res.render('statistics', { layout: false, user: user, index:'statistics' ,  items : item});
         });
     },
 
