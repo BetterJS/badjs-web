@@ -26,12 +26,6 @@
                 <a href="apply.html">申请接入</a>
             </li>
             <li class="item items <%= it.index=='manage'?'active':''%>">
-
-                <% if(it.user.role == 0) {%>
-
-                <a  href="userManage.html">用户列表</a>
-
-                <%}else {%>
                 <a><%= it.title?it.title:"管理" %></a>
                 <ul class="subNav">
                     <li class="item">
@@ -44,7 +38,6 @@
                         <!--<a href=""></a>-->
                     <!--</li>-->
                 </ul>
-                <%}%>
             </li>
             <li class="item items <%= it.index==('systemIntroduce'||'guide')?'active':''%>">
                 <a>帮助</a>

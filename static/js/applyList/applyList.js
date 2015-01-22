@@ -107,7 +107,7 @@ define([
     function getApplyList(cb){
         var params = {
         };
-        $.get('./controller/applyAction/queryListByAdmin.do',params, function (data) {
+        $.get('./controller/applyAction/queryListByUser.do',params, function (data) {
             var ret = data.ret;
             switch(ret){
                 case 0://成功

@@ -13,7 +13,7 @@ var  log4js = require('log4js'),
 
 var approveAction = {
 
-   doApprove: function(params, res){
+   doApprove: function(params, req , res){
         var approve = params;
         approve.createTime = new Date();
         approve.userName = params.user.loginName;

@@ -16,7 +16,7 @@ var LogService = require('../../service/LogService'),
     };
 
 var LogAction = {
-    queryLogList : function (params,res) {
+    queryLogList : function (params, req , res) {
 
         var logService = new LogService();
 

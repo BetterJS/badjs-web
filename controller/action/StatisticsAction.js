@@ -13,7 +13,7 @@ var  log4js = require('log4js'),
 var StatisticsAction = {
 
 
-    index :  function(req, res){
+    index :  function( req, res){
         var params = req.query,
             user  = req.session.user;
 

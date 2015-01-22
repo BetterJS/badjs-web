@@ -35,7 +35,7 @@ var processData = function (data){
 
 var applyAction = {
 
-    addApply: function(params, res){
+    addApply: function(params, req , res){
         //必要信息为空，则报错
         if(params.name == "" || params.url ==""){
             res.json({ret:1002, msg:"params error"});
@@ -55,16 +55,26 @@ var applyAction = {
             res.json({ret:0, msg: "success-add"});
         });
     },
-    queryListByUser : function (params,res) {
+    queryListByUser : function (params, req , res) {
         var applyService = new ApplyService();
-        applyService.queryListByUser(params,function(err, items){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, msg: "success", data: processData(items)});
-        });
+        if(params.user.role !=1){
+            applyService.queryListByUser(params,function(err, items){
+                if(isError(res, err)){
+                    return;
+                }
+                res.json({ret:0, msg: "success", data: {role :params.user.role , item :  processData(items)}});
+            });
+        }else {
+            applyService.queryListByAdmin(params,function(err, items){
+                if(isError(res, err)){
+                    return;
+                }
+                res.json({ret:0, msg: "success", data: {role :params.user.role , item :  processData(items)}});
+            });
+        }
+
     },
-    queryListByAdmin : function (params,res) {
+    queryListByAdmin : function (params, req , res) {
         var applyService = new ApplyService();
         //不是管理员的话直接返回错误提示
         if(params.user.role !=1){
@@ -78,13 +88,24 @@ var applyAction = {
             res.json({ret:0, msg: "success", data: processData(items)});
         });
     },
-    queryListBySearch : function (params,res) {
+    queryListBySearch : function (params, req , res) {
         var applyService = new ApplyService();
-        applyService.queryListBySearch(params,function(err, items){
+
+        var searchParam = {};
+        if(params.user.role !=1){
+            searchParam.userName  = params.user.loginName;
+        }
+
+        //搜索全部
+        if(params.statusType != 3){
+            searchParam.status = params.statusType;
+        }
+
+        applyService.queryListBySearch(searchParam,function(err, items){
             if(isError(res, err)){
                 return;
             }
-            res.json({ret:0, msg: "success", data: processData(items)});
+            res.json({ret:0, msg: "success", data: {role :params.user.role , item :processData(items)}});
         });
     },
     update:function(params,cb){

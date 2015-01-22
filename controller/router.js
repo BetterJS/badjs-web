@@ -94,9 +94,13 @@ module.exports = function(app){
 
 
     //html页面请求
-    app.get('/', IndexAction.index);
+    app.get('/', function (req , res){
+        IndexAction.index({} , req , res);
+    });
 
-    app.get('/index.html',IndexAction.index  );
+    app.get('/index.html', function (req , res){
+        IndexAction.index({} , req , res);
+    } );
 
     app.get('/apply.html', function(req, res){
         var user  = req.session.user;
@@ -107,9 +111,13 @@ module.exports = function(app){
         res.render('applyList', { layout: false, user: user, index:'manage', title: '申请列表'});
     });
 
-    app.get('/userManage.html', UserAction.index);
+    app.get('/userManage.html', function (req , res){
+        UserAction.index({} , req , res);
+    });
 
-    app.get('/statistics.html',  StatisticsAction.index );
+    app.get('/statistics.html' , function (req , res){
+        StatisticsAction.index({} , req , res);
+    });
 
     /**
      * 登出
@@ -140,11 +148,11 @@ module.exports = function(app){
             //根据不同actionName 调用不同action
             try{
                 switch(action){
-                    case "user": UserAction[operation](params, res);break;
-                    case "apply": ApplyAction[operation](params, res);break;
-                    case "approve": ApproveAction[operation](params, res);break;
-                    case "log" : LogAction[operation](params, res); break;
-                    case "userApply": UserApplyAction[operation](params, res);break;
+                    case "user": UserAction[operation](params,req, res);break;
+                    case "apply": ApplyAction[operation](params,req,  res);break;
+                    case "approve": ApproveAction[operation](params,req, res);break;
+                    case "log" : LogAction[operation](params,req, res); break;
+                    case "userApply": UserApplyAction[operation](params,req, res);break;
                     case "statistics" : StatisticsAction[operation](params, req, res); break;
 
                     default  : next();

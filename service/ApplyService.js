@@ -35,33 +35,14 @@ ApplyService.prototype = {
             callback(null,items);
         });
     },
-    queryListBySearch : function (target , callback){
+    queryListBySearch : function (searchParam , callback){
 
-        var searchParam={
-            userName: target.user.loginName
-        };
-        //搜索全部
-        if(target.statusType != 3){
-            searchParam.status = target.statusType;
-        }
+
         this.applyDao.find(searchParam ,["createTime", "Z"], function (err , items){
             if(err){
                 callback(err);
             }
-            if(target.searchText ||target.searchText != ''){
-                var newItem = [];
-                for(var i = 0, len =  items.length; i<len; i++){
-                    //console.log(items[i].name.indexOf(target.searchText));
-                    if(items[i].name.indexOf(target.searchText)!=-1){
-                        newItem.push(items[i]);
-                    }
-                }
-                callback(null,newItem);
-            }else{
-                callback(null,items);
-            }
-
-
+            callback(null,items);
         });
     },
     add: function(target, callback){
