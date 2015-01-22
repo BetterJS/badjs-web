@@ -9,8 +9,9 @@
 <tr>
     <!--<th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>-->
     <th>#</th>
-    <th>项目名称</th>
-    <th>项目申请人</th>
+    <th>上报id</th>
+    <th>名称</th>
+    <th>申请人</th>
     <th>申请时间</th>
     <th style="width:30%;">业务描述</th>
     <th>业务网址</th>
@@ -32,13 +33,15 @@
         statusText = it[i].status ==1 ? '已通过' : '已拒绝';
         statusClass = it[i].status ==1 ? 'passBtn' : 'rejectedBtn';
     }
+
 %>
 <tr class="listRow" >
     <!--<td><input class="tableSelectCheckBox" type="checkbox"/></td>-->
-    <td class="apply_id"><%==it[i].id%></td>
+    <td class=""><%=(i +1)%></td>
+    <td class="apply_id" style="text-align: center;"><%==it[i].id%></td>
     <td class="apply_name"><%==it[i].name%></td>
     <td class="apply_userName"><%==it[i].userName%></td>
-    <td class="apply_createTime"><%== it[i].createTime%></td>
+    <td class="apply_createTime"><%= _.formatDate( new Date(it[i].createTime) , 'YYYY-MM-DD' )%></td>
     <td  class="apply_description"><%== it[i].description%></td>
     <td class="apply_url"><%==it[i].url%></td>
 
