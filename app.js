@@ -88,3 +88,9 @@ server.listen(80);
 logger.info('start badjs-web , listen 80 ...');
 
 
+
+setTimeout(function (){
+    var service = require("./service/StatisticsService");
+    console.log('start startMonitor ...');
+    new service().startMonitor();
+},3000)
