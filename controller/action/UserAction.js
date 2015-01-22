@@ -22,9 +22,16 @@ var userAction = {
 
         var businessService =  new BusinessService();
 
-        businessService.findBusinessByProjectOwner(user.loginName , function (err, item){
-            res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
-        });
+        if(user.role == 1 ){
+            businessService.findBusiness(  function (err, item){
+                res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
+            });
+        }else {
+            businessService.findBusinessByProjectOwner(user.loginName , function (err, item){
+                res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
+            });
+        }
+
     },
     addUser: function(params, cb){
         var us = new UserService();
