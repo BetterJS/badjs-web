@@ -29,25 +29,11 @@ module.exports = function(app){
     app.use(function (req , res , next){
         var params = req.query,
             user  = req.session.user,
-            //获取用户model
+        //获取用户model
             userDao = req.models.userDao;
-
-
-
-
-
-
-
-
-        //if(GLOBAL.DEBUG ){
-        //    user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
-        //}
-
-
-        //if(GLOBAL.DEBUG ){
-        //    user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
-        //}
-
+        if(GLOBAL.DEBUG){
+            user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
+        }
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
@@ -78,9 +64,9 @@ module.exports = function(app){
                                 next();
                             });
                         }else{
-                           logger.info("Old User:"+ req.session.user);
-                           req.session.user.role = user.role;
-                           req.session.user.id = user.id;
+                            logger.info("Old User:"+ req.session.user);
+                            req.session.user.role = user.role;
+                            req.session.user.id = user.id;
 
                             // 尚未登录过， 但是添加过，分配中文名字
                             if(!user.chineseName){
@@ -187,4 +173,4 @@ module.exports = function(app){
 
 
 
- };
+};
