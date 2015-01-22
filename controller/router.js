@@ -32,9 +32,6 @@ module.exports = function(app){
             //获取用户model
             userDao = req.models.userDao;
 
-        //if(GLOBAL.DEBUG ){
-        //    user = req.session.user = {loginName: "coverguo", chineseName: '郭锋棉' ,role : 1, id:1}
-        //}
 
         req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
 
@@ -141,15 +138,19 @@ module.exports = function(app){
             params.user = req.session.user;
 
             //根据不同actionName 调用不同action
-            switch(action){
-                case "user": UserAction[operation](params, res);break;
-                case "apply": ApplyAction[operation](params, res);break;
-                case "approve": ApproveAction[operation](params, res);break;
-                case "log" : LogAction[operation](params, res); break;
-                case "userApply": UserApplyAction[operation](params, res);break;
-                case "statistics" : StatisticsAction[operation](params, req, res); break;
+            try{
+                switch(action){
+                    case "user": UserAction[operation](params, res);break;
+                    case "apply": ApplyAction[operation](params, res);break;
+                    case "approve": ApproveAction[operation](params, res);break;
+                    case "log" : LogAction[operation](params, res); break;
+                    case "userApply": UserApplyAction[operation](params, res);break;
+                    case "statistics" : StatisticsAction[operation](params, req, res); break;
 
-                default  : next();
+                    default  : next();
+                }
+            }catch(e){
+                res.send(404, 'Sorry! can not found action.');
             }
             return;
         }else{
