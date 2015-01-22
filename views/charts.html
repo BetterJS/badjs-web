@@ -13,14 +13,27 @@
         <div class="right-side">
 
             <section>
-                <p class="setting-title">起始时间</p>
-                <input type="text" value="" readonly class="datetimepicker" id="startTime"/><br><br>
+                <label class="setting-title">统计项目：</label>
+                <select class="form-control "  id="select-chartBusiness">
+                    <option value="-1">-- 全部项目 --</option>
+                    <%  for(var i = 0 ; i < it.items.length ;i ++){
+                    var itemOne = it.items[i];
 
-                <p class="setting-title">结束时间</p>
-                <input type="text" value="" readonly class="datetimepicker" id="endTime"/><br><br>
+                    %>
+                    <option value="<%=itemOne.id%>"> <%=itemOne.name%></option>
+                    <%}%>
+                </select>
             </section>
             <section>
-                <div class="setting-search" data-event-click="showLogs">图表统计</div>
+                <label class="setting-title">时间范围：</label>
+                <select  class="form-control" id="select-timeScope">
+                    <option value="1">最近七天</option>
+                    <option value="2">最近一个月</option>
+                </select>
+            </section>
+
+            <section>
+                <div class="setting-search" id="showCharts">图表统计</div>
             </section>
         </div>
     </div>

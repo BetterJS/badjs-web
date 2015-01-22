@@ -20,20 +20,27 @@ var StatisticsAction = {
         var businessService =  new BusinessService();
 
         businessService.findBusinessByUser(user.loginName , function (err, item){
-            res.render('statistics', { layout: false, user: user, index:'statistics' , title:"日志统计",  items : item});
+            res.render(param.tpl, { layout: false, user: user, index:'statistics' , title:param.title,  items : item});
         });
     },
-    charts :  function(param, req, res){
-        var params = req.query,
-            user  = req.session.user;
+    queryByChart : function (param, req, res) {
+        console.log(param);
+        var statisticsService =  new StatisticsService();
+        console.log(11);
+        if(!param.projectId || isNaN(param.projectId) || !param.timeScope){
+            res.json({ret:0 , msg:'success' , data : {} });
+            return ;
+        };
 
-        var businessService =  new BusinessService();
-
-        businessService.findBusinessByUser(user.loginName , function (err, item){
-            res.render('charts', { layout: false, user: user, index:'statistics' , title:"图表统计",  items : item});
+        statisticsService.queryByChart({userName : param.user.loginName , projectId : param.projectId-0 , timeScope:param.timeScope-0}  , function (err, data){
+            if(err){
+                res.json({ret:-1, msg:"error"});
+                return;
+            }
+            res.json(data);
+            return;
         });
     },
-
     queryById:function (param , req, res ){
         var statisticsService =  new StatisticsService();
         if(!req.query.projectId || isNaN(req.query.projectId) || !req.query.startDate){
@@ -58,6 +65,7 @@ var StatisticsAction = {
             res.json(data);
         });
     }
+
 };
 
 module.exports = StatisticsAction;

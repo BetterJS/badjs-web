@@ -7,7 +7,9 @@ var  log4js = require('log4js'),
      Apply = require('../model/Apply'),
      http = require('http'),
      _ = require('underscore'),
-     logger = log4js.getLogger();
+     logger = log4js.getLogger(),
+     ORM = require("orm");
+
 
 var dateFormat  = function (date , fmt){
     var o = {
@@ -44,14 +46,30 @@ var StatisticsService = function (){
 StatisticsService.prototype = {
     queryById : function (param  , callback){
 
-
-
         this.statisticsDao.find({projectId :param.projectId , startDate : dateFormat(param.startDate , 'yyyy-MM-dd hh:mm:ss')} , function (err , items){
             if(err){
                 callback(err);
             }
             callback(null,{ret:0, msg:"success", data: items});
         });
+
+    },
+    queryByChart : function (param  , callback){
+
+        var oneDay = 1000 * 60 * 60 * 24;
+        var day = param.timeScope ==1?7:30;
+        param.startTime = new Date() - oneDay * day;
+        console.log(new Date(param.startTime));
+        if(GLOBAL.DEBUG){
+            logger.info("query start time is"+ param.startTime);
+        }
+        this.statisticsDao.find({ projectId :param.projectId, startDate:ORM.gte(param.startTime)}, function (err, items) {
+            if(err){
+                callback(err);
+            }
+            callback(null,{ret:0, msg:"success", data: items});
+        });
+
 
     },
     fetchAndSave : function (id , startDate , cb){

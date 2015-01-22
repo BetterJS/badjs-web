@@ -1,58 +1,70 @@
 /**
- * @info 申请列表js
+ * @info 图表统计js
  * @author coverguo
  * */
 
-define([
-    '../dialog'
-], function ( Dialog ) {
-    var maxDate = 60*60*1000*24 *2;
-    var   encodeHtml = function (str) {
-        return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
-    };
-
-    function bindEvent() {
+define([ '../dialog',
+], function ( Dialog) {
 
 
-    }
 
-    function init() {
-        $(".datetimepicker").datetimepicker({format: 'YYYY-MM-DD HH:mm'}).data("DateTimePicker").setMaxDate(new Date());
+    var statistics = {
+        init : function (){
 
-        $('#startTime').data("DateTimePicker").setDate( new Date(new Date() - maxDate));
-        $('#endTime').data("DateTimePicker").setDate( new Date());
+            this.bindEvent();
 
-        $(function () {
+        },
+        setChart : function (data) {
             $('#chartsContainer').highcharts({                   //图表展示容器，与div的id保持一致
                 chart: {
                     type: 'line'                         //指定图表的类型，默认是折线图（line）
                 },
                 title: {
-                    text: '想回到过去2015-01-19至2015-01-21统计图表'      //指定图表标题
+                    text:  chart_title  //指定图表标题
                 },
                 xAxis: {
-                    categories: ['20-00am', '20-12am', '21-00am','20-00am', '20-12am', '21-00am','20-00am', '20-12am', '21-00am','20-00am', '20-12am', '21-00am']   //指定x轴分组
+                    categories: chart_x
                 },
                 yAxis: {
                     title: {
                         text: 'something'                  //指定y轴的标题
                     }
                 },
-                series: [{                                 //指定数据列
-                    name: 'Jane',                          //数据列名
-                    data: [1, 100, 24, 31, 0, 4, 1, 0, 4, 1, 0, 4, 1, 0, 4]                        //数据
-                }, {
-                    name: 'John',
-                    data: [5, 87, 23,34, 2, 1, 6, 4, 2, 7, 3, 7, 2, 7, 2]
-                }]
+                series: [chart_series]
             });
-        });
+        },
+        bindEvent : function (){
+            var self = this;
+            $('#showCharts').bind("click" , function(e){
+                var param = {
+                    projectId : $("#select-chartBusiness").val(),
+                    timeScope : $("#select-timeScope").val()
+                };
+                console.log(param);
+                $.getJSON("/controller/statisticsAction/queryByChart.do" , param , function (data){
 
+                    console.log(data);
+                    sortChartData(data.data);
+                    self.setChart();
+                });
+            });
+        }
 
+    };
+    //
+    var chart_x = [], chart_series = {},chart_title;
+    function sortChartData(data){
+        chart_title = $("#select-chartBusiness").find("option:selected").text() + $("#select-timeScope").find("option:selected").text()+"统计";
+        var text = $("#select-chartBusiness").find("option:selected").text();
+        chart_series.name = text;
+        chart_series.data = [];
+        console.log(chart_series);
+        for(var i = 0;i<data.length; i++){
+            chart_x.push(_.formatDate(new Date(data[i].startDate) , 'YYYY-MM-DD'));
+            chart_series.data.push(data[i].total);
+        };
     }
 
-    return {
-        init: init
-    }
+    return statistics;
 
 });

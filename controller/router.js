@@ -118,10 +118,10 @@ module.exports = function(app){
     });
 
     app.get('/statistics.html' , function (req , res){
-        StatisticsAction.index({} , req , res);
+        StatisticsAction.index({tpl:"statistics", title: "日志统计"} , req , res);
     });
     app.get('/charts.html' , function (req , res){
-        StatisticsAction.charts({} , req , res);
+        StatisticsAction.index({tpl:"charts", title: "图表统计"} , req , res);
     });
 
     /**
