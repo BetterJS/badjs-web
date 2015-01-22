@@ -7,6 +7,7 @@
 
 var log4js = require('log4js'),
     logger = log4js.getLogger(),
+    _ = require('underscore'),
     ApplyService = require('../../service/ApplyService'),
     isError = function (res , error){
         if(error){
@@ -16,6 +17,20 @@ var log4js = require('log4js'),
         return false;
     };
 
+
+var processData = function (data){
+    _.each(data , function (value , key){
+        if(value.createTime){
+            value.createTime = (new Date(value.createTime) - 0 )
+        }
+
+        if(value.passTime){
+            value.passTime = (new Date(value.passTime) - 0 )
+        }
+    });
+
+    return data;
+}
 
 
 var applyAction = {
@@ -46,7 +61,7 @@ var applyAction = {
             if(isError(res, err)){
                 return;
             }
-            res.json({ret:0, msg: "success", data:items});
+            res.json({ret:0, msg: "success", data: processData(items)});
         });
     },
     queryListByAdmin : function (params,res) {
@@ -60,7 +75,7 @@ var applyAction = {
             if(isError(res, err)){
                 return;
             }
-            res.json({ret:0, msg: "success", data:items});
+            res.json({ret:0, msg: "success", data: processData(items)});
         });
     },
     queryListBySearch : function (params,res) {
@@ -69,7 +84,7 @@ var applyAction = {
             if(isError(res, err)){
                 return;
             }
-            res.json({ret:0, msg: "success", data:items});
+            res.json({ret:0, msg: "success", data: processData(items)});
         });
     },
     update:function(params,cb){
