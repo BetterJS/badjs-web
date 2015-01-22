@@ -38,7 +38,7 @@
     <td class="apply_id"><%==it[i].id%></td>
     <td class="apply_name"><%==it[i].name%></td>
     <td class="apply_userName"><%==it[i].userName%></td>
-    <td class="apply_createTime"><%== it[i].createTime%></td>
+    <td class="apply_createTime"><%= _.formatDate(new Date(it[i].createTime) , 'YYYY-MM-DD hh:mm:ss') %></td>
     <td  class="apply_description"><%== it[i].description%></td>
     <td class="apply_url"><%==it[i].url%></td>
 

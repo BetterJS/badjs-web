@@ -14,8 +14,6 @@ var ApplyService = function (){
     this.userApplyDao = global.models.userApplyDao;
 };
 
-
-
 ApplyService.prototype = {
 
     queryListByAdmin : function (target , callback){
