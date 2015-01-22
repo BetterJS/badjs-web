@@ -19,20 +19,8 @@
             <li class="item">
                 <a href="">实时日志</a>
             </li>
-            <li class="item items <%= it.index=='statistics'?'active':''%>">
-                <a><%= it.title?it.title:"统计" %></a>
-                <ul class="subNav">
-                    <li class="item">
-                        <a  href="statistics.html">日志统计</a>
-                    </li>
-                    <li class="item">
-                        <a  href="charts.html">图表统计</a>
-                    </li>
-                    <!--<li class="item">-->
-                    <!--<a href=""></a>-->
-                    <!--</li>-->
-                </ul>
-
+            <li class="item <%= it.index=='statistics'?'active':''%>">
+                <a href="statistics.html">日志统计</a>
             </li>
             <li class="item <%= it.index=='apply'?'active':''%>">
                 <a href="apply.html">申请接入</a>
@@ -40,7 +28,9 @@
             <li class="item items <%= it.index=='manage'?'active':''%>">
 
                 <% if(it.user.role == 0) {%>
+
                 <a  href="userManage.html">用户列表</a>
+
                 <%}else {%>
 
                 <a><%= it.title?it.title:"管理" %></a>
