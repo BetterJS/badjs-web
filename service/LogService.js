@@ -12,7 +12,7 @@ var  log4js = require('log4js'),
 var LogService = function (){
 
     if(GLOBAL.DEBUG){
-        this.url = 'http://183.60.70.234:9000/query';
+        this.url = 'http://localhost:9000/query';
     }else {
         this.url = 'http://10.143.132.205:9000/query';
     }

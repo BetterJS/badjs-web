@@ -15,7 +15,7 @@ var log4js = require('log4js'),
 
 
 var userAction = {
-    addUserApply: function(userApply, res){
+    addUserApply: function(userApply, req , res){
 
         if(userApply.userName ==""){
             res.json({ret: 1002, msg: "userName为空"});
@@ -35,7 +35,7 @@ var userAction = {
     //update:function(req, res){
     //
     //},
-    remove: function(remove, res){
+    remove: function(remove, req, res){
         if(remove.id ==""){
             res.json({ret: 1002, msg: "id为空"});
             return;
