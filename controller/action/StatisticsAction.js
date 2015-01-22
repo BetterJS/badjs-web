@@ -13,14 +13,24 @@ var  log4js = require('log4js'),
 var StatisticsAction = {
 
 
-    index :  function( req, res){
+    index :  function(param, req, res){
         var params = req.query,
             user  = req.session.user;
 
         var businessService =  new BusinessService();
 
         businessService.findBusinessByUser(user.loginName , function (err, item){
-            res.render('statistics', { layout: false, user: user, index:'statistics' ,  items : item});
+            res.render('statistics', { layout: false, user: user, index:'statistics' , title:"日志统计",  items : item});
+        });
+    },
+    charts :  function(param, req, res){
+        var params = req.query,
+            user  = req.session.user;
+
+        var businessService =  new BusinessService();
+
+        businessService.findBusinessByUser(user.loginName , function (err, item){
+            res.render('charts', { layout: false, user: user, index:'statistics' , title:"图表统计",  items : item});
         });
     },
 

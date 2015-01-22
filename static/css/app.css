@@ -621,4 +621,10 @@ form {
     color:red;
 }
 
+/*charts 图表*/
+#chartsContainer{
+    width: 98%;
+    margin: 20px  auto;
+    padding: 30px 15px;
+}
 

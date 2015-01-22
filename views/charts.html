@@ -1,0 +1,40 @@
+<%=include('./common/commonLinks.html')(it, opt)%>
+
+<%=include('./common/header.html')(it, opt)%>
+
+<main id="content" role="main">
+    <div class="wrap">
+        <!--<%=include('./common/leftSide.html')(it, opt)%>-->
+        <div class="mid-side">
+            <div id="chartsContainer"  class="main-mid">
+
+            </div>
+        </div>
+        <div class="right-side">
+
+            <section>
+                <p class="setting-title">起始时间</p>
+                <input type="text" value="" readonly class="datetimepicker" id="startTime"/><br><br>
+
+                <p class="setting-title">结束时间</p>
+                <input type="text" value="" readonly class="datetimepicker" id="endTime"/><br><br>
+            </section>
+            <section>
+                <div class="setting-search" data-event-click="showLogs">图表统计</div>
+            </section>
+        </div>
+    </div>
+</main>
+<%=include('./common/footer.html')(it)%>
+<script src="/js/charts/highcharts.js"></script>
+<script src="/js/charts/sand-signika.js"></script>
+<script type="text/javascript">
+    require.config({
+        baseUrl : 'js/charts'
+    });
+    require(['charts'], function (charts) {
+        charts.init();
+    });
+</script>
+</body>
+</html>

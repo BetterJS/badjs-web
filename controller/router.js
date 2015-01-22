@@ -120,6 +120,9 @@ module.exports = function(app){
     app.get('/statistics.html' , function (req , res){
         StatisticsAction.index({} , req , res);
     });
+    app.get('/charts.html' , function (req , res){
+        StatisticsAction.charts({} , req , res);
+    });
 
     /**
      * 登出
