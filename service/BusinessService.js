@@ -4,6 +4,7 @@
 
 
 var  Apply = require('../model/Apply');
+    _ = require('underscore');
 
 var BusinessService = function (){
 
@@ -56,9 +57,8 @@ BusinessService.prototype = {
 
     findBusiness : function ( callback){
 
-        var string = "select a.id, u.loginName, u.chineseName, ua.role, a.name "+
-            "from  b_user as u join b_user_apply as ua on(ua.userId = u.id) "+
-            "join b_apply as a on (a.id =ua.applyId) "+
+        var string = "select  a.id, u.loginName, u.chineseName  , a.name  "+
+            "from  b_apply a join b_user u on (a.userName=u.loginName)  "+
             "where  a.status=?  ";
         var condition = [Apply.STATUS_PASS ];
 
@@ -68,6 +68,10 @@ BusinessService.prototype = {
                 callback(err);
                 return;
             }
+
+            _.each(data , function (value , ke){
+                value.role = 1;
+            })
             callback(null, data);
         });
 
