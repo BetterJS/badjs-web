@@ -116,10 +116,14 @@ UserService.prototype = {
 
         var string = "select ua.id, u.loginName, u.chineseName, ua.applyId, ua.role, a.name "+
             "from  b_user as u join b_user_apply as ua on(ua.userId = u.id) "+
-            "join b_apply as a on (a.id =ua.applyId) "+
-            "where applyId in(select applyId from b_user_apply where userId =? "+
-            " and role = 1) and  a.status=? ";
-        var condition = [target.user.id , Apply.STATUS_PASS ];
+            "join b_apply as a on (a.id =ua.applyId)  where a.status=? ";
+        var condition = [Apply.STATUS_PASS ];
+
+        if(target.userId){
+            string +=   "and applyId in(select applyId from b_user_apply where userId =? and role = 1)";
+            condition.push(target.userId);
+        }
+
         if(target.applyId !=-1){
             string += "and applyId =? ";
             condition.push(target.applyId);
@@ -128,6 +132,8 @@ UserService.prototype = {
             string += "and ua.role =? ";
             condition.push(target.role);
         }
+
+
         console.log(string);
         this.db.driver.execQuery(string,condition, function (err, data) {
             if(err){

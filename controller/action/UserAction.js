@@ -48,6 +48,10 @@ var userAction = {
             return;
         }
 
+        if(params.user.role != 1){
+            params.userId = params.user.id;
+        }
+
         userService.queryListByCondition(params,function(err, items){
             if(isError(res, err)){
                 return;
