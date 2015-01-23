@@ -20,7 +20,7 @@ var StatisticsAction = {
         var businessService =  new BusinessService();
 
         businessService.findBusinessByUser(user.loginName , function (err, item){
-            res.render(param.tpl, { layout: false, user: user, index:'statistics' , title:param.title,  items : item});
+            res.render(param.tpl, { layout: false, user: user, index:'statistics' , statisticsTitle:param.statisticsTitle,  items : item});
         });
     },
     queryByChart : function (param, req, res) {

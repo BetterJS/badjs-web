@@ -24,7 +24,7 @@ var userAction = {
 
         if(user.role == 1 ){
             businessService.findBusiness(  function (err, item){
-                res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
+                res.render('userManage', { layout: false, user: user, index:'manage', manageTitle: '用户列表' , items : item} );
             });
         }else {
             businessService.findBusinessByProjectOwner(user.loginName , function (err, item){

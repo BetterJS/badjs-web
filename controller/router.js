@@ -110,7 +110,7 @@ module.exports = function(app){
     });
     app.get('/applyList.html', function(req, res){
         var user = req.session.user;
-        res.render('applyList', { layout: false, user: user, index:'manage', title: '申请列表'});
+        res.render('applyList', { layout: false, user: user, index:'manage', manageTitle: '申请列表'});
     });
 
     app.get('/userManage.html', function (req , res){
@@ -118,10 +118,10 @@ module.exports = function(app){
     });
 
     app.get('/statistics.html' , function (req , res){
-        StatisticsAction.index({tpl:"statistics", title: "日志统计"} , req , res);
+        StatisticsAction.index({tpl:"statistics", statisticsTitle: "日志统计"} , req , res);
     });
     app.get('/charts.html' , function (req , res){
-        StatisticsAction.index({tpl:"charts", title: "图表统计"} , req , res);
+        StatisticsAction.index({tpl:"charts", statisticsTitle: "图表统计"} , req , res);
     });
 
     /**
