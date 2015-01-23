@@ -25,7 +25,7 @@ var dateFormat  = function (date , fmt){
     for (var k in o)
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
-}
+};
 
 var StatisticsService = function (){
 
@@ -49,25 +49,36 @@ StatisticsService.prototype = {
         this.statisticsDao.find({projectId :param.projectId , startDate : dateFormat(param.startDate , 'yyyy-MM-dd hh:mm:ss')} , function (err , items){
             if(err){
                 callback(err);
+                return;
             }
             callback(null,{ret:0, msg:"success", data: items});
         });
 
     },
     queryByChart : function (param  , callback){
+        //筛选参数
+        var s_params = {};
+        if(param.projectId !=-1){
+            s_params.projectId = param.projectId;
+        }
 
+        //时间开始范围 7天内 或者1个月内
         var oneDay = 1000 * 60 * 60 * 24;
         var day = param.timeScope ==1?7:30;
         param.startTime = new Date() - oneDay * day;
-        console.log(new Date(param.startTime));
+        param.startTime = dateFormat(new Date(param.startTime), 'yyyy-MM-dd');
+
         if(GLOBAL.DEBUG){
-            logger.info("query start time is"+ param.startTime);
+            logger.info("query start time is "+ param.startTime);
         }
-        this.statisticsDao.find({ projectId :param.projectId, startDate:ORM.gte(param.startTime)}, function (err, items) {
+        this.statisticsDao.find(s_params).where("startDate >=?", [param.startTime]).all(function (err, items)  {
             if(err){
                 callback(err);
+                return;
             }
             callback(null,{ret:0, msg:"success", data: items});
+        }).where(function(){
+
         });
 
 

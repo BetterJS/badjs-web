@@ -621,6 +621,13 @@ form {
     color:red;
 }
 
+.textOverflow{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+}
+
 /*charts 图表*/
 #chartsContainer{
     width: 98%;

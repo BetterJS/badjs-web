@@ -30,6 +30,7 @@ userApplyService.prototype = {
         this.userDao.one({loginName:target.userName}, function(err, item){
             if(err){
                 callback(err);
+                return;
             }
             if(item){
                 userApply.userId = item.id;

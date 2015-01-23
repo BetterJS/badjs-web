@@ -23,6 +23,7 @@ ApplyService.prototype = {
         this.applyDao.find(["createTime", "Z"], function (err , items){
             if(err){
                 callback(err);
+                return;
             }
             callback(null,items);
         });
@@ -31,6 +32,7 @@ ApplyService.prototype = {
         this.applyDao.find({userName: target.user.loginName},["createTime", "Z"], function (err , items){
             if(err){
                 callback(err);
+                return;
             }
             callback(null,items);
         });
@@ -41,6 +43,7 @@ ApplyService.prototype = {
         this.applyDao.find(searchParam ,["createTime", "Z"], function (err , items){
             if(err){
                 callback(err);
+                return;
             }
             callback(null,items);
         });
@@ -51,6 +54,7 @@ ApplyService.prototype = {
         this.applyDao.create(target , function (err , newApply){
             if(err){
                 callback(err);
+                return;
             }
             if(GLOBAL.DEBUG){
                 logger.info("Insert into b_apply success! target1: ",newApply);
@@ -66,6 +70,7 @@ ApplyService.prototype = {
             self.userApplyDao.create(userApply, function (err, items) {
                 if(err){
                     callback(err);
+                    return;
                 }
                 callback(null);
             })

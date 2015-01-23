@@ -9,13 +9,13 @@
 <tr>
     <!--<th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>-->
     <th>#</th>
-    <th>上报id</th>
-    <th>名称</th>
+    <th style="width:80px;">上报id</th>
+    <th >名称</th>
     <th>申请人</th>
     <th>申请时间</th>
-    <th style="width:30%;">业务描述</th>
-    <th>业务网址</th>
-    <th><%= it.role ==1 ? '操作' : '状态'%></th>
+    <th >业务描述</th>
+    <th >业务网址</th>
+    <th style="width:120px;"><%= it.role ==1 ? '操作' : '状态'%></th>
 
 
 </tr>
@@ -42,11 +42,17 @@ for(var i = 0; i<len ; i++){
         <!--<td><input class="tableSelectCheckBox" type="checkbox"/></td>-->
         <td class=""><%=(i +1)%></td>
         <td class="apply_id" style="text-align: center;"><%==one.id%></td>
-        <td class="apply_name"><%==one.name%></td>
+        <td class="apply_name">
+            <span style="width:100px;" class="textOverflow" title="<%==one.name%>"><%==one.name%></span>
+        </td>
         <td class="apply_userName"><%==one.userName%></td>
         <td class="apply_createTime"><%= _.formatDate( new Date(one.createTime) , 'YYYY-MM-DD' )%></td>
-        <td  class="apply_description"><%== one.description%></td>
-        <td class="apply_url" ><%==one.url%></td>
+        <td  class="apply_description">
+            <span style="width:250px;" class="textOverflow" title="<%==one.description%>"> <%==one.description%></span>
+        </td>
+        <td class="apply_url" >
+            <span style="width:250px;" class="textOverflow" title="<%==one.url%>"> <%==one.url%></span>
+        </td>
 
         <td class="apply_operation">
             <%if(it.role == 1){%>

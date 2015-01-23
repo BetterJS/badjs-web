@@ -7,7 +7,10 @@ define([ '../dialog',
 ], function ( Dialog) {
 
 
+    var dayNumber = 0,
+        days =[];
 
+    var chart_title, chart_projects=[];
     var statistics = {
         init : function (){
 
@@ -23,14 +26,14 @@ define([ '../dialog',
                     text:  chart_title  //指定图表标题
                 },
                 xAxis: {
-                    categories: chart_x
+                    categories: setChartX(dayNumber)
                 },
                 yAxis: {
                     title: {
-                        text: 'something'                  //指定y轴的标题
+                        text: '报错数量'                  //指定y轴的标题
                     }
                 },
-                series: [chart_series]
+                series: chart_projects
             });
         },
         bindEvent : function (){
@@ -40,28 +43,84 @@ define([ '../dialog',
                     projectId : $("#select-chartBusiness").val(),
                     timeScope : $("#select-timeScope").val()
                 };
-                console.log(param);
                 $.getJSON("/controller/statisticsAction/queryByChart.do" , param , function (data){
+                    var $options =  $("#select-chartBusiness option");
+                    var $selectedOption = $("#select-chartBusiness").find("option:selected");
 
+                    chart_projects= [];
+                    dayNumber = param.timeScope==1?7:30;
+                    days = setChartX(dayNumber);
+                    if(param.projectId == -1){
+                        var projectLength =$options.length;
+                        for(var i=1; i<projectLength; i++){
+                            var defaultData1  = [];
+                            setDefaultTotal(defaultData1, dayNumber);
+                            var project ={
+                                name:$options.eq(i).text(),
+                                projectId :$options.eq(i).val()-0,
+                                date:days,
+                                data:defaultData1
+                            };
+                            chart_projects.push(project);
+                        }
+                    }else{
+                        var defaultData2  = [];
+                        setDefaultTotal(defaultData2, dayNumber);
+                        var project ={
+                            name:$selectedOption.text(),
+                            projectId :$("#select-chartBusiness").val()-0,
+                            date:days,
+                            data:defaultData2
+                        };
+                        chart_projects.push(project)
+                    };
+
+                    //设置表格title
+                    chart_title = $("#select-chartBusiness").find("option:selected").text() + $("#select-timeScope").find("option:selected").text()+"统计";
                     console.log(data);
                     sortChartData(data.data);
+                    console.log('project', chart_projects);
                     self.setChart();
                 });
             });
         }
 
     };
+
+    function setChartX(number){
+        var days = [];
+        var nowDay = new Date()-0;
+
+        for(var i = number;i>0; i--){
+            var day = nowDay - i*1000*60*60*24;
+            days.push(_.formatDate(new Date(day), 'MM-DD'));
+        }
+        return days;
+    };
+    function setDefaultTotal(arr, number){
+        for(var i = number;i>0; i--){
+            arr.push(0);
+        }
+    };
+    function whichDayIndex(day1){
+        for(var i =0,len = days.length; i<len; i++){
+            if(day1 == days[i]){
+                return i;
+            }
+        }
+        return false;
+    }
     //
-    var chart_x = [], chart_series = {},chart_title;
+
     function sortChartData(data){
-        chart_title = $("#select-chartBusiness").find("option:selected").text() + $("#select-timeScope").find("option:selected").text()+"统计";
-        var text = $("#select-chartBusiness").find("option:selected").text();
-        chart_series.name = text;
-        chart_series.data = [];
-        console.log(chart_series);
-        for(var i = 0;i<data.length; i++){
-            chart_x.push(_.formatDate(new Date(data[i].startDate) , 'YYYY-MM-DD'));
-            chart_series.data.push(data[i].total);
+
+        for(var i = 0, len= data.length;i<len; i++){
+            data[i].startDate = _.formatDate( new Date(data[i].startDate) , 'MM-DD' );
+            for(var j= 0, length=chart_projects.length; j<length; j++){
+                if(data[i].projectId == chart_projects[j].projectId){
+                    chart_projects[j]['data'][whichDayIndex(data[i].startDate)] = data[i].total;
+                }
+            }
         };
     }
 

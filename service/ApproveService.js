@@ -26,6 +26,7 @@ ApproveService.prototype = {
                 this.approveDao.all({} , function (err , items){
                     if(err){
                         callback(err);
+                        return;
                     }
                     callback(null,{ret:0, msg:"success", data: items});
                 });
@@ -33,6 +34,7 @@ ApproveService.prototype = {
                 this.approveDao.find({userName: target.user.loginName} , function (err , items){
                     if(err){
                         callback(err);
+                        return;
                     }
                     callback(null,{ret:0, msg:"success", data: items});
                 });
@@ -45,6 +47,7 @@ ApproveService.prototype = {
         this.approveDao.create(target , function (err , items){
             if(err){
                 callback(err);
+                return;
             }
             logger.info("Insert into b_approve success! target: ",target);
             //改变申请表状态
@@ -58,6 +61,7 @@ ApproveService.prototype = {
             self.update(apply, function(err, data){
                 if(err){
                     callback(err);
+                    return;
                 }
                 logger.info("Update b_apply success! apply: ",apply);
                 callback(null,{ret:0, msg:"success add"});
@@ -78,6 +82,7 @@ ApproveService.prototype = {
             apply.save(function (err) {
                 if(err){
                     callback(err);
+                    return;
                 }
                 callback(null);
             });

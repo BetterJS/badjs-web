@@ -40,6 +40,7 @@ UserService.prototype = {
             this.userApplyDao.find(params, function(err, userApply){
                 if(err){
                     callback(err);
+                    return;
                 }else{
                     users = userApply;
                     console.log(userApply);
@@ -48,6 +49,7 @@ UserService.prototype = {
 
                     if(err){
                         callback(err);
+                        return;
                     }
 
                     if(users !=[]){
@@ -76,6 +78,7 @@ UserService.prototype = {
             this.userApplyDao.find(params, function(err, userApplyData){
                 if(err){
                     callback(err);
+                    return;
                 }else{
                     userApply = userApplyData;
                     console.log(userApplyData);
@@ -84,6 +87,7 @@ UserService.prototype = {
 
                     if(err){
                         callback(err);
+                        return;
                     }
 
                     if(userApply !=[]){
@@ -157,6 +161,7 @@ UserService.prototype = {
         this.userDao.create(target , function (err , items){
             if(err){
                 callback(err);
+                return;
             }
             logger.info("Insert into b_user success! target1: ",target);
             callback(null,{ret:0, msg:"success add"});
