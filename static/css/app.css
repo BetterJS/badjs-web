@@ -114,7 +114,7 @@ form {
     bottom:0;
     top:120px;
     width:100%;
-
+    min-height:800px;
 }
 #content .wrap {
     position: relative;
