@@ -91,12 +91,12 @@ logger.info('start badjs-web , listen 80 ...');
 
 setTimeout(function (){
     var service = require("./service/StatisticsService");
-    console.log('start startMonitor ...');
+    logger.info('start startMonitor ...');
     new service().startMonitor();
 
 
     var LogService = require("./service/LogService");
     new LogService().pushProject(function (e){
-        console.log('push project on system start');
+        logger.info('push project on system start');
     });
 },3000)

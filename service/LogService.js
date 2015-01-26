@@ -17,7 +17,7 @@ var LogService = function (){
         this.queryUrl = 'http://localhost:9000/query';
     }else {
         this.queryUrl = 'http://10.143.132.205:9000/query';
-        this.pushProjectUrl = 'http://10.143.132.205:9000/getProjects';
+        this.pushProjectUrl = 'http://10.143.132.205:9001/getProjects';
     }
 
     logger.debug('query url : ' + this.url)
@@ -58,6 +58,7 @@ LogService.prototype = {
         })
     },
     pushProject : function (callback){
+        var self = this;
 
         callback || (callback = function (){});
 
@@ -72,13 +73,13 @@ LogService.prototype = {
             });
 
             if(strParams.length >0){
-                strParams = strParams.substring(0 , strParams.length-1   ) + "&";
+                strParams = "projectsId="+strParams.substring(0 , strParams.length-1   ) + "&";
             }
 
             strParams +="auth=badjsAccepter";
 
 
-            http.get( this.pushProjectUrl + '?' + strParams , function (res){
+            http.get( self.pushProjectUrl + '?' + strParams , function (res){
                 var buffer = '';
                 res.on('end' , function (){
                     callback();
