@@ -4,7 +4,7 @@
 
 var http = require('http');
 
-var  log4js = require('log4js'),
+var log4js = require('log4js'),
     logger = log4js.getLogger();
 
 

@@ -93,4 +93,10 @@ setTimeout(function (){
     var service = require("./service/StatisticsService");
     console.log('start startMonitor ...');
     new service().startMonitor();
+
+
+    var LogService = require("./service/LogService");
+    new LogService().pushProject(function (e){
+        console.log('push project on system start');
+    });
 },3000)

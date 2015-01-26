@@ -4,7 +4,9 @@
 
 var http = require('http');
 
-var  log4js = require('log4js'),
+var log4js = require('log4js'),
+    BusinessService = require('./BusinessService'),
+    _ = require('underscore'),
     logger = log4js.getLogger();
 
 
@@ -53,6 +55,41 @@ LogService.prototype = {
             logger.warn('error :' + err);
             callback(err)
         })
+    },
+    pushProject : function (callback){
+
+        callback || (callback = function (){});
+
+        var businessService   = new BusinessService();
+
+        businessService.findBusiness(function (err , item){
+
+            var strParams = '';
+
+            _.each( item , function (value , ke){
+                strParams+=value.id+"_";
+            });
+
+            if(strParams.length >0){
+                strParams = strParams.substring(0 , strParams.length-1   ) + "&";
+            }
+
+            strParams +="auth=badjsAccepter";
+
+
+            http.get( this.url + '?' + strParams , function (res){
+                var buffer = '';
+                res.on('end' , function (){
+                    callback();
+                })
+
+            }).on('error' , function (err){
+                logger.warn('push project error :' + err);
+                callback(err)
+            })
+        });
+
+
     }
 }
 
