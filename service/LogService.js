@@ -14,9 +14,10 @@ var log4js = require('log4js'),
 var LogService = function (){
 
     if(GLOBAL.DEBUG){
-        this.url = 'http://localhost:9000/query';
+        this.queryUrl = 'http://localhost:9000/query';
     }else {
-        this.url = 'http://10.143.132.205:9000/query';
+        this.queryUrl = 'http://10.143.132.205:9000/query';
+        this.pushProjectUrl = 'http://10.143.132.205:9000/getProjects';
     }
 
     logger.debug('query url : ' + this.url)
@@ -39,7 +40,7 @@ LogService.prototype = {
         }
         strParams +='_=1';
         logger.debug('query param : ' +strParams );
-        http.get( this.url + '?'+ strParams , function (res){
+        http.get( this.queryUrl + '?'+ strParams , function (res){
             var buffer = '';
            res.on('data' , function (chunk){
                buffer += chunk.toString();
@@ -77,7 +78,7 @@ LogService.prototype = {
             strParams +="auth=badjsAccepter";
 
 
-            http.get( this.url + '?' + strParams , function (res){
+            http.get( this.pushProjectUrl + '?' + strParams , function (res){
                 var buffer = '';
                 res.on('end' , function (){
                     callback();
