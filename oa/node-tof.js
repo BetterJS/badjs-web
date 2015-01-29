@@ -283,12 +283,12 @@ exports.passport = function(ticket, cb) {
   if(ticket) {
     var data = TPL_AUTH.replace(/\{ticket\}/gi, encode(ticket));
 
-    iSOAP( 'passport.oa.com'
+    iSOAP( 'login.oa.com'
       , '/services/passportservice.asmx'
       , 'http://indigo.oa.com/services/DecryptTicket'
       , data, function( res ) {
       if( res ) {
-        //console.log(res);
+        console.log(res);
         var info = {}
           , m = res.match(/<LoginName>([^<]+)<\/LoginName>/);
 
