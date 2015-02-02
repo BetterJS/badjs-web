@@ -288,7 +288,7 @@ exports.passport = function(ticket, cb) {
       , 'http://indigo.oa.com/services/DecryptTicket'
       , data, function( res ) {
       if( res ) {
-        console.log(res);
+       // console.log(res);
         var info = {}
           , m = res.match(/<LoginName>([^<]+)<\/LoginName>/);
 
