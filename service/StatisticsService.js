@@ -146,6 +146,11 @@ StatisticsService.prototype = {
         var targetDate = getTomrrowDay();
 
         var startTimeout = function (){
+            var afterDate = targetDate - nowDate;
+            if(isNaN(afterDate)){
+                logger.info( "afterDate error : targetDate" + targetDate + " , now:" + nowDate);
+                return ;
+            }
             setTimeout(function (){
                 var startDate = getStartDay();
                 self.applyDao.find({status: Apply.STATUS_PASS} , function (err , item){
@@ -165,9 +170,9 @@ StatisticsService.prototype = {
 
 
 
-            } , targetDate - nowDate);
+            } , afterDate);
 
-            logger.info( "after " + ((targetDate - nowDate )/1000) + "s will fetch again ");
+            logger.info( "after " + ((afterDate )/1000) + "s will fetch again ");
         }
 
         startTimeout();
