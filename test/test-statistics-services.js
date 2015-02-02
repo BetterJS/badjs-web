@@ -2,7 +2,7 @@ var mysql = require('mysql'),
     StatisticsService = require('../service/StatisticsService'),
     orm = require('orm');
 
-GLOBAL.DEBUG = true;
+//GLOBAL.DEBUG = true;
 var mysql = "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs";
 //var mysql = "mysql://root:root@localhost:3306/badjs";
 
