@@ -134,16 +134,22 @@ StatisticsService.prototype = {
         var self = this;
 
 
-        var getTomrrowDay = function (){
-            return new Date(nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1)  + "-" + (nowDate.getDate()+1) + " 01:00:00");
+        var getTomorrowDay = function (){
+            var tomorrow = new Date(nowDate);
+            tomorrow.setHours(1, 0 , 0 ,0);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return tomorrow;
+//            return new Date(nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1)  + "-" + (nowDate.getDate()+1) + " 01:00:00");
         }
 
         var getStartDay = function (){
-            return new Date(nowDate.getFullYear() + "-" + (nowDate.getMonth() + 1) +  "-" + (nowDate.getDate()) + " 00:00:00");
+            var startDate = new Date(nowDate);
+            startDate.setHours(0 , 0 , 0 ,0);
+            return startDate;
         }
 
         var nowDate = new Date ;
-        var targetDate = getTomrrowDay();
+        var targetDate = getTomorrowDay();
 
         var startTimeout = function (){
             var afterDate = targetDate - nowDate;
@@ -155,7 +161,7 @@ StatisticsService.prototype = {
                 var startDate = getStartDay();
                 self.applyDao.find({status: Apply.STATUS_PASS} , function (err , item){
                     if(err){
-                        logger.error("find apply erro  :  " +  err);
+                        logger.error("find apply error  :  " +  err);
                     }
                     _.each(item , function (value ,key ){
                         self.fetchAndSave(value.id , startDate );
@@ -163,13 +169,10 @@ StatisticsService.prototype = {
 
                     nowDate = new Date();
                     startDate = getStartDay();
-                    targetDate =  getTomrrowDay();
+                    targetDate =  getTomorrowDay();
 
                     startTimeout();
                 })
-
-
-
             } , afterDate);
 
             logger.info( "after " + ((afterDate )/1000) + "s will fetch again ");
