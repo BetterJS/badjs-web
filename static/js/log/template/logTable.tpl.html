@@ -41,7 +41,7 @@ switch(it[i].level) {
         }
 }
 
-var isHtml = /^.+?\.html\?/.test(it[i].target);
+var isHtml = /^.+?\.html\??/.test(it[i].target);
 %>
 <tr>
     <td   class="td-1 info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
@@ -51,14 +51,16 @@ var isHtml = /^.+?\.html\?/.test(it[i].target);
     <td  class="td-5"><%==it[i].ip%></td>
     <td  class="td-6"><span class="ico-browser <%=getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
     <td class="td-7">
-  <%if(isHtml){%>
-        <a style="word-break:break-all;display: block" href="<%=it[i].target%>" target="_blank">
+  <%if(false){%>
+        <a style="word-break:break-all;display: block" >
   <%}else {%>
         <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
   <%}%>
 
         <%==it[i].target || it[i].url || ''%></a>
-        <span class="err-where"><%=it[i].rowNum || 0 %>行<%=it[i].colNum || 0%>列</span></td>
+        <span class="err-where"><%=it[i].rowNum || 0 %>行<%=it[i].colNum || 0%>列</span>
+        <a style="font-size:12px;" href="<%=it[i].from%>" target="_blank">查看</a>
+    </td>
 </tr>
 <% } %>
 

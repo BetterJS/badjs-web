@@ -239,7 +239,7 @@ define([
     function showLogs(opts,  isAdd) {
 
         if(opts.id <= 0 || loading){
-            Dialog({
+            !loading &&　Dialog({
                 header: '警告',
                 body:'请选择一个项目'
             });
@@ -267,7 +267,6 @@ define([
                 level:opts.level
             },
             success: function(data) {
-
                 var ret = data.ret;
                 if(ret==0){
                     var param = {
