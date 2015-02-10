@@ -95,6 +95,8 @@ define([
 
             })
             .on('click', 'showSource', function (e, data) {
+                // 内网服务器，拉取不到 外网数据,所以屏蔽掉请求
+                return ;
                 require([
                     './../beautify'
 
