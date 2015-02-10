@@ -40,6 +40,8 @@ switch(it[i].level) {
             return 'ico-safari';
         }
 }
+
+var isHtml = /^.+?\.html\?/.test(it[i].target);
 %>
 <tr>
     <td   class="td-1 info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
@@ -49,7 +51,12 @@ switch(it[i].level) {
     <td  class="td-5"><%==it[i].ip%></td>
     <td  class="td-6"><span class="ico-browser <%=getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
     <td class="td-7">
+  <%if(isHtml){%>
+        <a style="word-break:break-all;display: block" href="<%=it[i].target%>" target="_blank">
+  <%}else {%>
         <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
+  <%}%>
+
         <%==it[i].target || it[i].url || ''%></a>
         <span class="err-where"><%=it[i].rowNum || 0 %>行<%=it[i].colNum || 0%>列</span></td>
 </tr>

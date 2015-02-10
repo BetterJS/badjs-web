@@ -635,3 +635,12 @@ form {
     padding: 30px 15px;
 }
 
+#code-view .modal-body{
+    height:600px;
+}
+
+#code-view .modal-body iframe{
+    width: 100%;
+    height: 100%;
+    border: none;
+}

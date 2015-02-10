@@ -6,6 +6,7 @@
 
 var LogService = require('../../service/LogService'),
     log4js = require('log4js'),
+    http = require('http'),
     logger = log4js.getLogger(),
     isError = function (res , error){
         if(error){
@@ -31,6 +32,17 @@ var LogAction = {
             };
             res.json({ret:0, msg:"success-query", data:items});
         });
+    },
+
+    code : function (params, req , res){
+        http.get(params.target  , function(response){
+            var buffer = '';
+            response.on('data' , function (chunk){
+                buffer += chunk.toString();
+            }).on('end' , function (){
+                res.json({ret:0, msg:"success-query", data:buffer});
+            });
+        })
     }
 };
 

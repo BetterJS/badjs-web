@@ -96,57 +96,57 @@ define([
             })
             .on('click', 'showSource', function (e, data) {
                 require([
-                    './../beautify',
-                    function (done) {
-                        $.get('/code?target=' + encodeURIComponent(data.target), function (code) {
-                            done(null, code);
-                        }).error(function (xhr, type, msg) {
-                            done(msg);
-                        });
-                    }
-                ], function (beautify, code) {
-                    var codes = code.split(/\r?\n/),
-                        line = beautify.js_beautify(codes[+data.rowNum]),
-                        current;
+                    './../beautify'
 
-                    for (var i = 0, c = 0, l = line.length; i < l; i++) {
-                        if (c === +data.colNum) {
-                            current = i;
-                            break;
-                        }
-                        if (line[i] !== '\n' && line[i] !== '\r') {
-                            c++;
-                        }
-                    }
+                ], function (beautify) {
+                        $.get('/controller/logAction/code.do?target=' + encodeURIComponent(data.target), function (code) {
+                             var line ='';
+                            try{
+                                var codes = code.data.split(/\r?\n/),
+                                    line = beautify.js_beautify(codes[+data.rowNum]),
+                                    current;
 
-                    line = [
-                        '<pre>',
-                        line.slice(0, current - 1),
-                        '<strong>',
-                        line.slice(current - 1),
-                        '</strong>', 
-                        '</pre>',
-                        '<button type="button" class="btn btn-default" data-event-click="uploadSourceMap">上传SourceMap</button>',
-                        '<button type="button" class="btn btn-default" data-event-click="uploadSrc">上传源文件</button>'
-                    ].join('')
 
-                    Dialog({
-                        header: '错误定位',
-                        body: line,
-                        on: {
-                            'click/uploadSourceMap': function () {
-                                console.log('upload sourceMap');
-                            },
-                            'click/uploadSrc': function () {
-                                console.log('upload src');
+                                for (var i = 0, c = 0, l = line.length; i < l; i++) {
+                                    if (c === +data.colNum) {
+                                        current = i;
+                                        break;
+                                    }
+                                    if (line[i] !== '\n' && line[i] !== '\r') {
+                                        c++;
+                                    }
+                                }
+
+                                line = [
+                                    '<pre>',
+                                    line.slice(0, current - 1),
+                                    '<strong>',
+                                    line.slice(current - 1),
+                                    '</strong>',
+                                    '</pre>',
+                                    '<button type="button" class="btn btn-default" data-event-click="uploadSourceMap">上传SourceMap</button>',
+                                    '<button type="button" class="btn btn-default" data-event-click="uploadSrc">上传源文件</button>'
+                                ].join('')
+                            }catch(e){
+                                console.log(e);
+                                line = '解析错误';
                             }
-                        }
-                    });
-                }, function (err) {
-                    Dialog({
-                        header: err,
-                        body: err
-                    });
+                            Dialog({
+                                header: '错误定位',
+                                id : 'code-view',
+                                body: line,
+                                on: {
+                                    'click/uploadSourceMap': function () {
+                                        console.log('upload sourceMap');
+                                    },
+                                    'click/uploadSrc': function () {
+                                        console.log('upload src');
+                                    }
+                                }
+                            });
+                        }).error(function (xhr, type, msg) {
+                        });
+
                 });
                 
             }).on('change' ,'selectBusiness' , function (){
@@ -239,6 +239,10 @@ define([
     function showLogs(opts,  isAdd) {
 
         if(opts.id <= 0 || loading){
+            Dialog({
+                header: '警告',
+                body:'请选择一个项目'
+            });
             return ;
         }
 
@@ -263,7 +267,6 @@ define([
                 level:opts.level
             },
             success: function(data) {
-
 
                 var ret = data.ret;
                 if(ret==0){
