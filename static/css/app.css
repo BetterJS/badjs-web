@@ -20,7 +20,7 @@ header {
 }
 header .head-logo {
     height: 100%;
-    width: 207px;
+    width: 225px;
     font-size: 40px;
     text-align: center;
     line-height: 80px;
@@ -31,6 +31,10 @@ header .head-logo {
     color: #000;
     font-weight: bold;
     font-family: -webkit-pictograph;
+    display: block;
+}
+.head-logo img{
+    width: 100%;
 }
 #navbar{
     /*background: #D3D3D3;*/
