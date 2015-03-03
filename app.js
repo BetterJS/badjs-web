@@ -1,32 +1,33 @@
 var express = require('express')
   , tpl = require('express-micro-tpl')
-  , valid = require('url-valid')
-  //, passport = require('passport')
   , session = require('express-session')
   , bodyParser = require('body-parser')
   , cookieParser = require('cookie-parser')
-  , LocalStrategy = require('passport-local').Strategy
   , serveStatic = require('serve-static')
   , middlewarePipe = require('middleware-pipe')
   , tplPlugin = require('./gulp/tpl')
   , app = express()
   , server = require('http').createServer(app)
-  , io = require('socket.io')(server)
   , router = require('./controller/router')
   , orm = require('orm')
+  , fs = require('fs');
 
 
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
 
+
+
 var argv = process.argv.slice(2);
 if(argv.indexOf('--debug') >= 0){
     logger.setLevel('DEBUG');
     GLOBAL.DEBUG = true;
+    logger.info('running in debug');
+    GLOBAL.pjconfig =  require('./project.debug.json');
 }else {
     logger.setLevel('INFO');
+    GLOBAL.pjconfig = require('./project.json');
 }
-
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
@@ -49,16 +50,9 @@ app.use('/js', middlewarePipe('./static/js',
 app.use(serveStatic('static'));
 
 
-var msqlUrl = "";
-
-if( GLOBAL.DEBUG){
-    msqlUrl ="mysql://root:root@localhost:3306/badjs";
-}else {
-    msqlUrl = 'mysql://badjs:pass4badjs@10.134.5.103:3306/badjs';
-}
+var msqlUrl = GLOBAL.pjconfig.mysql.url;
 
 
-console.log(msqlUrl);
 app.use(orm.express(msqlUrl, {
   define: function (db, models, next) {
 
@@ -71,7 +65,7 @@ app.use(orm.express(msqlUrl, {
         models.db = db;
 
         global.models = models;
-        console.log("mysql dao");
+        logger.info('mysql connected');
         next();
   }}));
 

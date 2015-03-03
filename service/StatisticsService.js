@@ -32,11 +32,8 @@ var StatisticsService = function (){
     this.statisticsDao = global.models.statisticsDao;
     this.applyDao = global.models.applyDao;
 
-    if(GLOBAL.DEBUG){
-        this.url = 'http://183.60.70.234:9000/errorMsgTop';
-    }else {
-        this.url = 'http://10.143.132.205:9000/errorMsgTop';
-    }
+
+    this.url = GLOBAL.pjconfig.storage.errorMsgTopUrl;
 
     logger.debug('query url : ' + this.url);
 };

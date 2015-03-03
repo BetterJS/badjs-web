@@ -1,0 +1,12 @@
+{
+    "mysql" : {
+        "url" : "mysql://root:root@localhost:3306/badjs"
+    },
+    "storage" : {
+        "errorMsgTopUrl" : "http://127.0.0.1:9000/errorMsgTop",
+        "queryUrl" : "http://127.0.0.1:9000/query"
+    },
+    "acceptor": {
+        "pushProjectUrl" : "http://127.0.0.1:9001/getProjects"
+    }
+}

@@ -13,12 +13,15 @@ var log4js = require('log4js'),
 
 var LogService = function (){
 
-    if(GLOBAL.DEBUG){
+   /* if(GLOBAL.DEBUG){
         this.queryUrl = 'http://localhost:9000/query';
     }else {
         this.queryUrl = 'http://10.143.132.205:9000/query';
         this.pushProjectUrl = 'http://10.143.132.205:9001/getProjects';
-    }
+    //}*/
+
+    this.queryUrl = GLOBAL.pjconfig.storage.queryUrl;
+    this.pushProjectUrl = GLOBAL.pjconfig.storage.pushProjectUrl;
 
     logger.debug('query url : ' + this.url)
 //    this.url = 'http://127.0.0.1:9000/query';

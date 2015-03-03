@@ -1,0 +1,12 @@
+{
+    "mysql" : {
+        "url" : "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs"
+    },
+    "storage" : {
+        "errorMsgTopUrl" : "http://10.143.132.205:9000/errorMsgTop",
+        "queryUrl" : "http://10.143.132.205:9000/query"
+    },
+    "acceptor": {
+        "pushProjectUrl" : "http://10.143.132.205:9001/getProjects"
+    }
+}
