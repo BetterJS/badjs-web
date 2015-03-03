@@ -1,0 +1,91 @@
+<%=include('./common/commonLinks.html')(it, opt)%>
+<%=include('./common/header.html')(it, opt)%>
+
+<main id="content" role="main">
+    <div class="wrap">
+        <div class="main autoM">
+
+                <div class="m-mian js_navinfo" id="Mnavinfo-2">
+                <div class="m-r-side r">
+                    <h2 class="m-title-2">接入指南</h2>
+                    <ul class="toolar-ul">
+                        <li><a class="toolar-list" href="#caption1">1.申请上报ID</a></li>
+                        <li><a class="toolar-list" href="#caption2">2.页面上报</a></li>
+                        <li><a class="toolar-list" href="#caption3">3.Nlog查看日志</a></li>
+                    </ul>
+                </div>
+                <div class="m-l-mian l">
+                    <h2 class="m-title" id="caption1">1.申请上报ID</h2>
+                    <p class="ml-mod">每个业务对应唯一ID，在Nlog中提供日志筛选 </p>
+                    <h2 class="m-title" id="caption2">2.页面上报</h2>
+                    <div class="ml-mod">
+                        <p>
+                            <b>Step 1.引入Tryjs脚本</b><br/>
+                            代码封装在tryjs中---(github地址)http://github.com/imweb/mobile/tree/master/src/tools<br/>
+                            <b>加载tryjs模块，并初始化</b><br/>
+                            <img src='img/js.png' width="70%" />
+                        </p>
+                        <p>
+                            <b>Step 2.申请项目接入</b><br/>
+                            <img src='img/insert.png' width="100%" />
+                        </p>
+                        <div>
+                            <p><b>Step 3.页面上报</b></p>
+                            <p>在页面需要上报的上报点加入以下代码:<br/>
+                                $.badjs(msg, url, line, smid, level);
+                                参数对应的含义分别是：<br/>
+                            <ul style="margin-left:20px;">
+                                <li>msg {String} 上报错误信息</li>
+                                <li>url {String} 该上报信息所属的文件路径</li>
+                                <li>line {Number} 上报信息所属的文件行号，没有为0</li>
+                                <li>smid {Number} 上报对应的monitor id</li>
+                                <li> level {Number} 上报对应的级别:
+                                    <ul style="margin-left:30px;">
+                                        <li> debug（调试日志）：1 ;</li>
+                                        <li> info（流水日志）：2 ;</li>
+                                        <li> error（错误日志）：4（默认值） ;</li>
+                                        <li> fail（致命错误日志）：8</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            </p>
+                        </div>
+                        <div>
+                            <p><b id="caption3">Step 4.badjs系统查看日志，进行统计</b></p>
+                            <p>在badjs系统中设置查询参数，选择对应的业务名称<br/>
+                                <img src='img/log.png' width="100%"  /><br/>
+                                对查询结果进行统计<br/>
+                                图表统计<br/>
+                                <img src='img/charts.png' width="100%" />
+                                日志统计<br/>
+                                <img src='img/statistics.png' width="100%" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="m-mian js_navinfo" id="Mnavinfo-3">
+                <div>
+                    <h2 class="m-title">常见问题FAQ</h2>
+                    <div class="ml-mod">下面列举一些常见问题供各部门同事参考，参考中无法找到解决办法的问题可以RTX联系IMWebA/IMWebB协助处理。</div>
+                    <h2 class="m-title">业务接入问题</h2>
+                    <div class="ml-mod">
+                        <p><b>Q1.Badjs脚本做了什么？</b></p>
+                        <p>将信息上报到Nlog日志系统。同时监听error事件，上报脚本错误。</p>
+                        <p><b>Q2.为什么要申请业务ID？</b></p>
+                        <p>业务ID是为了方便在Nlog系统中做查询筛选，每一条上报记录对应了唯一一个业务。</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</main>
+
+<%=include('./common/footer.html')(it)%>
+</body>
+
+</html>

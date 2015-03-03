@@ -2,6 +2,7 @@ body, html {
     height: 100%;
     overflow: hidden;
     background: #f7f7f7;
+    font-family: "微软雅黑";
 }
 
 .clear {
@@ -35,6 +36,10 @@ header .head-logo {
 }
 .head-logo img{
     width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+    margin-left:20px;
 }
 #navbar{
     /*background: #D3D3D3;*/
@@ -373,7 +378,35 @@ form {
     color: #4d4d4d;
     margin: 0 27px; }
 
+/*common */
+.main{
+    width: 920px;
+    margin: 0 auto;
+    padding: 20px;
 
+}
+.main img{
+    margin: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+.main b{
+    line-height: 30px;
+}
+
+.ml-mod{
+    margin: 5px;
+    text-indent: 2em;
+    font-size: 16px;
+    line-height: 22px;
+}
+.m-title{
+    font-size: 25px;
+    line-height: 40px;
+    color: #46ACEA;
+    background: #fff;
+}
+/*common end*/
 /*@apply  coverguo 2014-12-31*/
 #applyContainer{
     padding-top: 10px;

@@ -52,13 +52,13 @@
                 </ul>
             </li>
             <li class="item items <%= it.index==('systemIntroduce'||'guide')?'active':''%>">
-                <a>帮助</a>
+                <a><%= it.guideTitle?it.guideTitle:"帮助" %></a>
                 <ul class="subNav">
                     <li class="item">
-                        <a href="userManage.html">系统介绍</a>
+                        <a href="introduce.html">系统介绍</a>
                     </li>
                     <li class="item">
-                        <a href="applyList.html">接入指南</a>
+                        <a href="help.html">使用指南</a>
                     </li>
                     <!--<li class="item">-->
                     <!--<a href=""></a>-->
