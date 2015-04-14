@@ -30,7 +30,20 @@ var LogAction = {
             if(isError(res, err)){
                 return;
             };
-            res.json({ret:0, msg:"success-query", data:items});
+
+     /*      [ {
+            _id: "552cf6441c715a952748137b",
+            all: ";uin=NaN;from=http://mobileapp.ke.qq.com/app2h5/agencyHome.html?_wv=1025&_bid=167&plg_auth=1#aid=10044;msg=localstorage not hit;url=http://mobileapp.ke.qq.com/app2h5/agencyHome.html?_wv=1025&_bid=167&plg_auth=1#aid=10044;level=4;ip=27.213.142.103;userAgent=Mozilla/5.0 (Linux; U; Android 4.0.3; zh-cn; U9500 Build/HuaweiU9500) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.4 TBS/025411 Mobile Safari/533.1 MicroMessenger/6.1.0.73_r1097298.543 NetType/WIFI",
+            date: "2015-04-14T11:13:08.848Z",
+            from: "http://mobileapp.ke.qq.com/app2h5/agencyHome.html?_wv=1025&_bid=167&plg_auth=1#aid=10044",
+            ip: "27.213.142.103",
+            level: 4,
+            msg: "localstorage not hit"
+            uin: "NaN"
+            url: "http://mobileapp.ke.qq.com/app2h5/agencyHome.html?_wv=1025&_bid=167&plg_auth=1#aid=10044"
+            userAgent: "Mozilla/5.0 (Linux; U; Android 4.0.3; zh-cn; U9500 Build/HuaweiU9500) AppleWebKit/533.1 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.4 TBS/025411 Mobile Safari/533.1 MicroMessenger/6.1.0.73_r1097298.543 NetType/WIFI"
+            }]*/
+            res.json({ret:0, msg:"success-query", data:items });
         });
     },
 

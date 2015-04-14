@@ -1,0 +1,88 @@
+<%=include('./common/commonLinks.html')(it, opt)%>
+<%=include('./common/header.html')(it, opt)%>
+
+<main id="content" role="main" class="autoBottom">
+    <div class="wrap">
+        <!--<%=include('./common/leftSide.html')(it, opt)%>-->
+        <div class="mid-side">
+            <div class="main-mid">
+                <table class="main-table">
+                    <thead>
+                        <tr>
+                            <th class="td-1">#</th>
+                            <th class="td-2">时间</th>
+                            <th class="td-3">信息</th>
+                            <th class="td-4">uin</th>
+                            <th class="td-5">ip</th>
+                            <th class="td-6">类型</th>
+                            <th class="td-7">来源</th>
+                        </tr>
+                    </thead>
+                    <tbody id="log-table">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="right-side">
+            <section>
+                <div class="log-select">
+                    <!--  <input type="text" class="head-input" placeholder="选择业务"/>
+                      <div class="head-btn" data-event-click="searchBusiness"><span class="glyphicon glyphicon-search"></span></div>-->
+                    <select class="form-control " data-event-change="selectBusiness" id="select-business">
+                        <option value="-1">-- 请选择项目 --</option>
+
+                        <%  for(var i = 0 ; i < it.items.length ;i ++){
+                            var itemOne = it.items[i];
+
+                        %>
+                        <option value=" <%=itemOne.id%>"> <%=itemOne.name%></option>
+                        <%}%>
+                    </select>
+                </div>
+                <div class="clear"></div>
+            </section>
+            <section>
+                <p class="setting-title">消息类型
+                <ul class="setting-msg">
+                    <li class="msg-error " data-event-click = "errorTypeClick">error</li>
+                    <li class="msg-log msg-dis" data-event-click = "logTypeClick">log</li>
+                    <li class="msg-debug msg-dis" data-event-click = "debugTypeClick">debug</li>
+                </ul>
+                <div class="clear"></div>
+            </section>
+            <section>
+                <p class="setting-title">包含关键词</p>
+                <div class="keyword-ctn">
+                    <input type="text" class="keyword-ipt" id="keyword-ipt" data-event-keyup="addKeyword"/><button class="keyword-btn" data-event-click="addKeyword">添加</button><button class="keyword-btn" data-event-click="removeKeywords">清空</button>
+                    <div class="keyword-tag-ctn" id="keyword-group">
+                    </div>
+                </div>
+            </section>
+            <section>
+                <p class="setting-title">排除关键词</p>
+                <div class="keyword-ctn">
+                    <input type="text" class="keyword-ipt" id="debar-ipt" data-event-keyup="addDebar"/><button class="keyword-btn" data-event-click="addDebar">添加</button><button class="keyword-btn" data-event-click="removeDebars">清空</button>
+                    <div class="keyword-tag-ctn" id="debar-group">
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="setting-search" data-event-click="showLogs">开始监听</div>
+            </section>
+        </div>
+    </div>
+</main>
+<%=include('./common/footer.html')(it)%>
+<script type="text/javascript">
+    var systime = '<%=it.systime%>' - 0;
+    var currentTime = new Date - 0;
+    require.config({
+        baseUrl : 'js/log/'
+    });
+    require(['realtime'], function (log) {
+        log.init();
+    });
+</script>
+</body>
+</html>

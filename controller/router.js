@@ -117,6 +117,9 @@ module.exports = function(app){
     app.get('/statistics.html' , function (req , res){
         StatisticsAction.index({tpl:"statistics", statisticsTitle: "日志统计"} , req , res);
     });
+    app.get('/realtimelog.html' , function (req , res){
+        IndexAction.realtime({} , req , res);
+    });
     app.get('/charts.html' , function (req , res){
         StatisticsAction.index({tpl:"charts", statisticsTitle: "图表统计"} , req , res);
     });

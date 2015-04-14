@@ -22,7 +22,23 @@ var IndexAction = {
         });
 
 
+    },
+
+
+    realtime :  function(parm , req, res){
+        var params = req.query,
+            user  = req.session.user;
+
+        var businessService =  new BusinessService();
+
+        businessService.findBusinessByUser(user.loginName , function (err, item){
+            res.render('realtimelog', { layout: false, user: user, index:"realtime" , items : item , systime : new Date - 0} );
+        });
+
+
     }
+
+
 };
 
 module.exports = IndexAction;
