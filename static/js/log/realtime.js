@@ -196,8 +196,9 @@ define([
                         startIndex : currentIndex
                     }
 
-
-                    $('#log-table').prepend(logTable(data.data.reverse(), param));
+                    if(data.data.length > 0){
+                        $('#log-table').prepend(logTable(data.data.reverse(), param));
+                    }
 
                     currentIndex += data.data.length;
                     if(data.data.length == 0){
