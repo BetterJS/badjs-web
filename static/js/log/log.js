@@ -241,7 +241,7 @@ define([
     function showLogs(opts,  isAdd) {
 
         if(opts.id <= 0 || loading){
-            !loading &&　Dialog({
+            !loading && Dialog({
                 header: '警告',
                 body:'请选择一个项目'
             });

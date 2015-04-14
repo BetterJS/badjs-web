@@ -39,6 +39,7 @@ var userAction = {
 //    },
     queryListByCondition : function (params , req ,  res) {
         var userService = new UserService();
+        var isAdmin  = req.session.user.role == 1;
         //用户根据项目查询项目成员
         if(params.applyId && params.role){
             params.applyId -=0;
@@ -56,7 +57,7 @@ var userAction = {
             if(isError(res, err)){
                 return;
             }
-            res.json({ret:0, data:items, msg:"success"});
+            res.json({ret:0, data:items, msg:"success" , isAdmin : isAdmin});
         });
     },
     queryAllList : function (params , req ,  res) {

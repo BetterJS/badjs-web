@@ -27,8 +27,13 @@ define([ '../dialog',
                 reloadPage();
             });
         });
-        //事件委托哈
+
+        var submiting =  false;
         $("#userList").on("click",'.user-deleteBtn', function (){
+            if(submiting){
+                return;
+            }
+            submiting = true;
             var params = {
                 id : $(this).data().uaid
             };
@@ -39,6 +44,21 @@ define([ '../dialog',
             }else{
                 return false;
             }
+
+        });
+
+
+        $("#userList").on("click",'.user-authBtn', function (){
+            if(submiting){
+                return;
+            }
+            submiting = true;
+            var params = {
+                id : $(this).data().uaid
+            };
+            $ajax("/controller/userApplyAction/auth.do", params, function(data){
+                location.reload();
+            });
 
         });
     };
@@ -102,7 +122,8 @@ define([ '../dialog',
         $ajax("controller/userAction/queryListByCondition.do",params,function(items){
             console.log(items);
             var param = {
-                encodeHtml: encodeHtml
+                encodeHtml: encodeHtml,
+                isAdmin : items.isAdmin
             };
             $('#userList').html(userTable(items.data, param));
 

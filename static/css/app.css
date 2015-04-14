@@ -1,6 +1,5 @@
 body, html {
     height: 100%;
-    overflow: hidden;
     background: #f7f7f7;
     font-family: "微软雅黑";
 }
@@ -117,7 +116,7 @@ header .head-face {
 form {
     margin-top: 100px; }
 
-#content {
+#content.autoBottom {
     background: #f7f7f7;
     position: absolute;
     bottom:0;
@@ -125,6 +124,7 @@ form {
     width:100%;
     min-height:800px;
 }
+
 #content .wrap {
     position: relative;
     height: 100%;
@@ -668,8 +668,8 @@ form {
 /*charts 图表*/
 #chartsContainer{
     width: 98%;
-    margin: 20px  auto;
-    padding: 30px 15px;
+    margin: 0  auto;
+    padding: 0 15px;
 }
 
 #code-view .modal-body{

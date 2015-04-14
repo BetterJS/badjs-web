@@ -77,6 +77,7 @@ app.use(function (err, req, res, next) {
 router(app);
 
 
+
 server.listen(80);
 
 logger.info('start badjs-web , listen 80 ...');

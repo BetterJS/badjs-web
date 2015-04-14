@@ -83,8 +83,28 @@ userApplyService.prototype = {
             });
         })
     },
-    update : function(target, callback){
-
+    auth : function(target, callback){
+        this.userApplyDao.one({id: target.id}, function (err, item) {
+            if(err){
+                callback(err);
+                return;
+            }
+            if(item.role == 1){
+                callback("had authed");
+                return ;
+            }
+            item.role = 1;
+            item.save(function(err) {
+                if (err) {
+                    callback(err);
+                    return;
+                }
+                if (GLOBAL.DEBUG) {
+                    logger.info("auth success item: " + item);
+                }
+                callback(null);
+            });
+        })
     }
 }
 

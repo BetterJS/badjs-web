@@ -45,7 +45,22 @@ var userAction = {
             if (isError(res, err)) {
                 return;
             }
-            res.json({ret: 0, msg: "success-add"});
+            res.json({ret: 0, msg: "success-remove"});
+        });
+
+    },
+
+    auth: function(auth, req, res){
+        if(auth.id ==""){
+            res.json({ret: 1002, msg: "id为空"});
+            return;
+        }
+        var userApplyService = new UserApplyService();
+        userApplyService.auth(auth,function(err, items) {
+            if (isError(res, err)) {
+                return;
+            }
+            res.json({ret: 0, msg: "success-update"});
         });
 
     }
