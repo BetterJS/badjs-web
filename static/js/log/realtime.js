@@ -169,9 +169,9 @@ define([
         if(startTime){
             startTime = endTime;
         }else {
-            startTime = new Date - currentTime + systime
+            startTime = new Date - diffTime - (5* 1000);
         }
-        endTime = startTime + 1000 * 5;
+        endTime = new Date - diffTime ;
 
 
         var url = '/controller/logAction/queryLogList.do';
