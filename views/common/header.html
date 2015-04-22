@@ -1,12 +1,12 @@
 
 <header>
-    <div class="head-logo"><a href="index.html"><img src="img/logo.png" alt=""/></a></div>
+    <div class="head-logo"><a href="index.html"><img src="/static/img/logo.png" alt=""/></a></div>
     <div class="head-user">
         <% if (it.user) { %>
         <span class="head-face"><%= it.user.chineseName %>(<%= it.user.loginName %>)</span>
         <a href="/logout">退出</a>
 
-        <img src="/img/face2.jpg" />
+        <img src="/static/img/face1.jpg" />
         <% } else { %>
         <a href="/login">登录</a>
         <% } %>

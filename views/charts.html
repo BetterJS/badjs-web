@@ -39,15 +39,6 @@
     </div>
 </main>
 <%=include('./common/footer.html')(it)%>
-<script src="/js/charts/highcharts.js"></script>
-<script src="/js/charts/sand-signika.js"></script>
-<script type="text/javascript">
-    require.config({
-        baseUrl : 'js/charts'
-    });
-    require(['charts'], function (charts) {
-        charts.init();
-    });
-</script>
+<script src="/static/entry.charts.js"></script>
 </body>
 </html>

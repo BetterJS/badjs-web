@@ -1,0 +1,72 @@
+<%
+var urls;
+for (var i = 0 , l = it.length, type; i < l; i++) {
+switch(it[i].level) {
+    case '8':
+        type = 'warning';
+        break;
+    case '4':
+        type = 'err';
+        break;
+    case '2':
+        type = 'info';
+        break;
+    case '1':
+        type = 'debug';
+        break;
+}
+
+ function getBrowserType(ua){
+        if(!ua){
+            return '';
+        }
+        ua = ua.toLowerCase();
+
+        if(ua.indexOf('mqq')>0){
+        return  'ico-qb';
+        }else if(ua.indexOf('qq')>0){
+            return  'ico-qq';
+        }else if(ua.indexOf('android')>0){
+            return  'ico-android';
+        }else if(ua.indexOf('iphone')>0){
+            return  'ico-ios';
+        }else if(ua.indexOf('chrome')>0){
+            return  'ico-chrome';
+        }else if(ua.indexOf('msie')>0){
+            return 'ico-ie';
+        }else if(ua.indexOf('firefox')>0){
+            return 'ico-ff';
+        }else if(ua.indexOf('safari')>0){
+            return 'ico-safari';
+        }
+}
+
+var isHtml = /^.+?\.html\??/.test(it[i].target);
+%>
+<tr>
+    <td   class="td-1 info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
+    <td   class="td-2"><%= _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') %></td>
+    <td style="" class="td-3"><%=it[i].msg%></td>
+    <td  class="td-4"><%= it[i].uin = 'NaN' ? '-' : it[i].uin%></td>
+    <td  class="td-5"><%=it[i].ip%></td>
+    <td  class="td-6"><span class="ico-browser <%=getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
+    <td class="td-7">
+  <%if(false){%>
+        <a style="word-break:break-all;display: block" >
+  <%}else {%>
+        <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
+  <%}%>
+
+        <%=it[i].target || it[i].url || ''%></a>
+        <span class="err-where"><%=it[i].rowNum || 0 %>行<%=it[i].colNum || 0%>列</span>
+        <a style="font-size:12px;" href="<%=it[i].from%>" target="_blank">查看</a>
+    </td>
+</tr>
+<% } %>
+
+<% if(it.length = 0 ){%>
+<td colspan="7" style="
+    text-align: center;
+    background: rgb(221, 221, 221);
+">无更多数据</td>
+<%}%>

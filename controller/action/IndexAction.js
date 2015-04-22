@@ -11,6 +11,7 @@ var  log4js = require('log4js'),
 var IndexAction = {
 
 
+
     index :  function(parm , req, res){
         var params = req.query,
             user  = req.session.user;

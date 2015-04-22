@@ -66,14 +66,7 @@
 </main>
 
 <%=include('/common/footer.html')(it)%>
-<script type="text/javascript">
-    require.config({
-        baseUrl : 'js/userManage'
-    });
-    require(['userManage'], function (userManage) {
-        userManage.init();
-    });
-</script>
+<script src="/static/entry.userManage.js"></script>
 </body>
 
 </html>

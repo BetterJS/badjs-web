@@ -44,16 +44,8 @@
 
     </div>
 </main>
-
-<%=include('/common/footer.html')(it)%>
-<script type="text/javascript">
-    require.config({
-        baseUrl : 'js/statistics'
-    });
-    require(['statistics'], function (statistics) {
-        statistics.init();
-    });
-</script>
+<%=include('./common/footer.html')(it)%>
+<script src="/static/entry.statistics.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,253 @@
+webpackJsonp([6],{
+
+/***/ 0:
+/***/ function(module, exports, __webpack_require__) {
+
+	var applyList = __webpack_require__(9);
+
+	applyList.init();
+
+/***/ },
+
+/***/ 9:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * @info 申请列表js
+	 * @author coverguo
+	 * */
+
+
+	var Dialog = __webpack_require__(97);
+	var applyTable = __webpack_require__(101);
+
+
+	    var maxDate = 60*60*1000*24 *2;
+	    var   encodeHtml = function (str) {
+	        return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+	    };
+	    //选择的状态
+	    var tempStatus,
+	        oldClass;
+
+
+	    function doApprove(params , cb){
+	        $.post('/controller/approveAction/doApprove.do',params, function (data) {
+	            var ret = data.ret;
+	            switch(ret){
+	                case 0://成功
+	                    //执行成功回调函数.
+	                    cb(data);
+	                    break;
+	                case 1://没有登陆态或登陆态失效
+	                    alert(data.msg);
+	            }
+	        }).fail(function () {
+	            // 错误处理
+	        });
+	    }
+	    function bindEvent() {
+
+	        //搜索
+	        $("#apply_searchBtn").on("click", function () {
+	            var searchParam = {
+	                searchText:$("#apply_searchText").val(),
+	                statusType:parseInt($("#apply_searchType").val(),10)
+	            };
+	            getSearchList(searchParam, function(data){
+	                console.log(data);
+	                var param = {
+	                    encodeHtml: encodeHtml
+	                };
+	                $('.dataTable').html(applyTable({it : data, opt : param}));
+	                //bindEvent();
+	            });
+	        });
+
+	        //审核
+	        $("#applyList").on("click",".approveBtn", function(){
+	            $(this).siblings(".approveBlock").show();
+	            tempStatus = $(this).siblings(".approveBlock").find("#statusPanel").data("value");
+	            oldClass = $(this).siblings(".approveBlock").find("#statusPanel").attr("class");
+	            console.log(tempStatus);
+	        });
+	        $(".approveBlock .closeBtn").on("click", function(e){
+	            $(this).parent().hide();
+	            //取消则返回之前的class
+	            $(this).siblings("#statusPanel").removeClass().addClass(oldClass);
+	            e.stopPropagation();
+	        });
+	        $("#statusPanel .statusBtn").on("click", function(e){
+	            var type = $(this).data("type");
+	            oldClass = $(this).parent().attr("class");
+	            tempStatus = $(this).data("value");
+	            $(this).parent().removeClass().addClass(type +"-active");
+	            e.stopPropagation();
+	        });
+	        $(".approveBlock .operation").on("click", function (e) {
+	            //只有提交了才改变状态值
+	            $(this).siblings("#statusPanel").data().value = tempStatus;
+	            var param = {
+	                reply       : $(this).siblings(".replyText").val(),
+	                applyId     : $(this).data("apply_id"),
+	                applyStatus : tempStatus
+	            };
+	            var $self = $(this);
+	            doApprove(param, function (data) {
+	                alert(data.msg);
+	                $self.parent().hide();
+	                location.reload();
+	            });
+	            e.stopPropagation();
+	        });
+
+	    }
+	    function getSearchList(params,cb){
+	        $.get('./controller/applyAction/queryListBySearch.do',params, function (data) {
+	            var ret = data.ret;
+	            switch(ret){
+	                case 0://成功
+	                    //执行成功回调函数.
+	                    cb(data.data);
+	                    break;
+	                case 1://没有登陆态或登陆态失效
+	                    alert("失败");
+	            }
+	        }).fail(function () {
+	            // 错误处理
+	        });
+	    }
+	    //获取列表页信息
+	    function getApplyList(cb){
+	        var params = {
+	        };
+	        $.get('./controller/applyAction/queryListByUser.do',params, function (data) {
+	            var ret = data.ret;
+	            switch(ret){
+	                case 0://成功
+	                    //执行成功回调函数.
+	                    cb(data.data);
+	                    break;
+	                case 1://没有登陆态或登陆态失效
+	                    alert("失败");
+	            }
+	        }).fail(function () {
+	            // 错误处理
+	        });
+	    }
+
+	    function init() {
+	        //$(".datetimepicker").datetimepicker({format: 'YYYY-MM-DD HH:mm'}).data("DateTimePicker").setMaxDate(new Date());
+	        //
+	        //$('.fromTime').data("DateTimePicker").setDate( new Date(new Date() - maxDate));
+	        //$('.toTime').data("DateTimePicker").setDate( new Date());
+	        getApplyList(function(data){
+	            console.log(data);
+	            var param = {
+	                encodeHtml: encodeHtml
+	            };
+	            $('.dataTable').html(applyTable({it : data, opt :param}));
+	            bindEvent();
+	        });
+
+
+	    }
+
+	module.exports = {
+	        init: init
+	}
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+
+/***/ 101:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '', __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
+	with (obj) {
+
+
+	    var len = it.item.length;
+
+	    var statue = "";
+
+	;
+	__p += '\r\n';
+	 if(len !=0){;
+	__p += '\r\n<thead>\r\n<tr>\r\n    <!--<th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>-->\r\n    <th>#</th>\r\n    <th style="width:80px;">上报id</th>\r\n    <th >名称</th>\r\n    <th>申请人</th>\r\n    <th>申请时间</th>\r\n    <th >业务描述</th>\r\n    <th >业务网址</th>\r\n    <th style="width:120px;">' +
+	((__t = ( it.role =1 ? '操作' : '状态')) == null ? '' : __t) +
+	'</th>\r\n\r\n\r\n</tr>\r\n</thead>\r\n\r\n<tbody id="applyList">\r\n';
+
+	var one ;
+	for(var i = 0; i<len ; i++){
+	    one = it.item[i];
+	    one.status -= 0;
+	    var STATUS_BLOCK_HEIGHT = 24;
+	    var status = 'applying-active';
+	    var statusText = '待审核';
+	    var statusClass = 'applyingBtn'
+	    if(one.status != 0){
+	        status = one.status =1 ? 'agree-active' : 'disagree-active';
+	        statusText = one.status =1 ? '已通过' : '已拒绝';
+	        statusClass = one.status =1 ? 'passBtn' : 'rejectedBtn';
+	    }
+
+	;
+	__p += '\r\n    <tr class="listRow" >\r\n        <!--<td><input class="tableSelectCheckBox" type="checkbox"/></td>-->\r\n        <td class="">' +
+	((__t = ((i +1))) == null ? '' : __t) +
+	'</td>\r\n        <td class="apply_id" style="text-align: center;">' +
+	((__t = (one.id)) == null ? '' : __t) +
+	'</td>\r\n        <td class="apply_name">\r\n            <span style="width:100px;" class="textOverflow" title="' +
+	((__t = (one.name)) == null ? '' : __t) +
+	'">' +
+	((__t = (one.name)) == null ? '' : __t) +
+	'</span>\r\n        </td>\r\n        <td class="apply_userName">' +
+	((__t = (one.userName)) == null ? '' : __t) +
+	'</td>\r\n        <td class="apply_createTime">' +
+	((__t = ( _.formatDate( new Date(one.createTime) , 'YYYY-MM-DD' ))) == null ? '' : __t) +
+	'</td>\r\n        <td  class="apply_description">\r\n            <span style="width:250px;" class="textOverflow" title="' +
+	((__t = (one.description)) == null ? '' : __t) +
+	'"> ' +
+	((__t = (one.description)) == null ? '' : __t) +
+	'</span>\r\n        </td>\r\n        <td class="apply_url" >\r\n            <span style="width:250px;" class="textOverflow" title="' +
+	((__t = (one.url)) == null ? '' : __t) +
+	'"> ' +
+	((__t = (one.url)) == null ? '' : __t) +
+	'</span>\r\n        </td>\r\n\r\n        <td class="apply_operation">\r\n            ';
+	if(it.role = 1){;
+	__p += '\r\n            <div  class="modifyBtn approveBtn ' +
+	((__t = (statusClass)) == null ? '' : __t) +
+	'">\r\n                ' +
+	((__t = ( statusText)) == null ? '' : __t) +
+	'\r\n            </div>\r\n            <div class="approveBlock" >\r\n                <div class="closeBtn">关闭</div>\r\n                <input  class="rowBlock replyText" type="text" name="description" placeholder="操作描述"/>\r\n                <div id="statusPanel" class="' +
+	((__t = ( status)) == null ? '' : __t) +
+	'" data-value="' +
+	((__t = ( one.status)) == null ? '' : __t) +
+	'">\r\n                    <div class="statusBtn applying" data-type="applying" data-value="0">待审核</div>\r\n                    <div class="statusBtn agree" data-type="agree" data-value="1">通过</div>\r\n                    <div class="statusBtn disagree" data-type="disagree" data-value="2">拒绝</div>\r\n                </div>\r\n                <div class="operation" data-apply_id="' +
+	((__t = (one.id)) == null ? '' : __t) +
+	'">\r\n                    <button class="submitBtn" >确定</button>\r\n                </div>\r\n            </div>\r\n            ';
+	} else {;
+	__p += '\r\n            <div  class=" ' +
+	((__t = (statusClass)) == null ? '' : __t) +
+	'">\r\n                ' +
+	((__t = ( statusText)) == null ? '' : __t) +
+	'\r\n            </div>\r\n            ';
+	};
+	__p += '\r\n\r\n\r\n        </td>\r\n    </tr>\r\n';
+	};
+	__p += '\r\n</tbody>\r\n';
+	};
+	__p += '\r\n';
+
+	}
+	return __p
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ }
+
+});

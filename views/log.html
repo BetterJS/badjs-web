@@ -81,13 +81,6 @@
     </div>
 </main>
 <%=include('./common/footer.html')(it)%>
-<script type="text/javascript">
-    require.config({
-        baseUrl : 'js/log/'
-    });
-    require(['log'], function (log) {
-        log.init();
-    });
-</script>
+<script src="/static/entry.log.js"></script>
 </body>
 </html>

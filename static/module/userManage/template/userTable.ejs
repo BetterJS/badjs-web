@@ -1,0 +1,25 @@
+<% for(var i =0, len = it.length;i<len; i++){
+    var role ="参与者";
+    if(it[i].role =1){
+        role ="项目管理员";
+    }
+%>
+<tr class="listRow">
+    <td><%= i+1%></td>
+    <td><%= it[i].loginName%></td>
+    <td><%= it[i].chineseName?it[i].chineseName:"无"%></td>
+    <td><%= it[i].name%></td>
+    <td><%= role%> </td>
+    <td>
+        <%if(it[i].role != 1 ){%>
+            <button class="user-authBtn btn-default modifyBtn" data-uaid = "<%= it[i].id%>">授权管理员</button>
+            <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "<%= it[i].id%>">删除</button>
+        <%}%>
+
+        <%if(it[i].role =1 && opt.isAdmin){%>
+        <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "<%= it[i].id%>">删除</button>
+        <%}%>
+
+    </td>
+</tr>
+<%}%>

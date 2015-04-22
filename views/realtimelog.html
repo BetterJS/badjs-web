@@ -74,16 +74,6 @@
     </div>
 </main>
 <%=include('./common/footer.html')(it)%>
-<script type="text/javascript">
-    var systime = '<%=it.systime%>' - 0;
-    var currentTime = new Date - 0;
-    var diffTime = systime - currentTime;
-    require.config({
-        baseUrl : 'js/log/'
-    });
-    require(['realtime'], function (log) {
-        log.init();
-    });
-</script>
+<script src="/static/entry.realtime.js"></script>
 </body>
 </html>

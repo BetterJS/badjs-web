@@ -10,117 +10,48 @@ var LogAction = require('./action/LogAction'),
     IndexAction = require("./action/IndexAction"),
     StatisticsAction = require("./action/StatisticsAction"),
     ApproveAction = require("./action/ApproveAction"),
-    UserApplyAction = require("./action/UserApplyAction"),
-    auth = require('../utils/auth'),
-    tof = require('../oa/node-tof');
+    UserApplyAction = require("./action/UserApplyAction");
+
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
 
 module.exports = function(app){
-    var isError = GLOBAL.isError = function (res , error){
-        if(error){
-            res.json({ret : 1 , msg : error});
-            return true;
-        }
-        return false;
-
-    };
-    app.use(function (req , res , next){
-        var params = req.query,
-            user  = req.session.user,
-        //获取用户model
-            userDao = req.models.userDao;
-
-        req.indexUrl = req.protocol + "://" + req.get('host') + '/index.html';
-
-        if(/^\/login/i.test(req.url)){ // 登录
-            var redirectUrl = req.headers.referer || req.indexUrl;
-            res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url='+redirectUrl);
-            return ;
-        }
-        if ( params && params.ticket) { // oa 登录跳转
-            tof.passport(params.ticket , function (result){
-                if(result){
-                    user = req.session.user = {loginName : result.LoginName , chineseName : result.ChineseName, role : 0};
-                    userDao.one({ loginName : result.LoginName} ,function (err , user) {
-                        if(isError(res,err)){
-                            return;
-                        }
-                        //第一次登陆
-                        if(!user){
-
-                            userDao.create(req.session.user, function(err, result){
-                                if(isError(res, err)){
-                                    return;
-                                }
-
-                                req.session.user.role = result.role;
-                                req.session.user.id = result.id;
-                                logger.info("New User:"+ req.session.user + "insert into db-badjs");
-                                next();
-                            });
-                        }else{
-                            logger.info("Old User:"+ req.session.user);
-                            req.session.user.role = user.role;
-                            req.session.user.id = user.id;
-
-                            // 尚未登录过， 但是添加过，分配中文名字
-                            if(!user.chineseName){
-                                user.chineseName = result.ChineseName;
-                                user.save( function(err, result){
-                                });
-                            }
-                            next();
-                        }
-
-                    })
-
-                }else {
-                    res.send(403, 'Sorry! you can not see that.');
-                }
-            });
-        } else  if(!req.session.user){
-            res.redirect(req.protocol + "://" + req.get('host') + '/login');
-            return ;
-        } else {
-            next();
-        }
-
-
-
-    });
-
 
     //html页面请求
     app.get('/', function (req , res){
-        IndexAction.index({} , req , res);
+        res.render('index',{} );
     });
 
     app.get('/index.html', function (req , res){
+        res.render('index',{} );
+    } );
+
+    app.get('/user/index.html', function (req , res){
         IndexAction.index({} , req , res);
     } );
 
-    app.get('/apply.html', function(req, res){
+
+    app.get('/user/apply.html', function(req, res){
         var user  = req.session.user;
         res.render('apply', { layout: false, user: user, index:'apply' });
     });
-    app.get('/applyList.html', function(req, res){
+    app.get('/user/applyList.html', function(req, res){
         var user = req.session.user;
         res.render('applyList', { layout: false, user: user, index:'manage', manageTitle: '申请列表'});
     });
 
-    app.get('/userManage.html', function (req , res){
+    app.get('/user/userManage.html', function (req , res){
         UserAction.index({} , req , res);
     });
 
-    app.get('/statistics.html' , function (req , res){
+    app.get('/user/statistics.html' , function (req , res){
         StatisticsAction.index({tpl:"statistics", statisticsTitle: "日志统计"} , req , res);
     });
-    app.get('/realtimelog.html' , function (req , res){
+    app.get('/user/realtimelog.html' , function (req , res){
         IndexAction.realtime({} , req , res);
     });
-    app.get('/charts.html' , function (req , res){
+    app.get('/user/charts.html' , function (req , res){
         StatisticsAction.index({tpl:"charts", statisticsTitle: "图表统计"} , req , res);
     });
     app.get('/help.html' , function (req , res){
@@ -143,9 +74,8 @@ module.exports = function(app){
     });
 
     // 请求路径为： controller/xxxAction/xxx.do (get || post)
-    app.use(function(req, res , next){
+    app.use("/controller",function(req, res , next){
         //controller 请求action
-        if(/^\/controller/i.test(req.url)){
             var url = req.url;
             var action = url.match(/controller\/(\w*)Action/i)[1];
             var operation = url.match(/\/(\w+)\.do/i)[1];
@@ -173,14 +103,7 @@ module.exports = function(app){
                 res.send(404, 'Sorry! can not found action.');
             }
             return;
-        }else{
-            next();
-        }
     });
-
-
-
-
 
 
 };

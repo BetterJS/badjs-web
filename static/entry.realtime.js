@@ -1,0 +1,380 @@
+webpackJsonp([1],{
+
+/***/ 0:
+/***/ function(module, exports, __webpack_require__) {
+
+	var log  =__webpack_require__(12);
+
+	log.init();
+
+/***/ },
+
+/***/ 12:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(97);
+	var Delegator = __webpack_require__(16);
+
+	var logTable = __webpack_require__(102);
+	var keyword = __webpack_require__(103);
+	var debar = __webpack_require__(104);
+
+
+	    var logConfig = {
+	            id: 0,
+	            startDate: 0,
+	            endDate: 0,
+	            include: [],
+	            exclude: [],
+	            index: 0,
+	            level:[4]
+	        },
+
+	        encodeHtml = function (str) {
+	            return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+	        };
+
+
+
+
+	    var currentSelectId = -1, currentIndex = 0  , noData = false , MAX_LIMIT = 500 , loading = false, monitorTimeId;
+
+	    function addKeyword() {
+	        var value = $.trim($('#keyword-ipt').val());
+	        if (value !== '') {
+	            if (!removeValue(value, logConfig.include)) {
+	                $('#keyword-group').append(keyword({
+	                    value: value
+	                }, {
+	                    encodeHtml: encodeHtml,
+	                    set: Delegator.set
+	                }));
+	            }
+	            logConfig.include.push(value);
+	            $('#keyword-ipt').val('');
+	        }
+	    }
+
+	    function addDebar() {
+	        var value = $.trim($('#debar-ipt').val());
+	        if (value !== '') {
+	            if (!removeValue(value, logConfig.exclude)) {
+	                $('#debar-group').append(debar({
+	                    value: value
+	                }, {
+	                    encodeHtml: encodeHtml,
+	                    set: Delegator.set
+	                }));
+	            }
+	            logConfig.exclude.push(value);
+	            $('#debar-ipt').val('');
+	        }
+	    }
+
+
+
+	    function bindEvent() {
+	        new Delegator(document.body)
+	            .on('click', 'searchBusiness', function () {
+	                // search business
+	            }).on('click', 'addKeyword', addKeyword)
+	            .on('keyup', 'addKeyword', function (e) {
+	                if (e.which === 13) addKeyword();
+	            }).on('click', 'removeKeywords', function () {
+	                logConfig.include.length = 0;
+	                $('#keyword-group').empty();
+	            }).on('click', 'removeKeyword', function (e, value) {
+	                $(this).closest('.keyword-tag').remove();
+	                removeValue(value, logConfig.include);
+	            }).on('click', 'addDebar', addDebar)
+	            .on('keyup', 'addDebar', function (e) {
+	                if (e.which === 13) addDebar();
+	            }).on('click', 'removeDebars', function () {
+	                logConfig.exclude.length = 0;
+	                $('#debar-group').empty();
+	            }).on('click', 'removeDebar', function (e, value) {
+	                $(this).closest('.keyword-tag').remove();
+	                removeValue(value, logConfig.exclude);
+	            }).on('click', 'showLogs', function () {
+	                if(logConfig.id <= 0 || loading){
+	                    !loading && Dialog({
+	                        header: '警告',
+	                        body:'请选择一个项目'
+	                    });
+	                    return ;
+	                }
+
+	                clearTimeout(monitorTimeId);
+	                $('#log-table').html('');
+	                startTime = undefined;
+	                startMonitor();
+	                $(this).text('重新监听')
+
+	            })
+	            .on('click', 'showSource', function (e, data) {
+	                // 内网服务器，拉取不到 外网数据,所以屏蔽掉请求
+	                return ;
+
+	            }).on('change' ,'selectBusiness' , function (){
+	                var val = $(this).val()-0;
+	                currentSelectId = val;
+	                $('#log-table').html('');
+	                currentIndex = 0;
+	                noData = false;
+	                logConfig.id = val;
+
+	            }).on('click', 'errorTypeClick', function () {
+	                if($(this).hasClass('msg-dis')){
+	                    logConfig.level.push(4);
+	                    $(this).removeClass('msg-dis');
+	                }else{
+	                    logConfig.level.splice($.inArray(4,logConfig.level),1);
+	                    $(this).addClass('msg-dis');
+	                }
+	                console.log('log', logConfig.level);
+
+	            }).on('click', 'logTypeClick', function(){
+	                if($(this).hasClass('msg-dis')){
+	                    logConfig.level.push(2);
+	                    $(this).removeClass('msg-dis');
+	                }else{
+	                    logConfig.level.splice($.inArray(2,logConfig.level),1);
+	                    $(this).addClass('msg-dis');
+	                }
+
+
+	            }).on('click', 'debugTypeClick', function () {
+	                if($(this).hasClass('msg-dis')){
+	                    logConfig.level.push(1);
+	                    $(this).removeClass('msg-dis');
+	                }else{
+	                    logConfig.level.splice($.inArray(1,logConfig.level),1);
+	                    $(this).addClass('msg-dis');
+	                }
+	            });
+
+
+
+	    }
+
+	    function removeValue(value, arr) {
+	        for (var l = arr.length; l--;) {
+	            if (arr[l] === value) {
+	                return arr.splice(l, 1);
+	            }
+	        }
+	    }
+
+
+	    var startMonitor = function (){
+	        monitorTimeId = setTimeout(function (){
+	            showLogs(logConfig);
+	            startMonitor();
+	        },3000);
+	    }
+
+
+	    var startTime, endTime;
+
+	    function showLogs(opts) {
+
+	        loading = true;
+
+
+	        if(startTime){
+	            startTime = endTime;
+	        }else {
+	            startTime = new Date - diffTime - (5* 1000);
+	        }
+	        endTime = new Date - diffTime ;
+
+
+	        var url = '/controller/logAction/queryLogList.do';
+	        $.ajax({
+	            url: url,
+	            data: {
+	                id: opts.id,
+	                startDate: startTime,
+	                endDate: endTime,
+	                include: opts.include,
+	                exclude: opts.exclude,
+	                index: 0 ,
+	                _t: new Date()-0,
+	                level:opts.level
+	            },
+	            success: function(data) {
+	                var ret = data.ret;
+	                if(ret==0){
+	                    var param = {
+	                        encodeHtml: encodeHtml,
+	                        set: Delegator.set,
+	                        startIndex : currentIndex
+	                    }
+
+	                    if(data.data.length > 0){
+	                        $('#log-table').prepend(logTable(data.data.reverse(), param));
+	                    }
+
+	                    currentIndex += data.data.length;
+	                    if(data.data.length == 0){
+	                        noData = true;
+	                    }
+	                }
+	                loading = false;
+	            },
+	            error: function() {
+	                loading = false;
+	            }
+	        });
+	    }
+
+	    function init() {
+	        bindEvent();
+	    }
+
+
+	exports.init = init;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+
+/***/ 102:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '', __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
+	with (obj) {
+
+
+	var urls;
+	for (var i = 0 , l = it.length, type; i < l; i++) {
+	switch(it[i].level) {
+	    case '8':
+	        type = 'warning';
+	        break;
+	    case '4':
+	        type = 'err';
+	        break;
+	    case '2':
+	        type = 'info';
+	        break;
+	    case '1':
+	        type = 'debug';
+	        break;
+	}
+
+	 function getBrowserType(ua){
+	        if(!ua){
+	            return '';
+	        }
+	        ua = ua.toLowerCase();
+
+	        if(ua.indexOf('mqq')>0){
+	        return  'ico-qb';
+	        }else if(ua.indexOf('qq')>0){
+	            return  'ico-qq';
+	        }else if(ua.indexOf('android')>0){
+	            return  'ico-android';
+	        }else if(ua.indexOf('iphone')>0){
+	            return  'ico-ios';
+	        }else if(ua.indexOf('chrome')>0){
+	            return  'ico-chrome';
+	        }else if(ua.indexOf('msie')>0){
+	            return 'ico-ie';
+	        }else if(ua.indexOf('firefox')>0){
+	            return 'ico-ff';
+	        }else if(ua.indexOf('safari')>0){
+	            return 'ico-safari';
+	        }
+	}
+
+	var isHtml = /^.+?\.html\??/.test(it[i].target);
+	;
+	__p += '\r\n<tr>\r\n    <td   class="td-1 info-type-' +
+	((__t = (type)) == null ? '' : __t) +
+	'">' +
+	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
+	'</td>\r\n    <td   class="td-2">' +
+	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
+	'</td>\r\n    <td style="" class="td-3">' +
+	((__t = (it[i].msg)) == null ? '' : __t) +
+	'</td>\r\n    <td  class="td-4">' +
+	((__t = ( it[i].uin = 'NaN' ? '-' : it[i].uin)) == null ? '' : __t) +
+	'</td>\r\n    <td  class="td-5">' +
+	((__t = (it[i].ip)) == null ? '' : __t) +
+	'</td>\r\n    <td  class="td-6"><span class="ico-browser ' +
+	((__t = (getBrowserType(it[i].userAgent))) == null ? '' : __t) +
+	'" title="' +
+	((__t = (it[i].userAgent)) == null ? '' : __t) +
+	'"></span></td>\r\n    <td class="td-7">\r\n  ';
+	if(false){;
+	__p += '\r\n        <a style="word-break:break-all;display: block" >\r\n  ';
+	}else {;
+	__p += '\r\n        <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="' +
+	((__t = (opt.set(it[i]))) == null ? '' : __t) +
+	'">\r\n  ';
+	};
+	__p += '\r\n\r\n        ' +
+	((__t = (it[i].target || it[i].url || '')) == null ? '' : __t) +
+	'</a>\r\n        <span class="err-where">' +
+	((__t = (it[i].rowNum || 0 )) == null ? '' : __t) +
+	'行' +
+	((__t = (it[i].colNum || 0)) == null ? '' : __t) +
+	'列</span>\r\n        <a style="font-size:12px;" href="' +
+	((__t = (it[i].from)) == null ? '' : __t) +
+	'" target="_blank">查看</a>\r\n    </td>\r\n</tr>\r\n';
+	 } ;
+	__p += '\r\n\r\n';
+	 if(it.length = 0 ){;
+	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
+	};
+
+
+	}
+	return __p
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+
+/***/ 103:
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<a class="keyword-tag">' +
+	((__t = (it.value)) == null ? '' : __t) +
+	'<span class="keyword-del" data-event-click="removeKeyword" data-event-data="' +
+	((__t = (opt.set(it.value))) == null ? '' : __t) +
+	'">x</span></a>';
+
+	}
+	return __p
+	}
+
+/***/ },
+
+/***/ 104:
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<a class="keyword-tag">' +
+	((__t = (it.value)) == null ? '' : __t) +
+	'<span class="keyword-del" data-event-click="removeDebar" data-event-data="' +
+	((__t = (opt.set(it.value))) == null ? '' : __t) +
+	'">x</span></a>';
+
+	}
+	return __p
+	}
+
+/***/ }
+
+});

@@ -59,14 +59,7 @@
 </main>
 
 <%=include('./common/footer.html')(it)%>
-<script type="text/javascript">
-    require.config({
-        baseUrl : 'js/applyList'
-    });
-    require(['applyList'], function (applyList) {
-        applyList.init();
-    });
-</script>
+<script src="/static/entry.applyList.js"></script>
 </body>
 
 </html>
