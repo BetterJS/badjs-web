@@ -74,6 +74,11 @@
     </div>
 </main>
 <%=include('./common/footer.html')(it)%>
+<script>
+    var systime = '<%=it.systime%>' - 0;
+    var currentTime = new Date - 0;
+    var diffTime = systime - currentTime;
+</script>
 <script src="/static/entry.realtime.js"></script>
 </body>
 </html>
