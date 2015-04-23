@@ -1,5 +1,4 @@
 {
-{
     "mysql" : {
         "url" : "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs"
     },
