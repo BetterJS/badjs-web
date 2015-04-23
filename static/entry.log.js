@@ -45,12 +45,7 @@ webpackJsonp([7],{
 	    var value = $.trim($('#keyword-ipt').val());
 	    if (value !== '') {
 	        if (!removeValue(value, logConfig.include)) {
-	            $('#keyword-group').append(keyword({
-	                value: value
-	            }, {
-	                encodeHtml: encodeHtml,
-	                set: Delegator.set
-	            }));
+	            $('#keyword-group').append(keyword( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
 	        }
 	        logConfig.include.push(value);
 	        $('#keyword-ipt').val('');

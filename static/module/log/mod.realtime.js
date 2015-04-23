@@ -29,12 +29,7 @@ var debar = require("./template/debar.ejs");
         var value = $.trim($('#keyword-ipt').val());
         if (value !== '') {
             if (!removeValue(value, logConfig.include)) {
-                $('#keyword-group').append(keyword({
-                    value: value
-                }, {
-                    encodeHtml: encodeHtml,
-                    set: Delegator.set
-                }));
+                $('#keyword-group').append(keyword( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
             }
             logConfig.include.push(value);
             $('#keyword-ipt').val('');
@@ -45,12 +40,7 @@ var debar = require("./template/debar.ejs");
         var value = $.trim($('#debar-ipt').val());
         if (value !== '') {
             if (!removeValue(value, logConfig.exclude)) {
-                $('#debar-group').append(debar({
-                    value: value
-                }, {
-                    encodeHtml: encodeHtml,
-                    set: Delegator.set
-                }));
+                $('#debar-group').append(debar( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
             }
             logConfig.exclude.push(value);
             $('#debar-ipt').val('');
@@ -198,7 +188,7 @@ var debar = require("./template/debar.ejs");
                     }
 
                     if(data.data.length > 0){
-                        $('#log-table').prepend(logTable(data.data.reverse(), param));
+                        $('#log-table').prepend(logTable({ it : data.data.reverse(), opt : param}));
                     }
 
                     currentIndex += data.data.length;
