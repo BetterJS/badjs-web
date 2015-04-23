@@ -56,14 +56,9 @@ webpackJsonp([7],{
 	    var value = $.trim($('#debar-ipt').val());
 	    if (value !== '') {
 	        if (!removeValue(value, logConfig.exclude)) {
-	            $('#debar-group').append(debar({
-	                value: value
-	            }, {
-	                encodeHtml: encodeHtml,
-	                set: Delegator.set
-	            }));
+	            $('#debar-group').append(debar( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
 	        }
-	        logConfig.exclude.push(value);
+	        logConfig.exclude.push(value);  
 	        $('#debar-ipt').val('');
 	    }
 	}
