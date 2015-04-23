@@ -57,7 +57,6 @@ app.use(orm.express(msqlUrl, {
 
 
 
-
 app.use("/user" ,function (req , res , next){
     var params = req.query,
         user  = req.session.user,
@@ -67,7 +66,7 @@ app.use("/user" ,function (req , res , next){
     req.indexUrl = req.protocol + "://" + req.get('host') + '/user/index.html';
 
     if(/^\/login/i.test(req.url)){ // 登录
-        var redirectUrl = req.headers.referer || req.indexUrl;
+        var redirectUrl = /*req.headers.referer ||*/ req.indexUrl;
         res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url='+redirectUrl);
         return ;
     }

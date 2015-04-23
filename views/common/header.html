@@ -8,7 +8,7 @@
 
         <img src="/static/img/face1.jpg" />
         <% } else { %>
-        <a href="/login">登录</a>
+        <a href="/user/login">登录</a>
         <% } %>
     </div>
     <nav id="navbar">
@@ -52,18 +52,18 @@
                 </ul>
             </li>
             <li class="item items <%= it.index==('systemIntroduce'||'guide')?'active':''%>">
-                <a><%= it.guideTitle?it.guideTitle:"帮助" %></a>
-                <ul class="subNav">
+                <a href="introduce.html">帮助</a>
+               <!-- <ul class="subNav">
                     <li class="item">
                         <a href="introduce.html">系统介绍</a>
                     </li>
                     <li class="item">
                         <a href="help.html">使用指南</a>
                     </li>
-                    <!--<li class="item">-->
-                    <!--<a href=""></a>-->
-                    <!--</li>-->
-                </ul>
+                    &lt;!&ndash;<li class="item">&ndash;&gt;
+                    &lt;!&ndash;<a href=""></a>&ndash;&gt;
+                    &lt;!&ndash;</li>&ndash;&gt;
+                </ul>-->
             </li>
         </ul>
     </nav>
