@@ -410,7 +410,7 @@ webpackJsonp([4],{
 
 	 for(var i =0, len = it.length;i<len; i++){
 	    var role ="参与者";
-	    if(it[i].role =1){
+	    if(it[i].role == 1){
 	        role ="项目管理员";
 	    }
 	;

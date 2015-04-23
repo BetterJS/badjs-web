@@ -58,7 +58,7 @@ webpackJsonp([7],{
 	        if (!removeValue(value, logConfig.exclude)) {
 	            $('#debar-group').append(debar( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
 	        }
-	        logConfig.exclude.push(value);  
+	        logConfig.exclude.push(value);
 	        $('#debar-ipt').val('');
 	    }
 	}
@@ -2440,7 +2440,7 @@ webpackJsonp([7],{
 	'" target="_blank">查看</a>\r\n    </td>\r\n</tr>\r\n';
 	 } ;
 	__p += '\r\n\r\n';
-	 if(it.length = 0 ){;
+	 if(it.length == 0 ){;
 	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
 	};
 

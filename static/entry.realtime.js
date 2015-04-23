@@ -549,7 +549,7 @@ webpackJsonp([1],{
 	'" target="_blank">查看</a>\r\n    </td>\r\n</tr>\r\n';
 	 } ;
 	__p += '\r\n\r\n';
-	 if(it.length = 0 ){;
+	 if(it.length == 0 ){;
 	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
 	};
 

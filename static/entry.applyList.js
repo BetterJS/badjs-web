@@ -450,7 +450,7 @@ webpackJsonp([5],{
 	'"> ' +
 	((__t = (one.url)) == null ? '' : __t) +
 	'</span>\r\n        </td>\r\n\r\n        <td class="apply_operation">\r\n            ';
-	if(it.role = 1){;
+	if(it.role == 1){;
 	__p += '\r\n            <div  class="modifyBtn approveBtn ' +
 	((__t = (statusClass)) == null ? '' : __t) +
 	'">\r\n                ' +
