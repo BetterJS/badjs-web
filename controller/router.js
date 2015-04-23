@@ -54,12 +54,14 @@ module.exports = function(app){
     app.get('/user/charts.html' , function (req , res){
         StatisticsAction.index({tpl:"charts", statisticsTitle: "图表统计"} , req , res);
     });
-    app.get('/help.html' , function (req , res){
-        res.render('help', { layout: false, user: req.session.user, index:'guide', guideTitle: '使用指南'});
+    app.get('/user/introduce.html' , function (req , res){
+        res.render('introduce', { layout: false, user: req.session.user, index:'guide', guideTitle: '使用指南'});
     });
+/*
     app.get('/introduce.html' , function (req , res){
         res.render('introduce', { layout: false, user: req.session.user, index:'guide', guideTitle: '系统介绍'});
     });
+*/
 
 
     /**
