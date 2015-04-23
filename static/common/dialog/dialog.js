@@ -17,7 +17,7 @@ var modal = require("./modal.ejs");
             container.remove();
             container = undefined;
         }
-        container = $(modal(param))
+        container = $(modal({it :param}))
             .appendTo(document.body)
             .show();
 

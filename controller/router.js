@@ -76,7 +76,7 @@ module.exports = function(app){
     });
 
     // 请求路径为： controller/xxxAction/xxx.do (get || post)
-    app.use("/controller",function(req, res , next){
+    app.use("/",function(req, res , next){
         //controller 请求action
             var url = req.url;
             var action = url.match(/controller\/(\w*)Action/i)[1];
@@ -88,6 +88,11 @@ module.exports = function(app){
             var method = req.method.toLowerCase();
             var params = method =="post"? req.body : req.query;
             params.user = req.session.user;
+
+            if( !params.user ){
+                res.json({ret : -2 , msg : "should login"});
+                return ;
+            }
 
             //根据不同actionName 调用不同action
             try{
