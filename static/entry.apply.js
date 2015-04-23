@@ -1,4 +1,4 @@
-webpackJsonp([8],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -17,7 +17,7 @@ webpackJsonp([8],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(18);
+	var Dialog = __webpack_require__(100);
 
 
 	    var isValid = true,
@@ -254,7 +254,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 18:
+/***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(17);
