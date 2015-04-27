@@ -68,7 +68,7 @@ var userTable = require("./template/userTable.ejs");
             applyId  : $(".search-applyId").val(),
             role : $(".search-userType").val()
         };
-        var url = "/userManage.html";
+        var url = "/user/userManage.html";
         url += "?applyId=" + params.applyId + "&role=" + params.role + "&userText=" + params.userText;
         location.href = url;
     }

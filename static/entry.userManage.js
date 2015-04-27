@@ -17,8 +17,8 @@ webpackJsonp([4],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(98);
-	var userTable = __webpack_require__(106);
+	var Dialog = __webpack_require__(18);
+	var userTable = __webpack_require__(107);
 
 
 	    var encodeHtml = function (str) {
@@ -82,7 +82,7 @@ webpackJsonp([4],{
 	            applyId  : $(".search-applyId").val(),
 	            role : $(".search-userType").val()
 	        };
-	        var url = "/userManage.html";
+	        var url = "/user/userManage.html";
 	        url += "?applyId=" + params.applyId + "&role=" + params.role + "&userText=" + params.userText;
 	        location.href = url;
 	    }
@@ -347,7 +347,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 98:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(16);
@@ -399,7 +399,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 106:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
