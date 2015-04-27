@@ -3,13 +3,13 @@ webpackJsonp([4],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var usermanger = __webpack_require__(11);
+	var usermanger = __webpack_require__(13);
 
 	usermanger.init();
 
 /***/ },
 
-/***/ 11:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -17,8 +17,8 @@ webpackJsonp([4],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(100);
-	var userTable = __webpack_require__(102);
+	var Dialog = __webpack_require__(98);
+	var userTable = __webpack_require__(106);
 
 
 	    var encodeHtml = function (str) {
@@ -163,11 +163,11 @@ webpackJsonp([4],{
 	        init: init
 	    }
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 17:
+/***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -343,14 +343,14 @@ webpackJsonp([4],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 100:
+/***/ 98:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(17);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(16);
 	var modal = __webpack_require__(108);
 
 	    var container;
@@ -395,11 +395,11 @@ webpackJsonp([4],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 102:
+/***/ 106:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -433,7 +433,7 @@ webpackJsonp([4],{
 	'">删除</button>\r\n        ';
 	};
 	__p += '\r\n\r\n        ';
-	if(it[i].role =1 && opt.isAdmin){;
+	if(it[i].role ==1 && opt.isAdmin){;
 	__p += '\r\n        <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
 	((__t = ( it[i].id)) == null ? '' : __t) +
 	'">删除</button>\r\n        ';

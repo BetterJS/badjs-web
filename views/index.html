@@ -31,10 +31,16 @@
                     <h2 class="m-title" id="caption2">2.页面上报</h2>
                     <div class="ml-mod">
                         <p>
-                            <b>Step 1.引入Tryjs脚本</b><br/>
-                            代码封装在tryjs中---(github地址)http://github.com/imweb/mobile/tree/master/src/tools<br/>
-                            <b>加载tryjs模块，并初始化</b><br/>
-                            <img src='/static/img/js.png' width="70%" />
+                            <b>Step 1.引入badjs脚本</b>
+                        </p>
+                        <p>
+                            项目地址 ：<a href="https://github.com/BetterJS/report" _blank="target"> https://github.com/BetterJS/report</a><br/>
+                            dist 目录下的:<br/>
+                            bj-report.js 最基本的上报组件<br/>
+                            bj-wrap.js 高级扩展插件，包裹异步函数<br/>
+                            bj-reportWrap.js 包含基本和高级的组件<br/>
+                            <br/>
+
                         </p>
                         <p>
                             <b>Step 2.申请项目接入</b><br/>
@@ -42,23 +48,7 @@
                         </p>
                         <div>
                             <p><b>Step 3.页面上报</b></p>
-                            <p>在页面需要上报的上报点加入以下代码:<br/>
-                                $.badjs(msg, url, line, smid, level);
-                                参数对应的含义分别是：<br/>
-                            <ul style="margin-left:20px;">
-                                <li>msg {String} 上报错误信息</li>
-                                <li>url {String} 该上报信息所属的文件路径</li>
-                                <li>line {Number} 上报信息所属的文件行号，没有为0</li>
-                                <li>smid {Number} 上报对应的monitor id</li>
-                                <li> level {Number} 上报对应的级别:
-                                    <ul style="margin-left:30px;">
-                                        <li> debug（调试日志）：1 ;</li>
-                                        <li> info（流水日志）：2 ;</li>
-                                        <li> error（错误日志）：4（默认值） ;</li>
-                                        <li> fail（致命错误日志）：8</li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <p> 说明请查看 <a href="https://github.com/BetterJS/report" _blank="target"> github项目</a> 地址readme <br/>
                             </p>
                         </div>
                     </div>

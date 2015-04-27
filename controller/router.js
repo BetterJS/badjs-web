@@ -78,6 +78,10 @@ module.exports = function(app){
     // 请求路径为： controller/xxxAction/xxx.do (get || post)
     app.use("/",function(req, res , next){
         //controller 请求action
+            if(!/^\/controller/i.test(req.url)){
+                next();
+                return ;
+            }
             var url = req.url;
             var action = url.match(/controller\/(\w*)Action/i)[1];
             var operation = url.match(/\/(\w+)\.do/i)[1];
