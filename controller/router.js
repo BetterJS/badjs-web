@@ -78,7 +78,7 @@ module.exports = function(app){
     // 请求路径为： controller/xxxAction/xxx.do (get || post)
     app.use("/",function(req, res , next){
         //controller 请求action
-            if(!/^\/controller/i.test(req.url)){
+            if(!/\/controller/i.test(req.url)){
                 next();
                 return ;
             }
