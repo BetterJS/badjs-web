@@ -10,6 +10,7 @@ var LogAction = require('./action/LogAction'),
     IndexAction = require("./action/IndexAction"),
     StatisticsAction = require("./action/StatisticsAction"),
     ApproveAction = require("./action/ApproveAction"),
+    realtimeService = require("../service/RealtimeService"),
     UserApplyAction = require("./action/UserApplyAction");
 
 
@@ -17,6 +18,9 @@ var log4js = require('log4js'),
     logger = log4js.getLogger();
 
 module.exports = function(app){
+
+
+    realtimeService(app);
 
     //html页面请求
     app.get('/', function (req , res){
@@ -74,6 +78,7 @@ module.exports = function(app){
         signoutUrl = signoutUrl.replace('{yourWebsite}', encodeURIComponent(homeUrl));
         res.redirect(signoutUrl);
     });
+
 
     // 请求路径为： controller/xxxAction/xxx.do (get || post)
     app.use("/",function(req, res , next){

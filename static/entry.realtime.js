@@ -1,19 +1,19 @@
-webpackJsonp([1],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(11);
+	var log  =__webpack_require__(13);
 
 	log.init();
 
 /***/ },
 
-/***/ 11:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(18);
-	var Delegator = __webpack_require__(16);
+	var Delegator = __webpack_require__(17);
 
 	var logTable = __webpack_require__(103);
 	var keyword = __webpack_require__(104);
@@ -33,6 +33,9 @@ webpackJsonp([1],{
 	        encodeHtml = function (str) {
 	            return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
 	        };
+
+
+	    var websocket ;
 
 
 
@@ -94,11 +97,16 @@ webpackJsonp([1],{
 	                    return ;
 	                }
 
-	                clearTimeout(monitorTimeId);
-	                $('#log-table').html('');
-	                startTime = undefined;
-	                startMonitor();
-	                $(this).text('重新监听')
+	                if(!$(this).data("stop")){
+	                    $(this).data("stop" ,true);
+	                    $('#log-table').html('');
+	                    startMonitor();
+	                    $(this).text('停止监听');
+	                }else {
+	                    $(this).data("stop" ,false);
+	                    websocket.close();
+	                    $(this).text('开始监听')
+	                }
 
 	            })
 	            .on('click', 'showSource', function (e, data) {
@@ -157,14 +165,27 @@ webpackJsonp([1],{
 
 
 	    var startMonitor = function (){
-	        monitorTimeId = setTimeout(function (){
-	            showLogs(logConfig);
-	            startMonitor();
-	        },3000);
+
+	        websocket = new WebSocket("ws://"+location.host+"/ws/realtimeLog");
+
+	        websocket.onmessage = function (evt){
+	            showLogs(JSON.parse(evt.data));
+	        }
+	    }
+
+	    var currentIndex = 1;
+	    function showLogs(data) {
+	            var param = {
+	                encodeHtml: encodeHtml,
+	                set: Delegator.set,
+	                startIndex : currentIndex
+	            }
+	            $('#log-table').prepend(logTable({ it : [data], opt : param}));
+	            currentIndex ++;
 	    }
 
 
-	    var startTime, endTime;
+	   /* var startTime, endTime;
 
 	    function showLogs(opts) {
 
@@ -216,7 +237,7 @@ webpackJsonp([1],{
 	                loading = false;
 	            }
 	        });
-	    }
+	    }*/
 
 	    function init() {
 	        bindEvent();
@@ -228,7 +249,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 16:
+/***/ 17:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -411,7 +432,7 @@ webpackJsonp([1],{
 /***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(16);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(17);
 	var modal = __webpack_require__(108);
 
 	    var container;

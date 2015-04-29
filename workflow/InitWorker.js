@@ -11,7 +11,6 @@ if(argv.indexOf('--debug') >= 0){
 
 }else {
     logger.setLevel('INFO');
-
 }
 
 if(argv.indexOf('--project') >= 0){

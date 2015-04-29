@@ -24,11 +24,14 @@
     "serve-static": "^1.7.1",
     "socket.io": "^1.2.0",
     "underscore": "1.5.2",
-    "url-valid": "^0.3.0"
+    "url-join": "0.0.1",
+    "url-valid": "^0.3.0",
+    "ws": "^0.7.1",
+    "zmq": "^2.11.0"
   },
   "devDependencies": {
-    "webpack" : "~1.8.5",
-    "glob" : "~5.0.5"
+    "webpack": "~1.8.5",
+    "glob": "~5.0.5"
   },
   "scripts": {},
   "author": "",

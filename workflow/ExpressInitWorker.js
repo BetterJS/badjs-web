@@ -5,7 +5,7 @@ var express = require('express')
     , cookieParser = require('cookie-parser')
     , serveStatic = require('serve-static')
     , app = express()
-    , server = require('http').createServer(app)
+    , ewebsocket = require('./../utils/express-websocket')(app )
     , router = require('../controller/router')
     , orm = require('orm');
 
@@ -138,7 +138,7 @@ router(app);
 
 
 module.exports = function (){
-    server.listen(80);
+    app.listen(80);
 
     logger.info('start badjs-web , listen 80 ...');
 }

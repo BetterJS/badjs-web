@@ -21,6 +21,9 @@ var debar = require("./template/debar.ejs");
         };
 
 
+    var websocket ;
+
+
 
 
     var currentSelectId = -1, currentIndex = 0  , noData = false , MAX_LIMIT = 500 , loading = false, monitorTimeId;
@@ -80,11 +83,16 @@ var debar = require("./template/debar.ejs");
                     return ;
                 }
 
-                clearTimeout(monitorTimeId);
-                $('#log-table').html('');
-                startTime = undefined;
-                startMonitor();
-                $(this).text('重新监听')
+                if(!$(this).data("stop")){
+                    $(this).data("stop" ,true);
+                    $('#log-table').html('');
+                    startMonitor();
+                    $(this).text('停止监听');
+                }else {
+                    $(this).data("stop" ,false);
+                    websocket.close();
+                    $(this).text('开始监听')
+                }
 
             })
             .on('click', 'showSource', function (e, data) {
@@ -143,14 +151,27 @@ var debar = require("./template/debar.ejs");
 
 
     var startMonitor = function (){
-        monitorTimeId = setTimeout(function (){
-            showLogs(logConfig);
-            startMonitor();
-        },3000);
+
+        websocket = new WebSocket("ws://"+location.host+"/ws/realtimeLog");
+
+        websocket.onmessage = function (evt){
+            showLogs(JSON.parse(evt.data));
+        }
+    }
+
+    var currentIndex = 1;
+    function showLogs(data) {
+            var param = {
+                encodeHtml: encodeHtml,
+                set: Delegator.set,
+                startIndex : currentIndex
+            }
+            $('#log-table').prepend(logTable({ it : [data], opt : param}));
+            currentIndex ++;
     }
 
 
-    var startTime, endTime;
+   /* var startTime, endTime;
 
     function showLogs(opts) {
 
@@ -202,7 +223,7 @@ var debar = require("./template/debar.ejs");
                 loading = false;
             }
         });
-    }
+    }*/
 
     function init() {
         bindEvent();
