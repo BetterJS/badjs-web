@@ -150,6 +150,7 @@ var debar = require("./template/debar.ejs");
     }
 
 
+
     var startMonitor = function (){
 
         websocket = new WebSocket("ws://"+location.host+"/ws/realtimeLog");
@@ -159,8 +160,57 @@ var debar = require("./template/debar.ejs");
         }
     }
 
+
+     var isInclude = function (str, regs){
+        var result = true;
+
+         regs.forEach(function (value , key){
+                if(str.indexOf(value) >= 0){
+                    result = result && true;
+                }else {
+                    result = result && false;
+                }
+         });
+         return result;
+     }
+
+    var isExclude = function (str, regs){
+        var result = true;
+
+        regs.forEach(function (value , key){
+            if(str.indexOf(value) >= 0){
+                result = result && true;
+            }else {
+                result = result && false;
+            }
+        });
+
+        return result;
+    }
+
     var currentIndex = 1;
     function showLogs(data) {
+
+
+            if(data.id != logConfig.id){
+                return ;
+            }else if(logConfig.level.indexOf(data.level) < 0){
+                return ;
+            }else {
+                var msg = data.msg.toString() + "||" + data.uin + "||" + data.url + "||" + data.userAgent+ "||" + data.from
+                if(logConfig.include.length != 0){
+                    if(!isInclude(msg , logConfig.include)){
+                        return ;
+                    }
+                }
+                if( logConfig.exclude.length != 0){
+                    if(isExclude(msg , logConfig.exclude)){
+                        return ;
+                    }
+
+                }
+            }
+
             var param = {
                 encodeHtml: encodeHtml,
                 set: Delegator.set,
@@ -171,59 +221,7 @@ var debar = require("./template/debar.ejs");
     }
 
 
-   /* var startTime, endTime;
 
-    function showLogs(opts) {
-
-        loading = true;
-
-
-        if(startTime){
-            startTime = endTime;
-        }else {
-            startTime = new Date - diffTime - (5* 1000);
-        }
-        endTime = new Date - diffTime ;
-
-
-        var url = '/controller/logAction/queryLogList.do';
-        $.ajax({
-            url: url,
-            data: {
-                id: opts.id,
-                startDate: startTime,
-                endDate: endTime,
-                include: opts.include,
-                exclude: opts.exclude,
-                index: 0 ,
-                _t: new Date()-0,
-                level:opts.level
-            },
-            success: function(data) {
-                var ret = data.ret;
-                if(ret==0){
-                    var param = {
-                        encodeHtml: encodeHtml,
-                        set: Delegator.set,
-                        startIndex : currentIndex
-                    }
-
-                    if(data.data.length > 0){
-                        $('#log-table').prepend(logTable({ it : data.data.reverse(), opt : param}));
-                    }
-
-                    currentIndex += data.data.length;
-                    if(data.data.length == 0){
-                        noData = true;
-                    }
-                }
-                loading = false;
-            },
-            error: function() {
-                loading = false;
-            }
-        });
-    }*/
 
     function init() {
         bindEvent();
