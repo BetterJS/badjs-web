@@ -3,13 +3,13 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(9);
+	var apply = __webpack_require__(6);
 
 	apply.init();
 
 /***/ },
 
-/***/ 9:
+/***/ 6:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -17,7 +17,7 @@ webpackJsonp([1],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(18);
+	var Dialog = __webpack_require__(17);
 
 
 	    var isValid = true,
@@ -74,7 +74,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 17:
+/***/ 15:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -254,10 +254,10 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 18:
+/***/ 17:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(17);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(15);
 	var modal = __webpack_require__(108);
 
 	    var container;

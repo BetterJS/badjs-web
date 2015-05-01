@@ -150,7 +150,7 @@ var debar = require("./template/debar.ejs");
     }
 
 
-
+    var keepAliveTimeoutId ;
     var startMonitor = function (){
 
         websocket = new WebSocket("ws://"+location.host+"/ws/realtimeLog");
@@ -158,6 +158,17 @@ var debar = require("./template/debar.ejs");
         websocket.onmessage = function (evt){
             showLogs(JSON.parse(evt.data));
         }
+
+        websocket.onclose = function (){
+            clearTimeout(keepAliveTimeoutId);
+        }
+
+
+        keepAliveTimeoutId = setInterval(function (){
+            websocket.send("__keepalive__");
+        },5000);
+
+
     }
 
 
