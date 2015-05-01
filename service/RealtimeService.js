@@ -64,8 +64,45 @@ module.exports = function (app) {
         try{
             logger.info("one client closed , ip: " + ws._socket.remoteAddress)
         }catch(e){}
+        monitorClientTimeout(ws);
     });
 
 
+
+    var resetTimeoutFlag = function (ws){
+        ws._keepalive = new Date - 0 ;
+        ws._timeoutTimes = 0;
+    }
+
+
+
+    var monitorClientTimeout = function (ws){
+        resetTimeoutFlag(ws);
+
+        ws.on('message' , function (data , flag){
+            if(data == "__keepalive__"){
+                resetTimeoutFlag(this);
+            }
+        })
+    }
+
+
+    // monitor client is closed
+    setInterval(function (){
+        var currentDate = new Date - 0;
+        webSocketServer.clients.forEach(function each(client) {
+            if(!client._keepalive){
+                resetTimeoutFlag(client);
+            }
+            if (currentDate - client._keepalive  > 5000) {
+                client._timeoutTimes++;
+            }
+
+            if(client._timeoutTimes >2){
+                client.close();
+                logger.info("one client timeout , ip: " + client._socket.remoteAddress);
+            }
+        });
+    },5000);
 
 };
