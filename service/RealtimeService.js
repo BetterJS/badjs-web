@@ -80,6 +80,7 @@ module.exports = function (app) {
         resetTimeoutFlag(ws);
 
         ws.on('message' , function (data , flag){
+            logger.debug("get keepalive message : " + data);
             if(data == "__keepalive__"){
                 resetTimeoutFlag(this);
             }

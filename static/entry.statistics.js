@@ -1,4 +1,4 @@
-webpackJsonp([4],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -20,7 +20,7 @@ webpackJsonp([4],{
 
 	__webpack_require__(16);
 	var Dialog = __webpack_require__(17);
-	var statisticsTpl = __webpack_require__(25);
+	var statisticsTpl = __webpack_require__(106);
 
 	    var statistics = {
 	        init : function (){
@@ -2147,7 +2147,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 25:
+/***/ 106:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {module.exports = function (obj) {
