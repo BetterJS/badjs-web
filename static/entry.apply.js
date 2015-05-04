@@ -17,7 +17,7 @@ webpackJsonp([8],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(98);
+	var Dialog = __webpack_require__(18);
 
 
 	    var isValid = true,
@@ -74,7 +74,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 16:
+/***/ 17:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -254,10 +254,10 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 98:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(16);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(17);
 	var modal = __webpack_require__(108);
 
 	    var container;

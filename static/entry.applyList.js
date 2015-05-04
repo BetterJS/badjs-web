@@ -1,4 +1,4 @@
-webpackJsonp([6],{
+webpackJsonp([5],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -18,8 +18,8 @@ webpackJsonp([6],{
 	 * */
 
 
-	var Dialog = __webpack_require__(98);
-	var applyTable = __webpack_require__(105);
+	var Dialog = __webpack_require__(18);
+	var applyTable = __webpack_require__(102);
 
 
 	    var maxDate = 60*60*1000*24 *2;
@@ -161,7 +161,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 16:
+/***/ 17:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -341,10 +341,10 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 98:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(16);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(17);
 	var modal = __webpack_require__(108);
 
 	    var container;
@@ -393,7 +393,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 105:
+/***/ 102:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -423,9 +423,9 @@ webpackJsonp([6],{
 	    var statusText = '待审核';
 	    var statusClass = 'applyingBtn'
 	    if(one.status != 0){
-	        status = one.status =1 ? 'agree-active' : 'disagree-active';
-	        statusText = one.status =1 ? '已通过' : '已拒绝';
-	        statusClass = one.status =1 ? 'passBtn' : 'rejectedBtn';
+	        status = one.status ==1 ? 'agree-active' : 'disagree-active';
+	        statusText = one.status ==1 ? '已通过' : '已拒绝';
+	        statusClass = one.status ==1 ? 'passBtn' : 'rejectedBtn';
 	    }
 
 	;
