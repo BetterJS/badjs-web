@@ -44,7 +44,6 @@ var applyAction = {
 
         var apply = params;
         apply.userName = params.user.loginName;
-        apply.createTime = new Date();
         apply.status = 0;
 
         var applyService = new ApplyService();
@@ -56,6 +55,7 @@ var applyAction = {
                 res.json({ret:0, msg: "success-add"});
             });
         }else {
+            apply.createTime = new Date();
             applyService.add(apply,function(err, items){
                 if(isError(res, err)){
                     return;
