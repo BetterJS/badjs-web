@@ -1,22 +1,27 @@
 <%=include('./common/commonLinks.html')(it, opt)%>
 <%=include('./common/header.html')(it, opt)%>
-
 <main id="content" role="main">
     <div class="wrap">
         <div id="applyContainer">
 
             <form id="applyForm" class="form-horizontal" role="form">
-                <h3 class="applyTitle">新业务申请</h3>
+                <h3 class="applyTitle">
+                    <% if (it.apply.name) {%>
+                    业务编辑
+                    <% } else { %>
+                    新业务申请
+                    <%}%>
+                </h3>
                 <div class="form-group">
                     <label  class="col-sm-4 control-label">业务名称</label>
                     <div class="col-sm-6">
-                        <input  type="text" class="apply-name form-control" placeholder="申请业务名">
+                        <input  type="text" class="apply-name form-control" placeholder="申请业务名" value="<%=it.apply.name%>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-4 control-label">业务URL</label>
                     <div class="col-sm-6">
-                        <input type="url" class="apply-url form-control"  placeholder="业务url">
+                        <input type="url" class="apply-url form-control"  placeholder="业务url" value="<%=it.apply.url%>">
                     </div>
                 </div>
                 <!--<div class="form-group">-->
@@ -28,23 +33,23 @@
                 <div class="form-group">
                     <label  class="col-sm-4 control-label" >业务详情描述</label>
                     <div class="col-sm-6">
-                        <textarea class="apply-description form-control" rows="4"></textarea>
+                        <textarea class="apply-description form-control" rows="4"><%=it.apply.description%></textarea>
                     </div>
                 </div>
-                <!--<div class="form-group">-->
-                    <!--<div class="col-sm-offset-4 col-sm-6">-->
-                        <!--<div class="checkbox">-->
-                            <!--<label>-->
-                                <!--<input class="apply-rule" type="checkbox" > 是否遵守本网站的相关规章协议-->
-                            <!--</label>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-6">
-                        <button class="col-sm-3 btn btn-primary apply-submit" >申请</button>
+                        <button class="col-sm-3 btn btn-primary apply-submit" >
+                            <% if (it.apply.name) {%>
+                            编辑
+                            <% } else { %>
+                            申请
+                            <%}%>
+                        </button>
                         <button type="reset" class="col-sm-offset-1 col-sm-3 btn btn-default" >重置</button>
                     </div>
+                    <% if (it.apply.name) {%>
+                     <input type="hidden" value="<%=it.apply.id%>" name="applyId" id="applyId">
+                    <% }  %>
                 </div>
             </form>
         </div>

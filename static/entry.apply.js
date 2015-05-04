@@ -36,7 +36,8 @@ webpackJsonp([8],{
 	            $.extend(params, {
 	                name: $('.apply-name').val(),
 	                description: $('.apply-description').val(),
-	                url: $(".apply-url").val()
+	                url: $(".apply-url").val(),
+	                id: $("#applyId").val()
 	                //mail: $(".apply-mail").val()
 	            });
 

@@ -38,7 +38,17 @@ module.exports = function(app){
 
     app.get('/user/apply.html', function(req, res){
         var user  = req.session.user;
-        res.render('apply', { layout: false, user: user, index:'apply' });
+        if(req.query && req.query.applyId){
+            ApplyAction.queryByApplyId({applyId :req.query.applyId } , function (err , apply){
+                if(apply.status != 1){
+                    res.render('apply', { layout: false, user: user, index:'apply' , apply : apply });
+                }else {
+                    res.render('apply', { layout: false, user: user, index:'apply' , apply  : {} });
+                }
+            });
+        }else {
+            res.render('apply', { layout: false, user: user, index:'apply' , apply  : {} });
+        }
     });
     app.get('/user/applyList.html', function(req, res){
         var user = req.session.user;
@@ -61,11 +71,6 @@ module.exports = function(app){
     app.get('/user/introduce.html' , function (req , res){
         res.render('introduce', { layout: false, user: req.session.user, index:'guide', guideTitle: '使用指南'});
     });
-/*
-    app.get('/introduce.html' , function (req , res){
-        res.render('introduce', { layout: false, user: req.session.user, index:'guide', guideTitle: '系统介绍'});
-    });
-*/
 
 
     /**

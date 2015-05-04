@@ -48,12 +48,22 @@ var applyAction = {
         apply.status = 0;
 
         var applyService = new ApplyService();
-        applyService.add(apply,function(err, items){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, msg: "success-add"});
-        });
+        if(apply.id){
+            applyService.update(apply,function(err, items){
+                if(isError(res, err)){
+                    return;
+                }
+                res.json({ret:0, msg: "success-add"});
+            });
+        }else {
+            applyService.add(apply,function(err, items){
+                if(isError(res, err)){
+                    return;
+                }
+                res.json({ret:0, msg: "success-add"});
+            });
+        }
+
     },
     queryListByUser : function (params, req , res) {
         var applyService = new ApplyService();
@@ -106,6 +116,12 @@ var applyAction = {
                 return;
             }
             res.json({ret:0, msg: "success", data: {role :params.user.role , item :processData(items)}});
+        });
+    },
+    queryByApplyId : function (params,cb){
+        var applyService = new ApplyService();
+        applyService.queryById({id : params.applyId} , function (err , apply){
+            cb(err , apply);
         });
     },
     update:function(params,cb){

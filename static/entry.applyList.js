@@ -412,7 +412,11 @@ webpackJsonp([5],{
 	 if(len !=0){;
 	__p += '\r\n<thead>\r\n<tr>\r\n    <!--<th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>-->\r\n    <th>#</th>\r\n    <th style="width:80px;">上报id</th>\r\n    <th >名称</th>\r\n    <th>申请人</th>\r\n    <th>申请时间</th>\r\n    <th >业务描述</th>\r\n    <th >业务网址</th>\r\n    <th style="width:120px;">' +
 	((__t = ( it.role ==1 ? '操作' : '状态')) == null ? '' : __t) +
-	'</th>\r\n\r\n\r\n</tr>\r\n</thead>\r\n\r\n<tbody id="applyList">\r\n';
+	'</th>\r\n    ';
+	if (it.role != 1) { ;
+	__p += '\r\n    <th style="width:80px;">操作</th>\r\n    ';
+	 };
+	__p += '\r\n\r\n\r\n</tr>\r\n</thead>\r\n\r\n<tbody id="applyList">\r\n';
 
 	var one ;
 	for(var i = 0; i<len ; i++){
@@ -469,7 +473,17 @@ webpackJsonp([5],{
 	((__t = ( statusText)) == null ? '' : __t) +
 	'\r\n            </div>\r\n            ';
 	};
-	__p += '\r\n\r\n\r\n        </td>\r\n    </tr>\r\n';
+	__p += '\r\n        </td>\r\n        ';
+	if (it.role != 1) { ;
+	__p += '\r\n        <td>\r\n            ';
+	  if(one.status != 1) {;
+	__p += '\r\n            <button class="editBtn">\r\n                <a href="apply.html?applyId=' +
+	((__t = (one.id)) == null ? '' : __t) +
+	'">编辑</a>\r\n            </button>\r\n            ';
+	 } ;
+	__p += '\r\n        </td>\r\n        ';
+	};
+	__p += '\r\n    </tr>\r\n';
 	};
 	__p += '\r\n</tbody>\r\n';
 	};

@@ -60,7 +60,7 @@ app.use(orm.express(msqlUrl, {
 app.use("/user" ,function (req , res , next){
     var params = req.query,
         user  = req.session.user,
-    //获取用户model
+        //获取用户model
         userDao = req.models.userDao;
 
     req.indexUrl = req.protocol + "://" + req.get('host') + '/user/index.html';
@@ -106,7 +106,7 @@ app.use("/user" ,function (req , res , next){
                         next();
                     }
 
-                })
+                });
 
             }else {
                 res.send(403, 'Sorry! you can not see that.');
@@ -118,9 +118,6 @@ app.use("/user" ,function (req , res , next){
     } else {
         next();
     }
-
-
-
 });
 
 

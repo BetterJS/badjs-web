@@ -66,7 +66,6 @@ ApplyService.prototype = {
                 role: 1,
                 createTime : new Date()
             };
-            console.log(userApply);
             self.userApplyDao.create(userApply, function (err, items) {
                 if(err){
                     callback(err);
@@ -98,6 +97,12 @@ ApplyService.prototype = {
                 // err.msg = "under-age";
                 callback(null,{ret:0, msg:"success remove"});
             });
+        });
+    },
+    queryById : function (target, callback){
+        this.applyDao.one({id: target.id }, function (err, apply) {
+
+            callback( err , apply );
         });
     }
 }
