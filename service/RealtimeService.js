@@ -57,14 +57,14 @@ module.exports = function (app) {
         try{
             logger.info("one client connected , ip: " + ws._socket.remoteAddress)
         }catch(e){}
-
+        monitorClientTimeout(ws);
     });
 
     webSocketServer.on('close', function (ws) {
         try{
             logger.info("one client closed , ip: " + ws._socket.remoteAddress)
         }catch(e){}
-        monitorClientTimeout(ws);
+
     });
 
 

@@ -1,19 +1,19 @@
-webpackJsonp([8],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(9);
+	var log  =__webpack_require__(12);
 
 	log.init();
 
 /***/ },
 
-/***/ 9:
+/***/ 12:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(17);
-	var Delegator = __webpack_require__(15);
+	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(98);
+	var Delegator = __webpack_require__(16);
 
 	var logTable = __webpack_require__(102);
 	var keyword = __webpack_require__(103);
@@ -177,11 +177,13 @@ webpackJsonp([8],{
 	            clearTimeout(keepAliveTimeoutId);
 	        }
 
+	        websocket.onopen = function (){
+
 
 	        keepAliveTimeoutId = setInterval(function (){
 	            websocket.send("__keepalive__");
 	        },5000);
-
+	        }
 
 	    }
 
@@ -258,7 +260,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 15:
+/***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -438,10 +440,10 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 17:
+/***/ 98:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(15);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(16);
 	var modal = __webpack_require__(108);
 
 	    var container;

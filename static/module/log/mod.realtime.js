@@ -163,11 +163,13 @@ var debar = require("./template/debar.ejs");
             clearTimeout(keepAliveTimeoutId);
         }
 
+        websocket.onopen = function (){
+
 
         keepAliveTimeoutId = setInterval(function (){
             websocket.send("__keepalive__");
         },5000);
-
+        }
 
     }
 
