@@ -5,6 +5,7 @@
 
 var BusinessService = require('../../service/BusinessService'),
     _ = require('underscore'),
+    ApplyService = require('../../service/ApplyService'),
     StatisticsService = require('../../service/StatisticsService');
 
 var  log4js = require('log4js'),
@@ -23,16 +24,41 @@ var StatisticsAction = {
             res.render(param.tpl, { layout: false, user: user, index:'statistics' , statisticsTitle:param.statisticsTitle,  items : item});
         });
     },
+    projectTotal :  function(param, req, res){
+        var params = req.query,
+            user  = req.session.user;
+
+        var applyService = new ApplyService();
+
+        applyService.queryListByAdmin(params,function(err, items){
+            res.render(param.tpl, { layout: false, user: user, index:'projectTotal' , statisticsTitle:param.statisticsTitle,  items : items});
+        });
+
+    },
     queryByChart : function (param, req, res) {
-        console.log(param);
         var statisticsService =  new StatisticsService();
-        console.log(11);
         if(!param.projectId || isNaN(param.projectId) || !param.timeScope){
             res.json({ret:0 , msg:'success' , data : {} });
             return ;
         };
 
         statisticsService.queryByChart({userName : param.user.loginName , projectId : param.projectId-0 , timeScope:param.timeScope-0}  , function (err, data){
+            if(err){
+                res.json({ret:-1, msg:"error"});
+                return;
+            }
+            res.json(data);
+            return;
+        });
+    },
+    queryByChartForAdmin : function (param, req, res) {
+        var statisticsService =  new StatisticsService();
+        if(!param.projectId || isNaN(param.projectId) || !param.timeScope || param.user.role !=1 ){
+            res.json({ret:0 , msg:'success' , data : {} });
+            return ;
+        };
+
+        statisticsService.queryByChart({  projectId : param.projectId-0 , timeScope:param.timeScope-0}  , function (err, data){
             if(err){
                 res.json({ret:-1, msg:"error"});
                 return;

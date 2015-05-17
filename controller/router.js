@@ -68,6 +68,9 @@ module.exports = function(app){
     app.get('/user/charts.html' , function (req , res){
         StatisticsAction.index({tpl:"charts", statisticsTitle: "图表统计"} , req , res);
     });
+    app.get('/user/projectTotal.html' , function (req , res){
+        StatisticsAction.projectTotal({tpl:"projectTotal", statisticsTitle: "项目统计"} , req , res);
+    });
     app.get('/user/introduce.html' , function (req , res){
         res.render('introduce', { layout: false, user: req.session.user, index:'guide', guideTitle: '使用指南'});
     });

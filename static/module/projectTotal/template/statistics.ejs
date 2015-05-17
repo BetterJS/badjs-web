@@ -1,0 +1,53 @@
+<thead>
+    <th>#</th>
+<%
+$.each(item[0].date , function (key, value){
+%>
+    <th><%= value %></th>
+<%
+})
+%>
+</thead>
+<tbody>
+<%
+
+var totalArray = []
+$.each(item , function (key, value){
+%>
+<tr>
+    <td><%= value.name %></td>
+    <%
+    var dataIndex = 0;
+    $.each(value.data , function (totalKey, total){
+
+    %>
+    <td>
+        <%= total %>
+    </td>
+    <%
+        if(Number.isInteger(totalArray)) {
+            totalArray[dataIndex] +=total;
+        }else {
+            totalArray[dataIndex] = total;
+        }
+        dataIndex ++ ;
+    });
+    %>
+</tr>
+<%
+});
+%>
+
+<tr>
+<td>
+总计
+</td>
+<%
+$.each(totalArray , function (key, value){
+%>
+<td><%=value%></td>
+<%
+})
+%>
+</tr>
+</tbody>

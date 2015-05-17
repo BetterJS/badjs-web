@@ -68,7 +68,7 @@ StatisticsService.prototype = {
         if(GLOBAL.DEBUG){
             logger.info("query start time is "+ param.startTime);
         }
-        this.statisticsDao.find(s_params).where("startDate >=?", [param.startTime]).all(function (err, items)  {
+        this.statisticsDao.find(s_params).only("endDate" , "startDate" , "projectId" , "id" , "total").where("startDate >=?", [param.startTime]).all(function (err, items)  {
             if(err){
                 callback(err);
                 return;
@@ -77,8 +77,6 @@ StatisticsService.prototype = {
         }).where(function(){
 
         });
-
-
     },
     fetchAndSave : function (id , startDate , cb){
         var self = this;

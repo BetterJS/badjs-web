@@ -665,11 +665,20 @@ form {
 }
 
 /*charts 图表*/
-#chartsContainer{
-    width: 98%;
+
+#chart-table {
+    margin-bottom:100px;
+    margin-top:30px;
+}
+#content #chartsContainer{
+  /*  width: 98%;*/
     margin: 0  auto;
     padding: 0 15px;
+    height: auto;
+    overflow: auto;
 }
+
+
 
 #code-view .modal-body{
     height:600px;

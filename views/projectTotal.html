@@ -1,0 +1,46 @@
+<%=include('./common/commonLinks.html')(it, opt)%>
+
+<%=include('./common/header.html')(it, opt)%>
+
+<main id="content" role="main" class="autoBottom">
+    <div class="wrap">
+        <!--<%=include('./common/leftSide.html')(it, opt)%>-->
+        <div class="mid-side">
+            <table id="chart-table" class="table table-condensed"></table>
+            <div id="chartsContainer"  class="main-mid">
+
+            </div>
+
+        </div>
+        <div class="right-side">
+
+            <section>
+                <label class="setting-title">统计项目：</label>
+                <select class="form-control "  id="select-chartBusiness">
+                    <option value="-1">-- 全部项目 --</option>
+                    <%  for(var i = 0 ; i < it.items.length ;i ++){
+                    var itemOne = it.items[i];
+
+                    %>
+                    <option value="<%=itemOne.id%>"> <%=itemOne.name%></option>
+                    <%}%>
+                </select>
+            </section>
+            <section>
+                <label class="setting-title">时间范围：</label>
+                <select disabled  class="form-control" id="select-timeScope">
+                    <option value="1">最近七天</option>
+                    <option value="2">最近一个月</option>
+                </select>
+            </section>
+
+            <section>
+                <div class="setting-search" id="showCharts">图表统计</div>
+            </section>
+        </div>
+    </div>
+</main>
+<%=include('./common/footer.html')(it)%>
+<script src="/static/entry.projectTotal.js"></script>
+</body>
+</html>

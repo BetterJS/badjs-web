@@ -1,15 +1,15 @@
-webpackJsonp([4],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var charts = __webpack_require__(10);
+	var projectTotal = __webpack_require__(12);
 
-	charts.init();
+	projectTotal.init();
 
 /***/ },
 
-/***/ 10:
+/***/ 12:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {/**
@@ -22,6 +22,7 @@ webpackJsonp([4],{
 	__webpack_require__(100);
 	__webpack_require__(101);
 	var Dialog = __webpack_require__(99);
+	var statisticsTpl = __webpack_require__(110);
 
 
 	    var dayNumber = 0,
@@ -40,7 +41,7 @@ webpackJsonp([4],{
 	                    type: 'line'                         //指定图表的类型，默认是折线图（line）
 	                },
 	                title: {
-	                    text:  chart_title  //指定图表标题
+	                    text:  ""  //指定图表标题
 	                },
 	                xAxis: {
 	                    categories: setChartX(dayNumber)
@@ -53,6 +54,9 @@ webpackJsonp([4],{
 	                series: chart_projects
 	            });
 	        },
+	        renderTable : function (){
+	            $('#chart-table').html(statisticsTpl({item : chart_projects}));
+	        },
 	        bindEvent : function (){
 	            var self = this;
 	            $('#showCharts').bind("click" , function(e){
@@ -60,7 +64,7 @@ webpackJsonp([4],{
 	                    projectId : $("#select-chartBusiness").val(),
 	                    timeScope : $("#select-timeScope").val()
 	                };
-	                $.getJSON("/controller/statisticsAction/queryByChart.do" , param , function (data){
+	                $.getJSON("/controller/statisticsAction/queryByChartForAdmin.do" , param , function (data){
 	                    var $options =  $("#select-chartBusiness option");
 	                    var $selectedOption = $("#select-chartBusiness").find("option:selected");
 
@@ -98,6 +102,7 @@ webpackJsonp([4],{
 	                    sortChartData(data.data);
 	                    console.log('project', chart_projects);
 	                    self.setChart();
+	                    self.renderTable();
 	                });
 	            });
 	        }
@@ -2672,6 +2677,73 @@ webpackJsonp([4],{
 	}
 	return __p
 	}
+
+/***/ },
+
+/***/ 110:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '', __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
+	with (obj) {
+	__p += '<thead>\r\n    <th>#</th>\r\n';
+
+	$.each(item[0].date , function (key, value){
+	;
+	__p += '\r\n    <th>' +
+	((__t = ( value )) == null ? '' : __t) +
+	'</th>\r\n';
+
+	})
+	;
+	__p += '\r\n</thead>\r\n<tbody>\r\n';
+
+
+	var totalArray = []
+	$.each(item , function (key, value){
+	;
+	__p += '\r\n<tr>\r\n    <td>' +
+	((__t = ( value.name )) == null ? '' : __t) +
+	'</td>\r\n    ';
+
+	    var dataIndex = 0;
+	    $.each(value.data , function (totalKey, total){
+
+	    ;
+	__p += '\r\n    <td>\r\n        ' +
+	((__t = ( total )) == null ? '' : __t) +
+	'\r\n    </td>\r\n    ';
+
+	        if(Number.isInteger(totalArray)) {
+	            totalArray[dataIndex] +=total;
+	        }else {
+	            totalArray[dataIndex] = total;
+	        }
+	        dataIndex ++ ;
+	    });
+	    ;
+	__p += '\r\n</tr>\r\n';
+
+	});
+	;
+	__p += '\r\n\r\n<tr>\r\n<td>\r\n总计\r\n</td>\r\n';
+
+	$.each(totalArray , function (key, value){
+	;
+	__p += '\r\n<td>' +
+	((__t = (value)) == null ? '' : __t) +
+	'</td>\r\n';
+
+	})
+	;
+	__p += '\r\n</tr>\r\n</tbody>\r\n';
+
+	}
+	return __p
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }
 

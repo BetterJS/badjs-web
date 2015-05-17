@@ -1,6 +1,6 @@
 
 /**
- *  @info: DtatisticsDao
+ *  @info: statisticsDao
  *  @author: chriscai
  *  @date: 2014-01-14
  */
