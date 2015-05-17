@@ -5,7 +5,6 @@
 
 var BusinessService = require('../../service/BusinessService'),
     _ = require('underscore'),
-    ApplyService = require('../../service/ApplyService'),
     StatisticsService = require('../../service/StatisticsService');
 
 var  log4js = require('log4js'),
@@ -28,9 +27,9 @@ var StatisticsAction = {
         var params = req.query,
             user  = req.session.user;
 
-        var applyService = new ApplyService();
+        var businessService =  new BusinessService();
 
-        applyService.queryListByAdmin(params,function(err, items){
+        businessService.findBusiness(function(err, items){
             res.render(param.tpl, { layout: false, user: user, index:'projectTotal' , statisticsTitle:param.statisticsTitle,  items : items});
         });
 
