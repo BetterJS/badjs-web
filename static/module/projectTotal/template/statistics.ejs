@@ -1,5 +1,5 @@
 <thead>
-    <th>#</th>
+    <th style="width:200px;">#</th>
 <%
 $.each(item[0].date , function (key, value){
 %>
@@ -15,7 +15,7 @@ var totalArray = []
 $.each(item , function (key, value){
 %>
 <tr>
-    <td><%= value.name %></td>
+    <td><span class="textOverflow" style="width:200px" title="<%= value.name %>"><%= value.name %></span></td>
     <%
     var dataIndex = 0;
     $.each(value.data , function (totalKey, total){

@@ -2667,7 +2667,7 @@ webpackJsonp([7],{
 	var __t, __p = '', __j = Array.prototype.join;
 	function print() { __p += __j.call(arguments, '') }
 	with (obj) {
-	__p += '<thead>\r\n    <th>#</th>\r\n';
+	__p += '<thead>\r\n    <th style="width:200px;">#</th>\r\n';
 
 	$.each(item[0].date , function (key, value){
 	;
@@ -2683,9 +2683,11 @@ webpackJsonp([7],{
 	var totalArray = []
 	$.each(item , function (key, value){
 	;
-	__p += '\r\n<tr>\r\n    <td>' +
+	__p += '\r\n<tr>\r\n    <td><span class="textOverflow" style="width:200px" title="' +
 	((__t = ( value.name )) == null ? '' : __t) +
-	'</td>\r\n    ';
+	'">' +
+	((__t = ( value.name )) == null ? '' : __t) +
+	'</span></td>\r\n    ';
 
 	    var dataIndex = 0;
 	    $.each(value.data , function (totalKey, total){
