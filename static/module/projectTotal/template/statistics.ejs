@@ -25,7 +25,7 @@ $.each(item , function (key, value){
         <%= total %>
     </td>
     <%
-        if(Number.isInteger(totalArray)) {
+        if(_.isNumber(totalArray[dataIndex])) {
             totalArray[dataIndex] +=total;
         }else {
             totalArray[dataIndex] = total;

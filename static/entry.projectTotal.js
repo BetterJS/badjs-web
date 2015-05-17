@@ -101,7 +101,7 @@ webpackJsonp([1],{
 	                    console.log(data);
 	                    sortChartData(data.data);
 	                    console.log('project', chart_projects);
-	                    self.setChart();
+	                  //  self.setChart();
 	                    self.renderTable();
 	                });
 	            });
@@ -2683,7 +2683,7 @@ webpackJsonp([1],{
 /***/ 110:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {module.exports = function (obj) {
+	/* WEBPACK VAR INJECTION */(function($, _) {module.exports = function (obj) {
 	obj || (obj = {});
 	var __t, __p = '', __j = Array.prototype.join;
 	function print() { __p += __j.call(arguments, '') }
@@ -2716,7 +2716,7 @@ webpackJsonp([1],{
 	((__t = ( total )) == null ? '' : __t) +
 	'\r\n    </td>\r\n    ';
 
-	        if(Number.isInteger(totalArray)) {
+	        if(_.isNumber(totalArray[dataIndex])) {
 	            totalArray[dataIndex] +=total;
 	        }else {
 	            totalArray[dataIndex] = total;
@@ -2743,7 +2743,7 @@ webpackJsonp([1],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(4)))
 
 /***/ }
 

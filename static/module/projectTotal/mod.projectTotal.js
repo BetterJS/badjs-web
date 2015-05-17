@@ -87,7 +87,7 @@ var statisticsTpl = require("./template/statistics.ejs");
                     console.log(data);
                     sortChartData(data.data);
                     console.log('project', chart_projects);
-                    self.setChart();
+                  //  self.setChart();
                     self.renderTable();
                 });
             });
