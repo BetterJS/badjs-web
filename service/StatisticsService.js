@@ -72,7 +72,10 @@ StatisticsService.prototype = {
                 callback(err);
                 return;
             }
-            callback(null,{ret:0, msg:"success", data: items.slice(0, param.top)});
+            if(param.top){
+                items = items.slice(0, param.top);
+            }
+            callback(null,{ret:0, msg:"success", data: items });
         }).where(function(){
 
         });

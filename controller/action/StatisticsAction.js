@@ -40,8 +40,7 @@ var StatisticsAction = {
             res.json({ret:0 , msg:'success' , data : {} });
             return ;
         }
-        var _top = parseInt(param.top, 10) || 100;
-        statisticsService.queryByChart({userName : param.user.loginName , projectId : param.projectId-0 , timeScope:param.timeScope-0, top: _top}  , function (err, data){
+        statisticsService.queryByChart({userName : param.user.loginName , projectId : param.projectId-0 , timeScope:param.timeScope-0 }  , function (err, data){
             if(err){
                 res.json({ret:-1, msg:"error"});
                 return;
