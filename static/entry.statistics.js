@@ -2162,7 +2162,7 @@ webpackJsonp([9],{
 
 
 
-	  if(!it.data || !it.data[0]){
+	  if(!it.data || !it.data[0] || !it.data[0].content[0]){
 	;
 	__p += '\r\n        <tr ><td colspan="3" style="text-align: center">当天没有统计数据</td></tr>\r\n';
 
