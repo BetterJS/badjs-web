@@ -29,7 +29,7 @@ var userAction = {
             });
         }else {
             businessService.findBusinessByProjectOwner(user.loginName , function (err, item){
-                res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
+                res.render('userManage', { layout: false, user: user, index:'manage', manageTitle: '用户列表' , items : item} );
             });
         }
 
@@ -37,7 +37,7 @@ var userAction = {
 
     authUserManger : function (params , req ,  res){
         var user = req.session.user;
-        res.render('authUserManage', { layout: false, user: user, index:'manage', title: '用户授权' } );
+        res.render('authUserManage', { layout: false, user: user, index:'manage', manageTitle: '用户授权' } );
 
     },
 
