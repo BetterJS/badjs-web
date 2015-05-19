@@ -125,6 +125,8 @@ webpackJsonp([4],{
 	'</td>\r\n    <td>' +
 	((__t = ( it[i].chineseName?it[i].chineseName:"无")) == null ? '' : __t) +
 	'</td>\r\n    <td>' +
+	((__t = ( it[i].email)) == null ? '' : __t) +
+	'</td>\r\n    <td>' +
 	((__t = ( role)) == null ? '' : __t) +
 	' </td>\r\n    <td>\r\n        ';
 	if(operationType == 1 ){;
