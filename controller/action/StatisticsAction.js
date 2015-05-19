@@ -39,9 +39,9 @@ var StatisticsAction = {
         if(!param.projectId || isNaN(param.projectId) || !param.timeScope){
             res.json({ret:0 , msg:'success' , data : {} });
             return ;
-        };
-
-        statisticsService.queryByChart({userName : param.user.loginName , projectId : param.projectId-0 , timeScope:param.timeScope-0}  , function (err, data){
+        }
+        var _top = parseInt(param.top, 10) || 100;
+        statisticsService.queryByChart({userName : param.user.loginName , projectId : param.projectId-0 , timeScope:param.timeScope-0, top: _top}  , function (err, data){
             if(err){
                 res.json({ret:-1, msg:"error"});
                 return;
@@ -55,7 +55,7 @@ var StatisticsAction = {
         if(!param.projectId || isNaN(param.projectId) || !param.timeScope || param.user.role !=1 ){
             res.json({ret:0 , msg:'success' , data : {} });
             return ;
-        };
+        }
 
         statisticsService.queryByChart({  projectId : param.projectId-0 , timeScope:param.timeScope-0}  , function (err, data){
             if(err){
@@ -86,7 +86,7 @@ var StatisticsAction = {
                     }else {
                         return -1;
                     }
-                })
+                });
             }
             res.json(data);
         });

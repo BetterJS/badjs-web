@@ -47,7 +47,7 @@ StatisticsService.prototype = {
                 callback(err);
                 return;
             }
-            callback(null,{ret:0, msg:"success", data: items});
+            callback(null,{ret:0, msg:"success", data: items.slice(0, param.top)});
         });
 
     },
