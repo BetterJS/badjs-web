@@ -10,7 +10,9 @@ module.exports  = function (db){
         id          : Number,
         loginName   : String,
         chineseName : String,
-        role        : Number
+        role        : Number,
+        email        : String,
+        password        : String
     });
 
     return user;

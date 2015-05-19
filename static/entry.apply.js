@@ -1,4 +1,4 @@
-webpackJsonp([9],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -17,7 +17,7 @@ webpackJsonp([9],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(99);
+	var Dialog = __webpack_require__(102);
 
 
 	    var isValid = true,
@@ -75,7 +75,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 18:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -255,11 +255,11 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 99:
+/***/ 102:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
-	var modal = __webpack_require__(110);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	var modal = __webpack_require__(112);
 
 	    var container;
 
@@ -307,7 +307,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 110:
+/***/ 112:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

@@ -5,6 +5,7 @@
 var log4js = require('log4js'),
     logger = log4js.getLogger(),
     UserService = require('../../service/UserService'),
+    crypto = require('crypto'),
     BusinessService = require('../../service/BusinessService'),
     isError = function (res , error){
         if(error){
@@ -30,6 +31,40 @@ var userAction = {
             businessService.findBusinessByProjectOwner(user.loginName , function (err, item){
                 res.render('userManage', { layout: false, user: user, index:'manage', title: '用户列表' , items : item} );
             });
+        }
+
+    },
+
+    authUserManger : function (params , req ,  res){
+        var user = req.session.user;
+        res.render('authUserManage', { layout: false, user: user, index:'manage', title: '用户授权' } );
+
+    },
+
+    login : function (params , req ,  res){
+
+        var method = req.method.toLowerCase();
+        if(method == "post"){
+
+            var userDao = req.models.userDao;
+
+            userDao.one({ loginName : req.body.username } ,function (err , user) {
+                if(err || !user || (crypto.createHash("md5").update(req.body.password).digest('hex') != user.password)){
+                    res.render('login', {  user: user , index:"login"   , message : "帐号或则密码错误"} );
+                }else {
+                    req.session.user = {
+                        role : user.role,
+                        id : user.id,
+                        email : user.email,
+                        loginName : user.loginName ,
+                        chineseName : user.chineseName
+                    }
+                    res.redirect(req.protocol + "://" + req.get('host') + '/user/index.html');
+                }
+            });
+
+        }else {
+            res.render('login', {   index:"login" ,message : "" } );
         }
 
     },
@@ -60,7 +95,39 @@ var userAction = {
             res.json({ret:0, data:items, msg:"success" , isAdmin : isAdmin});
         });
     },
-    queryAllList : function (params , req ,  res) {
+
+    queryUserByCondition : function (params , req ,  res){
+        var userService = new UserService();
+        var user = req.session.user;
+        var isAdmin  = req.session.user.role == 1;
+        if(!isAdmin){
+            res.json({ret:-1, data:{}, msg:"error" });
+            return ;
+        }
+
+        var target = {};
+
+
+        if(params.roleType >= 0){
+            target.role = params.roleType;
+        }
+
+        userService.queryUsersByCondition(target , function (err , item){
+            res.json({ret:0, data:item, msg:"success" });
+        })
+    },
+
+    authUser : function (params , req ,  res){
+        var userService = new UserService();
+        userService.update({id : params.id, role : params.role} , function (err ){
+            if(err){
+                res.json({ret:-1,  msg:"error" });
+            }else {
+                res.json({ret:0,  msg:"success" });
+            }
+        })
+    },
+/*    queryAllList : function (params , req ,  res) {
 
         var userService = new UserService();
         //用户根据项目查询项目成员
@@ -80,7 +147,7 @@ var userAction = {
             }
             res.json({ret:0, data:items, msg:"success"});
         });
-    },
+    },*/
     update:function(req, res){
 
     },

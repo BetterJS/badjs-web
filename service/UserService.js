@@ -21,96 +21,6 @@ var UserService = function (){
 
 
 UserService.prototype = {
-    //根据指定条件查询所有项目的项目成员
-    admin :{
-        QueryListByCondition : function (target , callback){
-            var users;
-            var self = this,
-                params = {};
-            if(target !={}){
-                if(target.applyId !=-1){
-                    params.applyId = target.applyId;
-                }
-                if(target.role !=-1){
-                    params.role = target.role;
-                }
-            }
-
-            console.log(params);
-            this.userApplyDao.find(params, function(err, userApply){
-                if(err){
-                    callback(err);
-                    return;
-                }else{
-                    users = userApply;
-                    console.log(userApply);
-                }
-                self.userDao.all({}, function (err , userData){
-
-                    if(err){
-                        callback(err);
-                        return;
-                    }
-
-                    if(users !=[]){
-                        var newItems = [];
-                        for(var i = 0, len= userData.length; i<len; i++){
-                            for(var j = 0, length = users.length; j<length; j++){
-                                if(userData[i].id == users[j].userId){
-                                    userData[i].projectRole = users[j].role;
-                                    newItems.push(userData[i]);
-                                }
-                            }
-
-                        }
-                        userData = newItems;
-                    }
-                    callback(null,userData);
-                });
-            });
-
-
-        },
-        //查询所有项目的项目成员列表
-        queryAllList : function (target , callback){
-            var self = this;
-            params ={};
-            this.userApplyDao.find(params, function(err, userApplyData){
-                if(err){
-                    callback(err);
-                    return;
-                }else{
-                    userApply = userApplyData;
-                    console.log(userApplyData);
-                }
-                self.userDao.all({}, function (err , userData){
-
-                    if(err){
-                        callback(err);
-                        return;
-                    }
-
-                    if(userApply !=[]){
-                        var newItems = [];
-                        for(var i = 0, len= userData.length; i<len; i++){
-                            for(var j = 0, length = userApply.length; j<length; j++){
-                                if(userData[i].id == userApply[j].userId){
-                                    userData[i].projectRole = userApply[j].role;
-                                    //uad == userApplyId
-                                    userData[i].uad = userApply[j].id;
-                                    newItems.push(userData[i]);
-                                }
-                            }
-
-                        }
-                        userData = newItems;
-                    }
-                    callback(null,userData);
-                });
-            });
-
-        }
-    },
 
     queryListByCondition : function (target , callback){
 
@@ -134,7 +44,6 @@ UserService.prototype = {
         }
 
 
-        console.log(string);
         this.db.driver.execQuery(string,condition, function (err, data) {
             if(err){
                 callback(err);
@@ -162,6 +71,17 @@ UserService.prototype = {
         });
 
     },
+
+    queryUsersByCondition : function (target ,callback){
+        this.userDao.find(target , function (err , items){
+            if(err){
+                callback(err);
+                return;
+            }
+            callback(null, items);
+        });
+    },
+
     add: function(target, callback){
 
         this.userDao.create(target , function (err , items){
@@ -179,10 +99,12 @@ UserService.prototype = {
     update : function(target, callback){
         this.userDao.one({id: target.id }, function (err, user) {
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
-            user.each(function(key, value){
-                user[key] = value;
-            });
+
+            for(key in target){
+                user[key] = target[key];
+            };
             user.save(function (err) {
+                callback(err);
                 // err.msg = "under-age";
             });
         });
