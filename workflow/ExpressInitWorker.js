@@ -139,7 +139,7 @@ router(app);
 
 
 
-var port = parseInt(GLOBAL.pjconfig.port, 10) || 8081;
+var port = parseInt(GLOBAL.pjconfig.port, 10) || 80;
 module.exports = function (){
     app.listen(port);
 
