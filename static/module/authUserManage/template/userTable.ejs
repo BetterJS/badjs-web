@@ -1,0 +1,30 @@
+<% for(var i =0, len = it.length;i<len; i++){
+    var role ="普通用户";
+    var operationType = 0;
+    if(it[i].role == 1){
+        if(it[i].loginName == "admin") {
+            role = "超级管理员";
+            operationType = 2;
+        }else {
+            role ="管理员";
+            operationType = 1;
+        }
+    }
+%>
+<tr class="listRow">
+    <td><%= i+1%></td>
+    <td><%= it[i].loginName%></td>
+    <td><%= it[i].chineseName?it[i].chineseName:"无"%></td>
+    <td><%= it[i].email%></td>
+    <td><%= role%> </td>
+    <td>
+        <%if(operationType == 1 ){%>
+            <button class="user-authBtn btn-default modifyBtn" data-uaid="<%= it[i].id%>" data-role="0">转为普通成员</button>
+        <%} else if(operationType == 0) {%>
+            <button class="user-authBtn btn-default modifyBtn" data-uaid="<%= it[i].id%>" data-role="1" >授权管理员</button>
+        <%}%>
+
+
+    </td>
+</tr>
+<%}%>

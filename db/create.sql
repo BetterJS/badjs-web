@@ -73,14 +73,22 @@ CREATE TABLE `b_approve` (
 DROP TABLE IF EXISTS `b_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `b_user` (
+CREATE TABLE IF NOT EXISTS `b_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `loginName` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `chineseName` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `role` int(11) NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+--
+/*!40000 ALTER TABLE `b_user` DISABLE KEYS */;
+INSERT INTO `b_user` (`id`, `loginName`, `chineseName`, `role`, `email`, `password`) VALUES
+	(1, 'admin', 'admin', 1, NULL, '21232f297a57a5a743894a0e4a801fc3');
+
 
 
 --

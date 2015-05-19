@@ -35,6 +35,13 @@ module.exports = function(app){
         IndexAction.index({} , req , res);
     } );
 
+    app.use('/login.html', function (req , res){
+        UserAction.login({}, req , res);
+    } );
+
+
+
+
 
     app.get('/user/apply.html', function(req, res){
         var user  = req.session.user;
@@ -59,6 +66,10 @@ module.exports = function(app){
         UserAction.index({} , req , res);
     });
 
+    app.get('/user/authUserManage.html', function (req , res){
+        UserAction.authUserManger(req.param , req , res);
+    });
+
     app.get('/user/statistics.html' , function (req , res){
         StatisticsAction.index({tpl:"statistics", statisticsTitle: "日志统计"} , req , res);
     });
@@ -80,11 +91,10 @@ module.exports = function(app){
      * 登出
      * */
     app.get('/logout', function(req, res){
-        var signoutUrl = 'http://passport.oa.com/modules/passport/signout.ashx?url={yourWebsite}';
         req.session.user = null;
-        var homeUrl = req.protocol + "://" + req.get('host')+'/';
-        signoutUrl = signoutUrl.replace('{yourWebsite}', encodeURIComponent(homeUrl));
-        res.redirect(signoutUrl);
+        var homeUrl = req.protocol + "://" + req.get('host') + '/index.html';
+        delete req.session.user;
+        res.redirect(homeUrl);
     });
 
 

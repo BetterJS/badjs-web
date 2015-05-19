@@ -51,6 +51,16 @@
                     <li class="item">
                         <a  href="applyList.html">申请列表</a>
                     </li>
+
+                    <%
+                    if(it.user.role == 1){
+                    %>
+                    <li class="item">
+                        <a  href="authUserManage.html">用户授权</a>
+                    </li>
+                    <%
+                    }
+                    %>
                     <!--<li class="item">-->
                         <!--<a href=""></a>-->
                     <!--</li>-->

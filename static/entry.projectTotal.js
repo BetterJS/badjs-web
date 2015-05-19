@@ -1,15 +1,15 @@
-webpackJsonp([7],{
+webpackJsonp([8],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var projectTotal = __webpack_require__(14);
+	var projectTotal = __webpack_require__(13);
 
 	projectTotal.init();
 
 /***/ },
 
-/***/ 14:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {/**
@@ -18,11 +18,11 @@ webpackJsonp([7],{
 	 * */
 
 
-	__webpack_require__(17);
+	__webpack_require__(18);
 	__webpack_require__(100);
 	__webpack_require__(101);
-	var Dialog = __webpack_require__(99);
-	var statisticsTpl = __webpack_require__(108);
+	var Dialog = __webpack_require__(102);
+	var statisticsTpl = __webpack_require__(109);
 
 
 	    var dayNumber = 0,
@@ -152,7 +152,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 17:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(jQuery) {/**
@@ -2011,7 +2011,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 18:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -2187,58 +2187,6 @@ webpackJsonp([7],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ },
-
-/***/ 99:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
-	var modal = __webpack_require__(110);
-
-	    var container;
-
-	    function hide() {
-	        container.removeClass('in');
-	        container.find('.modal-backdrop').removeClass('in');
-	        setTimeout(function () {
-	            container.remove();
-	            container = undefined;
-	        }, 300);
-	    }
-
-	    function Dialog (param) {
-	        if (container) {
-	            container.remove();
-	            container = undefined;
-	        }
-	        container = $(modal({it :param}))
-	            .appendTo(document.body)
-	            .show();
-
-	        var key,
-	            action,
-	            delegator,
-	            on = param.on || {};
-
-	        delegator = (new Delegator(container))
-	            .on('click', 'close', hide);
-
-	        for (key in on) {
-	            action = key.split('/');
-	            delegator.on(action[0], action[1], on[key]);
-	        }
-
-	        setTimeout(function () {
-	            container.addClass('in');
-	            container.find('.modal-backdrop').addClass('in');
-	        }, 0);
-	    }
-
-	    Dialog.hide = hide;
-
-	module.exports =  Dialog;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
@@ -2659,7 +2607,59 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 108:
+/***/ 102:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	var modal = __webpack_require__(112);
+
+	    var container;
+
+	    function hide() {
+	        container.removeClass('in');
+	        container.find('.modal-backdrop').removeClass('in');
+	        setTimeout(function () {
+	            container.remove();
+	            container = undefined;
+	        }, 300);
+	    }
+
+	    function Dialog (param) {
+	        if (container) {
+	            container.remove();
+	            container = undefined;
+	        }
+	        container = $(modal({it :param}))
+	            .appendTo(document.body)
+	            .show();
+
+	        var key,
+	            action,
+	            delegator,
+	            on = param.on || {};
+
+	        delegator = (new Delegator(container))
+	            .on('click', 'close', hide);
+
+	        for (key in on) {
+	            action = key.split('/');
+	            delegator.on(action[0], action[1], on[key]);
+	        }
+
+	        setTimeout(function () {
+	            container.addClass('in');
+	            container.find('.modal-backdrop').addClass('in');
+	        }, 0);
+	    }
+
+	    Dialog.hide = hide;
+
+	module.exports =  Dialog;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+
+/***/ },
+
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {module.exports = function (obj) {
@@ -2728,7 +2728,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 110:
+/***/ 112:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
