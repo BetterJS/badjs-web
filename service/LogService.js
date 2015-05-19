@@ -23,7 +23,7 @@ var LogService = function (){
     this.queryUrl = GLOBAL.pjconfig.storage.queryUrl;
     this.pushProjectUrl = GLOBAL.pjconfig.acceptor.pushProjectUrl;
 
-    logger.debug('query url : ' + this.url)
+    logger.debug('query url : ' + this.queryUrl)
 //    this.url = 'http://127.0.0.1:9000/query';
 }
 

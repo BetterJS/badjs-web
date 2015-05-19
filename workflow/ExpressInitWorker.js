@@ -57,6 +57,7 @@ app.use(orm.express(msqlUrl, {
 
 
 
+
 app.use("/user" ,function (req , res , next){
     var params = req.query,
         user  = req.session.user,
@@ -133,9 +134,9 @@ router(app);
 
 
 
-
+var port = parseInt(GLOBAL.pjconfig.port, 10) || 8081;
 module.exports = function (){
-    app.listen(80);
+    app.listen(port);
 
-    logger.info('start badjs-web , listen 80 ...');
+    logger.info('start badjs-web , listen ' + port + ' ...');
 }

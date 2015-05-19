@@ -42,7 +42,6 @@ var StatisticsService = function (){
 
 StatisticsService.prototype = {
     queryById : function (param  , callback){
-
         this.statisticsDao.find({projectId :param.projectId , startDate : dateFormat(param.startDate , 'yyyy-MM-dd hh:mm:ss')} , function (err , items){
             if(err){
                 callback(err);
@@ -73,7 +72,7 @@ StatisticsService.prototype = {
                 callback(err);
                 return;
             }
-            callback(null,{ret:0, msg:"success", data: items});
+            callback(null,{ret:0, msg:"success", data: items.slice(0, param.top)});
         }).where(function(){
 
         });
