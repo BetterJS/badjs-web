@@ -1,23 +1,23 @@
-webpackJsonp([7],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(12);
+	var log  =__webpack_require__(13);
 
 	log.init();
 
 /***/ },
 
-/***/ 12:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(102);
+	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
 	var Delegator = __webpack_require__(19);
 
 	var logTable = __webpack_require__(106);
 	var keyword = __webpack_require__(107);
-	var debar = __webpack_require__(110);
+	var debar = __webpack_require__(108);
 
 
 	    var logConfig = {
@@ -256,7 +256,7 @@ webpackJsonp([7],{
 
 
 	exports.init = init;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
@@ -436,11 +436,11 @@ webpackJsonp([7],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 102:
+/***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
@@ -488,7 +488,7 @@ webpackJsonp([7],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
@@ -525,8 +525,8 @@ webpackJsonp([7],{
 	        }
 	        ua = ua.toLowerCase();
 
-	        if(ua.indexOf('mqq')>0){
-	        return  'ico-qb';
+	        if(ua.indexOf('qqbrowser')>0){
+	            return  'ico-qb';
 	        }else if(ua.indexOf('qq')>0){
 	            return  'ico-qq';
 	        }else if(ua.indexOf('android')>0){
@@ -612,7 +612,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 110:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

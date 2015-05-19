@@ -73,7 +73,7 @@ var StatisticsAction = {
             return ;
         }
         var _top = parseInt(param.top, 10) || 100;
-        statisticsService.queryById({userName : param.user.loginName , projectId : req.query.projectId-0 , startDate : new Date(param.startDate + " 00:00:00"), top: _top}  , function (err, data){
+        statisticsService.queryById({userName : param.user.loginName , projectId : req.query.projectId-0 , startDate : new Date(param.startDate ), top: _top}  , function (err, data){
             if(data.data && data.data[0] ){
                 data.data[0].content = JSON.parse(data.data[0].content);
                 data.data[0].content = _.map(data.data[0].content, function(value, key){
