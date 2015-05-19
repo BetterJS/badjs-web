@@ -71,7 +71,7 @@ var StatisticsAction = {
             res.json({ret:0 , msg:'success' , data : {} });
             return ;
         }
-        statisticsService.queryById({userName : param.user.loginName , projectId : req.query.projectId-0 , startDate : new Date(param.startDate ) }  , function (err, data){
+        statisticsService.queryById({userName : param.user.loginName , projectId : req.query.projectId-0 , startDate : new Date(param.startDate - 0 ) }  , function (err, data){
             if(data.data && data.data[0] ){
                 data.data[0].content = JSON.parse(data.data[0].content);
                 data.data[0].content = _.map(data.data[0].content, function(value, key){
