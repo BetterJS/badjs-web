@@ -13,11 +13,11 @@ webpackJsonp([1],{
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
-	var Delegator = __webpack_require__(19);
+	var Delegator = __webpack_require__(18);
 
-	var logTable = __webpack_require__(106);
-	var keyword = __webpack_require__(107);
-	var debar = __webpack_require__(108);
+	var logTable = __webpack_require__(105);
+	var keyword = __webpack_require__(106);
+	var debar = __webpack_require__(107);
 
 
 	    var logConfig = {
@@ -256,11 +256,11 @@ webpackJsonp([1],{
 
 
 	exports.init = init;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 19:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -436,14 +436,14 @@ webpackJsonp([1],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
 /***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
 	var modal = __webpack_require__(112);
 
 	    var container;
@@ -488,11 +488,11 @@ webpackJsonp([1],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 106:
+/***/ 105:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -555,9 +555,9 @@ webpackJsonp([1],{
 	'</td>\r\n    <td style="" class="td-3">' +
 	((__t = (it[i].msg)) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-4">' +
-	((__t = ( it[i].uin = 'NaN' ? '-' : it[i].uin)) == null ? '' : __t) +
+	((__t = ( it[i].uin == 'NaN' ? '-' : it[i].uin)) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-5">' +
-	((__t = (it[i].ip)) == null ? '' : __t) +
+	((__t = (it[i].ip )) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-6"><span class="ico-browser ' +
 	((__t = (getBrowserType(it[i].userAgent))) == null ? '' : __t) +
 	'" title="' +
@@ -593,7 +593,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 107:
+/***/ 106:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -612,7 +612,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 108:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
