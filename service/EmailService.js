@@ -133,7 +133,7 @@ EmailService.prototype = {
         date.setHours(parseInt(time[0], 10) || 9, parseInt(time[1], 10) || 0, parseInt(time[2], 10) || 0, 0);
         var timeDiff = date.valueOf() - (new Date()).valueOf();
         setTimeout(function() {
-            this.queryAll();
+            that.queryAll();
         }, timeDiff);
         logger.debug('Email service will start after: ' + timeDiff);
     }
