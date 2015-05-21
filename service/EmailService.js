@@ -86,9 +86,6 @@ EmailService.prototype = {
                     }
                 });
                 for (var applyId in orderByApplyId) {
-                    if(applyId != 8){
-                        continue;
-                    }
                     (function(users) {
                         var to_list = []; // 收件方
                         var cc_list = []; // 抄送方
@@ -129,16 +126,16 @@ EmailService.prototype = {
         send_email(this.from, emails.to, emails.cc, title, content, data);
     },
     start: function() {
-       /* var that = this;
+        var that = this;
         var date = new Date();
         date.setDate(date.getDate() + 1);
         var time = GLOBAL.pjconfig.email.time.toString().split(':');
         date.setHours(parseInt(time[0], 10) || 9, parseInt(time[1], 10) || 0, parseInt(time[2], 10) || 0, 0);
         var timeDiff = date.valueOf() - (new Date()).valueOf();
-        setTimeout(function() {*/
+        setTimeout(function() {
             this.queryAll();
-        /*}, timeDiff);
-        logger.debug('Email service will start after: ' + timeDiff);*/
+        }, timeDiff);
+        logger.debug('Email service will start after: ' + timeDiff);
     }
 };
 
