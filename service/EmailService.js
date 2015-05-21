@@ -96,13 +96,13 @@ EmailService.prototype = {
                     if(applyId != 8){
                         continue;
                     }
-                    that.statisticsService.queryById({
+                    /*that.statisticsService.queryById({
                         top: that.top,
                         projectId: applyId,
                         startDate: that.date
                     }, function(err, data) {
                         if (err) return logger.error('Send email statisticsService queryById error');
-                        if (data && data.data && data.data[0]) {
+                        if (  data.data[0]) {
                             that.sendEmail({
                                 to: to_list,
                                 cc: cc_list,
@@ -111,7 +111,7 @@ EmailService.prototype = {
                         } else {
                             logger.error('Send email data format error');
                         }
-                    }); // jshint ignore:line
+                    }); // jshint ignore:line*/
                 }
             }
         });
@@ -126,16 +126,16 @@ EmailService.prototype = {
         send_email(this.from, emails.to, emails.cc, title, content, data);
     },
     start: function() {
-        var that = this;
+       /* var that = this;
         var date = new Date();
         date.setDate(date.getDate() + 1);
         var time = GLOBAL.pjconfig.email.time.toString().split(':');
         date.setHours(parseInt(time[0], 10) || 9, parseInt(time[1], 10) || 0, parseInt(time[2], 10) || 0, 0);
         var timeDiff = date.valueOf() - (new Date()).valueOf();
-        setTimeout(function() {
+        setTimeout(function() {*/
             that.queryAll();
-        }, timeDiff);
-        logger.debug('Email service will start after: ' + timeDiff);
+        /*}, timeDiff);
+        logger.debug('Email service will start after: ' + timeDiff);*/
     }
 };
 

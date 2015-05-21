@@ -50,13 +50,13 @@ StatisticsService.prototype = {
 
 
 
-            if(items.data && items.data[0] ){
-                items.data[0].content = JSON.parse(items.data[0].content);
-                items.data[0].content = _.map(items.data[0].content, function(value, key){
+            if(items[0] ){
+                items[0].content = JSON.parse(items[0].content);
+                items[0].content = _.map(items[0].content, function(value, key){
                     return {title : key , total : value};
                 });
 
-                items.data[0].content = items.data[0].content.sort(function ( a, b){
+                items[0].content = items[0].content.sort(function ( a, b){
                     if(a.total < b.total){
                         return 1;
                     }else {
@@ -65,11 +65,11 @@ StatisticsService.prototype = {
                 });
 
                 if(param.top){
-                    items.data[0].content = items.data[0].content.slice(0 , param.top);
+                    items[0].content = items[0].content.slice(0 , param.top);
                 }
 
             }
-            callback(null,{ret:0, msg:"success", data: items});
+            callback(null,  items);
         });
 
     },

@@ -72,7 +72,12 @@ var StatisticsAction = {
             return ;
         }
         statisticsService.queryById({userName : param.user.loginName , projectId : req.query.projectId-0 , startDate : new Date(param.startDate - 0 ) }  , function (err, data){
-            res.json(data);
+            if(err){
+                res.json({ret:-1 , msg:'error' , data : {} });
+            }else {
+                res.json({ret:0 , msg:'success' , data : data });
+            }
+
         });
     }
 
