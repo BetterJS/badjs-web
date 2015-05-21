@@ -17,5 +17,10 @@ module.exports = function (){
         new LogService().pushProject(function (e){
             logger.info('push project on system start');
         });
+        
+        // 邮件报表
+        var EmailService = require("../service/EmailService");
+        logger.info('start email report ...');
+        new EmailService().start();
     },3000)
 }
