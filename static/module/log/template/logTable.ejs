@@ -46,7 +46,7 @@ var isHtml = /^.+?\.html\??/.test(it[i].target);
 <tr>
     <td   class="td-1 info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
     <td   class="td-2"><%= _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') %></td>
-    <td style="" class="td-3"><%=it[i].msg%></td>
+    <td style="" class="td-3"><%= opt.encodeHtml(it[i].msg) %></td>
     <td  class="td-4"><%= it[i].uin == 'NaN' ? '-' : it[i].uin%></td>
     <td  class="td-5"><%=it[i].ip %></td>
     <td  class="td-6"><span class="ico-browser <%=getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>

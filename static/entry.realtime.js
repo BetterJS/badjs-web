@@ -3,21 +3,21 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(13);
+	var log  =__webpack_require__(16);
 
 	log.init();
 
 /***/ },
 
-/***/ 13:
+/***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
-	var Delegator = __webpack_require__(18);
+	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(105);
-	var keyword = __webpack_require__(106);
-	var debar = __webpack_require__(107);
+	var logTable = __webpack_require__(106);
+	var keyword = __webpack_require__(107);
+	var debar = __webpack_require__(108);
 
 
 	    var logConfig = {
@@ -256,11 +256,11 @@ webpackJsonp([1],{
 
 
 	exports.init = init;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 18:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -436,14 +436,14 @@ webpackJsonp([1],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
 /***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
 	var modal = __webpack_require__(112);
 
 	    var container;
@@ -488,11 +488,11 @@ webpackJsonp([1],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 105:
+/***/ 106:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -553,7 +553,7 @@ webpackJsonp([1],{
 	'</td>\r\n    <td   class="td-2">' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
 	'</td>\r\n    <td style="" class="td-3">' +
-	((__t = (it[i].msg)) == null ? '' : __t) +
+	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-4">' +
 	((__t = ( it[i].uin == 'NaN' ? '-' : it[i].uin)) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-5">' +
@@ -593,7 +593,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 106:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -612,7 +612,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 107:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
