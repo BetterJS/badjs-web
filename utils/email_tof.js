@@ -22,6 +22,8 @@ var fixMail = function(emails){
     return output.join(";");
 };
 
+var charset = 'utf8';
+
 module.exports = function(from, to, cc, title, content) {
     logger.info("Send email " + title);
     var cmd = ['./utils/uniform_msg_client mail'];
@@ -29,6 +31,7 @@ module.exports = function(from, to, cc, title, content) {
     cmd.push('-C', wrap(fixMail(cc)));
     cmd.push('-S', wrap(title));
     cmd.push('-c', wrap(content));
+    cmd.push('-d', wrap(charset));
 
     child_process.exec(cmd.join(' '), function(error, stdout, stderr) {
         logger.info("Send email error " + stdout);
