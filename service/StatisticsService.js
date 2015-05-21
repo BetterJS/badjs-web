@@ -48,8 +48,26 @@ StatisticsService.prototype = {
                 return;
             }
 
-            if(param.top){
-                items = items.slice(0, param.top);
+
+
+            if(items.data && items.data[0] ){
+                items.data[0].content = JSON.parse(items.data[0].content);
+                items.data[0].content = _.map(items.data[0].content, function(value, key){
+                    return {title : key , total : value};
+                });
+
+                items.data[0].content = items.data[0].content.sort(function ( a, b){
+                    if(a.total < b.total){
+                        return 1;
+                    }else {
+                        return -1;
+                    }
+                });
+
+                if(param.top){
+                    items.data[0].content = items.data[0].content.slice(0 , param.top);
+                }
+
             }
             callback(null,{ret:0, msg:"success", data: items});
         });
@@ -75,9 +93,6 @@ StatisticsService.prototype = {
             if(err){
                 callback(err);
                 return;
-            }
-            if(param.top){
-                items = items.slice(0, param.top);
             }
             callback(null,{ret:0, msg:"success", data: items });
         }).where(function(){

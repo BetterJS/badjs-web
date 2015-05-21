@@ -72,20 +72,6 @@ var StatisticsAction = {
             return ;
         }
         statisticsService.queryById({userName : param.user.loginName , projectId : req.query.projectId-0 , startDate : new Date(param.startDate - 0 ) }  , function (err, data){
-            if(data.data && data.data[0] ){
-                data.data[0].content = JSON.parse(data.data[0].content);
-                data.data[0].content = _.map(data.data[0].content, function(value, key){
-                    return {title : key , total : value};
-                });
-
-                data.data[0].content = data.data[0].content.sort(function ( a, b){
-                    if(a.total < b.total){
-                        return 1;
-                    }else {
-                        return -1;
-                    }
-                });
-            }
             res.json(data);
         });
     }
