@@ -34,6 +34,7 @@ EmailService.prototype = {
         var html = [];
         html.push('<html>');
         html.push('<h3>【BadJS日报邮件】 ' + data.title + '</h3>');
+        html.push('<p><a href="http://badjs.server.com/user/index.html">日志查看点着: http://badjs.server.com/user/index.html</a></p>');
         var content = data.content;
         if (content && content.length) {
             html.push('<table style="border-collapse:collapse;;width:95%"><tr style="background-color:#188eee;text-align:left;color:#fff"><th style="padding:2px 0 2px 10px;border:1px solid #dedede;width:60px">#</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede;;width:120px">出现次数</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede">错误内容</th></tr>');
@@ -107,7 +108,7 @@ EmailService.prototype = {
                                     to: to_list,
                                     cc: cc_list,
                                     title: name
-                                }, data);
+                                }, data[0]);
                             } else {
                                 logger.error('Send email data format error');
                             }
