@@ -8,13 +8,14 @@ var log4js = require('log4js');
 var logger = log4js.getLogger();
 var _ = require('underscore');
 var UserService = require('./UserService');
-var dateFormat = require("../utils/dateFormat");
+var StatisticsService = require('./StatisticsService');
 
 var send_email = require("../utils/" + GLOBAL.pjconfig.email.module);
+var dateFormat = require("../utils/dateFormat");
 
 var EmailService = function() {
     this.userService = new UserService();
-    this.statisticsDao = global.models.statisticsDao;
+    this.statisticsService = new StatisticsService();
     this.top = parseInt(GLOBAL.pjconfig.email.top, 10) || 20;
     this.from = GLOBAL.pjconfig.email.from || "noreply-badjs@tencent.com";
 };
@@ -26,70 +27,40 @@ var getYestoday = function() {
     return date;
 };
 
-var formatData = function(data) {
-    data = data || {};
-    try {
-        data.content = JSON.parse(data.content);
-        data.content = _.map(data.content, function(value, key) {
-            return {
-                title: key,
-                total: value
-            };
-        });
-
-        data.content = data.content.sort(function(x, y) {
-            return x.total < y.total ? 1 : -1;
-        });
-    } catch (err) {
-        logger.error('Email data content error');
-        data.content = [];
-    }
-
-    return data;
-};
-
 EmailService.prototype = {
-    render: function(datas) {
+    render: function(data) {
         var that = this;
-        datas = datas || {};
+        data = data || {};
         var html = [];
         html.push('<html>');
-        var empty_tips = '<p>暂无数据</p>';
-        if (datas.ret === 0) {
-            var data = formatData(datas.data[0]);
-            var content = data.content;
-            if (content.length > 0) {
-                content = content.slice(0, that.top);
-                html.push('<h3>【BadJS日报邮件】 ' + datas.title + '</h3>');
-                html.push('<table style="border-collapse:collapse;;width:95%"><tr style="background-color:#188eee;text-align:left;color:#fff"><th style="padding:2px 0 2px 10px;border:1px solid #dedede;width:60px">#</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede;;width:120px">出现次数</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede">错误内容</th></tr>');
-                var total_top = 0;
-                content.forEach(function(v, i) {
-                    v = typeof v === 'object' ? v : null;
-                    if (v) {
-                        html.push('<tr style="background-color:{{bgc}}"><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{index}}</td><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{times}}</td><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{desc}}</td></tr>'
-                            .replace(/{{index}}/g, i + 1)
-                            .replace(/{{times}}/g, v.total)
-                            .replace(/{{desc}}/g, v.title)
-                            .replace(/{{bgc}}/g, i % 2 ? '#fff' : '#eee')
-                        );
-                        total_top += v.total;
-                    }
-                });
-                html.push('</table>');
-                var total = data.total;
-                total > 0 && html.push('<p style="border-top:1px solid #dedede;margin:20px 0 0 10px">共 {{total}} 条记录, Top {{top}} 占 {{per}}.</p>'
-                    .replace(/{{total}}/g, total)
-                    .replace(/{{top}}/g, that.top)
-                    .replace(/{{per}}/g, (total_top * 100 / total).toFixed(2) + '%')
-                );
-            } else {
-                logger.error('Email render data empty');
-                html.push(empty_tips);
-            }
+        html.push('<h3>【BadJS日报邮件】 ' + data.title + '</h3>');
+        var content = data.content;
+        if (content && content.length) {
+            html.push('<table style="border-collapse:collapse;;width:95%"><tr style="background-color:#188eee;text-align:left;color:#fff"><th style="padding:2px 0 2px 10px;border:1px solid #dedede;width:60px">#</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede;;width:120px">出现次数</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede">错误内容</th></tr>');
+            var total_top = 0;
+            content.forEach(function(v, i) {
+                v = typeof v === 'object' ? v : null;
+                if (v) {
+                    html.push('<tr style="background-color:{{bgc}}"><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{index}}</td><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{times}}</td><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{desc}}</td></tr>'
+                        .replace(/{{index}}/g, i + 1)
+                        .replace(/{{times}}/g, v.total)
+                        .replace(/{{desc}}/g, v.title)
+                        .replace(/{{bgc}}/g, i % 2 ? '#fff' : '#eee')
+                    );
+                    total_top += v.total;
+                }
+            });
+            html.push('</table>');
+            var total = data.total;
+            total > 0 && html.push('<p style="border-top:1px solid #666;margin-top:20px;width:520px;padding:5px 0 0 10px">共 {{total}} 条记录, Top {{top}} 占 {{per}}.</p>'
+                .replace(/{{total}}/g, total)
+                .replace(/{{top}}/g, that.top)
+                .replace(/{{per}}/g, (total_top * 100 / total).toFixed(2) + '%')
+            );
         } else {
-            logger.error('Email render data error');
-            html.push(empty_tips);
+            html.push('<p style="border-top:1px solid #666;margin-top:20px;width:520px;padding:5px 0 0 10px">暂无数据</p>');
         }
+
         html.push('</html>');
         return html.join('');
     },
@@ -102,7 +73,7 @@ EmailService.prototype = {
             role: -1
         }, function(err, userlist) {
             if (err) {
-                return logger.error('Send email queryListByCondition error');
+                return logger.error('Send email userService queryListByCondition error');
             } else {
                 var orderByApplyId = {};
                 userlist.forEach(function(v) {
@@ -121,13 +92,39 @@ EmailService.prototype = {
                         v.role === 0 ? cc_list.push(v.email) : to_list.push(v.email);
                         name = v.name;
                     }); // jshint ignore:line
-                    that.statisticsByApplyId(applyId, function(err, data) {
-                        if (err) return;
-                        that.sendEmail({
-                            to: to_list,
-                            cc: cc_list,
-                            title: name
-                        }, data);
+                    that.statisticsService.queryById({
+                        top: 1, // kael
+                        projectId: applyId,
+                        startDate: that.date
+                    }, function(err, data) {
+                        if (err) return logger.error('Send email statisticsService queryById error');
+                        if (data && data.data && data.data[0]) {
+                            var temp = data.data[0];
+                            temp.content = JSON.parse(temp.content);
+                            temp.content = _.map(temp.content, function(value, key) {
+                                return {
+                                    title: key,
+                                    total: value
+                                };
+                            });
+
+                            temp.content = temp.content.sort(function(a, b) {
+                                if (a.total < b.total) {
+                                    return 1;
+                                } else {
+                                    return -1;
+                                }
+                            });
+
+                            temp.content = temp.content.slice(0, that.top);
+                            that.sendEmail({
+                                to: to_list,
+                                cc: cc_list,
+                                title: name
+                            }, temp);
+                        } else {
+                            logger.error('Send email data format error');
+                        }
                     }); // jshint ignore:line
                 }
             }
@@ -135,22 +132,6 @@ EmailService.prototype = {
         !isRetry && setTimeout(function() {
             that.queryAll();
         }, 86400000);
-    },
-    statisticsByApplyId: function(applyId, callback) {
-        var that = this;
-        this.statisticsDao.find({
-            projectId: applyId,
-            startDate: dateFormat(this.date, 'yyyy-MM-dd hh:mm:ss')
-        }, function(err, items) {
-            if (err) {
-                return callback(err);
-            }
-            callback(null, {
-                ret: 0,
-                msg: "success",
-                data: items.slice(0, 1)
-            });
-        });
     },
     sendEmail: function(emails, data) {
         var title = "【" + dateFormat(this.date, "yyyy-MM-dd") + " BadJS 日报】- " + emails.title;
