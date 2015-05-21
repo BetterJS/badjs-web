@@ -16,7 +16,7 @@ var EmailService = function() {
     this.userService = new UserService();
     this.statisticsDao = global.models.statisticsDao;
     this.top = parseInt(GLOBAL.pjconfig.email.top, 10) || 20;
-    this.from = GLOBAL.pjconfig.email.from || "noreply-betterjs@tencent.com";
+    this.from = GLOBAL.pjconfig.email.from || "noreply-badjs@tencent.com";
 };
 
 var getYestoday = function() {
@@ -83,26 +83,26 @@ EmailService.prototype = {
                     .replace(/{{per}}/g, (total_top * 100 / total).toFixed(2) + '%')
                 );
             } else {
+                logger.error('Email render data empty');
                 html.push(empty_tips);
             }
         } else {
+            logger.error('Email render data error');
             html.push(empty_tips);
         }
         html.push('</html>');
         return html.join('');
     },
-    queryAll: function(isRetry) {
+    queryAll: function(isRetry, times) {
         var that = this;
         that.date = getYestoday();
+        logger.info('Send mail query all start');
         that.userService.queryListByCondition({
             applyId: -1,
             role: -1
         }, function(err, userlist) {
             if (err) {
-                // 一个小时后重试
-                setTimeout(function() {
-                    that.queryAll(true);
-                }, 3600000);
+                return logger.error('Send email queryListByCondition error');
             } else {
                 var orderByApplyId = {};
                 userlist.forEach(function(v) {

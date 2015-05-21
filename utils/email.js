@@ -1,9 +1,12 @@
 /* global module */
+var log4js = require('log4js');
+var logger = log4js.getLogger();
 var emailjs = require("emailjs");
 var EmailServer = null;
 var RETRY = 3;
 
 module.exports = function(from, to, cc, title, content) {
+    logger.info("Send email " + title);
     var message = {
         from: from,
         to: to.join(","),
@@ -15,6 +18,7 @@ module.exports = function(from, to, cc, title, content) {
             alternative: true
         }]
     };
+
     (function send(message, times) {
         if (!EmailServer) {
             EmailServer = emailjs.server.connect({
@@ -25,9 +29,11 @@ module.exports = function(from, to, cc, title, content) {
         EmailServer.send(message, function(err, data) {
             times--;
             if (err) {
+                logger.error("Send email error " + title);
                 EmailServer = null;
                 return times && send(message, times);
             }
+            logger.info("Send email success " + title);
         });
     })(message, RETRY);
 };
