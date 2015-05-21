@@ -107,7 +107,7 @@ StatisticsService.prototype = {
                             saveModel.total += result.result[key];
                     })
 
-                }catch(e){
+                }catch(err){
                     logger.error('error :' + err);
                     saveModel = {
                         startDate: startDate,

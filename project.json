@@ -12,5 +12,11 @@
     "zmq" : {
         "url" : "tcp://10.143.132.205:10000",
         "subscribe" : "badjs"
+    },
+    "email": {
+        "from": "noreply-badjs@tencent.com",
+        "time": "09:00:00",
+        "top": 20,
+        "module": "email_tof"
     }
 }

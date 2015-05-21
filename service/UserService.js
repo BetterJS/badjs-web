@@ -24,7 +24,7 @@ UserService.prototype = {
 
     queryListByCondition : function (target , callback){
 
-        var string = "select ua.id, u.loginName, u.chineseName, ua.applyId, ua.role, a.name "+
+        var string = "select ua.id, u.loginName, u.email, u.chineseName, ua.applyId, ua.role, a.name "+
             "from  b_user as u join b_user_apply as ua on(ua.userId = u.id) "+
             "join b_apply as a on (a.id =ua.applyId)  where a.status=? ";
         var condition = [Apply.STATUS_PASS ];
