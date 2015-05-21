@@ -20,7 +20,7 @@ var EmailService = function() {
     this.from = GLOBAL.pjconfig.email.from || "noreply-badjs@tencent.com";
 };
 
-var getYesterday = function() {
+var getYestoday = function() {
     var date = new Date();
     date.setDate(date.getDate() - 1);
     date.setHours(0, 0, 0, 0);
@@ -66,7 +66,7 @@ EmailService.prototype = {
     },
     queryAll: function(isRetry, times) {
         var that = this;
-        that.date = getYesterday();
+        that.date = getYestoday();
         logger.info('Send mail query all start');
         that.userService.queryListByCondition({
             applyId: -1,
