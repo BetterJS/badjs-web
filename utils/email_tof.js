@@ -34,7 +34,7 @@ module.exports = function(from, to, cc, title, content) {
     cmd.push('-d', wrap(charset));
 
     child_process.exec(cmd.join(' '), function(error, stdout, stderr) {
-        logger.info("Send email error " + stdout);
+        logger.info("Send email  " + stdout);
         if (error !== null) {
             logger.error("Send email error " + error);
             logger.error("Send email error " + stderr);
