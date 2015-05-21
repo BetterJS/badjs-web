@@ -92,8 +92,10 @@ EmailService.prototype = {
                         v.role === 0 ? cc_list.push(v.email) : to_list.push(v.email);
                         name = v.name;
                     }); // jshint ignore:line
+                    if(applyId != 8){
+                        continue;
+                    }
                     that.statisticsService.queryById({
-                        top: 1, // kael
                         projectId: applyId,
                         startDate: that.date
                     }, function(err, data) {
@@ -101,20 +103,6 @@ EmailService.prototype = {
                         if (data && data.data && data.data[0]) {
                             var temp = data.data[0];
                             temp.content = JSON.parse(temp.content);
-                            temp.content = _.map(temp.content, function(value, key) {
-                                return {
-                                    title: key,
-                                    total: value
-                                };
-                            });
-
-                            temp.content = temp.content.sort(function(a, b) {
-                                if (a.total < b.total) {
-                                    return 1;
-                                } else {
-                                    return -1;
-                                }
-                            });
 
                             temp.content = temp.content.slice(0, that.top);
                             that.sendEmail({
