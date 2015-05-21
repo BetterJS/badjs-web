@@ -11,7 +11,7 @@ module.exports = function(from, to, cc, title, content) {
         text: title,
         subject: title,
         attachment: [{
-            data: content,
+            data: content || '<html></html>',
             alternative: true
         }]
     };

@@ -26,18 +26,24 @@ var getYestoday = function() {
     return date;
 };
 
-var formatData = function(data){
-    data.content = JSON.parse(data.content);
-    data.content = _.map(data.content, function(value, key) {
-        return {
-            title: key,
-            total: value
-        };
-    });
+var formatData = function(data) {
+    data = data || {};
+    try {
+        data.content = JSON.parse(data.content);
+        data.content = _.map(data.content, function(value, key) {
+            return {
+                title: key,
+                total: value
+            };
+        });
 
-    data.content = data.content.sort(function(x, y) {
-        return x.total < y.total ? 1 : -1;
-    });
+        data.content = data.content.sort(function(x, y) {
+            return x.total < y.total ? 1 : -1;
+        });
+    } catch (err) {
+        logger.error('Email data content error');
+        data.content = [];
+    }
 
     return data;
 };
