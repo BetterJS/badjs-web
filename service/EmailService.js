@@ -84,34 +84,35 @@ EmailService.prototype = {
                     }
                 });
                 for (var applyId in orderByApplyId) {
-                    var users = orderByApplyId[applyId];
-                    var to_list = []; // 收件方
-                    var cc_list = []; // 抄送方
-                    var name = '';
-                    users.forEach(function(v) {
-                        v.role === 0 ? cc_list.push(v.email) : to_list.push(v.email);
-                        name = v.name;
-                    }); // jshint ignore:line
-
                     if(applyId != 8){
                         continue;
                     }
-                    that.statisticsService.queryById({
-                        top: that.top,
-                        projectId: applyId,
-                        startDate: that.date
-                    }, function(err, data) {
-                        if (err) return logger.error('Send email statisticsService queryById error');
-                        if ( data &&  data.length > 0) {
-                            that.sendEmail({
-                                to: to_list,
-                                cc: cc_list,
-                                title: name
-                            }, data);
-                        } else {
-                            logger.error('Send email data format error');
-                        }
-                    }); // jshint ignore:line
+                    (function(users) {
+                        var to_list = []; // 收件方
+                        var cc_list = []; // 抄送方
+                        var name = '';
+                        users.forEach(function(v) {
+                            v.role === 0 ? cc_list.push(v.email) : to_list.push(v.email);
+                            name = v.name;
+                        }); // jshint ignore:line
+
+                        that.statisticsService.queryById({
+                            top: that.top,
+                            projectId: applyId,
+                            startDate: that.date
+                        }, function(err, data) {
+                            if (err) return logger.error('Send email statisticsService queryById error');
+                            if ( data &&  data.length > 0) {
+                                that.sendEmail({
+                                    to: to_list,
+                                    cc: cc_list,
+                                    title: name
+                                }, data);
+                            } else {
+                                logger.error('Send email data format error');
+                            }
+                        }); // jshint ignore:line
+                    })(orderByApplyId[applyId]); // jshint ignore:line
                 }
             }
         });
