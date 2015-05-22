@@ -253,6 +253,8 @@ form {
     background: url(/static/img/ico-android.png) no-repeat; }
 #content .mid-side .main-table .ico-ios {
     background: url(/static/img/ico-ios.png) no-repeat; }
+#content .mid-side .main-table .ico-wx {
+    background: url(/static/img/ico-wx.png) no-repeat; }
 #content .right-side {
     width: 250px;
     height: 100%;

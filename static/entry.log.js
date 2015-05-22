@@ -1,23 +1,23 @@
-webpackJsonp([1],{
+webpackJsonp([7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(13);
+	var log  =__webpack_require__(12);
 
 	log.init();
 
 /***/ },
 
-/***/ 13:
+/***/ 12:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($, _) {var Dialog = __webpack_require__(20);
+	/* WEBPACK VAR INJECTION */(function($, _) {var Dialog = __webpack_require__(100);
 	var Delegator = __webpack_require__(18);
 
-	var logTable = __webpack_require__(105);
-	var keyword = __webpack_require__(106);
-	var debar = __webpack_require__(107);
+	var logTable = __webpack_require__(106);
+	var keyword = __webpack_require__(107);
+	var debar = __webpack_require__(108);
 
 	__webpack_require__(19);
 
@@ -2299,7 +2299,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 20:
+/***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
@@ -2351,7 +2351,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 105:
+/***/ 106:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -2386,12 +2386,10 @@ webpackJsonp([1],{
 
 	        if(ua.indexOf('qqbrowser')>0){
 	            return  'ico-qb';
-	        }else if(ua.indexOf('qq')>0){
+	        }else if(ua.indexOf('qq/')>0){
 	            return  'ico-qq';
-	        }else if(ua.indexOf('android')>0){
-	            return  'ico-android';
-	        }else if(ua.indexOf('iphone')>0){
-	            return  'ico-ios';
+	        }else if(ua.indexOf('MicroMessenger')>0){
+	            return  'ico-wx';
 	        }else if(ua.indexOf('chrome')>0){
 	            return  'ico-chrome';
 	        }else if(ua.indexOf('msie')>0){
@@ -2400,6 +2398,10 @@ webpackJsonp([1],{
 	            return 'ico-ff';
 	        }else if(ua.indexOf('safari')>0){
 	            return 'ico-safari';
+	        }else if(ua.indexOf('android')>0){
+	            return  'ico-android';
+	        }else if(ua.indexOf('iphone')>0){
+	            return  'ico-ios';
 	        }
 	}
 
@@ -2452,7 +2454,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 106:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -2471,7 +2473,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 107:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

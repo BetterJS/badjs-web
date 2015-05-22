@@ -24,12 +24,10 @@ switch(it[i].level) {
 
         if(ua.indexOf('qqbrowser')>0){
             return  'ico-qb';
-        }else if(ua.indexOf('qq')>0){
+        }else if(ua.indexOf('qq/')>0){
             return  'ico-qq';
-        }else if(ua.indexOf('android')>0){
-            return  'ico-android';
-        }else if(ua.indexOf('iphone')>0){
-            return  'ico-ios';
+        }else if(ua.indexOf('MicroMessenger')>0){
+            return  'ico-wx';
         }else if(ua.indexOf('chrome')>0){
             return  'ico-chrome';
         }else if(ua.indexOf('msie')>0){
@@ -38,6 +36,10 @@ switch(it[i].level) {
             return 'ico-ff';
         }else if(ua.indexOf('safari')>0){
             return 'ico-safari';
+        }else if(ua.indexOf('android')>0){
+            return  'ico-android';
+        }else if(ua.indexOf('iphone')>0){
+            return  'ico-ios';
         }
 }
 
