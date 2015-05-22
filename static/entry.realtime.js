@@ -1,23 +1,23 @@
-webpackJsonp([1],{
+webpackJsonp([9],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(16);
+	var log  =__webpack_require__(12);
 
 	log.init();
 
 /***/ },
 
-/***/ 16:
+/***/ 12:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
+	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(20);
 	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(106);
-	var keyword = __webpack_require__(107);
-	var debar = __webpack_require__(108);
+	var logTable = __webpack_require__(107);
+	var keyword = __webpack_require__(108);
+	var debar = __webpack_require__(109);
 
 
 	    var logConfig = {
@@ -256,7 +256,7 @@ webpackJsonp([1],{
 
 
 	exports.init = init;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
@@ -436,11 +436,11 @@ webpackJsonp([1],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 100:
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
@@ -488,11 +488,11 @@ webpackJsonp([1],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 106:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -555,13 +555,13 @@ webpackJsonp([1],{
 	'</td>\r\n    <td style="" class="td-3">' +
 	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-4">' +
-	((__t = ( it[i].uin == 'NaN' ? '-' : it[i].uin)) == null ? '' : __t) +
+	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-5">' +
 	((__t = (it[i].ip )) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-6"><span class="ico-browser ' +
-	((__t = (getBrowserType(it[i].userAgent))) == null ? '' : __t) +
+	((__t = ( opt.encodeHtml(getBrowserType(it[i].userAgent))) == null ? '' : __t) +
 	'" title="' +
-	((__t = (it[i].userAgent)) == null ? '' : __t) +
+	((__t = (it[i].userAgent))) == null ? '' : __t) +
 	'"></span></td>\r\n    <td class="td-7">\r\n  ';
 	if(false){;
 	__p += '\r\n        <a style="word-break:break-all;display: block" >\r\n  ';
@@ -571,14 +571,14 @@ webpackJsonp([1],{
 	'">\r\n  ';
 	};
 	__p += '\r\n\r\n        ' +
-	((__t = (it[i].target || it[i].url || '')) == null ? '' : __t) +
+	((__t = ( opt.encodeHtml(it[i].target || it[i].url || ''))) == null ? '' : __t) +
 	'</a>\r\n        <span class="err-where">' +
-	((__t = (it[i].rowNum || 0 )) == null ? '' : __t) +
+	((__t = (opt.encodeHtml(it[i].rowNum || 0) )) == null ? '' : __t) +
 	'行' +
-	((__t = (it[i].colNum || 0)) == null ? '' : __t) +
+	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
 	'列</span>\r\n        <a style="font-size:12px;" href="' +
-	((__t = (it[i].from)) == null ? '' : __t) +
-	'" target="_blank">查看</a>\r\n    </td>\r\n</tr>\r\n';
+	((__t = ( opt.encodeHtml((it[i].from)) )) == null ? '' : __t) +
+	'" target="_blank">页面查看</a>\r\n    </td>\r\n</tr>\r\n';
 	 } ;
 	__p += '\r\n\r\n';
 	 if(it.length == 0 ){;
@@ -593,7 +593,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 107:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -612,7 +612,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 108:
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
