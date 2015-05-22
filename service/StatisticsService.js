@@ -136,7 +136,7 @@ StatisticsService.prototype = {
                     if(err){
                         logger.error("Insert into b_statistics error(id=", id + ") :  " +  err);
                     }
-                    logger.info("Insert into b_statistics success(id=", id + ") :  " + buffer.toString());
+                    logger.info("Insert into b_statistics success(id=", id + ") :  " );
                     cb && cb(err);
                 });
             })
