@@ -135,7 +135,7 @@ EmailService.prototype = {
         setTimeout(function() {
             that.queryAll();
         }, timeDiff);
-        logger.debug('Email service will start after: ' + timeDiff);
+        logger.info('Email service will start after: ' + timeDiff);
     }
 };
 
