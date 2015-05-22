@@ -49,7 +49,7 @@ var isHtml = /^.+?\.html\??/.test(it[i].target);
     <td style="" class="td-3"><%= opt.encodeHtml(it[i].msg) %></td>
     <td  class="td-4"><%=  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin )%></td>
     <td  class="td-5"><%=it[i].ip %></td>
-    <td  class="td-6"><span class="ico-browser <%= opt.encodeHtml(getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent)%>"></span></td>
+    <td  class="td-6"><span class="ico-browser <%= getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
     <td class="td-7">
   <%if(false){%>
         <a style="word-break:break-all;display: block" >
@@ -58,6 +58,8 @@ var isHtml = /^.+?\.html\??/.test(it[i].target);
   <%}%>
 
         <%= opt.encodeHtml(it[i].target || it[i].url || '')%></a>
+        <span class="err-where"><%=opt.encodeHtml(it[i].rowNum || 0) %>行<%=opt.encodeHtml(it[i].colNum || 0)%>列</span>
+        <a style="font-size:12px;" href="<%= opt.encodeHtml((it[i].from)) %>" target="_blank">页面查看</a>
     </td>
 </tr>
 <% } %>
