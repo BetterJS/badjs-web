@@ -1,23 +1,23 @@
-webpackJsonp([3],{
+webpackJsonp([8],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(13);
+	var log  =__webpack_require__(11);
 
 	log.init();
 
 /***/ },
 
-/***/ 13:
+/***/ 11:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
-	var Delegator = __webpack_require__(18);
+	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(22);
+	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(106);
-	var keyword = __webpack_require__(107);
-	var debar = __webpack_require__(108);
+	var logTable = __webpack_require__(107);
+	var keyword = __webpack_require__(108);
+	var debar = __webpack_require__(109);
 
 
 	    var logConfig = {
@@ -260,7 +260,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 18:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -440,10 +440,10 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 100:
+/***/ 22:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
 	var modal = __webpack_require__(112);
 
 	    var container;
@@ -492,7 +492,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 106:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -529,7 +529,7 @@ webpackJsonp([3],{
 	            return  'ico-qb';
 	        }else if(ua.indexOf('qq/')>0){
 	            return  'ico-qq';
-	        }else if(ua.indexOf('MicroMessenger')>0){
+	        }else if(ua.indexOf('micromessenger')>0){
 	            return  'ico-wx';
 	        }else if(ua.indexOf('chrome')>0){
 	            return  'ico-chrome';
@@ -595,7 +595,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 107:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -614,7 +614,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 108:
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
