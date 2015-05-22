@@ -79,6 +79,10 @@ EmailService.prototype = {
             } else {
                 var orderByApplyId = {};
                 userlist.forEach(function(v) {
+                    // 兼容没有登陆过的用户，自动拼接 邮箱后缀
+                    if(!v.email){
+                        v.email = v.loginName + GLOBAL.pjconfig.email.emailSuffix;
+                    }
                     if (orderByApplyId[v.applyId]) {
                         orderByApplyId[v.applyId].push(v);
                     } else {

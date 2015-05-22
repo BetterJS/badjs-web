@@ -17,6 +17,7 @@
     "email": {
         "homepage": "http://badjs.server.com/user/index.html",
         "from": "noreply-badjs@tencent.com",
+        "emailSuffix" : "@tencent.com",
         "time": "09:00:00",
         "top": 20,
         "module": "email"
