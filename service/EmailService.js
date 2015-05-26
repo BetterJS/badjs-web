@@ -124,7 +124,7 @@ EmailService.prototype = {
         }, 86400000);
     },
     sendEmail: function(emails, data) {
-        var title = "【" + dateFormat(this.date, "yyyy-MM-dd") + " BadJS 日报】- " + emails.title;
+        var title = "【BadJS 日报 " + dateFormat(this.date, "yyyy-MM-dd") + "】- " + emails.title;
         data.title = emails.title;
         var content = this.render(data);
         send_email(this.from, emails.to, emails.cc, title, content, data);
