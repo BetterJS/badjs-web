@@ -83,7 +83,7 @@ app.use("/user" ,function (req , res , next){
                     }
                     //第一次登陆
                     if(!dbUser){
-                        req.session.user.email = user.loginName + + GLOBAL.pjconfig.email.emailSuffix;
+                        req.session.user.email = user.loginName + "@" + GLOBAL.pjconfig.email.emailSuffix;
                         req.session.user.password = crypto.createHash("md5").update(user.loginName).digest('hex');
 
                         userDao.create(req.session.user, function(err, result){
