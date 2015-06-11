@@ -21,11 +21,10 @@ var LogAction = {
 
         var logService = new LogService();
 
-        for(var key in params){
-            params['endDate'] -=0;
-            params['startDate'] -=0;
-            params['id'] -=0;
-        }
+        params['endDate'] -=0;
+        params['startDate'] -=0;
+        params['id'] -=0;
+        delete params.user;
         logService.query(params,function(err, items){
             if(isError(res, err)){
                 return;
