@@ -1,15 +1,15 @@
-webpackJsonp([9],{
+webpackJsonp([8],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var statistics  = __webpack_require__(15);
+	var statistics  = __webpack_require__(13);
 
 	statistics.init();
 
 /***/ },
 
-/***/ 15:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -19,8 +19,8 @@ webpackJsonp([9],{
 
 
 	__webpack_require__(18);
-	var Dialog = __webpack_require__(20);
-	var statisticsTpl = __webpack_require__(110);
+	var Dialog = __webpack_require__(100);
+	var statisticsTpl = __webpack_require__(109);
 
 	    var statistics = {
 	        init : function (){
@@ -48,7 +48,7 @@ webpackJsonp([9],{
 
 	                $.getJSON("/controller/statisticsAction/queryById.do" , {projectId : projectId , startDate : new Date($('#startTime').val() + " 00:00:00") - 0} , function (data){
 	                        $('#table-content').html(statisticsTpl({it : data}));
-	                    if(  !data || !data.data[0] ){
+	                    if(  data && data.data[0] ){
 	                        $('#error-count').html(data.data[0].total || 0 );
 	                    }
 	                });
@@ -2102,7 +2102,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 20:
+/***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
@@ -2154,7 +2154,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 110:
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {module.exports = function (obj) {

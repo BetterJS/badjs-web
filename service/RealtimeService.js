@@ -39,7 +39,12 @@ module.exports = function (app) {
     });
     webSocketServer.broadcast = function broadcast(data) {
         webSocketServer.clients.forEach(function each(client) {
-            client.send(data);
+            try{
+                client.send(data);
+            }catch(e){
+                logger.info("one client closed , ip: " + client._socket.remoteAddress)
+            }
+
         });
     };
 

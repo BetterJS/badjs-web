@@ -34,7 +34,7 @@ var statisticsTpl = require("./template/statistics.ejs");
 
                 $.getJSON("/controller/statisticsAction/queryById.do" , {projectId : projectId , startDate : new Date($('#startTime').val() + " 00:00:00") - 0} , function (data){
                         $('#table-content').html(statisticsTpl({it : data}));
-                    if(  !data || !data.data[0] ){
+                    if(  data && data.data[0] ){
                         $('#error-count').html(data.data[0].total || 0 );
                     }
                 });
