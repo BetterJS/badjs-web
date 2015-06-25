@@ -5,6 +5,7 @@
     },
     "storage" : {
         "errorMsgTopUrl" : "http://127.0.0.1:9000/errorMsgTop",
+        "errorMsgTopCacheUrl" : "http://127.0.0.1:9000/errorMsgTopCache",
         "queryUrl" : "http://127.0.0.1:9000/query"
     },
     "acceptor": {

@@ -32,7 +32,7 @@ var StatisticsService = function (){
     this.statisticsDao = global.models.statisticsDao;
     this.applyDao = global.models.applyDao;
 
-
+    this.triggerUrl = GLOBAL.pjconfig.storage.errorMsgTopCacheUrl
     this.url = GLOBAL.pjconfig.storage.errorMsgTopUrl;
 
     logger.debug('query url : ' + this.url);
@@ -54,14 +54,6 @@ StatisticsService.prototype = {
                 items[0].content = JSON.parse(items[0].content);
                 items[0].content = _.map(items[0].content, function(value, key){
                     return {title : key , total : value};
-                });
-
-                items[0].content = items[0].content.sort(function ( a, b){
-                    if(a.total < b.total){
-                        return 1;
-                    }else {
-                        return -1;
-                    }
                 });
 
                 if(param.top){
@@ -110,24 +102,25 @@ StatisticsService.prototype = {
                 try {
                     var result = JSON.parse(buffer);
 
+                    _.forEach(result.item , function(value , key){
+                        value.title = value._id;
+                        delete value._id
+                    })
                     saveModel = {
                         startDate : new Date(result.startDate),
                         endDate : new Date(result.endDate),
-                        content : JSON.stringify(result.result),
+                        content : JSON.stringify(result.item),
                         projectId : id,
-                        total : 0
+                        total : result.pv
                     };
 
-                    _.each(result.result , function (value ,key ){
-                            saveModel.total += result.result[key];
-                    })
 
                 }catch(err){
                     logger.error('error :' + err);
                     saveModel = {
                         startDate: startDate,
                         endDate: startDate + 86400000,
-                        content: "{}",
+                        content: "[]",
                         total: 0
                     }
                 }
@@ -143,6 +136,17 @@ StatisticsService.prototype = {
 
         }).on('error' , function (err){
             logger.error('error :' + err);
+        });
+    },
+
+    triggerStorageCache : function (ids , startDate , cb){
+        http.get((this.triggerUrl + '?ids=' + id + '&startDate=' + (startDate -0 ))  , function(res){
+            res.on("end" , function (){
+                cb();
+            });
+        }).on('error' , function (err){
+            cb(err);
+            logger.error('triggerStorageCache error :' + err);
         });
     },
 
@@ -180,12 +184,24 @@ StatisticsService.prototype = {
                     if(err){
                         logger.error("find apply error  :  " +  err);
                     }
+
+                    var ids = "0_"
                     _.each(item , function (value ,key ){
-                        self.fetchAndSave(value.id , startDate );
+                        ids+= "_"+value.id;
+                    });
+
+                    self.triggerStorageCache(ids , startDate , function (err){
+                        if(!err){
+                            setTimeout(function (){
+                                _.each(item , function (value ,key ){
+                                    self.fetchAndSave(value.id , startDate );
+                                });
+                            },5400000) // 1个半小时候后，拉取统计
+
+                        }
                     })
 
                     nowDate = new Date();
-                    startDate = getStartDay();
                     targetDate =  getTomorrowDay();
 
                     startTimeout();
