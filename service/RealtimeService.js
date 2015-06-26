@@ -42,7 +42,7 @@ module.exports = function (app) {
             try{
                 client.send(data);
             }catch(e){
-                logger.info("one client closed , ip: " + client._socket.remoteAddress)
+                logger.info("one client closed , ip: " + client._socket.remoteAddress);
             }
 
         });

@@ -147,7 +147,7 @@ StatisticsService.prototype = {
     },
 
     triggerStorageCache : function (ids , startDate , cb){
-        http.get((this.triggerUrl + '?ids=' + id + '&startDate=' + (startDate -0 ))  , function(res){
+        http.get((this.triggerUrl + '?ids=' + ids + '&startDate=' + (startDate -0 ))  , function(res){
             res.on("end" , function (){
                 cb();
             });
@@ -192,7 +192,7 @@ StatisticsService.prototype = {
                         logger.error("find apply error  :  " +  err);
                     }
 
-                    var ids = "0_"
+                    var ids = "0"
                     _.each(item , function (value ,key ){
                         ids+= "_"+value.id;
                     });
