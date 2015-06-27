@@ -148,9 +148,9 @@ StatisticsService.prototype = {
 
     triggerStorageCache : function (ids , startDate , cb){
         http.get((this.triggerUrl + '?ids=' + ids + '&startDate=' + (startDate -0 ))  , function(res){
-            res.on("end" , function (){
+          //  res.on("end" , function (){
                 cb();
-            });
+           // });
         }).on('error' , function (err){
             cb(err);
             logger.error('triggerStorageCache error :' + err);
