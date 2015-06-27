@@ -198,8 +198,10 @@ StatisticsService.prototype = {
                     });
 
                     self.triggerStorageCache(ids , startDate , function (err){
+						 logger.info("trigger success and after 5400000s fetch result");
                         if(!err){
                             setTimeout(function (){
+								 logger.info("start fetching result ... ");
                                 _.each(item , function (value ,key ){
                                     self.fetchAndSave(value.id , startDate );
                                 });
