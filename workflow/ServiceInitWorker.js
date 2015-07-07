@@ -14,9 +14,26 @@ module.exports = function (){
 
 
         var LogService = require("../service/LogService");
-        new LogService().pushProject(function (e){
-            logger.info('push project on system start');
-        });
+        var logService = new LogService();
+        var tryTimes = 0;
+        var pushProject = function (){
+            logService.pushProject(function (err){
+                if(err){
+                    if(tryTimes <=3 ){
+                        tryTimes++;
+                        setTimeout(function (){ pushProject();},1000);
+                    }else {
+                        logger.warn('push project on system start and error ' + err);
+                    }
+                }else {
+                    logger.info('push project on system start');
+                }
+
+            });
+        }
+
+        pushProject();
+
         
         // 邮件报表
         var EmailService = require("../service/EmailService");

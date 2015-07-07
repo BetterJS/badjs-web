@@ -12,8 +12,7 @@ http.get( "http://10.143.132.205:9001/getProjects" + '?' + strParams , function 
     })
 
 }).on('error' , function (err){
-    logger.warn('push project error :' + err);
-    callback(err)
+    console.log('push project error :' + err);
 })
 
 

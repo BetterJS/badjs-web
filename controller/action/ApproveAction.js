@@ -30,7 +30,22 @@ var approveAction = {
 
 
             if(params.applyStatus == 1){
-                logService.pushProject();
+                var tryTimes = 0;
+                var pushProject = function (){
+                    logService.pushProject(function (err){
+                        if(err){
+                            if(tryTimes <=3 ){
+                                tryTimes++;
+                                setTimeout(function (){ pushProject();},1000);
+                            }else {
+                                logger.warn('push project  error ' + err);
+                            }
+                        }else {
+                            logger.info('push project success');
+                        }
+                    });
+                }
+                pushProject();
             }
 
             res.json({ret:0, msg:"审核完成"});
