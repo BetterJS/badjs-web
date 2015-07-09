@@ -145,8 +145,7 @@ var Worker = {
         logger.info("worker("+process.pid+") stop accept, service:" + this.monitorKey );
         this.zmqClient && this.zmqClient.close();
         this.wbClient = {};
-        clearTimeout(this._monitorTimeoutId);
-
+        clearInterval(this._monitorTimeoutId);
     }
 }
 
