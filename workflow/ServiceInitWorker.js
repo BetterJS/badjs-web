@@ -9,7 +9,7 @@ var log4js = require('log4js'),
 module.exports = function (){
     setTimeout(function (){
         var service = require("../service/StatisticsService");
-        logger.info('start startMonitor ...');
+        logger.info('start Statistics  ...');
         new service().startMonitor();
 
 

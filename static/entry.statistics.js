@@ -1,15 +1,15 @@
-webpackJsonp([8],{
+webpackJsonp([9],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var statistics  = __webpack_require__(13);
+	var statistics  = __webpack_require__(14);
 
 	statistics.init();
 
 /***/ },
 
-/***/ 13:
+/***/ 14:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -20,7 +20,7 @@ webpackJsonp([8],{
 
 	__webpack_require__(18);
 	var Dialog = __webpack_require__(100);
-	var statisticsTpl = __webpack_require__(109);
+	var statisticsTpl = __webpack_require__(111);
 
 	    var statistics = {
 	        init : function (){
@@ -2154,7 +2154,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 109:
+/***/ 111:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {module.exports = function (obj) {

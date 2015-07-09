@@ -1,23 +1,23 @@
-webpackJsonp([2],{
+webpackJsonp([8],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(15);
+	var log  =__webpack_require__(12);
 
 	log.init();
 
 /***/ },
 
-/***/ 15:
+/***/ 12:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
 	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(105);
-	var keyword = __webpack_require__(106);
-	var debar = __webpack_require__(107);
+	var logTable = __webpack_require__(107);
+	var keyword = __webpack_require__(108);
+	var debar = __webpack_require__(109);
 
 
 	    var logConfig = {
@@ -100,7 +100,7 @@ webpackJsonp([2],{
 	                if(!$(this).data("stop")){
 	                    $(this).data("stop" ,true);
 	                    $('#log-table').html('');
-	                    startMonitor();
+	                    startMonitor(logConfig.id);
 	                    $(this).text('停止监听');
 	                }else {
 	                    $(this).data("stop" ,false);
@@ -165,12 +165,15 @@ webpackJsonp([2],{
 
 
 	    var keepAliveTimeoutId ;
-	    var startMonitor = function (){
+	    var currentIndex;
+	    var startMonitor = function (id){
 
 	        websocket = new WebSocket("ws://"+location.host+"/ws/realtimeLog");
 
+
+	        currentIndex = 0;
 	        websocket.onmessage = function (evt){
-	            showLogs(JSON.parse(evt.data));
+	            showLogs(JSON.parse(evt.data).message);
 	        }
 
 	        websocket.onclose = function (){
@@ -179,71 +182,29 @@ webpackJsonp([2],{
 
 	        websocket.onopen = function (){
 
+	            websocket.send(JSON.stringify({type:"INIT" , include : logConfig.include , exclude: logConfig.exclude , level:logConfig.level , id:id}));
 
-	        keepAliveTimeoutId = setInterval(function (){
-	            websocket.send("__keepalive__");
-	        },5000);
+	            keepAliveTimeoutId = setInterval(function (){
+	                websocket.send(JSON.stringify({type:"KEEPALIVE"}));
+	            },5000);
 	        }
-
 	    }
 
 
-	     var isInclude = function (str, regs){
-	        var result = true;
-
-	         regs.forEach(function (value , key){
-	                if(str.indexOf(value) >= 0){
-	                    result = result && true;
-	                }else {
-	                    result = result && false;
-	                }
-	         });
-	         return result;
-	     }
-
-	    var isExclude = function (str, regs){
-	        var result = true;
-
-	        regs.forEach(function (value , key){
-	            if(str.indexOf(value) >= 0){
-	                result = result && true;
-	            }else {
-	                result = result && false;
-	            }
-	        });
-
-	        return result;
-	    }
-
-	    var currentIndex = 1;
-	    function showLogs(data) {
-
-
-	            if(data.id != logConfig.id){
-	                return ;
-	            }else if(logConfig.level.indexOf(data.level) < 0){
-	                return ;
-	            }else {
-	                var msg = data.msg.toString() + "||" + data.uin + "||" + data.url + "||" + data.userAgent+ "||" + data.from
-	                if(logConfig.include.length != 0){
-	                    if(!isInclude(msg , logConfig.include)){
-	                        return ;
-	                    }
-	                }
-	                if( logConfig.exclude.length != 0){
-	                    if(isExclude(msg , logConfig.exclude)){
-	                        return ;
-	                    }
-
-	                }
-	            }
+	    function showLogs(data){
 
 	            var param = {
 	                encodeHtml: encodeHtml,
 	                set: Delegator.set,
 	                startIndex : currentIndex
 	            }
-	            $('#log-table').prepend(logTable({ it : [data], opt : param}));
+
+	            var $table = $('#log-table');
+
+	            if(currentIndex%100 == 0){
+	                $table.html($table.html().split("</tr>").slice(0,10).join("</tr>"));
+	            }
+	            $table.prepend(logTable({ it : [data], opt : param}));
 	            currentIndex ++;
 	    }
 
@@ -492,7 +453,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 105:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -548,13 +509,15 @@ webpackJsonp([2],{
 
 	var isHtml = /^.+?\.html\??/.test(it[i].target);
 	;
-	__p += '\r\n<tr>\r\n    <td   class="td-1 info-type-' +
+	__p += '\r\n<tr id="tr-' +
+	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
+	'">\r\n    <td  class="td-1 info-type-' +
 	((__t = (type)) == null ? '' : __t) +
 	'">' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'</td>\r\n    <td   class="td-2">' +
+	'</td>\r\n    <td  class="td-2">' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'</td>\r\n    <td style="" class="td-3">' +
+	'</td>\r\n    <td  style="" class="td-3">' +
 	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-4">' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
@@ -595,7 +558,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 106:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -614,7 +577,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 107:
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

@@ -86,7 +86,7 @@ var debar = require("./template/debar.ejs");
                 if(!$(this).data("stop")){
                     $(this).data("stop" ,true);
                     $('#log-table').html('');
-                    startMonitor();
+                    startMonitor(logConfig.id);
                     $(this).text('停止监听');
                 }else {
                     $(this).data("stop" ,false);
@@ -151,12 +151,16 @@ var debar = require("./template/debar.ejs");
 
 
     var keepAliveTimeoutId ;
-    var startMonitor = function (){
+    var currentIndex;
+    var maxShow = 100;
+    var startMonitor = function (id){
 
         websocket = new WebSocket("ws://"+location.host+"/ws/realtimeLog");
 
+
+        currentIndex = 0;
         websocket.onmessage = function (evt){
-            showLogs(JSON.parse(evt.data));
+            showLogs(JSON.parse(evt.data).message);
         }
 
         websocket.onclose = function (){
@@ -165,71 +169,29 @@ var debar = require("./template/debar.ejs");
 
         websocket.onopen = function (){
 
+            websocket.send(JSON.stringify({type:"INIT" , include : logConfig.include , exclude: logConfig.exclude , level:logConfig.level , id:id}));
 
-        keepAliveTimeoutId = setInterval(function (){
-            websocket.send("__keepalive__");
-        },5000);
+            keepAliveTimeoutId = setInterval(function (){
+                websocket.send(JSON.stringify({type:"KEEPALIVE"}));
+            },5000);
         }
-
     }
 
 
-     var isInclude = function (str, regs){
-        var result = true;
-
-         regs.forEach(function (value , key){
-                if(str.indexOf(value) >= 0){
-                    result = result && true;
-                }else {
-                    result = result && false;
-                }
-         });
-         return result;
-     }
-
-    var isExclude = function (str, regs){
-        var result = true;
-
-        regs.forEach(function (value , key){
-            if(str.indexOf(value) >= 0){
-                result = result && true;
-            }else {
-                result = result && false;
-            }
-        });
-
-        return result;
-    }
-
-    var currentIndex = 1;
-    function showLogs(data) {
-
-
-            if(data.id != logConfig.id){
-                return ;
-            }else if(logConfig.level.indexOf(data.level) < 0){
-                return ;
-            }else {
-                var msg = data.msg.toString() + "||" + data.uin + "||" + data.url + "||" + data.userAgent+ "||" + data.from
-                if(logConfig.include.length != 0){
-                    if(!isInclude(msg , logConfig.include)){
-                        return ;
-                    }
-                }
-                if( logConfig.exclude.length != 0){
-                    if(isExclude(msg , logConfig.exclude)){
-                        return ;
-                    }
-
-                }
-            }
+    function showLogs(data){
 
             var param = {
                 encodeHtml: encodeHtml,
                 set: Delegator.set,
                 startIndex : currentIndex
             }
-            $('#log-table').prepend(logTable({ it : [data], opt : param}));
+
+            var $table = $('#log-table');
+
+            if(maxShow%100 == 0){
+                $table.html($table.html().split("</tr>").slice(0,maxShow).join("</tr>"));
+            }
+            $table.prepend(logTable({ it : [data], opt : param}));
             currentIndex ++;
     }
 

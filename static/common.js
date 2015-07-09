@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "../" + ({"0":"entry.home","1":"entry.apply","2":"entry.realtime","4":"entry.charts","5":"entry.authUserManage","6":"entry.userManage","7":"entry.log","8":"entry.statistics","9":"entry.projectTotal","10":"entry.applyList"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "../" + ({"0":"entry.home","1":"entry.charts","2":"entry.log","4":"entry.authUserManage","5":"entry.userManage","6":"entry.applyList","7":"entry.projectTotal","8":"entry.realtime","9":"entry.statistics","10":"entry.apply"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};

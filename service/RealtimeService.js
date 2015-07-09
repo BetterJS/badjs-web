@@ -6,14 +6,19 @@ var  zmq = require('zmq')
     , port = GLOBAL.pjconfig.zmq.url
     , service = GLOBAL.pjconfig.zmq.subscribe;
 
+
+var ProcessorThread = require("../service/worker/ProcessorPool");
+
+
 var WebSocketServer = require('ws').Server;
 
 var http = require("http");
 
+var path = require("path");
+
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
-
 
 
 
@@ -22,6 +27,7 @@ var log4js = require('log4js'),
  * @returns {Stream}
  */
 module.exports = function (app) {
+
 
     logger.info("starting zmq : " + service);
 
@@ -37,24 +43,9 @@ module.exports = function (app) {
         server: server,
         path: "/ws/realtimeLog"
     });
-    webSocketServer.broadcast = function broadcast(data) {
-        webSocketServer.clients.forEach(function each(client) {
-            try{
-                client.send(data);
-            }catch(e){
-                logger.info("one client closed , ip: " + client._socket.remoteAddress);
-            }
-
-        });
-    };
 
 
-    client.on('message', function (data) {
-        var dataStr = data.toString();
-        data = dataStr.substring(dataStr.indexOf(' '));
-        webSocketServer.broadcast(data);
-
-    });
+    ProcessorThread.createPool();
 
 
 
@@ -62,53 +53,18 @@ module.exports = function (app) {
         try{
             logger.info("one client connected , ip: " + ws._socket.remoteAddress)
         }catch(e){}
-        monitorClientTimeout(ws);
+        createProcessor(ws);
     });
 
     webSocketServer.on('close', function (ws) {
         try{
             logger.info("one client closed , ip: " + ws._socket.remoteAddress)
         }catch(e){}
-
     });
 
 
-
-    var resetTimeoutFlag = function (ws){
-        ws._keepalive = new Date - 0 ;
-        ws._timeoutTimes = 0;
+    var createProcessor = function (ws){
+        ProcessorThread.getProcessor().start({wbClient : ws});
     }
-
-
-
-    var monitorClientTimeout = function (ws){
-        resetTimeoutFlag(ws);
-
-        ws.on('message' , function (data , flag){
-            logger.debug("get keepalive message : " + data);
-            if(data == "__keepalive__"){
-                resetTimeoutFlag(this);
-            }
-        })
-    }
-
-
-    // monitor client is closed
-    setInterval(function (){
-        var currentDate = new Date - 0;
-        webSocketServer.clients.forEach(function each(client) {
-            if(!client._keepalive){
-                resetTimeoutFlag(client);
-            }
-            if (currentDate - client._keepalive  > 5000) {
-                client._timeoutTimes++;
-            }
-
-            if(client._timeoutTimes >2){
-                client.close();
-                logger.info("one client timeout , ip: " + client._socket.remoteAddress);
-            }
-        });
-    },5000);
 
 };

@@ -1,23 +1,23 @@
-webpackJsonp([7],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(10);
+	var log  =__webpack_require__(16);
 
 	log.init();
 
 /***/ },
 
-/***/ 10:
+/***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {var Dialog = __webpack_require__(100);
 	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(105);
-	var keyword = __webpack_require__(106);
-	var debar = __webpack_require__(107);
+	var logTable = __webpack_require__(107);
+	var keyword = __webpack_require__(108);
+	var debar = __webpack_require__(109);
 
 	__webpack_require__(18);
 
@@ -2351,7 +2351,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 105:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -2407,13 +2407,15 @@ webpackJsonp([7],{
 
 	var isHtml = /^.+?\.html\??/.test(it[i].target);
 	;
-	__p += '\r\n<tr>\r\n    <td   class="td-1 info-type-' +
+	__p += '\r\n<tr id="tr-' +
+	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
+	'">\r\n    <td  class="td-1 info-type-' +
 	((__t = (type)) == null ? '' : __t) +
 	'">' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'</td>\r\n    <td   class="td-2">' +
+	'</td>\r\n    <td  class="td-2">' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'</td>\r\n    <td style="" class="td-3">' +
+	'</td>\r\n    <td  style="" class="td-3">' +
 	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
 	'</td>\r\n    <td  class="td-4">' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
@@ -2454,7 +2456,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 106:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -2473,7 +2475,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 107:
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

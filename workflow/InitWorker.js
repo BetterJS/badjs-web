@@ -3,7 +3,7 @@ var  log4js = require('log4js'),
 
 
 
-var argv = process.argv.slice(2);
+var argv = process.argv.slice();
 if(argv.indexOf('--debug') >= 0){
     logger.setLevel('DEBUG');
     GLOBAL.DEBUG = true;
