@@ -87,21 +87,25 @@ var Worker = {
 
     isMatch : function (data){
 
-        var msg = data.msg.toString() + "||" + data.uin + "||" + data.url + "||" + data.userAgent+ "||" + data.from
+        try{
+            var msg = data.msg + "||" + data.uin + "||" + data.url + "||" + data.userAgent+ "||" + data.from
 
-        if(filter.level.indexOf(data.level) <0){
-            return false;
-        }
-
-        if(filter.include && filter.include.length != 0){
-            if(!isInclude(msg , filter.include)){
+            if(filter.level.indexOf(data.level) <0){
                 return false;
             }
-        }
-        if( filter.exclude && filter.exclude.length != 0){
-            if(isExclude(msg , filter.exclude)){
-                return false;
+
+            if(filter.include && filter.include.length != 0){
+                if(!isInclude(msg , filter.include)){
+                    return false;
+                }
             }
+            if( filter.exclude && filter.exclude.length != 0){
+                if(isExclude(msg , filter.exclude)){
+                    return false;
+                }
+            }
+        }catch(e){
+            logger.error("isMatch error : " + e +  "data :" + JSON.stringify(data))
         }
 
         return true;

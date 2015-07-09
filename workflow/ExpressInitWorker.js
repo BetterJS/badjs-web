@@ -98,7 +98,7 @@ app.use("/user" ,function (req , res , next){
                             next();
                         });
                     }else{
-                        logger.info("Old User:"+ req.session.user);
+                        logger.info("Old User:"+ JSON.stringify(req.session.user));
                         req.session.user.role = dbUser.role;
                         req.session.user.id = dbUser.id;
                         req.session.user.email = dbUser.email;
