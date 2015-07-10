@@ -104,7 +104,7 @@ var ProcessorPool = function (){
             idlePool.push(p);
         }
 
-        logger.info("create ProcessPool , number : " + number)
+        logger.info("create ProcessPool , number : " + max);
         monitorError();
     }
 
