@@ -43,7 +43,7 @@ var ProcessorPool = function (){
     var bindProcessorEvent = function (p){
         p.processor.on("destroy" , function (){
             ProcessorPool.destroy(this);
-        })
+        });
     }
 
     var monitorError = function (){
@@ -60,7 +60,7 @@ var ProcessorPool = function (){
 
     var idleProcessor = function (p){
         var processor = processorMapping[p.__id__];
-        if(processor.status == STATUS_IDLE){
+        if(processor.status == STATUS_IDLE || processor.processor.isDead() ){
             return ;
         }else {
             var index = 0;
@@ -72,6 +72,7 @@ var ProcessorPool = function (){
             }
             processor.status = STATUS_IDLE;
             processor.idleTime = new Date - 0;
+            processor.processor.wait();
             idlePool.push(runningPool.splice(index , 1)[0]);
 
             logger.debug("idleProcessor id="+ p.__id__ + ", idle count: " + ProcessorPool.idleProcessors() +", running count: " + ProcessorPool.runningProcessors());
@@ -98,7 +99,9 @@ var ProcessorPool = function (){
     ProcessorPool.createPool = function (number){
         var max = number || 15;
         for(var i= 0 ; i <max ; i ++) {
-            idlePool.push(createProcessor({role:ROLE_NOMRAL}));
+            var p = createProcessor({role:ROLE_NOMRAL});
+            p.processor.wait();
+            idlePool.push(p);
         }
 
         logger.info("create ProcessPool , number : " + number)
@@ -115,6 +118,8 @@ var ProcessorPool = function (){
 
         p.status = STATUS_RUNNING;
         runningPool.push(p);
+
+        p.processor.wait();
 
         logger.debug("runningProcessor id="+ p.processor.__id__ + ", idle count: " + ProcessorPool.idleProcessors() +", running count: " + ProcessorPool.runningProcessors());
         return p.processor;

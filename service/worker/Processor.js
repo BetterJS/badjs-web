@@ -3,6 +3,10 @@ var  zmq = require('zmq')
     , port = GLOBAL.pjconfig.zmq.url
     , service = GLOBAL.pjconfig.zmq.subscribe;
 
+
+var log4js = require('log4js'),
+    logger = log4js.getLogger();
+
 var events = require('events');
 
 var _ = require("underscore");
@@ -13,6 +17,14 @@ var cluster = require('cluster');
 cluster.setupMaster({
     exec: path.join(__dirname ,  "Worker.js")
 });
+
+var support_signal = true;
+try{
+    process.kill("SIGCONT")
+}catch(e){
+    support_signal = false
+    logger.warn("sorry , the platform not support SIGCONT adn SIGSTOP");
+}
 
 
 var log4js = require('log4js'),
@@ -70,18 +82,31 @@ Processor.prototype = {
         });
     },
 
+    isDead : function (){
+        if(!this.worker){
+            return true;
+        }
+        return this.worker.isDead();
+    },
+
 
     destroy : function (isKill){
-
         if(isKill){
             this.worker.kill();
             logger.info("processor("+this.__pid__+") killed " );
         }else {
             logger.info("processor("+this.__pid__+") stop monitor " );
         }
-
         this.wbClient = null;
         this.eventEmitter.emit("destroy");
+    },
+
+    wait : function (){
+        support_signal && this.worker.kill("SIGSTOP");
+    },
+
+    notify : function (){
+        support_signal && this.worker.kill("SIGCONT");
     },
 
     on : function (key , cb){
