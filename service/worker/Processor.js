@@ -18,13 +18,8 @@ cluster.setupMaster({
     exec: path.join(__dirname ,  "Worker.js")
 });
 
-var support_signal = true;
-try{
-    process.kill("SIGCONT")
-}catch(e){
-    support_signal = false
-    logger.warn("sorry , the platform not support SIGCONT adn SIGSTOP");
-}
+var support_signal = false;
+
 
 
 var log4js = require('log4js'),
@@ -47,10 +42,9 @@ Processor.prototype = {
 
         logger.info("processor("+this.__pid__+") start monitor");
 
-        this.worker.send({type:"READY"});
 
         var self = this;
-        var messageQueue = [];
+        var messageQueue = [{type:"READY"}];
         this.wbClient.on("message" , function (data){
             if(self.worker.state == "online"){
                 // 新建一个worker 是有延迟的，  这个时候有message ,怎么加入队列，待其 OK 后在 send 给他
@@ -77,8 +71,8 @@ Processor.prototype = {
         });
 
         this.wbClient.on("close" , function (data){
-            self.destroy();
             self.worker.send({type : "STOP"});
+            self.destroy();
         });
     },
 
