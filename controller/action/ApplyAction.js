@@ -124,13 +124,22 @@ var applyAction = {
             cb(err , apply);
         });
     },
-    update:function(params,cb){
+    update:function(params,req , res){
         var as = new ApplyService();
-        as.update(params,cb);
+        as.update(params,function (){
+
+        });
     },
-    remove: function(){
-        var as = new ApplyService();
-        as.remove(params,cb);
+    remove: function(params , req , res){
+        var applyService = new ApplyService();
+        applyService.remove(params,function (err ){
+            if(err){
+                res.json({ret:3, msg:"fail remove"});
+            }else {
+                res.json({ret:0, msg:"success remove"});
+            }
+
+        });
     }
 
 };

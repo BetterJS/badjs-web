@@ -7,6 +7,10 @@ var http = require('http');
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
 
+var UserApplyService = require('./UserApplyService');
+
+var LogService = require('./LogService');
+
 
 
 var ApplyService = function (){
@@ -56,9 +60,7 @@ ApplyService.prototype = {
                 callback(err);
                 return;
             }
-            if(GLOBAL.DEBUG){
-                logger.info("Insert into b_apply success! target1: ",newApply);
-            }
+            logger.debug("Insert into b_apply success! target1: " + newApply.id);
             //创建项目的即为管理员 故role ==1
             var userApply = {
                 userId : userId,
@@ -79,11 +81,30 @@ ApplyService.prototype = {
     remove : function(target, callback){
         this.applyDao.one({id: target.id }, function (err, apply) {
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
-            for(key in target){
+            if(err || !apply ){
+                callback(null);
+                return ;
+            }
+            for(var key in target){
                 apply[key] = target[key];
             };
             apply.remove(function (err) {
-                callback(null,{ret:0, msg:"success remove"});
+
+                var userApplyService =  new UserApplyService();
+
+                userApplyService.removeByApplyId({applyId : apply.id} , function (err){
+                    if(err){
+                        callback(null);
+                    }else {
+                        callback(null);
+                    }
+
+                });
+
+                var logService = new LogService();
+
+                logService.pushProject();
+
             });
         });
     },

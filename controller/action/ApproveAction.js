@@ -29,17 +29,11 @@ var approveAction = {
 
 
 
-            if(params.applyStatus == 1){
-                var tryTimes = 0;
+            if(params.applyStatus == 1 || params.applyStatus == 2){
                 var pushProject = function (){
                     logService.pushProject(function (err){
                         if(err){
-                            if(tryTimes <=3 ){
-                                tryTimes++;
-                                setTimeout(function (){ pushProject();},1000);
-                            }else {
-                                logger.warn('push project  error ' + err);
-                            }
+                            logger.warn('push project  error ' + err);
                         }else {
                             logger.info('push project success');
                         }
@@ -59,7 +53,7 @@ var approveAction = {
         var as = new ApproveService();
         as.update(params,cb);
     },
-    remove: function(){
+    remove: function(params , cb){
         var as = new ApproveService();
         as.remove(params,cb);
 

@@ -12,12 +12,12 @@
     <th style="width:80px;">上报id</th>
     <th >名称</th>
     <th>申请人</th>
-    <th>申请时间</th>
+    <th style="width:120px;">申请时间</th>
     <th >业务描述</th>
     <th >业务网址</th>
     <th style="width:120px;"><%= it.role ==1 ? '操作' : '状态'%></th>
     <%if (it.role != 1) { %>
-    <th style="width:80px;">操作</th>
+    <th style="width:120px;">操作</th>
     <% }%>
 
 
@@ -87,6 +87,9 @@ for(var i = 0; i<len ; i++){
                 <a href="apply.html?applyId=<%=one.id%>">编辑</a>
             </button>
             <% } %>
+            <button class="deleteBtn" data-applyid="<%=one.id%>">
+                <a href="javascript:void(0)">删除</a>
+            </button>
         </td>
         <%}%>
     </tr>

@@ -10,7 +10,7 @@ var LogAction = require('./action/LogAction'),
     IndexAction = require("./action/IndexAction"),
     StatisticsAction = require("./action/StatisticsAction"),
     ApproveAction = require("./action/ApproveAction"),
-    realtimeService = require("../service/RealtimeService"),
+//    realtimeService = require("../service/RealtimeService"),
     UserApplyAction = require("./action/UserApplyAction");
 
 
@@ -20,7 +20,7 @@ var log4js = require('log4js'),
 module.exports = function(app){
 
 
-    realtimeService(app);
+//    realtimeService(app);
 
     //html页面请求
     app.get('/', function (req , res){
@@ -108,9 +108,7 @@ module.exports = function(app){
             var url = req.url;
             var action = url.match(/controller\/(\w*)Action/i)[1];
             var operation = url.match(/\/(\w+)\.do/i)[1];
-            if(GLOBAL.DEBUG){
-                logger.info("the operation is: " + action + " --operation: "+ operation);
-            }
+            logger.debug("the operation is: " + action + " --operation: "+ operation);
             //判断是get还是post请求， 获取参数params
             var method = req.method.toLowerCase();
             var params = method =="post"? req.body : req.query;

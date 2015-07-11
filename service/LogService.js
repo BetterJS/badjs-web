@@ -67,33 +67,45 @@ LogService.prototype = {
 
         var businessService   = new BusinessService();
 
-        businessService.findBusiness(function (err , item){
+        var tryTimes = 0;
+        var push = function (){
 
-            var strParams = '';
+            businessService.findBusiness(function (err , item){
 
-            _.each( item , function (value , ke){
-                strParams+=value.id+"_";
-            });
+                var strParams = '';
 
-            if(strParams.length >0){
-                strParams = "projectsId="+strParams.substring(0 , strParams.length-1   ) + "&";
-            }
+                _.each( item , function (value , ke){
+                    strParams+=value.id+"_";
+                });
 
-            strParams +="auth=badjsAccepter";
+                if(strParams.length >0){
+                    strParams = "projectsId="+strParams.substring(0 , strParams.length-1   ) + "&";
+                }
+
+                strParams +="auth=badjsAccepter";
 
 
-            http.get( self.pushProjectUrl + '?' + strParams , function (res){
-                var buffer = '';
-                res.on('end' , function (){
-                    callback();
+                http.get( self.pushProjectUrl + '?' + strParams , function (res){
+                    res.on('end' , function (){
+                        callback();
+                    })
+
+                }).on('error' , function (err){
+                    if(tryTimes <=3 ){
+                        tryTimes++;
+                        logger.warn('push project error and try:' + err);
+                        push();
+                    }else {
+                        logger.warn('push project error :' + err);
+                        callback(err)
+                    }
+
+
                 })
+            });
+        }
 
-            }).on('error' , function (err){
-                logger.warn('push project error :' + err);
-                callback(err)
-            })
-        });
-
+        push();
 
     }
 }

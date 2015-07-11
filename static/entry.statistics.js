@@ -3,13 +3,13 @@ webpackJsonp([9],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var statistics  = __webpack_require__(14);
+	var statistics  = __webpack_require__(15);
 
 	statistics.init();
 
 /***/ },
 
-/***/ 14:
+/***/ 15:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -20,7 +20,7 @@ webpackJsonp([9],{
 
 	__webpack_require__(18);
 	var Dialog = __webpack_require__(100);
-	var statisticsTpl = __webpack_require__(111);
+	var statisticsTpl = __webpack_require__(110);
 
 	    var statistics = {
 	        init : function (){
@@ -2154,7 +2154,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 111:
+/***/ 110:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {module.exports = function (obj) {

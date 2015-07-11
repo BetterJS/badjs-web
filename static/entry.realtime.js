@@ -1,23 +1,23 @@
-webpackJsonp([8],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(12);
+	var log  =__webpack_require__(13);
 
 	log.init();
 
 /***/ },
 
-/***/ 12:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
 	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(107);
-	var keyword = __webpack_require__(108);
-	var debar = __webpack_require__(109);
+	var logTable = __webpack_require__(106);
+	var keyword = __webpack_require__(107);
+	var debar = __webpack_require__(108);
 
 
 	    var logConfig = {
@@ -166,6 +166,7 @@ webpackJsonp([8],{
 
 	    var keepAliveTimeoutId ;
 	    var currentIndex;
+	    var maxShow = 100;
 	    var startMonitor = function (id){
 
 	        websocket = new WebSocket("ws://"+location.host+"/ws/realtimeLog");
@@ -201,8 +202,8 @@ webpackJsonp([8],{
 
 	            var $table = $('#log-table');
 
-	            if(currentIndex%100 == 0){
-	                $table.html($table.html().split("</tr>").slice(0,10).join("</tr>"));
+	            if(maxShow%100 == 0){
+	                $table.html($table.html().split("</tr>").slice(0,maxShow).join("</tr>"));
 	            }
 	            $table.prepend(logTable({ it : [data], opt : param}));
 	            currentIndex ++;
@@ -453,7 +454,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 107:
+/***/ 106:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -558,7 +559,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 108:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -577,7 +578,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 109:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

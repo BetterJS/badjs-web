@@ -1,4 +1,4 @@
-webpackJsonp([6],{
+webpackJsonp([10],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -19,7 +19,7 @@ webpackJsonp([6],{
 
 
 	var Dialog = __webpack_require__(100);
-	var applyTable = __webpack_require__(105);
+	var applyTable = __webpack_require__(104);
 
 
 	    var maxDate = 60*60*1000*24 *2;
@@ -82,6 +82,23 @@ webpackJsonp([6],{
 	            oldClass = $(this).parent().attr("class");
 	            tempStatus = $(this).data("value");
 	            $(this).parent().removeClass().addClass(type +"-active");
+	            e.stopPropagation();
+	        });
+	        $("#applyList .deleteBtn").on("click", function(e){
+	            var self = this;
+	            if(!confirm("你确定要删除吗")){
+	                return ;
+	            }
+	            $.getJSON('/controller/applyAction/remove.do',{id : $(this).data("applyid")}, function (data) {
+	                var ret = data.ret;
+	                if(ret == 0){
+	                    $(self).parents(".listRow").remove();
+	                }else {
+	                    alert(data.msg);
+	                }
+	            }).fail(function () {
+	                alert("删除失败");
+	            });
 	            e.stopPropagation();
 	        });
 	        $(".approveBlock .operation").on("click", function (e) {
@@ -393,7 +410,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 105:
+/***/ 104:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -410,11 +427,11 @@ webpackJsonp([6],{
 	;
 	__p += '\r\n';
 	 if(len !=0){;
-	__p += '\r\n<thead>\r\n<tr>\r\n    <!--<th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>-->\r\n    <th>#</th>\r\n    <th style="width:80px;">上报id</th>\r\n    <th >名称</th>\r\n    <th>申请人</th>\r\n    <th>申请时间</th>\r\n    <th >业务描述</th>\r\n    <th >业务网址</th>\r\n    <th style="width:120px;">' +
+	__p += '\r\n<thead>\r\n<tr>\r\n    <!--<th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>-->\r\n    <th>#</th>\r\n    <th style="width:80px;">上报id</th>\r\n    <th >名称</th>\r\n    <th>申请人</th>\r\n    <th style="width:120px;">申请时间</th>\r\n    <th >业务描述</th>\r\n    <th >业务网址</th>\r\n    <th style="width:120px;">' +
 	((__t = ( it.role ==1 ? '操作' : '状态')) == null ? '' : __t) +
 	'</th>\r\n    ';
 	if (it.role != 1) { ;
-	__p += '\r\n    <th style="width:80px;">操作</th>\r\n    ';
+	__p += '\r\n    <th style="width:120px;">操作</th>\r\n    ';
 	 };
 	__p += '\r\n\r\n\r\n</tr>\r\n</thead>\r\n\r\n<tbody id="applyList">\r\n';
 
@@ -481,7 +498,9 @@ webpackJsonp([6],{
 	((__t = (one.id)) == null ? '' : __t) +
 	'">编辑</a>\r\n            </button>\r\n            ';
 	 } ;
-	__p += '\r\n        </td>\r\n        ';
+	__p += '\r\n            <button class="deleteBtn" data-applyid="' +
+	((__t = (one.id)) == null ? '' : __t) +
+	'">\r\n                <a href="javascript:void(0)">删除</a>\r\n            </button>\r\n        </td>\r\n        ';
 	};
 	__p += '\r\n    </tr>\r\n';
 	};

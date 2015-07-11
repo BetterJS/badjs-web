@@ -70,6 +70,23 @@ var applyTable = require("./template/applyTable.ejs");
             $(this).parent().removeClass().addClass(type +"-active");
             e.stopPropagation();
         });
+        $("#applyList .deleteBtn").on("click", function(e){
+            var self = this;
+            if(!confirm("你确定要删除吗")){
+                return ;
+            }
+            $.getJSON('/controller/applyAction/remove.do',{id : $(this).data("applyid")}, function (data) {
+                var ret = data.ret;
+                if(ret == 0){
+                    $(self).parents(".listRow").remove();
+                }else {
+                    alert(data.msg);
+                }
+            }).fail(function () {
+                alert("删除失败");
+            });
+            e.stopPropagation();
+        });
         $(".approveBlock .operation").on("click", function (e) {
             //只有提交了才改变状态值
             $(this).siblings("#statusPanel").data().value = tempStatus;

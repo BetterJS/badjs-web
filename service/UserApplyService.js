@@ -65,6 +65,16 @@ userApplyService.prototype = {
 
 
     },
+    removeByApplyId : function(target, callback){
+        this.userApplyDao.find({applyId: target.applyId}).remove( function (err) {
+            if(err ){
+                callback(err);
+            }else {
+                callback(null);
+            }
+
+        })
+    },
     remove : function(target, callback){
         this.userApplyDao.one({id: target.id}, function (err, item) {
             if(err){

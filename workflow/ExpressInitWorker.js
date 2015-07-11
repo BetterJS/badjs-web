@@ -94,7 +94,7 @@ app.use("/user" ,function (req , res , next){
                             req.session.user.role = result.role;
                             req.session.user.id = result.id;
 
-                            logger.info("New User:"+ req.session.user + "insert into db-badjs");
+                            logger.info("New User:"+ JSON.stringify(req.session.user) + "insert into db-badjs");
                             next();
                         });
                     }else{
