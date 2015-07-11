@@ -1,4 +1,4 @@
-webpackJsonp([10],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -46,6 +46,22 @@ webpackJsonp([10],{
 	            // 错误处理
 	        });
 	    }
+
+	    var deleteItem = function ($item , id){
+	        if(!confirm("你确定要删除吗")){
+	            return ;
+	        }
+	        $.getJSON('/controller/applyAction/remove.do',{id : id}, function (data) {
+	            var ret = data.ret;
+	            if(ret == 0){
+	                $item.parents(".listRow").remove();
+	            }else {
+	                alert(data.msg);
+	            }
+	        }).fail(function () {
+	            alert("删除失败");
+	        });
+	    }
 	    function bindEvent() {
 
 	        //搜索
@@ -69,7 +85,6 @@ webpackJsonp([10],{
 	            $(this).siblings(".approveBlock").show();
 	            tempStatus = $(this).siblings(".approveBlock").find("#statusPanel").data("value");
 	            oldClass = $(this).siblings(".approveBlock").find("#statusPanel").attr("class");
-	            console.log(tempStatus);
 	        });
 	        $(".approveBlock .closeBtn").on("click", function(e){
 	            $(this).parent().hide();
@@ -85,23 +100,15 @@ webpackJsonp([10],{
 	            e.stopPropagation();
 	        });
 	        $("#applyList .deleteBtn").on("click", function(e){
-	            var self = this;
-	            if(!confirm("你确定要删除吗")){
-	                return ;
-	            }
-	            $.getJSON('/controller/applyAction/remove.do',{id : $(this).data("applyid")}, function (data) {
-	                var ret = data.ret;
-	                if(ret == 0){
-	                    $(self).parents(".listRow").remove();
-	                }else {
-	                    alert(data.msg);
-	                }
-	            }).fail(function () {
-	                alert("删除失败");
-	            });
+	            deleteItem($(this) , $(this).data("applyId"));
 	            e.stopPropagation();
 	        });
 	        $(".approveBlock .operation").on("click", function (e) {
+
+	            if( $(this).siblings("#statusPanel").hasClass("delete-active")){
+	                deleteItem($(this) , $(this).data("apply_id"));
+	                return ;
+	            }
 	            //只有提交了才改变状态值
 	            $(this).siblings("#statusPanel").data().value = tempStatus;
 	            var param = {
@@ -480,7 +487,7 @@ webpackJsonp([10],{
 	((__t = ( status)) == null ? '' : __t) +
 	'" data-value="' +
 	((__t = ( one.status)) == null ? '' : __t) +
-	'">\r\n                    <div class="statusBtn applying" data-type="applying" data-value="0">待审核</div>\r\n                    <div class="statusBtn agree" data-type="agree" data-value="1">通过</div>\r\n                    <div class="statusBtn disagree" data-type="disagree" data-value="2">拒绝</div>\r\n                </div>\r\n                <div class="operation" data-apply_id="' +
+	'">\r\n                    <div class="statusBtn applying" data-type="applying" data-value="0">待审核</div>\r\n                    <div class="statusBtn agree" data-type="agree" data-value="1">通过</div>\r\n                    <div class="statusBtn disagree" data-type="disagree" data-value="2">拒绝</div>\r\n                    <div class="statusBtn delete" data-type="delete" >删除</div>\r\n                </div>\r\n                <div class="operation" data-apply_id="' +
 	((__t = (one.id)) == null ? '' : __t) +
 	'">\r\n                    <button class="submitBtn" >确定</button>\r\n                </div>\r\n            </div>\r\n            ';
 	} else {;

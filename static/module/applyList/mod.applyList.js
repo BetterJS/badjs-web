@@ -32,6 +32,22 @@ var applyTable = require("./template/applyTable.ejs");
             // 错误处理
         });
     }
+
+    var deleteItem = function ($item , id){
+        if(!confirm("你确定要删除吗")){
+            return ;
+        }
+        $.getJSON('/controller/applyAction/remove.do',{id : id}, function (data) {
+            var ret = data.ret;
+            if(ret == 0){
+                $item.parents(".listRow").remove();
+            }else {
+                alert(data.msg);
+            }
+        }).fail(function () {
+            alert("删除失败");
+        });
+    }
     function bindEvent() {
 
         //搜索
@@ -55,7 +71,6 @@ var applyTable = require("./template/applyTable.ejs");
             $(this).siblings(".approveBlock").show();
             tempStatus = $(this).siblings(".approveBlock").find("#statusPanel").data("value");
             oldClass = $(this).siblings(".approveBlock").find("#statusPanel").attr("class");
-            console.log(tempStatus);
         });
         $(".approveBlock .closeBtn").on("click", function(e){
             $(this).parent().hide();
@@ -71,23 +86,15 @@ var applyTable = require("./template/applyTable.ejs");
             e.stopPropagation();
         });
         $("#applyList .deleteBtn").on("click", function(e){
-            var self = this;
-            if(!confirm("你确定要删除吗")){
-                return ;
-            }
-            $.getJSON('/controller/applyAction/remove.do',{id : $(this).data("applyid")}, function (data) {
-                var ret = data.ret;
-                if(ret == 0){
-                    $(self).parents(".listRow").remove();
-                }else {
-                    alert(data.msg);
-                }
-            }).fail(function () {
-                alert("删除失败");
-            });
+            deleteItem($(this) , $(this).data("applyId"));
             e.stopPropagation();
         });
         $(".approveBlock .operation").on("click", function (e) {
+
+            if( $(this).siblings("#statusPanel").hasClass("delete-active")){
+                deleteItem($(this) , $(this).data("apply_id"));
+                return ;
+            }
             //只有提交了才改变状态值
             $(this).siblings("#statusPanel").data().value = tempStatus;
             var param = {

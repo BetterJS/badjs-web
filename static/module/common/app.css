@@ -506,7 +506,7 @@ form {
 }
 .apply_operation .approveBlock{
     display: none;
-    width: 250px;
+    width: 330px;
     position: absolute;
     left: -80px;
     top: 40px;
@@ -550,6 +550,10 @@ form {
 .disagree-active .disagree
 {
     background: #259BB6;;
+}
+.delete-active .delete
+{
+    background: #F33;;
 }
 .approveBlock .closeBtn{
     position: absolute;
