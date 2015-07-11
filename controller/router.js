@@ -10,7 +10,7 @@ var LogAction = require('./action/LogAction'),
     IndexAction = require("./action/IndexAction"),
     StatisticsAction = require("./action/StatisticsAction"),
     ApproveAction = require("./action/ApproveAction"),
-//    realtimeService = require("../service/RealtimeService"),
+    realtimeService = require("../service/RealtimeService"),
     UserApplyAction = require("./action/UserApplyAction");
 
 
@@ -20,7 +20,7 @@ var log4js = require('log4js'),
 module.exports = function(app){
 
 
-//    realtimeService(app);
+    realtimeService(app);
 
     //html页面请求
     app.get('/', function (req , res){
