@@ -103,7 +103,13 @@ ApplyService.prototype = {
 
                 var logService = new LogService();
 
-                logService.pushProject();
+                logService.pushProject(function (err){
+                    if(err){
+                        logger.warn('push project  error ' + err);
+                    }else {
+                        logger.info('push project success from remove .');
+                    }
+                });
 
             });
         });

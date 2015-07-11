@@ -86,8 +86,9 @@ LogService.prototype = {
 
 
                 http.get( self.pushProjectUrl + '?' + strParams , function (res){
-                    res.on('end' , function (){
-                        logger.info('push project success');
+                    res
+                        .on('data' , function (){})
+                        .on('end' , function (){
                         callback();
                     })
 

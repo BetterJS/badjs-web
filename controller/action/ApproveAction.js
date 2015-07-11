@@ -35,7 +35,7 @@ var approveAction = {
                         if(err){
                             logger.warn('push project  error ' + err);
                         }else {
-                            logger.info('push project success');
+                            logger.info('push project success from approve ');
                         }
                     });
                 }
