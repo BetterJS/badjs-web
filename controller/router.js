@@ -86,6 +86,10 @@ module.exports = function(app){
         res.render('introduce', { layout: false, user: req.session.user, index:'guide', guideTitle: '使用指南'});
     });
 
+    app.get('/user/monitor.html' , function (req , res){
+        res.render('monitor', { layout: false, user: req.session.user, index:'guide', guideTitle: '实时监控'});
+    });
+
 
     /**
      * 登出

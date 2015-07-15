@@ -1,0 +1,49 @@
+<%=include('./common/commonLinks.html')(it, opt)%>
+<%=include('./common/header.html')(it, opt)%>
+
+<main id="content" role="main">
+    <div class="wrap">
+        <div class="main autoM">
+            <div class="m-mian js_navinfo" id="Mnavinfo-1">
+                <div>
+                    <h3 class="m-title">介绍</h3>
+                    <p class="ml-mod">实时监控是接入了 http://monitor.server.com 系统，地址如下：</p>
+                    <p class="ml-mod"> <a target="_blank" href="http://monitor.server.com/link/graph/viewid:12368">http://monitor.server.com/link/graph/viewid:12368</a></p>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="m-mian js_navinfo" id="Mnavinfo-2">
+                <div>
+                    <h2 class="m-title">如何接入</h2>
+                    <div class="ml-mod">首先 BJ-REPORT 升级到最新版本， V 1.1.1</div>
+                    <div class="ml-mod">
+                        <p><b>1. 申请监控id </b></p>
+                        <p>点击 <a target="_blank" href="http://monitor.server.com/link/configattr">监控id申请</a></p>
+                        <p>将信息上报到badjs系统。同时监听error事件，上报脚本错误。</p>
+                        <p><img width="800px" src="/static/img/monitor/1.png"></p>
+                        <p><b>2. 绑定视图 </b></p>
+                        <p>点击 <a target="_blank" href="http://monitor.server.com/link/graph/viewid:12368">视图绑定</a></p>
+                        <p><img width="800px" src="/static/img/monitor/2.png"></p>
+                        <p><b>3.上报</b></p>
+                        <p>使用最新版本的BJ-REPORT ,会有一个 ext 属性，添加msid 为你的申请监控id 即可,如下图 </p>
+                        <p><img src="/static/img/monitor/3.png"></p>
+                        <p><b>5.完成</b></p>
+                        <p>完成版定后，可以进行上报，大概2分钟后会看到数据</p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <p><b>6.机器绑定</b></p>
+                        <p>假如你申请的id需要绑定到你自己的视图上面，则需要对你的视图进行机器绑定</p>
+                        <p><img width="800px"  src="/static/img/monitor/4.png"></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+</main>
+
+<%=include('./common/footer.html')(it)%>
+</body>
+
+</html>

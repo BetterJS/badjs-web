@@ -31,9 +31,6 @@ module.exports = function (app) {
 
     logger.info("starting zmq : " + service);
 
-    client.connect(port);
-    client.subscribe(service);
-
 
     var server = http.createServer(app);
     app.listen = function(){
