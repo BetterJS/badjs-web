@@ -65,7 +65,12 @@ Processor.prototype = {
             if(data.type == "_STOP_"){
                 self.destroy();
             }else {
+                try{
                 self.wbClient && self.wbClient.send(JSON.stringify(data));
+                }catch(e){
+                    logger.info("one client had closed");
+                    self.destroy();
+                }
             }
 
         });
