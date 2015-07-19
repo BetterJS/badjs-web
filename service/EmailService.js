@@ -110,8 +110,11 @@ EmailService.prototype = {
                 .replace(/{{per}}/g, (total_top * 100 / total).toFixed(2) + '%')
             );
 
-            html.push("<p></p>")
-            html.push('<p><img src="data:image/png;base64,'+imageData+'"></p>');
+            if(imageData){
+                html.push("<p></p>")
+                html.push('<p><img src="data:image/png;base64,'+imageData+'"></p>');
+            }
+
         } else {
             html.push('<p style="border-top:1px solid #666;margin-top:20px;width:520px;padding:5px 0 0 10px">暂无数据</p>');
         }
@@ -160,17 +163,17 @@ EmailService.prototype = {
                             if (err) return logger.error('Send email statisticsService queryById error');
                             if ( data &&  data.length > 0) {
 
-                                that.statisticsService.queryByChart({projectId : applyId , timeScope :1} , function (err , chartData){
+                              //  that.statisticsService.queryByChart({projectId : applyId , timeScope :1} , function (err , chartData){
 
-                                    if(err || chartData.data.length <=0){
+                                //    if(err || chartData.data.length <=0){
                                         that.sendEmail({
                                             to: to_list,
                                             cc: cc_list,
                                             title: name
                                         }, data[0]);
-                                    }else {
+                                 //   }else {
 
-                                        Exporting(
+                                   /*     Exporting(
                                             getImageData(name , chartData.data)
                                          , function (err , image){
 
@@ -185,15 +188,14 @@ EmailService.prototype = {
                                                 that.sendEmail({
                                                     to: to_list,
                                                     cc: cc_list,
-                                                    title: name,
-                                                    image : image
-                                                }, data[0]);
+                                                    title: name
+                                                }, data[0] , image);
                                             }
                                         });
+*/
+                                 //   }
 
-                                    }
-
-                                })
+                               // })
 
                             } else {
                                 logger.error('Send email data format error');
@@ -207,11 +209,11 @@ EmailService.prototype = {
             that.queryAll();
         }, 86400000);
     },
-    sendEmail: function(emails, data) {
+    sendEmail: function(emails, data ) {
         var title = "【BadJS 日报 " + dateFormat(this.date, "yyyy-MM-dd") + "】- " + emails.title;
         data.title = emails.title;
-        var content = this.render(data);
-        send_email(this.from, emails.to, emails.cc, title, content, data);
+        var content = this.render(data );
+        send_email(this.from, emails.to, emails.cc, title, content);
     },
     start: function() {
         var that = this;
