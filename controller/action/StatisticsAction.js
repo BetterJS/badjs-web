@@ -46,7 +46,6 @@ var StatisticsAction = {
                 return;
             }
             res.json(data);
-            return;
         });
     },
     queryByChartForAdmin : function (param, req, res) {

@@ -28,10 +28,10 @@ module.exports = function(from, to, cc, title, content) {
         }
         EmailServer.send(message, function(err, data) {
             times--;
-            if (err) {
+            if (err ) {
                 logger.error("Send email error " + title);
                 EmailServer = null;
-                return times && send(message, times);
+                return times>0 && send(message, times);
             }
             logger.info("Send email success " + title);
         });

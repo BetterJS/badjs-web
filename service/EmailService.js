@@ -9,6 +9,7 @@ var logger = log4js.getLogger();
 var _ = require('underscore');
 var UserService = require('./UserService');
 var StatisticsService = require('./StatisticsService');
+var Exporting = require('node-highcharts-exporting');
 
 var send_email = require("../utils/" + GLOBAL.pjconfig.email.module);
 var dateFormat = require("../utils/dateFormat");
@@ -28,8 +29,57 @@ var getYesterday = function() {
     return date;
 };
 
+
+var setChartX =  function (number){
+    var days = [];
+    var nowDay = new Date()-0;
+
+    for(var i = number;i>0; i--){
+        var day = nowDay - i*1000*60*60*24;
+        days.push(dateFormat(new Date(day), 'MM-dd'));
+    }
+    return days;
+}
+
+var getImageData = function (name  , data){
+
+    var totalArray = [0,0,0,0,0,0,0];
+    var categories = setChartX(7);
+
+    function whichDayIndex(day1){
+        for(var i =0,len = categories.length; i<len; i++){
+            if(day1 == categories[i]){
+                return i;
+            }
+        }
+        return false;
+    }
+
+    _.forEach(data , function (value ,key){
+        var index = whichDayIndex( dateFormat(new Date(value.startDate), 'MM-dd'));
+        totalArray[index] = value.total
+    });
+
+
+    return {
+        data: {
+            xAxis: {
+                categories: categories
+            },
+            series: [{data: totalArray}]
+        },
+
+        options : {
+            title : {text : "The last 7 days line charts"} ,
+            "yAxis" : {"title" : {"text": "total" }}
+        }
+
+
+    }
+}
+
 EmailService.prototype = {
-    render: function(data) {
+    render: function(data ,imageData) {
         var that = this;
         data = data || {};
         var html = [];
@@ -59,6 +109,9 @@ EmailService.prototype = {
                 .replace(/{{top}}/g, that.top)
                 .replace(/{{per}}/g, (total_top * 100 / total).toFixed(2) + '%')
             );
+
+            html.push("<p></p>")
+            html.push('<p><img src="data:image/png;base64,'+imageData+'"></p>');
         } else {
             html.push('<p style="border-top:1px solid #666;margin-top:20px;width:520px;padding:5px 0 0 10px">暂无数据</p>');
         }
@@ -106,11 +159,42 @@ EmailService.prototype = {
                         }, function(err, data) {
                             if (err) return logger.error('Send email statisticsService queryById error');
                             if ( data &&  data.length > 0) {
-                                that.sendEmail({
-                                    to: to_list,
-                                    cc: cc_list,
-                                    title: name
-                                }, data[0]);
+
+                                that.statisticsService.queryByChart({projectId : applyId , timeScope :1} , function (err , chartData){
+
+                                    if(err || chartData.data.length <=0){
+                                        that.sendEmail({
+                                            to: to_list,
+                                            cc: cc_list,
+                                            title: name
+                                        }, data[0]);
+                                    }else {
+
+                                        Exporting(
+                                            getImageData(name , chartData.data)
+                                         , function (err , image){
+
+                                            if(err){
+                                                logger.info("generate image error " + err.toString() + ", id =" + applyId)
+                                                that.sendEmail({
+                                                    to: to_list,
+                                                    cc: cc_list,
+                                                    title: name
+                                                }, data[0]);
+                                            }else {
+                                                that.sendEmail({
+                                                    to: to_list,
+                                                    cc: cc_list,
+                                                    title: name,
+                                                    image : image
+                                                }, data[0]);
+                                            }
+                                        });
+
+                                    }
+
+                                })
+
                             } else {
                                 logger.error('Send email data format error');
                             }
@@ -136,9 +220,9 @@ EmailService.prototype = {
         var time = GLOBAL.pjconfig.email.time.toString().split(':');
         date.setHours(parseInt(time[0], 10) || 9, parseInt(time[1], 10) || 0, parseInt(time[2], 10) || 0, 0);
         var timeDiff = date.valueOf() - (new Date()).valueOf();
-        setTimeout(function() {
+       // setTimeout(function() {
             that.queryAll();
-        }, timeDiff);
+       // }, timeDiff);
         logger.info('Email service will start after: ' + timeDiff);
     }
 };
