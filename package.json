@@ -19,6 +19,7 @@
     "map-stream": "0.0.5",
     "moment": "^2.10.2",
     "mysql": "2.0.0-rc2",
+    "node-highcharts-exporting": "~0.0.3",
     "orm": "2.1.3",
     "orm-transaction": "0.0.2",
     "passport": "^0.2.1",
