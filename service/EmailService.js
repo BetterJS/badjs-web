@@ -68,7 +68,12 @@ var getImageData = function (name  , data){
             xAxis: {
                 categories: categories
             },
-            series: [{data: totalArray}]
+            series: [
+                {
+                    data: totalArray,
+                    name :"-"
+                }
+            ]
         },
 
         options : {
@@ -229,7 +234,7 @@ EmailService.prototype = {
     sendEmail: function(emails, data  ) {
         var title = "【BadJS 日报 " + dateFormat(this.date, "yyyy-MM-dd") + "】- " + emails.title;
         data.title = emails.title;
-        var content = this.render(emails.imagePath );
+        var content = this.render(data , emails.imagePath  );
         send_email(this.from, emails.to, emails.cc, title, content);
     },
     start: function() {
