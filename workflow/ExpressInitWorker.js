@@ -6,7 +6,6 @@ var express = require('express')
     , cookieParser = require('cookie-parser')
     , serveStatic = require('serve-static')
     , app = express()
-    , ewebsocket = require('./../utils/express-websocket')(app )
     , router = require('../controller/router')
     , orm = require('orm');
 

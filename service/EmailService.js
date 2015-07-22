@@ -87,6 +87,11 @@ var getImageData = function (name  , data){
     }
 }
 
+var encodeHtml = function (str) {
+    return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+};
+
+
 EmailService.prototype = {
     render: function(data ,imagePath) {
         var that = this;
@@ -105,7 +110,7 @@ EmailService.prototype = {
                     html.push('<tr style="background-color:{{bgc}}"><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{index}}</td><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{times}}</td><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{desc}}</td></tr>'
                         .replace(/{{index}}/g, i + 1)
                         .replace(/{{times}}/g, v.total)
-                        .replace(/{{desc}}/g, v.title)
+                        .replace(/{{desc}}/g,encodeHtml( v.title))
                         .replace(/{{bgc}}/g, i % 2 ? '#fff' : '#eee')
                     );
                     total_top += v.total;
@@ -157,7 +162,7 @@ EmailService.prototype = {
                     }
                 });
                 for (var applyId in orderByApplyId) {
-                    (function(users) {
+                    (function(users , applyId) {
                         var to_list = []; // 收件方
                         var cc_list = []; // 抄送方
                         var name = '';
@@ -166,7 +171,7 @@ EmailService.prototype = {
                             name = v.name;
                         }); // jshint ignore:line
 
-                       /* if(applyId != 991){
+                 /*       if(applyId != 991){
                             return ;
                         }
 
@@ -223,7 +228,7 @@ EmailService.prototype = {
                                 logger.error('Send email data format error');
                             }
                         }); // jshint ignore:line
-                    })(orderByApplyId[applyId]); // jshint ignore:line
+                    })(orderByApplyId[applyId] , applyId); // jshint ignore:line
                 }
             }
         });

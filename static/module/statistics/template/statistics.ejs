@@ -13,7 +13,7 @@ $.each(content , function (key , value){
     <td><%= ++count %></td>
     <td><%= value.total %></td>
     <td>
-        <%= value.title %>
+        <%=  opt.encodeHtml(value.title) %>
     </td>
 </tr>
 <%
