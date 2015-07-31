@@ -22,23 +22,23 @@ switch(it[i].level) {
         }
         ua = ua.toLowerCase();
 
-        if(ua.indexOf('qqbrowser')>0){
+        if(ua.indexOf('qqbrowser')>-1){
             return  'ico-qb';
-        }else if(ua.indexOf('qq/')>0){
+        }else if(ua.indexOf('qq/')>-1){
             return  'ico-qq';
-        }else if(ua.indexOf('micromessenger')>0){
+        }else if(ua.indexOf('micromessenger')>-1){
             return  'ico-wx';
-        }else if(ua.indexOf('chrome')>0){
+        }else if(ua.indexOf('chrome')>-1){
             return  'ico-chrome';
-        }else if(ua.indexOf('msie')>0){
+        }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
             return 'ico-ie';
-        }else if(ua.indexOf('firefox')>0){
+        }else if(ua.indexOf('firefox')>-1){
             return 'ico-ff';
-        }else if(ua.indexOf('safari')>0){
+        }else if(ua.indexOf('safari')>-1){
             return 'ico-safari';
-        }else if(ua.indexOf('android')>0){
+        }else if(ua.indexOf('android')>-1){
             return  'ico-android';
-        }else if(ua.indexOf('iphone')>0){
+        }else if(ua.indexOf('iphone')>-1){
             return  'ico-ios';
         }
 }
