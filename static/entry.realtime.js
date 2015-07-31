@@ -1,4 +1,4 @@
-webpackJsonp([3],{
+webpackJsonp([5],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -13,7 +13,7 @@ webpackJsonp([3],{
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(101);
-	var Delegator = __webpack_require__(99);
+	var Delegator = __webpack_require__(98);
 
 	var logTable = __webpack_require__(105);
 	var keyword = __webpack_require__(106);
@@ -218,11 +218,11 @@ webpackJsonp([3],{
 
 
 	exports.init = init;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ },
 
-/***/ 99:
+/***/ 98:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -398,14 +398,14 @@ webpackJsonp([3],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ },
 
 /***/ 101:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(99);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(98);
 	var modal = __webpack_require__(112);
 
 	    var container;
@@ -450,7 +450,7 @@ webpackJsonp([3],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ },
 
@@ -487,23 +487,23 @@ webpackJsonp([3],{
 	        }
 	        ua = ua.toLowerCase();
 
-	        if(ua.indexOf('qqbrowser')>0){
+	        if(ua.indexOf('qqbrowser')>-1){
 	            return  'ico-qb';
-	        }else if(ua.indexOf('qq/')>0){
+	        }else if(ua.indexOf('qq/')>-1){
 	            return  'ico-qq';
-	        }else if(ua.indexOf('micromessenger')>0){
+	        }else if(ua.indexOf('micromessenger')>-1){
 	            return  'ico-wx';
-	        }else if(ua.indexOf('chrome')>0){
+	        }else if(ua.indexOf('chrome')>-1){
 	            return  'ico-chrome';
-	        }else if(ua.indexOf('msie')>0){
+	        }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
 	            return 'ico-ie';
-	        }else if(ua.indexOf('firefox')>0){
+	        }else if(ua.indexOf('firefox')>-1){
 	            return 'ico-ff';
-	        }else if(ua.indexOf('safari')>0){
+	        }else if(ua.indexOf('safari')>-1){
 	            return 'ico-safari';
-	        }else if(ua.indexOf('android')>0){
+	        }else if(ua.indexOf('android')>-1){
 	            return  'ico-android';
-	        }else if(ua.indexOf('iphone')>0){
+	        }else if(ua.indexOf('iphone')>-1){
 	            return  'ico-ios';
 	        }
 	}
@@ -555,7 +555,7 @@ webpackJsonp([3],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
