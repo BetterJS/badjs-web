@@ -53,15 +53,6 @@ StatisticsService.prototype = {
             if(items[0] ){
                 items[0].content = JSON.parse(items[0].content);
 
-                if(items[0].content&& items[0].content[0] && items[0].content[0].title){
-
-                }else {
-                    // 兼容旧的数据格式
-                    items[0].content = _.map(items[0].content, function(value, key){
-                        return {title : key , total : value};
-                    });
-                }
-
 
                 if(param.top){
                     items[0].content = items[0].content.slice(0 , param.top);
