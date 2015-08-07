@@ -49,16 +49,23 @@ StatisticsService.prototype = {
             }
 
 
+            try{
+                if(items[0] ){
+                    items[0].content = JSON.parse(items[0].content);
 
-            if(items[0] ){
-                items[0].content = JSON.parse(items[0].content);
 
+                    if(param.top){
+                        items[0].content = items[0].content.slice(0 , param.top);
+                    }
 
-                if(param.top){
-                    items[0].content = items[0].content.slice(0 , param.top);
                 }
 
+            }catch(e){
+                callback(e);
+                logger.error("queryById error :  "+ param.projectId  + ", error :" +  e.toString());
+                return ;
             }
+
             callback(null,  items);
         });
 
@@ -77,7 +84,7 @@ StatisticsService.prototype = {
         param.startTime = dateFormat(new Date(param.startTime), 'yyyy-MM-dd');
 
         if(GLOBAL.DEBUG){
-            logger.info("query start time is "+ param.startTime);
+            logger.debug("query start time is "+ param.startTime);
         }
         this.statisticsDao.find(s_params).only("endDate" , "startDate" , "projectId" , "id" , "total").where("startDate >=?", [param.startTime]).all(function (err, items)  {
             if(err){
