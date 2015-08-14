@@ -114,7 +114,7 @@ var Worker = {
     startMonitor :function (data){
         var self = this;
 
-        this.monitorKey = service+data.id ;
+        this.monitorKey = service+data.id+"|" ;
 
         this.zmqClient = zmq.socket('sub');
 
