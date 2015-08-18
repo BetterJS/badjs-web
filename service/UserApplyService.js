@@ -56,8 +56,7 @@ userApplyService.prototype = {
                        return;
                    }
                    logger.info("Insert into b_user success! target1: ",newUser);
-                   callback(null);
-                   return;
+                   self.add(target, callback);
                })
             }
 

@@ -75,8 +75,8 @@ DROP TABLE IF EXISTS `b_user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE IF NOT EXISTS `b_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `loginName` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `chineseName` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `loginName` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `chineseName` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `role` int(11) NOT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
