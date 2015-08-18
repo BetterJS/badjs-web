@@ -40,7 +40,7 @@ userApplyService.prototype = {
                         callback(err);
                         return;
                     }
-                    logger.info("Insert into b_user_apply success! target1: ",items);
+                    logger.info("Insert into b_user_apply success! target1: " + items.id);
                     callback(null);
                     return;
                 });
@@ -50,12 +50,12 @@ userApplyService.prototype = {
                    role : 0,
                    createTime : new Date()
                };
-               self.userDao.create(newUser,function(err, newUser){
+               self.userDao.create(newUser,function(err){
                    if(err){
                        callback(err);
                        return;
                    }
-                   logger.info("Insert into b_user success! target1: ",newUser);
+                   logger.info("Insert into b_user success! ");
                    self.add(target, callback);
                })
             }
