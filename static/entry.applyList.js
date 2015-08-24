@@ -1,15 +1,15 @@
-webpackJsonp([5],{
+webpackJsonp([7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var applyList = __webpack_require__(8);
+	var applyList = __webpack_require__(9);
 
 	applyList.init();
 
 /***/ },
 
-/***/ 8:
+/***/ 9:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -18,7 +18,7 @@ webpackJsonp([5],{
 	 * */
 
 
-	var Dialog = __webpack_require__(101);
+	var Dialog = __webpack_require__(20);
 	var applyTable = __webpack_require__(104);
 
 
@@ -100,7 +100,7 @@ webpackJsonp([5],{
 	            e.stopPropagation();
 	        });
 	        $("#applyList .deleteBtn").on("click", function(e){
-	            deleteItem($(this) , $(this).data("applyId"));
+	            deleteItem($(this) , $(this).data("applyid"));
 	            e.stopPropagation();
 	        });
 	        $(".approveBlock .operation").on("click", function (e) {
@@ -181,11 +181,11 @@ webpackJsonp([5],{
 	        init: init
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 99:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -361,14 +361,14 @@ webpackJsonp([5],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 101:
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(99);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
 	var modal = __webpack_require__(112);
 
 	    var container;
@@ -413,7 +413,7 @@ webpackJsonp([5],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
@@ -518,7 +518,7 @@ webpackJsonp([5],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 

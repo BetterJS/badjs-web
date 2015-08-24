@@ -86,7 +86,7 @@ var applyTable = require("./template/applyTable.ejs");
             e.stopPropagation();
         });
         $("#applyList .deleteBtn").on("click", function(e){
-            deleteItem($(this) , $(this).data("applyId"));
+            deleteItem($(this) , $(this).data("applyid"));
             e.stopPropagation();
         });
         $(".approveBlock .operation").on("click", function (e) {

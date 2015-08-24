@@ -17,7 +17,7 @@ webpackJsonp([4],{
 	 * @author coverguo
 	 * */
 
-	var userTable = __webpack_require__(108);
+	var userTable = __webpack_require__(105);
 
 
 	    var encodeHtml = function (str) {
@@ -92,11 +92,11 @@ webpackJsonp([4],{
 	        }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 108:
+/***/ 105:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
