@@ -1,15 +1,15 @@
-webpackJsonp([8],{
+webpackJsonp([7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var usermanger = __webpack_require__(16);
+	var usermanger = __webpack_require__(15);
 
 	usermanger.init();
 
 /***/ },
 
-/***/ 16:
+/***/ 15:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -18,7 +18,7 @@ webpackJsonp([8],{
 	 * */
 
 	var Dialog = __webpack_require__(101);
-	var userTable = __webpack_require__(108);
+	var userTable = __webpack_require__(109);
 
 
 	    var encodeHtml = function (str) {
@@ -163,11 +163,11 @@ webpackJsonp([8],{
 	        init: init
 	    }
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 98:
+/***/ 99:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -343,14 +343,14 @@ webpackJsonp([8],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
 /***/ 101:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(98);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(99);
 	var modal = __webpack_require__(112);
 
 	    var container;
@@ -395,11 +395,11 @@ webpackJsonp([8],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 
-/***/ 108:
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

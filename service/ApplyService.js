@@ -82,13 +82,18 @@ ApplyService.prototype = {
         this.applyDao.one({id: target.id }, function (err, apply) {
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
             if(err || !apply ){
-                callback(null);
+                callback(new Error("can not found apply , id" + target.id));
                 return ;
             }
             for(var key in target){
                 apply[key] = target[key];
             };
             apply.remove(function (err) {
+
+                if(err){
+                    console.error("remove error : " + err.toString())
+                    throw err;
+                }
 
                 var userApplyService =  new UserApplyService();
 
@@ -122,7 +127,7 @@ ApplyService.prototype = {
             };
             apply.save(function (err) {
                 // err.msg = "under-age";
-                callback(null,{ret:0, msg:"success remove"});
+                callback(null,{ret:0, msg:"success update"});
             });
         });
     },
