@@ -1,0 +1,58 @@
+<%=include('./common/commonLinks.html')(it, opt)%>
+<%=include('./common/header.html')(it, opt)%>
+<main id="content" role="main">
+    <div class="wrap">
+        <div class="formContainer">
+
+            <form action="modifyUser.html"  method="post" class="form-horizontal form-wrap" >
+                <h3 >
+                    修改密码
+                </h3>
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label">旧密码</label>
+                    <div class="col-sm-6">
+                        <input  type="password" name="oldpassword" class="  form-control" placeholder="输入旧密码"  >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label">新密码</label>
+                    <div class="col-sm-6">
+                        <input type="password" name="newpassword"  class="  form-control"  placeholder="输入新密码"  >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-4 control-label">新密码确认</label>
+                    <div class="col-sm-6">
+                        <input type="password" name="newpassword2" class="form-control"  placeholder="输入二次密码确认"  >
+                        <p class="help-block" style="text-align: left ;position: relative">
+                            <span style="color:<%= (it.type == '1' ? 'green' : 'red' )%>;">&nbsp;<%=it.message%></span>
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-6">
+                        <button class="col-sm-3 btn btn-primary apply-submit" >
+                            保存
+                        </button>
+                        <button type="reset" class="col-sm-offset-1 col-sm-3 btn btn-default" >重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+</main>
+
+<%=include('./common/footer.html')(it)%>
+
+<% if (it.type == '1'   ){%>
+<script> setTimeout(function (){window.location.href="/login.html"},3000)</script>
+<%}%>
+
+</body>
+
+</html>

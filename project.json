@@ -21,5 +21,8 @@
         "time": "09:00:00",
         "top": 20,
         "module": "email_tof"
+    },
+    "oos" : {
+        "module":"tencent/tencentoos"
     }
 }

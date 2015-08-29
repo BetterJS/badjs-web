@@ -19,9 +19,9 @@
             <li class="item <%= it.index=='realtime'?'active':''%>">
                 <a href="realtimelog.html">实时日志</a>
             </li>
-            <li class="item <%= it.index=='monitor'?'active':''%>">
+         <!--   <li class="item <%= it.index=='monitor'?'active':''%>">
                 <a  href="monitor.html">实时监控</a>
-            </li>
+            </li>-->
             <li class="item items <%= it.index=='statistics'?'active':''%>">
                 <a><%= it.statisticsTitle?it.statisticsTitle:"统计" %></a>
                 <ul class="subNav">
@@ -64,6 +64,9 @@
                     <%
                     }
                     %>
+                    <li class="item">
+                        <a  href="modifyUser.html">密码修改</a>
+                    </li>
                     <!--<li class="item">-->
                         <!--<a href=""></a>-->
                     <!--</li>-->

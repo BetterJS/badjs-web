@@ -411,15 +411,17 @@ form {
 }
 /*common end*/
 /*@apply  coverguo 2014-12-31*/
-#applyContainer{
+
+
+.formContainer{
     padding-top: 10px;
 }
-#applyContainer .applyTitle{
+.formContainer h3{
     text-align: center;
     font-weight: bold;
     margin-bottom: 40px;
 }
-#applyForm{
+.form-wrap{
     max-width: 800px;
     margin: 60px auto;
 }

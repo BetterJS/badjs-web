@@ -10,7 +10,7 @@ var LogAction = require('./action/LogAction'),
     IndexAction = require("./action/IndexAction"),
     StatisticsAction = require("./action/StatisticsAction"),
     ApproveAction = require("./action/ApproveAction"),
-    realtimeService = require("../service/RealtimeService"),
+    //realtimeService = require("../service/RealtimeService"),
     UserApplyAction = require("./action/UserApplyAction");
 
 
@@ -20,7 +20,7 @@ var log4js = require('log4js'),
 module.exports = function(app){
 
 
-    realtimeService(app);
+   // realtimeService(app);
 
     //html页面请求
     app.get('/', function (req , res){
@@ -37,6 +37,10 @@ module.exports = function(app){
 
     app.use('/login.html', function (req , res){
         UserAction.login({}, req , res);
+    } );
+
+    app.use('/register.html', function (req , res){
+        UserAction.register({}, req , res);
     } );
 
 
@@ -64,6 +68,9 @@ module.exports = function(app){
 
     app.get('/user/userManage.html', function (req , res){
         UserAction.index({} , req , res);
+    });
+    app.use('/user/modifyUser.html', function (req , res){
+        UserAction.modify(req.param  , req , res);
     });
 
     app.get('/user/authUserManage.html', function (req , res){

@@ -50,7 +50,7 @@ var userAction = {
 
             userDao.one({ loginName : req.body.username } ,function (err , user) {
                 if(err || !user || (crypto.createHash("md5").update(req.body.password).digest('hex') != user.password)){
-                    res.render('login', {  user: user , index:"login"   , message : "帐号或则密码错误"} );
+                    res.render('login', { name:req.body.username,   isUseOA : !! GLOBAL.pjconfig.oos, index:"login"   , message : "帐号或则密码错误"} );
                 }else {
                     req.session.user = {
                         role : user.role,
@@ -64,10 +64,100 @@ var userAction = {
             });
 
         }else {
-            res.render('login', {   index:"login" ,message : "" } );
+            res.render('login', {  isUseOA : !! GLOBAL.pjconfig.oos, message : "" } );
         }
 
     },
+
+    register : function (params , req ,  res){
+
+        var method = req.method.toLowerCase();
+        if(method == "post"){
+
+            if( !req.body.username || !req.body.password) {
+                res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos, name: req.body.username ,  message : "帐号密码不能为空"} );
+                return ;
+            }else if( req.body.password != req.body.password2) {
+                res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos, name: req.body.username ,  message : "密码和确认密码不一致"} );
+                return ;
+            }
+
+            var userDao = req.models.userDao;
+
+            userDao.one({ loginName : req.body.username } ,function (err , user) {
+                if(err){
+                   logger.error("register user error : " + err.toString());
+                    res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos,  name: req.body.username ,  message : "系统错误，请联系管理员"} );
+                } else if(user){
+                    res.render('register', {isUseOA : !! GLOBAL.pjconfig.oos,  name: req.body.username ,  message : "用户已经存在"} );
+                    return ;
+                } else {
+                    var newUser = { chineseName: req.body.username, role : 0 ,loginName : req.body.username ,password : crypto.createHash("md5").update(req.body.password).digest('hex')};
+                    userDao.create(newUser  , function (err) {
+                        if(err){
+                            res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos,     message : "系统错误，请联系管理员"} );
+                        }
+                        res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos,  type : "1", message : '注册成功 '} )
+
+                    });
+                }
+            });
+
+        }else {
+            res.render('register', {   isUseOA : !! GLOBAL.pjconfig.oos, message : "" } );
+        }
+
+    },
+
+    modify : function (params , req ,  res){
+        var params = req.query,
+            user  = req.session.user;
+
+        var method = req.method.toLowerCase();
+        if(method == "post"){
+
+            if( !req.body.newpassword || !req.body.oldpassword) {
+                res.render('modifyUser', {  layout:false, user: user , index:'modifyUser', manageTitle: '修改密码',    message : "密码不能为空"} );
+                return ;
+            }if( req.body.newpassword != req.body.newpassword2) {
+                res.render('modifyUser', {  layout:false, user: user , index:'modifyUser', manageTitle: '修改密码' , message : "密码和确认密码不一致"} );
+                return ;
+            }else if( req.body.oldpassword == req.body.newpassword) {
+                res.render('modifyUser', {  layout:false, user: user , index:'modifyUser', manageTitle: '修改密码' , message : "新旧密码不能一致"} );
+                return
+            }
+
+            var userDao = req.models.userDao;
+
+            userDao.one({ loginName : user.loginName } ,function (err , user) {
+                var newpassword =  crypto.createHash("md5").update(req.body.newpassword).digest('hex')
+                var oldpassword =  crypto.createHash("md5").update(req.body.oldpassword).digest('hex')
+                if(err){
+                    logger.error("modifyUser user error : " + err.toString());
+                    res.render('modifyUser', {   layout:false, user: user , index:'modifyUser', manageTitle: '修改密码'  ,  message : "系统错误，请联系管理员"} );
+                }else if(!user){
+                    res.render('modifyUser', {    layout:false, user: user , index:'modifyUser', manageTitle: '修改密码'  ,  message : "用户不存在"} );
+                }else if (oldpassword != user.password){
+                    res.render('modifyUser', {    layout:false, user: user , index:'modifyUser', manageTitle: '修改密码'  ,  message : "原始密码不正确"} );
+                }else {
+                    user.password = newpassword;
+                    user.save( function (err) {
+                        if(err){
+                            res.render('modifyUser', {  layout:false, user: user , index:'modifyUser', manageTitle: '修改密码'  ,    message : "系统错误，请联系管理员"} );
+                        }
+                        req.session.user = null;
+                        res.render('modifyUser', {  layout:false, user: user , index:'modifyUser', manageTitle: '修改密码'  ,   type : "1", message : '修改成功 ,3s 后跳转到登录界面'} );
+
+                    });
+                }
+            });
+
+        }else {
+
+            res.render('modifyUser', { layout:false, user: user , index:'modifyUser', manageTitle: '修改密码'} );
+        }
+    },
+
 //    addUser: function(params, cb){
 //        var us = new UserService();
 //        us.add(params,cb);
@@ -127,27 +217,7 @@ var userAction = {
             }
         })
     },
-/*    queryAllList : function (params , req ,  res) {
 
-        var userService = new UserService();
-        //用户根据项目查询项目成员
-        userService.queryAllList(params,function(err, items){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, data:items, msg:"success"});
-        });
-    },
-    queryListByUserProject : function(params , req ,  res){
-        var userService = new UserService();
-        //用户根据项目查询项目成员
-        userService.queryListByUserProject(params,function(err, items){
-            if(isError(res, err)){
-                return;
-            }
-            res.json({ret:0, data:items, msg:"success"});
-        });
-    },*/
     update:function(req, res){
 
     },
