@@ -96,6 +96,7 @@ Processor.prototype = {
         }else {
             logger.info("processor("+this.__pid__+") stop monitor " );
         }
+        this.worker.removeAllListeners();
         this.wbClient = null;
         this.eventEmitter.emit("destroy");
     },

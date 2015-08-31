@@ -53,6 +53,9 @@ var Worker = {
 
     _keepAliveMonitor : function (){
         var self = this;
+        if(this._monitorTimeoutId ){
+            clearInterval(this._monitorTimeoutId);
+        }
         this._monitorTimeoutId = setInterval(function (){
             var currentDate = new Date - 0;
             if(!self.wbClient._keepalive){

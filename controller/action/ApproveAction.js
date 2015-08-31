@@ -8,7 +8,14 @@
 var log4js = require('log4js'),
     logger = log4js.getLogger(),
     ApproveService = require('../../service/ApproveService'),
-    LogService = require('../../service/LogService');
+    LogService = require('../../service/LogService'),
+    isError = function (res , error){
+        if(error){
+            res.json({ret : 1 , msg : error});
+            return true;
+        }
+        return false;
+    };
 
 
 
