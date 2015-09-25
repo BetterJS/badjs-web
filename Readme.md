@@ -15,18 +15,21 @@ db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理�
 {
     "host" : "http://badjs.server.com/",   //配额管理服务器地址，用于邮件中的图片展示
     "mysql" : {
-        "url" : "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs"  // mysql 地址
+           "url" : "mysql://root:root@localhost:3306/badjs" // mysql 地址
     },
     "storage" : {         // 存储服务器的地址， 这里配置badjs-storage 的地址
-        "errorMsgTopUrl" : "http://10.143.132.205:9000/errorMsgTop",
-        "errorMsgTopCacheUrl" : "http://10.143.132.205:9000/errorMsgTopCache",
-        "queryUrl" : "http://10.143.132.205:9000/query"
+        "errorMsgTopUrl" : "http://127.0.0.1:9000/errorMsgTop",
+      "errorMsgTopCacheUrl" : "http://127.0.0.1:9000/errorMsgTopCache",
+        "queryUrl" : "http://127.0.0.1:9000/query"
     },
-    "acceptor": {     //badjs-acceptor 模块的地址， 这里用于同步审核通过的业务id 到接入层进行验证
-        "pushProjectUrl" : "http://10.143.132.205:9001/getProjects"
+    "acceptor": {     //badjs-acceptor 模块的地址， 这里用于同步审核通过的业务的id 到接入层进行验证
+          "pushProjectUrl" : "http://127.0.0.1:9001/getProjects"
+    },
+     "openapi": {        //badjs-acceptor 模块的地址， 这里用于同步审核通过的业务的appkey 到openapi 进行验证
+        "pushProjectUrl" : "http://127.0.0.1:9002/getProjects"
     },
     "zmq" : {       // badjs-mq 的地址  
-        "url" : "tcp://10.143.132.205:10000",
+         "url" : "tcp://127.0.0.1:10000",
         "subscribe" : "badjs"     // 跟 badjs-aceptor 中的subscribe 对应
     },
     "email": {      // 发送 email 配置
