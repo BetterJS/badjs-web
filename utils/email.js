@@ -22,7 +22,7 @@ module.exports = function(from, to, cc, title, content) {
     (function send(message, times) {
         if (!EmailServer) {
             EmailServer = emailjs.server.connect({
-                host: "smtp.tencent.com",
+                host: GLOBAL.pjconfig.email.smtp,
                 ssl: false
             });
         }

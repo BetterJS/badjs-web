@@ -1,4 +1,5 @@
 {
+    "host" : "http://badjs.server.com/",
     "mysql" : {
         "url" : "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs"
     },
@@ -17,6 +18,7 @@
     "email": {
         "homepage": "http://badjs.server.com/user/index.html",
         "from": "noreply-badjs@tencent.com",
+        "smtp": "smtp.tencent.com",
         "emailSuffix" : "@tencent.com",
         "time": "09:00:00",
         "top": 20,

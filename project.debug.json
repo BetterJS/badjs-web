@@ -1,4 +1,5 @@
 {
+    "host" : "http://badjs.server.com/",
     "port": 8081,
     "mysql" : {
         "url" : "mysql://root:root@localhost:3306/badjs"
@@ -11,7 +12,7 @@
     "acceptor": {
         "pushProjectUrl" : "http://127.0.0.1:9001/getProjects"
     },
-    "open": {
+    "openapi": {
         "pushProjectUrl" : "http://127.0.0.1:9002/getProjects"
     },
     "zmq" : {
@@ -22,6 +23,7 @@
         "homepage": "http://badjs.server.com/user/index.html",
         "from": "noreply-badjs@tencent.com",
         "emailSuffix" : "@tencent.com",
+        "smtp": "smtp.tencent.com",
         "time": "09:00:00",
         "top": 20,
         "module": "email"
