@@ -49,7 +49,7 @@ app.use(orm.express(msqlUrl, {
 }}));
 
 
-if(GLOBAL.pjconfig.oos){
+if(GLOBAL.pjconfig.oos && GLOBAL.pjconfig.oos.module){
     app.use("/user" ,require("../oos/" + GLOBAL.pjconfig.oos.module));
 }
 
