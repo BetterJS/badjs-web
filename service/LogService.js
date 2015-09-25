@@ -101,6 +101,7 @@ LogService.prototype = {
                         logger.warn('push projectIds to acceptor  error :' + err);
                         result[0] = -1
                     }else {
+                        logger.info('push projectIds to acceptor  success');
                         result[0] = 1;
                     }
                     resultCall();
@@ -111,6 +112,7 @@ LogService.prototype = {
                         logger.warn('push projectIds to open  error :' + err);
                         result[1] = -1;
                     }else {
+                        logger.info('push projectIds to openapi success');
                         result[1] = 1;
                     }
 
