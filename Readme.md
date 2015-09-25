@@ -8,7 +8,8 @@
 
 --project 使用测试环境（ project.debug.json ）配置 ， 默认使用 project.json
 
-
+# 数据库初始化
+db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理员帐号是 admin ， 密码是 admin
 # 配置说明
 ```
 {
