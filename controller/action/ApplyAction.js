@@ -8,6 +8,7 @@
 var log4js = require('log4js'),
     logger = log4js.getLogger(),
     _ = require('underscore'),
+    crypto = require('crypto'),
     ApplyService = require('../../service/ApplyService'),
     isError = function (res , error){
         if(error){
@@ -56,6 +57,7 @@ var applyAction = {
             });
         }else {
             apply.createTime = new Date();
+            apply.appkey = crypto.createHash("md5").update(new Date-0  + "badjsappkey" +params.user.loginName).digest('hex');
             applyService.add(apply,function(err, items){
                 if(isError(res, err)){
                     return;

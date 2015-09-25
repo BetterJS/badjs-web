@@ -111,6 +111,10 @@ var applyTable = require("./template/applyTable.ejs");
             e.stopPropagation();
         });
 
+        $("#applyList .appkey_btn").click(function (){
+
+        });
+
     }
     function getSearchList(params,cb){
         $.get('./controller/applyAction/queryListBySearch.do',params, function (data) {

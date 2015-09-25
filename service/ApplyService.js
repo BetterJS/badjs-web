@@ -122,7 +122,7 @@ ApplyService.prototype = {
     update : function(target, callback){
         this.applyDao.one({id: target.id }, function (err, apply) {
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
-            for(key in target){
+            for(var key in target){
                 apply[key] = target[key];
             };
             apply.save(function (err) {

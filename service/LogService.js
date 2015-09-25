@@ -9,6 +9,8 @@ var log4js = require('log4js'),
     _ = require('underscore'),
     logger = log4js.getLogger();
 
+var request = require("request");
+
 
 
 var LogService = function (){
@@ -22,6 +24,7 @@ var LogService = function (){
 
     this.queryUrl = GLOBAL.pjconfig.storage.queryUrl;
     this.pushProjectUrl = GLOBAL.pjconfig.acceptor.pushProjectUrl;
+    this.pushProjectUrl2 = GLOBAL.pjconfig.open.pushProjectUrl;
 
     logger.debug('query url : ' + this.queryUrl)
 //    this.url = 'http://127.0.0.1:9000/query';
@@ -67,7 +70,6 @@ LogService.prototype = {
 
         var businessService   = new BusinessService();
 
-        var tryTimes = 0;
         var push = function (){
 
             businessService.findBusiness(function (err , item){
@@ -75,35 +77,46 @@ LogService.prototype = {
                 var strParams = '';
 
                 _.each( item , function (value , ke){
-                    strParams+=value.id+"_";
+                    strParams+=value.id+"|"+value.appkey+"_";
                 });
 
                 if(strParams.length >0){
-                    strParams = "projectsId="+strParams.substring(0 , strParams.length-1   ) + "&";
+                    strParams = strParams.substring(0 , strParams.length-1  ) ;
                 }
 
-                strParams +="auth=badjsAccepter";
+                //strParams +="auth=badjsAccepter";
 
-
-                http.get( self.pushProjectUrl + '?' + strParams , function (res){
-                    res
-                        .on('data' , function (){})
-                        .on('end' , function (){
-                        callback();
-                    })
-
-                }).on('error' , function (err){
-                    if(tryTimes <=3 ){
-                        tryTimes++;
-                        logger.warn('push project error and try:' + err);
-                        push();
-                    }else {
-                        logger.warn('push project error :' + err);
-                        callback(err)
+                var result = [0,0]
+                var resultCall = function (){
+                    if(result[0] < 0 && result[1] <0){
+                        callback(new Error("error"))
+                    }else if(result[0] > 0 && result[1] > 0) {
+                        callback()
                     }
 
+                }
 
-                })
+                request.post(self.pushProjectUrl , {form:{projectsId : strParams, auth : "badjsAccepter"}} , function (err ){
+                    if(err){
+                        logger.warn('push projectIds to acceptor  error :' + err);
+                        result[0] = -1
+                    }else {
+                        result[0] = 1;
+                    }
+                    resultCall();
+                });
+
+                request.post(self.pushProjectUrl2 , {form:{projectsId : strParams , auth : "badjsOpen"}}  , function (err ){
+                    if(err){
+                        logger.warn('push projectIds to open  error :' + err);
+                        result[1] = -1;
+                    }else {
+                        result[1] = 1;
+                    }
+
+                    resultCall();
+                });
+
             });
         }
 

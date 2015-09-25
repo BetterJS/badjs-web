@@ -724,3 +724,24 @@ form {
 .toolar-ul.show li {
     left:0px;
 }
+
+.apply_appkey {
+     position: relative;
+ }
+
+.apply_appkey:hover .appkey-panel {
+    display: block;
+}
+
+.apply_appkey .appkey-panel {
+    display: none;
+    position: absolute;
+    width:360px;
+    border: 1px solid #9D9696;
+    background: #E5E5E5;
+    border-radius: 4px;
+    z-index: 99;
+    padding:  5px;
+    left:-100px;
+    top:30px;
+}

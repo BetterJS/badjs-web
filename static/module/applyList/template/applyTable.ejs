@@ -10,6 +10,7 @@
     <!--<th><input class="tableSelectCheckBox parentCheckBox" type="checkbox"/></th>-->
     <th>#</th>
     <th style="width:80px;">上报id</th>
+    <th style="width:80px;">appkey</th>
     <th >名称</th>
     <th>申请人</th>
     <th style="width:120px;">申请时间</th>
@@ -45,6 +46,12 @@ for(var i = 0; i<len ; i++){
         <!--<td><input class="tableSelectCheckBox" type="checkbox"/></td>-->
         <td class=""><%=(i +1)%></td>
         <td class="apply_id" style="text-align: center;"><%=one.id%></td>
+        <td class="apply_appkey" style="text-align: center;" >
+            <a class="appkey_btn" href="javascript:void(0)" >appkey</a>
+            <div class="appkey-panel" style="text-align: left">
+                <div> appkey :<strong><%=one.appkey%></strong></div>
+            </div>
+        </td>
         <td class="apply_name">
             <span style="width:100px;" class="textOverflow" title="<%=one.name%>"><%=one.name%></span>
         </td>

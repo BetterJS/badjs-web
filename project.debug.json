@@ -11,6 +11,9 @@
     "acceptor": {
         "pushProjectUrl" : "http://127.0.0.1:9001/getProjects"
     },
+    "open": {
+        "pushProjectUrl" : "http://127.0.0.1:9002/getProjects"
+    },
     "zmq" : {
       "url" : "tcp://127.0.0.1:10000",
       "subscribe" : "badjs"

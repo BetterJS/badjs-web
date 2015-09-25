@@ -11,6 +11,7 @@ module.exports  = function (db){
         userName    : String,
         status      : Number,
         name        : String,
+        appkey      : String,
         url         : String,
         description : String,
         mail        : String,
