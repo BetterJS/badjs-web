@@ -1,4 +1,4 @@
-tencentoos.jsvar   tof = require('./oa/node-tof');
+var   tof = require('./oa/node-tof');
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
