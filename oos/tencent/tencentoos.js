@@ -1,4 +1,4 @@
-var   tof = require('./oa/node-tof');
+tencentoos.jsvar   tof = require('./oa/node-tof');
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
@@ -27,13 +27,14 @@ module.exports = function (req , res , next){
     if ( params && params.ticket) { // oa 登录跳转
         tof.passport(params.ticket , function (result){
             if(result){
+                //登录成功
                 user = req.session.user = {loginName : result.LoginName , chineseName : result.ChineseName, role : 0};
                 userDao.one({ loginName : result.LoginName} ,function (err , dbUser) {
                     if(isError(res,err)){
                         return;
                     }
-                    //第一次登陆
-                    if(!dbUser){
+
+                    if(!dbUser){ //第一次登陆，将用户信息写入数据库
                         req.session.user.email = user.loginName +  GLOBAL.pjconfig.email.emailSuffix;
                         req.session.user.password = crypto.createHash("md5").update(user.loginName).digest('hex');
 
@@ -48,7 +49,7 @@ module.exports = function (req , res , next){
                             logger.info("New User:"+ JSON.stringify(req.session.user) + "insert into db-badjs");
                             next();
                         });
-                    }else{
+                    }else{          // 已经登录过，判断是否更新信息
                         logger.info("Old User:"+ JSON.stringify(req.session.user));
                         req.session.user.role = dbUser.role;
                         req.session.user.id = dbUser.id;
