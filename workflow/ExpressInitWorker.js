@@ -20,7 +20,7 @@ var log4js = require('log4js'),
 app.set('views',path.join(__dirname , ".." , "views"));
 app.set('view engine', 'html');
 app.engine('html', tpl.__express);
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 30 * 60 * 1000 } }));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 120 * 60 * 1000 } }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/static' , serveStatic(path.join(__dirname , ".." , "static")));
