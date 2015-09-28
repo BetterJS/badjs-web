@@ -46,3 +46,6 @@ db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理�
     }
 }
 ```
+
+# oos 接入
+查看当前目录的 oos/tencentoos.js 如何处理。
