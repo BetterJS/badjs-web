@@ -9,12 +9,11 @@ var log4js = require('log4js'),
 
 var STATUS_IDLE = "IDLE";
 var STATUS_RUNNING = "RUNNING";
-var ROLE_NEW = "NEW";
-var ROLE_NOMRAL = "NOMRAL";
 
 // 半个小时，回收新增的线程
 var IDLE_TIMEOUT = 1800000;
 
+var maxIdle = 15;
 
 var ProcessorPool = function (){
 
@@ -32,7 +31,7 @@ var ProcessorPool = function (){
 
     /* private */
     var createProcessor = function (obj){
-        var p = {id : currentId++ , processor : new Processor() , status : obj.status || STATUS_IDLE , role : obj.role , idleTime : 0 };
+        var p = {id : currentId++ , processor : new Processor() , status : obj.status || STATUS_IDLE , role : obj.role , createTime : new Date -0   };
         p.processor.__id__ = p.id;
         processorMapping[p.id] = p;
         bindProcessorEvent(p);
@@ -71,7 +70,6 @@ var ProcessorPool = function (){
                 }
             }
             processor.status = STATUS_IDLE;
-            processor.idleTime = new Date - 0;
             processor.processor.wait();
             idlePool.push(runningPool.splice(index , 1)[0]);
 
@@ -81,37 +79,45 @@ var ProcessorPool = function (){
 
     var recovery = function (){
         setInterval(function (){
-            var newIdlePool = [];
-            _.each(idlePool , function (value){
-                if(value.role == ROLE_NEW && (new Date - value.idleTime) > IDLE_TIMEOUT ){
+            if( idlePool.length <= maxIdle){
+                return ;
+            }
+            var diff = idlePool.length - maxIdle;
+
+            logger.info("had "+diff + " should remove ... ");
+
+            for(var i = 0 ; i < diff ; i++){
+                var value = idlePool.splice(0,1)[0];
+                if(value){
                     value.processor.destroy(true);
-
-                    logger.info("processor("+value.processor.__pid__+") idle timeout and clear");
-                }else {
-                    newIdlePool.push(value)
+                    logger.info("processor("+value.processor.__pid__+")  remove");
                 }
-            });
-            idlePool = newIdlePool;
+            }
 
-        },900000);
+            logger.info("current length of idlePool " + idlePool.length);
+
+        //}, 1000 * 10 );
+        },900000); //15分钟，检测一次是否有多余的进程
     }
 
     ProcessorPool.createPool = function (number){
-        var max = number || 15;
-        for(var i= 0 ; i <max ; i ++) {
-            var p = createProcessor({role:ROLE_NOMRAL});
+        if(number){
+            maxIdle = number;
+        }
+        for(var i= 0 ; i <maxIdle ; i ++) {
+            var p = createProcessor({});
             p.processor.wait();
             idlePool.push(p);
         }
 
-        logger.info("create ProcessPool , number : " + max);
+        logger.info("create ProcessPool , number : " + maxIdle);
         monitorError();
     }
 
     ProcessorPool.getProcessor = function (){
         var p;
         if(idlePool.length <=0 ){
-            p = createProcessor({status : STATUS_RUNNING , role : ROLE_NEW });
+            p = createProcessor({status : STATUS_RUNNING  });
         }else {
             p = idlePool.splice(0,1)[0];
         }
@@ -119,7 +125,7 @@ var ProcessorPool = function (){
         p.status = STATUS_RUNNING;
         runningPool.push(p);
 
-        p.processor.wait();
+        p.processor.notify();
 
         logger.debug("runningProcessor id="+ p.processor.__id__ + ", idle count: " + ProcessorPool.idleProcessors() +", running count: " + ProcessorPool.runningProcessors());
         return p.processor;

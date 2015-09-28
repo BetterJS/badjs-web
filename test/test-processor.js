@@ -1,4 +1,7 @@
 
+var EventEmitter = require("events");
+
+var eventEmitter = new EventEmitter;
 
 GLOBAL= {
     pjconfig : {
@@ -29,29 +32,21 @@ var webclientMock = {
     },
     on : function (msg , cb){
         if(msg == "message"){
-            this._msgCallback = cb;
+            eventEmitter.on("test" , cb)
         }
 
     }
 }
 
 
-var processor = ProcessorThread.getProcessor();
-
-processor.start({wbClient : webclientMock});
-
-
-
-/*setInterval(function (){
-    webclientMock._msgCallback(JSON.stringify({type : "KEEPALIVE"}));
-},2000);*/
+ProcessorThread.getProcessor().start({wbClient : webclientMock});
+ProcessorThread.getProcessor().start({wbClient : webclientMock});
+ProcessorThread.getProcessor().start({wbClient : webclientMock});
 
 setTimeout(function (){
-    webclientMock._msgCallback(JSON.stringify({type : "INIT" , id:5}));
+    eventEmitter.emit("test", JSON.stringify({type : "INIT" , id:5}))
+
 },1000)
 
-/*setTimeout(function (){
-    processor.destroy();
-},10000)*/
 
 
