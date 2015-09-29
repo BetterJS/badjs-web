@@ -171,12 +171,17 @@ EmailService.prototype = {
                             name = v.name;
                         }); // jshint ignore:line
 
-                 /*       if(applyId != 991){
-                            return ;
+                        //测试代码
+                        if(GLOBAL.pjconfig.sendEmailflag){
+
+                            if(GLOBAL.pjconfig.sendEmailId && GLOBAL.pjconfig.sendEmailId != applyId ){
+                                return ;
+                            }
+
+                            to_list = GLOBAL.pjconfig.sendEmailList ;
+                            cc_list = [];
                         }
 
-                        to_list = ["chriscai@tencent.com"];
-                        cc_list = [];*/
 
                         that.statisticsService.queryById({
                             top: that.top,
