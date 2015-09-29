@@ -45,8 +45,13 @@ var setChartX =  function (number){
 
 var getImageData = function (name  , data){
 
-    var totalArray = [0,0,0,0,0,0,0];
-    var categories = setChartX(7);
+    var dayLength = 30;
+    var totalArray = [];
+    var categories = setChartX(dayLength);
+
+    for(var i = 0 ; i<dayLength ; i++){
+        totalArray.push(0)
+    }
 
     function whichDayIndex(day1){
         for(var i =0,len = categories.length; i<len; i++){
@@ -105,7 +110,7 @@ EmailService.prototype = {
 
             if(imagePath){
                 html.push('<h4>最近7天图表统计</h4>')
-                html.push('<p><img src="'+ GLOBAL.pjconfig.hostname +imagePath+'"></p>');
+                html.push('<p><img src="'+ GLOBAL.pjconfig.host +imagePath+'"></p>');
             }
 
             html.push('<table style="border-collapse:collapse;;width:95%"><tr style="background-color:#188eee;text-align:left;color:#fff"><th style="padding:2px 0 2px 10px;border:1px solid #dedede;width:60px">#</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede;;width:120px">出现次数</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede">错误内容</th></tr>');
@@ -194,7 +199,7 @@ EmailService.prototype = {
                             if (err) return logger.error('Send email statisticsService queryById error');
                             if ( data &&  data.length > 0) {
 
-                                that.statisticsService.queryByChart({projectId : applyId , timeScope :1} , function (err , chartData){
+                                that.statisticsService.queryByChart({projectId : applyId , timeScope :2} , function (err , chartData){
 
                                     if(err || chartData.data.length <=0){
                                         that.sendEmail({
