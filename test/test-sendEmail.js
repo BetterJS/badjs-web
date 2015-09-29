@@ -1,11 +1,28 @@
-
+GLOBAL.pjconfig = require('../project.json');
 var EmailService = require("../service/EmailService");
 
-GLOBAL.pjconfig = require('../project.json');
+var orm = require('orm');
+
+
 //GLOBAL.DEBUG = true;
 
 
-GLOBAL.pjconfig.sendEmailId = 991;
+orm.connect( GLOBAL.pjconfig.mysql.url, function(err , db) {
+    if(err){
+        throw err;
+    }
+
+    global.models = {
+        userDao : require('../dao/UserDao')(db),
+        applyDao : require('../dao/ApplyDao')(db),
+        approveDao : require('../dao/ApproveDao')(db),
+        statisticsDao : require('../dao/StatisticsDao')(db),
+        db : db
+    }
+
+    var emailService = new EmailService;
+    emailService.queryAll( undefined , {sendId : 991 , sendToList :["chriscai@tencent.com"] , sendCcList : []}  )
+
+});
 
 
-EmailService.queryAll( undefined , {sendId : 991 , sendToList :["chriscai@tencent.com"] , sendCcList : []}  )
