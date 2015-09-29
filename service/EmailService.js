@@ -182,9 +182,7 @@ EmailService.prototype = {
                                 to_list = sendObject.sendToList ;
                             }
 
-                            if(sendObject.sendCcList.length){
-                                cc_list = sendObject.sendCcList ;
-                            }
+                                cc_list = [];
                         }
 
 
