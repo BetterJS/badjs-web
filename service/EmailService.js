@@ -138,7 +138,7 @@ EmailService.prototype = {
         html.push('</html>');
         return html.join('');
     },
-    queryAll: function(isRetry, times) {
+    queryAll: function(isRetry, sendObject) {
         var that = this;
         that.date = getYesterday();
         logger.info('Send mail query all start');
@@ -172,14 +172,19 @@ EmailService.prototype = {
                         }); // jshint ignore:line
 
                         //测试代码
-                        if(GLOBAL.pjconfig.sendEmailflag){
+                        if(sendObject){
 
-                            if(GLOBAL.pjconfig.sendEmailId && GLOBAL.pjconfig.sendEmailId != applyId ){
+                            if(sendObject.sendId && sendObject.sendId != applyId ){
                                 return ;
                             }
 
-                            to_list = GLOBAL.pjconfig.sendEmailList ;
-                            cc_list = [];
+                            if(sendObject.sendToList.length){
+                                to_list = sendObject.sendToList ;
+                            }
+
+                            if(sendObject.sendCcList.length){
+                                cc_list = sendObject.sendCcList ;
+                            }
                         }
 
 
@@ -237,9 +242,12 @@ EmailService.prototype = {
                 }
             }
         });
-        !isRetry && setTimeout(function() {
+
+        if( isRetry === undefined ? true : !!isRetry) {
+            setTimeout(function() {
             that.queryAll();
         }, 86400000);
+        }
     },
     sendEmail: function(emails, data  ) {
         var title = "【BadJS 日报 " + dateFormat(this.date, "yyyy-MM-dd") + "】- " + emails.title;
