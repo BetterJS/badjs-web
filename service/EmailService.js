@@ -82,7 +82,7 @@ var getImageData = function (name  , data){
         },
 
         options : {
-            title : {text : "The last 7 days line charts"} ,
+            title : {text : "The last 30 days line charts"} ,
             "yAxis" : {"title" : {"text": "total" }}
         },
 
@@ -109,7 +109,7 @@ EmailService.prototype = {
         if (content && content.length) {
 
             if(imagePath){
-                html.push('<h4>最近7天图表统计</h4>')
+                html.push('<h4>最近30天图表统计</h4>')
                 html.push('<p><img src="'+ GLOBAL.pjconfig.host +imagePath+'"></p>');
             }
 
