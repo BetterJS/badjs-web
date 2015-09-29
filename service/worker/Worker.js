@@ -5,7 +5,7 @@ var log4js = require('log4js'),
 
 var port = process.env.port;
 var service = process.env.service;
-var isDebug = process.env.debug;
+var isDebug = process.env.debug == "false" ? false: true;
 
 if(isDebug){
     logger.setLevel('DEBUG');
@@ -92,8 +92,6 @@ var Worker = {
 
             if(isDebug ){
                 logger.debug( "pid="+ process.pid + " , " +JSON.stringify(data));
-            }else if ( data.type != "KEEPALIVE"){
-                logger.info("pid=" + process.pid + " , " + JSON.stringify(data));
             }
 
         });
