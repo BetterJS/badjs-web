@@ -31,7 +31,6 @@ var getYesterday = function() {
     return date;
 };
 
-
 var setChartX =  function (number){
     var days = [];
     var nowDay = new Date()-0;
@@ -45,11 +44,10 @@ var setChartX =  function (number){
 
 var getImageData = function (name  , data){
 
-    var dayLength = 30;
     var totalArray = [];
-    var categories = setChartX(dayLength);
+    var categories = setChartX(DAY_LENGTH);
 
-    for(var i = 0 ; i<dayLength ; i++){
+    for(var i = 0 ; i < DAY_LENGTH; i++){
         totalArray.push(0)
     }
 
@@ -67,7 +65,6 @@ var getImageData = function (name  , data){
         totalArray[index] = value.total
     });
 
-
     return {
         data: {
             xAxis: {
@@ -80,22 +77,17 @@ var getImageData = function (name  , data){
                 }
             ]
         },
-
         options : {
-            title : {text : "The last 30 days line charts"} ,
+            title : {text : "The last " + DAY_LENGTH + " days line charts"} ,
             "yAxis" : {"title" : {"text": "total" }}
         },
-
-
         width : 800
-
     }
 }
 
 var encodeHtml = function (str) {
     return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
 };
-
 
 EmailService.prototype = {
     render: function(data ,imagePath) {
@@ -109,7 +101,7 @@ EmailService.prototype = {
         if (content && content.length) {
 
             if(imagePath){
-                html.push('<h4>最近30天图表统计</h4>')
+                html.push('<h4>最近' + DAY_LENGTH + '天图表统计</h4>')
                 html.push('<p><img src="'+ GLOBAL.pjconfig.host +imagePath+'"></p>');
             }
 
@@ -134,7 +126,6 @@ EmailService.prototype = {
                 .replace(/{{top}}/g, that.top)
                 .replace(/{{per}}/g, (total_top * 100 / total).toFixed(2) + '%')
             );
-
 
         } else {
             html.push('<p style="border-top:1px solid #666;margin-top:20px;width:520px;padding:5px 0 0 10px">暂无数据</p>');
@@ -178,18 +169,14 @@ EmailService.prototype = {
 
                         //测试代码
                         if(sendObject){
-
-                            if(sendObject.sendId && sendObject.sendId != applyId ){
-                                return ;
+                            if(sendObject.sendId && sendObject.sendId != applyId) {
+                                return;
                             }
-
-                            if(sendObject.sendToList.length){
+                            if(sendObject.sendToList.length) {
                                 to_list = sendObject.sendToList ;
                             }
-
-                                cc_list = [];
+                            cc_list = [];
                         }
-
 
                         that.statisticsService.queryById({
                             top: that.top,
@@ -198,9 +185,7 @@ EmailService.prototype = {
                         }, function(err, data) {
                             if (err) return logger.error('Send email statisticsService queryById error');
                             if ( data &&  data.length > 0) {
-
                                 that.statisticsService.queryByChart({projectId : applyId , timeScope :2} , function (err , chartData){
-
                                     if(err || chartData.data.length <=0){
                                         that.sendEmail({
                                             to: to_list,
@@ -208,11 +193,7 @@ EmailService.prototype = {
                                             title: name
                                         }, data[0]);
                                     }else {
-
-                                        Exporting(
-                                            getImageData(name , chartData.data)
-                                         , function (err , image){
-
+                                        Exporting(getImageData(name , chartData.data), function (err , image){
                                             if(err){
                                                 logger.info("generate image error " + err.toString() + ", id =" + applyId)
                                                 that.sendEmail({
@@ -230,13 +211,10 @@ EmailService.prototype = {
                                                         imagePath :imagePath
                                                     }, data[0] );
                                                 });
-
                                             }
                                         });
                                     }
-
                                })
-
                             } else {
                                 logger.error('Send email data format error');
                             }
@@ -245,12 +223,11 @@ EmailService.prototype = {
                 }
             }
         });
-
-        if( isRetry === undefined ? true : !!isRetry) {
+        // if( isRetry === undefined ? true : !!isRetry) {
             setTimeout(function() {
-            that.queryAll();
-        }, 86400000);
-        }
+                that.queryAll();
+            }, 86400000);
+        // }
     },
     sendEmail: function(emails, data  ) {
         var title = "【BadJS 日报 " + dateFormat(this.date, "yyyy-MM-dd") + "】- " + emails.title;
