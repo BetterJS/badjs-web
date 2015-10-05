@@ -87,13 +87,13 @@ LogService.prototype = {
                 //strParams +="auth=badjsAccepter";
 
                 var result = [0,0]
+                // todo fix ? post is async
                 var resultCall = function (){
                     if(result[0] < 0 && result[1] <0){
                         callback(new Error("error"))
                     }else if(result[0] > 0 && result[1] > 0) {
                         callback()
                     }
-
                 }
 
                 request.post(self.pushProjectUrl , {form:{projectsId : strParams, auth : "badjsAccepter"}} , function (err ){
@@ -115,7 +115,6 @@ LogService.prototype = {
                         logger.info('push projectIds to openapi success');
                         result[1] = 1;
                     }
-
                     resultCall();
                 });
 
