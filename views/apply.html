@@ -19,9 +19,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label  class="col-sm-4 control-label">业务URL</label>
+                    <label class="col-sm-4 control-label">业务URL [<span style="color:#428bca" title="上报请求的 referer 与 该 url 不匹配将被忽略">?</span>]</label>
                     <div class="col-sm-6">
-                        <input type="url" class="apply-url form-control"  placeholder="业务url" value="<%=it.apply.url%>">
+                        <input
+                            type="url"
+                            class="apply-url form-control"
+                            placeholder="业务url, 格式: http://www.qq.com/"
+                            value="<%=it.apply.url%>"
+                        >
                     </div>
                 </div>
                 <!--<div class="form-group">-->
