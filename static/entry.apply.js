@@ -3,13 +3,13 @@ webpackJsonp([1],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(7);
+	var apply = __webpack_require__(10);
 
 	apply.init();
 
 /***/ },
 
-/***/ 7:
+/***/ 10:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -17,65 +17,60 @@ webpackJsonp([1],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(22);
+	var REG_REFERER = /^https?:\/\/[^\/]+\//i;
+
+	var Dialog = __webpack_require__(20);
 
 
-	    var isValid = true,
-	        applyBox = $("#applyContainer");
+	var applyBox = $("#applyContainer");
 
-	    function bindEvent() {
-	        applyBox.on('click', '.apply-submit', function(e){
-	            e.preventDefault();
-	            if(!isValid){
-	                console.log(isValid);
-	                alert("填写错误，请改正填写");
-	                return;
+	function bindEvent() {
+	    applyBox.on('click', '.apply-submit', function(e) {
+	        e.preventDefault();
+	        var mainpage = $.trim($(".apply-url").val());
+	        if (mainpage !== '*' && !REG_REFERER.test(mainpage)) {
+	            alert("业务URL格式错误");
+	            return;
+	        }
+	        var params = {};
+	        //申请数据
+	        $.extend(params, {
+	            name: $('.apply-name').val(),
+	            description: $('.apply-description').val(),
+	            url: mainpage,
+	            id: $("#applyId").val()
+	        });
+
+	        $.post('./controller/applyAction/addApply.do', params, function(data) {
+	            var ret = data.ret;
+	            switch (ret) {
+	                case 0: //成功
+	                    //执行成功回调函数.
+	                    alert("成功");
+	                    location.reload();
+	                    break;
+	                case 1: //没有登陆态或登陆态失效
+	                    alert("失败");
 	            }
-	            var params = {};
-	            //申请数据
-	            $.extend(params, {
-	                name: $('.apply-name').val(),
-	                description: $('.apply-description').val(),
-	                url: $(".apply-url").val(),
-	                id: $("#applyId").val()
-	                //mail: $(".apply-mail").val()
-	            });
-
-	            $.post('./controller/applyAction/addApply.do', params, function (data) {
-	                var ret = data.ret;
-	                switch(ret){
-	                    case 0://成功
-	                        //执行成功回调函数.
-	                        alert("成功");
-	                        location.reload();
-	                        break;
-	                    case 1://没有登陆态或登陆态失效
-	                        alert("失败");
-	                }
-	            }).fail(function () {
-	                // 错误处理
-	            });
+	        }).fail(function() {
+	            // 错误处理
+	        });
+	    });
+	}
 
 
-	        })
+	function init() {
+	    bindEvent();
+	}
 
-
-	    }
-
-
-	    function init() {
-
-	        bindEvent();
-
-	    }
-
-	module.exports = {init: init}
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+	module.exports = {
+	    init: init
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 18:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -251,15 +246,15 @@ webpackJsonp([1],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 22:
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
-	var modal = __webpack_require__(112);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	var modal = __webpack_require__(117);
 
 	    var container;
 
@@ -303,11 +298,11 @@ webpackJsonp([1],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 112:
+/***/ 117:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

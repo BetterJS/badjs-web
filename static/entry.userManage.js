@@ -1,15 +1,15 @@
-webpackJsonp([4],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var usermanger = __webpack_require__(15);
+	var usermanger = __webpack_require__(16);
 
 	usermanger.init();
 
 /***/ },
 
-/***/ 15:
+/***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -17,8 +17,8 @@ webpackJsonp([4],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(22);
-	var userTable = __webpack_require__(111);
+	var Dialog = __webpack_require__(20);
+	var userTable = __webpack_require__(116);
 
 
 	    var encodeHtml = function (str) {
@@ -163,11 +163,11 @@ webpackJsonp([4],{
 	        init: init
 	    }
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 18:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -343,15 +343,15 @@ webpackJsonp([4],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 22:
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
-	var modal = __webpack_require__(112);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	var modal = __webpack_require__(117);
 
 	    var container;
 
@@ -395,11 +395,11 @@ webpackJsonp([4],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 111:
+/***/ 116:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -448,7 +448,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 112:
+/***/ 117:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
