@@ -43,19 +43,11 @@ module.exports = function(app){
         UserAction.register({}, req , res);
     } );
 
-
-
-
-
     app.get('/user/apply.html', function(req, res){
         var user  = req.session.user;
         if(req.query && req.query.applyId){
             ApplyAction.queryByApplyId({applyId :req.query.applyId } , function (err , apply){
-                if(apply.status != 1){
-                    res.render('apply', { layout: false, user: user, index:'apply' , apply : apply });
-                }else {
-                    res.render('apply', { layout: false, user: user, index:'apply' , apply  : {} });
-                }
+                res.render('apply', { layout: false, user: user, index:'apply' , apply : apply });
             });
         }else {
             res.render('apply', { layout: false, user: user, index:'apply' , apply  : {} });

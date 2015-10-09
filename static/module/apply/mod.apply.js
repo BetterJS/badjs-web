@@ -4,6 +4,7 @@
  * */
 
 var REG_REFERER = /^https?:\/\/[^\/]+\//i;
+var REG_DOMAIN_STAR = /^\*(\.[^\/]+)?$/;
 
 var Dialog = require("dialog/dialog");
 
@@ -14,7 +15,7 @@ function bindEvent() {
     applyBox.on('click', '.apply-submit', function(e) {
         e.preventDefault();
         var mainpage = $.trim($(".apply-url").val());
-        if (mainpage !== '*' && !REG_REFERER.test(mainpage)) {
+        if (!REG_DOMAIN_STAR.test(mainpage) && !REG_REFERER.test(mainpage)) {
             alert("业务URL格式错误");
             return;
         }

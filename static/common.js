@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		3:0
+/******/ 		0:0
 /******/ 	};
 
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "../" + ({"0":"entry.home","1":"entry.apply","2":"entry.realtime","4":"entry.charts","5":"entry.authUserManage","6":"entry.userManage","7":"entry.statistics","8":"entry.projectTotal","9":"entry.log","10":"entry.applyList"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "../" + ({"1":"entry.apply","2":"entry.applyList","3":"entry.authUserManage","4":"entry.charts","5":"entry.home","6":"entry.log","7":"entry.projectTotal","8":"entry.realtime","9":"entry.statistics","10":"entry.userManage"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -98,2615 +98,16 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(4);
 	__webpack_require__(1);
-	__webpack_require__(5);
-	__webpack_require__(6);
 	__webpack_require__(2);
-	module.exports = __webpack_require__(3);
+	__webpack_require__(3);
+	__webpack_require__(4);
+	__webpack_require__(93);
+	module.exports = __webpack_require__(94);
 
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {
-	if(!_){
-	    _={};
-	}
-
-	_.formatDate= function(date, formatString){
-	    /*
-	     * eg:formatString="YYYY-MM-DD hh:mm:ss";
-	     */
-	    var o = {
-	        "M+" : date.getMonth()+1,    //month
-	        "D+" : date.getDate(),    //day
-	        "h+" : date.getHours(),    //hour
-	        "m+" : date.getMinutes(),    //minute
-	        "s+" : date.getSeconds(),    //second
-	        "q+" : Math.floor((date.getMonth()+3)/3),    //quarter
-	        "S" : date.getMilliseconds()    //millisecond
-	    }
-
-	    if(/(Y+)/.test(formatString)){
-	        formatString = formatString.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
-	    }
-
-	    for(var k in o){
-	        if(new RegExp("("+ k +")").test(formatString)){
-	            formatString = formatString.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
-	        }
-	    }
-	    return formatString;
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(jQuery) {/*!
-	 * Bootstrap v3.3.0 (http://getbootstrap.com)
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 */
-
-	if (typeof jQuery === 'undefined') {
-	  throw new Error('Bootstrap\'s JavaScript requires jQuery')
-	}
-
-	+function ($) {
-	  var version = $.fn.jquery.split(' ')[0].split('.')
-	  if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1)) {
-	    throw new Error('Bootstrap\'s JavaScript requires jQuery version 1.9.1 or higher')
-	  }
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: transition.js v3.3.0
-	 * http://getbootstrap.com/javascript/#transitions
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
-	  // ============================================================
-
-	  function transitionEnd() {
-	    var el = document.createElement('bootstrap')
-
-	    var transEndEventNames = {
-	      WebkitTransition : 'webkitTransitionEnd',
-	      MozTransition    : 'transitionend',
-	      OTransition      : 'oTransitionEnd otransitionend',
-	      transition       : 'transitionend'
-	    }
-
-	    for (var name in transEndEventNames) {
-	      if (el.style[name] !== undefined) {
-	        return { end: transEndEventNames[name] }
-	      }
-	    }
-
-	    return false // explicit for ie8 (  ._.)
-	  }
-
-	  // http://blog.alexmaccaw.com/css-transitions
-	  $.fn.emulateTransitionEnd = function (duration) {
-	    var called = false
-	    var $el = this
-	    $(this).one('bsTransitionEnd', function () { called = true })
-	    var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
-	    setTimeout(callback, duration)
-	    return this
-	  }
-
-	  $(function () {
-	    $.support.transition = transitionEnd()
-
-	    if (!$.support.transition) return
-
-	    $.event.special.bsTransitionEnd = {
-	      bindType: $.support.transition.end,
-	      delegateType: $.support.transition.end,
-	      handle: function (e) {
-	        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
-	      }
-	    }
-	  })
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: alert.js v3.3.0
-	 * http://getbootstrap.com/javascript/#alerts
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // ALERT CLASS DEFINITION
-	  // ======================
-
-	  var dismiss = '[data-dismiss="alert"]'
-	  var Alert   = function (el) {
-	    $(el).on('click', dismiss, this.close)
-	  }
-
-	  Alert.VERSION = '3.3.0'
-
-	  Alert.TRANSITION_DURATION = 150
-
-	  Alert.prototype.close = function (e) {
-	    var $this    = $(this)
-	    var selector = $this.attr('data-target')
-
-	    if (!selector) {
-	      selector = $this.attr('href')
-	      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
-	    }
-
-	    var $parent = $(selector)
-
-	    if (e) e.preventDefault()
-
-	    if (!$parent.length) {
-	      $parent = $this.closest('.alert')
-	    }
-
-	    $parent.trigger(e = $.Event('close.bs.alert'))
-
-	    if (e.isDefaultPrevented()) return
-
-	    $parent.removeClass('in')
-
-	    function removeElement() {
-	      // detach from parent, fire event then clean up data
-	      $parent.detach().trigger('closed.bs.alert').remove()
-	    }
-
-	    $.support.transition && $parent.hasClass('fade') ?
-	      $parent
-	        .one('bsTransitionEnd', removeElement)
-	        .emulateTransitionEnd(Alert.TRANSITION_DURATION) :
-	      removeElement()
-	  }
-
-
-	  // ALERT PLUGIN DEFINITION
-	  // =======================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this = $(this)
-	      var data  = $this.data('bs.alert')
-
-	      if (!data) $this.data('bs.alert', (data = new Alert(this)))
-	      if (typeof option == 'string') data[option].call($this)
-	    })
-	  }
-
-	  var old = $.fn.alert
-
-	  $.fn.alert             = Plugin
-	  $.fn.alert.Constructor = Alert
-
-
-	  // ALERT NO CONFLICT
-	  // =================
-
-	  $.fn.alert.noConflict = function () {
-	    $.fn.alert = old
-	    return this
-	  }
-
-
-	  // ALERT DATA-API
-	  // ==============
-
-	  $(document).on('click.bs.alert.data-api', dismiss, Alert.prototype.close)
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: button.js v3.3.0
-	 * http://getbootstrap.com/javascript/#buttons
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // BUTTON PUBLIC CLASS DEFINITION
-	  // ==============================
-
-	  var Button = function (element, options) {
-	    this.$element  = $(element)
-	    this.options   = $.extend({}, Button.DEFAULTS, options)
-	    this.isLoading = false
-	  }
-
-	  Button.VERSION  = '3.3.0'
-
-	  Button.DEFAULTS = {
-	    loadingText: 'loading...'
-	  }
-
-	  Button.prototype.setState = function (state) {
-	    var d    = 'disabled'
-	    var $el  = this.$element
-	    var val  = $el.is('input') ? 'val' : 'html'
-	    var data = $el.data()
-
-	    state = state + 'Text'
-
-	    if (data.resetText == null) $el.data('resetText', $el[val]())
-
-	    // push to event loop to allow forms to submit
-	    setTimeout($.proxy(function () {
-	      $el[val](data[state] == null ? this.options[state] : data[state])
-
-	      if (state == 'loadingText') {
-	        this.isLoading = true
-	        $el.addClass(d).attr(d, d)
-	      } else if (this.isLoading) {
-	        this.isLoading = false
-	        $el.removeClass(d).removeAttr(d)
-	      }
-	    }, this), 0)
-	  }
-
-	  Button.prototype.toggle = function () {
-	    var changed = true
-	    var $parent = this.$element.closest('[data-toggle="buttons"]')
-
-	    if ($parent.length) {
-	      var $input = this.$element.find('input')
-	      if ($input.prop('type') == 'radio') {
-	        if ($input.prop('checked') && this.$element.hasClass('active')) changed = false
-	        else $parent.find('.active').removeClass('active')
-	      }
-	      if (changed) $input.prop('checked', !this.$element.hasClass('active')).trigger('change')
-	    } else {
-	      this.$element.attr('aria-pressed', !this.$element.hasClass('active'))
-	    }
-
-	    if (changed) this.$element.toggleClass('active')
-	  }
-
-
-	  // BUTTON PLUGIN DEFINITION
-	  // ========================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this   = $(this)
-	      var data    = $this.data('bs.button')
-	      var options = typeof option == 'object' && option
-
-	      if (!data) $this.data('bs.button', (data = new Button(this, options)))
-
-	      if (option == 'toggle') data.toggle()
-	      else if (option) data.setState(option)
-	    })
-	  }
-
-	  var old = $.fn.button
-
-	  $.fn.button             = Plugin
-	  $.fn.button.Constructor = Button
-
-
-	  // BUTTON NO CONFLICT
-	  // ==================
-
-	  $.fn.button.noConflict = function () {
-	    $.fn.button = old
-	    return this
-	  }
-
-
-	  // BUTTON DATA-API
-	  // ===============
-
-	  $(document)
-	    .on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
-	      var $btn = $(e.target)
-	      if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
-	      Plugin.call($btn, 'toggle')
-	      e.preventDefault()
-	    })
-	    .on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
-	      $(e.target).closest('.btn').toggleClass('focus', e.type == 'focus')
-	    })
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: carousel.js v3.3.0
-	 * http://getbootstrap.com/javascript/#carousel
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // CAROUSEL CLASS DEFINITION
-	  // =========================
-
-	  var Carousel = function (element, options) {
-	    this.$element    = $(element)
-	    this.$indicators = this.$element.find('.carousel-indicators')
-	    this.options     = options
-	    this.paused      =
-	    this.sliding     =
-	    this.interval    =
-	    this.$active     =
-	    this.$items      = null
-
-	    this.options.keyboard && this.$element.on('keydown.bs.carousel', $.proxy(this.keydown, this))
-
-	    this.options.pause == 'hover' && !('ontouchstart' in document.documentElement) && this.$element
-	      .on('mouseenter.bs.carousel', $.proxy(this.pause, this))
-	      .on('mouseleave.bs.carousel', $.proxy(this.cycle, this))
-	  }
-
-	  Carousel.VERSION  = '3.3.0'
-
-	  Carousel.TRANSITION_DURATION = 600
-
-	  Carousel.DEFAULTS = {
-	    interval: 5000,
-	    pause: 'hover',
-	    wrap: true,
-	    keyboard: true
-	  }
-
-	  Carousel.prototype.keydown = function (e) {
-	    switch (e.which) {
-	      case 37: this.prev(); break
-	      case 39: this.next(); break
-	      default: return
-	    }
-
-	    e.preventDefault()
-	  }
-
-	  Carousel.prototype.cycle = function (e) {
-	    e || (this.paused = false)
-
-	    this.interval && clearInterval(this.interval)
-
-	    this.options.interval
-	      && !this.paused
-	      && (this.interval = setInterval($.proxy(this.next, this), this.options.interval))
-
-	    return this
-	  }
-
-	  Carousel.prototype.getItemIndex = function (item) {
-	    this.$items = item.parent().children('.item')
-	    return this.$items.index(item || this.$active)
-	  }
-
-	  Carousel.prototype.getItemForDirection = function (direction, active) {
-	    var delta = direction == 'prev' ? -1 : 1
-	    var activeIndex = this.getItemIndex(active)
-	    var itemIndex = (activeIndex + delta) % this.$items.length
-	    return this.$items.eq(itemIndex)
-	  }
-
-	  Carousel.prototype.to = function (pos) {
-	    var that        = this
-	    var activeIndex = this.getItemIndex(this.$active = this.$element.find('.item.active'))
-
-	    if (pos > (this.$items.length - 1) || pos < 0) return
-
-	    if (this.sliding)       return this.$element.one('slid.bs.carousel', function () { that.to(pos) }) // yes, "slid"
-	    if (activeIndex == pos) return this.pause().cycle()
-
-	    return this.slide(pos > activeIndex ? 'next' : 'prev', this.$items.eq(pos))
-	  }
-
-	  Carousel.prototype.pause = function (e) {
-	    e || (this.paused = true)
-
-	    if (this.$element.find('.next, .prev').length && $.support.transition) {
-	      this.$element.trigger($.support.transition.end)
-	      this.cycle(true)
-	    }
-
-	    this.interval = clearInterval(this.interval)
-
-	    return this
-	  }
-
-	  Carousel.prototype.next = function () {
-	    if (this.sliding) return
-	    return this.slide('next')
-	  }
-
-	  Carousel.prototype.prev = function () {
-	    if (this.sliding) return
-	    return this.slide('prev')
-	  }
-
-	  Carousel.prototype.slide = function (type, next) {
-	    var $active   = this.$element.find('.item.active')
-	    var $next     = next || this.getItemForDirection(type, $active)
-	    var isCycling = this.interval
-	    var direction = type == 'next' ? 'left' : 'right'
-	    var fallback  = type == 'next' ? 'first' : 'last'
-	    var that      = this
-
-	    if (!$next.length) {
-	      if (!this.options.wrap) return
-	      $next = this.$element.find('.item')[fallback]()
-	    }
-
-	    if ($next.hasClass('active')) return (this.sliding = false)
-
-	    var relatedTarget = $next[0]
-	    var slideEvent = $.Event('slide.bs.carousel', {
-	      relatedTarget: relatedTarget,
-	      direction: direction
-	    })
-	    this.$element.trigger(slideEvent)
-	    if (slideEvent.isDefaultPrevented()) return
-
-	    this.sliding = true
-
-	    isCycling && this.pause()
-
-	    if (this.$indicators.length) {
-	      this.$indicators.find('.active').removeClass('active')
-	      var $nextIndicator = $(this.$indicators.children()[this.getItemIndex($next)])
-	      $nextIndicator && $nextIndicator.addClass('active')
-	    }
-
-	    var slidEvent = $.Event('slid.bs.carousel', { relatedTarget: relatedTarget, direction: direction }) // yes, "slid"
-	    if ($.support.transition && this.$element.hasClass('slide')) {
-	      $next.addClass(type)
-	      $next[0].offsetWidth // force reflow
-	      $active.addClass(direction)
-	      $next.addClass(direction)
-	      $active
-	        .one('bsTransitionEnd', function () {
-	          $next.removeClass([type, direction].join(' ')).addClass('active')
-	          $active.removeClass(['active', direction].join(' '))
-	          that.sliding = false
-	          setTimeout(function () {
-	            that.$element.trigger(slidEvent)
-	          }, 0)
-	        })
-	        .emulateTransitionEnd(Carousel.TRANSITION_DURATION)
-	    } else {
-	      $active.removeClass('active')
-	      $next.addClass('active')
-	      this.sliding = false
-	      this.$element.trigger(slidEvent)
-	    }
-
-	    isCycling && this.cycle()
-
-	    return this
-	  }
-
-
-	  // CAROUSEL PLUGIN DEFINITION
-	  // ==========================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this   = $(this)
-	      var data    = $this.data('bs.carousel')
-	      var options = $.extend({}, Carousel.DEFAULTS, $this.data(), typeof option == 'object' && option)
-	      var action  = typeof option == 'string' ? option : options.slide
-
-	      if (!data) $this.data('bs.carousel', (data = new Carousel(this, options)))
-	      if (typeof option == 'number') data.to(option)
-	      else if (action) data[action]()
-	      else if (options.interval) data.pause().cycle()
-	    })
-	  }
-
-	  var old = $.fn.carousel
-
-	  $.fn.carousel             = Plugin
-	  $.fn.carousel.Constructor = Carousel
-
-
-	  // CAROUSEL NO CONFLICT
-	  // ====================
-
-	  $.fn.carousel.noConflict = function () {
-	    $.fn.carousel = old
-	    return this
-	  }
-
-
-	  // CAROUSEL DATA-API
-	  // =================
-
-	  var clickHandler = function (e) {
-	    var href
-	    var $this   = $(this)
-	    var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) // strip for ie7
-	    if (!$target.hasClass('carousel')) return
-	    var options = $.extend({}, $target.data(), $this.data())
-	    var slideIndex = $this.attr('data-slide-to')
-	    if (slideIndex) options.interval = false
-
-	    Plugin.call($target, options)
-
-	    if (slideIndex) {
-	      $target.data('bs.carousel').to(slideIndex)
-	    }
-
-	    e.preventDefault()
-	  }
-
-	  $(document)
-	    .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
-	    .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler)
-
-	  $(window).on('load', function () {
-	    $('[data-ride="carousel"]').each(function () {
-	      var $carousel = $(this)
-	      Plugin.call($carousel, $carousel.data())
-	    })
-	  })
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: collapse.js v3.3.0
-	 * http://getbootstrap.com/javascript/#collapse
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // COLLAPSE PUBLIC CLASS DEFINITION
-	  // ================================
-
-	  var Collapse = function (element, options) {
-	    this.$element      = $(element)
-	    this.options       = $.extend({}, Collapse.DEFAULTS, options)
-	    this.$trigger      = $(this.options.trigger).filter('[href="#' + element.id + '"], [data-target="#' + element.id + '"]')
-	    this.transitioning = null
-
-	    if (this.options.parent) {
-	      this.$parent = this.getParent()
-	    } else {
-	      this.addAriaAndCollapsedClass(this.$element, this.$trigger)
-	    }
-
-	    if (this.options.toggle) this.toggle()
-	  }
-
-	  Collapse.VERSION  = '3.3.0'
-
-	  Collapse.TRANSITION_DURATION = 350
-
-	  Collapse.DEFAULTS = {
-	    toggle: true,
-	    trigger: '[data-toggle="collapse"]'
-	  }
-
-	  Collapse.prototype.dimension = function () {
-	    var hasWidth = this.$element.hasClass('width')
-	    return hasWidth ? 'width' : 'height'
-	  }
-
-	  Collapse.prototype.show = function () {
-	    if (this.transitioning || this.$element.hasClass('in')) return
-
-	    var activesData
-	    var actives = this.$parent && this.$parent.find('> .panel').children('.in, .collapsing')
-
-	    if (actives && actives.length) {
-	      activesData = actives.data('bs.collapse')
-	      if (activesData && activesData.transitioning) return
-	    }
-
-	    var startEvent = $.Event('show.bs.collapse')
-	    this.$element.trigger(startEvent)
-	    if (startEvent.isDefaultPrevented()) return
-
-	    if (actives && actives.length) {
-	      Plugin.call(actives, 'hide')
-	      activesData || actives.data('bs.collapse', null)
-	    }
-
-	    var dimension = this.dimension()
-
-	    this.$element
-	      .removeClass('collapse')
-	      .addClass('collapsing')[dimension](0)
-	      .attr('aria-expanded', true)
-
-	    this.$trigger
-	      .removeClass('collapsed')
-	      .attr('aria-expanded', true)
-
-	    this.transitioning = 1
-
-	    var complete = function () {
-	      this.$element
-	        .removeClass('collapsing')
-	        .addClass('collapse in')[dimension]('')
-	      this.transitioning = 0
-	      this.$element
-	        .trigger('shown.bs.collapse')
-	    }
-
-	    if (!$.support.transition) return complete.call(this)
-
-	    var scrollSize = $.camelCase(['scroll', dimension].join('-'))
-
-	    this.$element
-	      .one('bsTransitionEnd', $.proxy(complete, this))
-	      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
-	  }
-
-	  Collapse.prototype.hide = function () {
-	    if (this.transitioning || !this.$element.hasClass('in')) return
-
-	    var startEvent = $.Event('hide.bs.collapse')
-	    this.$element.trigger(startEvent)
-	    if (startEvent.isDefaultPrevented()) return
-
-	    var dimension = this.dimension()
-
-	    this.$element[dimension](this.$element[dimension]())[0].offsetHeight
-
-	    this.$element
-	      .addClass('collapsing')
-	      .removeClass('collapse in')
-	      .attr('aria-expanded', false)
-
-	    this.$trigger
-	      .addClass('collapsed')
-	      .attr('aria-expanded', false)
-
-	    this.transitioning = 1
-
-	    var complete = function () {
-	      this.transitioning = 0
-	      this.$element
-	        .removeClass('collapsing')
-	        .addClass('collapse')
-	        .trigger('hidden.bs.collapse')
-	    }
-
-	    if (!$.support.transition) return complete.call(this)
-
-	    this.$element
-	      [dimension](0)
-	      .one('bsTransitionEnd', $.proxy(complete, this))
-	      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)
-	  }
-
-	  Collapse.prototype.toggle = function () {
-	    this[this.$element.hasClass('in') ? 'hide' : 'show']()
-	  }
-
-	  Collapse.prototype.getParent = function () {
-	    return $(this.options.parent)
-	      .find('[data-toggle="collapse"][data-parent="' + this.options.parent + '"]')
-	      .each($.proxy(function (i, element) {
-	        var $element = $(element)
-	        this.addAriaAndCollapsedClass(getTargetFromTrigger($element), $element)
-	      }, this))
-	      .end()
-	  }
-
-	  Collapse.prototype.addAriaAndCollapsedClass = function ($element, $trigger) {
-	    var isOpen = $element.hasClass('in')
-
-	    $element.attr('aria-expanded', isOpen)
-	    $trigger
-	      .toggleClass('collapsed', !isOpen)
-	      .attr('aria-expanded', isOpen)
-	  }
-
-	  function getTargetFromTrigger($trigger) {
-	    var href
-	    var target = $trigger.attr('data-target')
-	      || (href = $trigger.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') // strip for ie7
-
-	    return $(target)
-	  }
-
-
-	  // COLLAPSE PLUGIN DEFINITION
-	  // ==========================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this   = $(this)
-	      var data    = $this.data('bs.collapse')
-	      var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
-
-	      if (!data && options.toggle && option == 'show') options.toggle = false
-	      if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
-	      if (typeof option == 'string') data[option]()
-	    })
-	  }
-
-	  var old = $.fn.collapse
-
-	  $.fn.collapse             = Plugin
-	  $.fn.collapse.Constructor = Collapse
-
-
-	  // COLLAPSE NO CONFLICT
-	  // ====================
-
-	  $.fn.collapse.noConflict = function () {
-	    $.fn.collapse = old
-	    return this
-	  }
-
-
-	  // COLLAPSE DATA-API
-	  // =================
-
-	  $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
-	    var $this   = $(this)
-
-	    if (!$this.attr('data-target')) e.preventDefault()
-
-	    var $target = getTargetFromTrigger($this)
-	    var data    = $target.data('bs.collapse')
-	    var option  = data ? 'toggle' : $.extend({}, $this.data(), { trigger: this })
-
-	    Plugin.call($target, option)
-	  })
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: dropdown.js v3.3.0
-	 * http://getbootstrap.com/javascript/#dropdowns
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // DROPDOWN CLASS DEFINITION
-	  // =========================
-
-	  var backdrop = '.dropdown-backdrop'
-	  var toggle   = '[data-toggle="dropdown"]'
-	  var Dropdown = function (element) {
-	    $(element).on('click.bs.dropdown', this.toggle)
-	  }
-
-	  Dropdown.VERSION = '3.3.0'
-
-	  Dropdown.prototype.toggle = function (e) {
-	    var $this = $(this)
-
-	    if ($this.is('.disabled, :disabled')) return
-
-	    var $parent  = getParent($this)
-	    var isActive = $parent.hasClass('open')
-
-	    clearMenus()
-
-	    if (!isActive) {
-	      if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
-	        // if mobile we use a backdrop because click events don't delegate
-	        $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
-	      }
-
-	      var relatedTarget = { relatedTarget: this }
-	      $parent.trigger(e = $.Event('show.bs.dropdown', relatedTarget))
-
-	      if (e.isDefaultPrevented()) return
-
-	      $this
-	        .trigger('focus')
-	        .attr('aria-expanded', 'true')
-
-	      $parent
-	        .toggleClass('open')
-	        .trigger('shown.bs.dropdown', relatedTarget)
-	    }
-
-	    return false
-	  }
-
-	  Dropdown.prototype.keydown = function (e) {
-	    if (!/(38|40|27|32)/.test(e.which)) return
-
-	    var $this = $(this)
-
-	    e.preventDefault()
-	    e.stopPropagation()
-
-	    if ($this.is('.disabled, :disabled')) return
-
-	    var $parent  = getParent($this)
-	    var isActive = $parent.hasClass('open')
-
-	    if ((!isActive && e.which != 27) || (isActive && e.which == 27)) {
-	      if (e.which == 27) $parent.find(toggle).trigger('focus')
-	      return $this.trigger('click')
-	    }
-
-	    var desc = ' li:not(.divider):visible a'
-	    var $items = $parent.find('[role="menu"]' + desc + ', [role="listbox"]' + desc)
-
-	    if (!$items.length) return
-
-	    var index = $items.index(e.target)
-
-	    if (e.which == 38 && index > 0)                 index--                        // up
-	    if (e.which == 40 && index < $items.length - 1) index++                        // down
-	    if (!~index)                                      index = 0
-
-	    $items.eq(index).trigger('focus')
-	  }
-
-	  function clearMenus(e) {
-	    if (e && e.which === 3) return
-	    $(backdrop).remove()
-	    $(toggle).each(function () {
-	      var $this         = $(this)
-	      var $parent       = getParent($this)
-	      var relatedTarget = { relatedTarget: this }
-
-	      if (!$parent.hasClass('open')) return
-
-	      $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
-
-	      if (e.isDefaultPrevented()) return
-
-	      $this.attr('aria-expanded', 'false')
-	      $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
-	    })
-	  }
-
-	  function getParent($this) {
-	    var selector = $this.attr('data-target')
-
-	    if (!selector) {
-	      selector = $this.attr('href')
-	      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
-	    }
-
-	    var $parent = selector && $(selector)
-
-	    return $parent && $parent.length ? $parent : $this.parent()
-	  }
-
-
-	  // DROPDOWN PLUGIN DEFINITION
-	  // ==========================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this = $(this)
-	      var data  = $this.data('bs.dropdown')
-
-	      if (!data) $this.data('bs.dropdown', (data = new Dropdown(this)))
-	      if (typeof option == 'string') data[option].call($this)
-	    })
-	  }
-
-	  var old = $.fn.dropdown
-
-	  $.fn.dropdown             = Plugin
-	  $.fn.dropdown.Constructor = Dropdown
-
-
-	  // DROPDOWN NO CONFLICT
-	  // ====================
-
-	  $.fn.dropdown.noConflict = function () {
-	    $.fn.dropdown = old
-	    return this
-	  }
-
-
-	  // APPLY TO STANDARD DROPDOWN ELEMENTS
-	  // ===================================
-
-	  $(document)
-	    .on('click.bs.dropdown.data-api', clearMenus)
-	    .on('click.bs.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
-	    .on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle)
-	    .on('keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown)
-	    .on('keydown.bs.dropdown.data-api', '[role="menu"]', Dropdown.prototype.keydown)
-	    .on('keydown.bs.dropdown.data-api', '[role="listbox"]', Dropdown.prototype.keydown)
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: modal.js v3.3.0
-	 * http://getbootstrap.com/javascript/#modals
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // MODAL CLASS DEFINITION
-	  // ======================
-
-	  var Modal = function (element, options) {
-	    this.options        = options
-	    this.$body          = $(document.body)
-	    this.$element       = $(element)
-	    this.$backdrop      =
-	    this.isShown        = null
-	    this.scrollbarWidth = 0
-
-	    if (this.options.remote) {
-	      this.$element
-	        .find('.modal-content')
-	        .load(this.options.remote, $.proxy(function () {
-	          this.$element.trigger('loaded.bs.modal')
-	        }, this))
-	    }
-	  }
-
-	  Modal.VERSION  = '3.3.0'
-
-	  Modal.TRANSITION_DURATION = 300
-	  Modal.BACKDROP_TRANSITION_DURATION = 150
-
-	  Modal.DEFAULTS = {
-	    backdrop: true,
-	    keyboard: true,
-	    show: true
-	  }
-
-	  Modal.prototype.toggle = function (_relatedTarget) {
-	    return this.isShown ? this.hide() : this.show(_relatedTarget)
-	  }
-
-	  Modal.prototype.show = function (_relatedTarget) {
-	    var that = this
-	    var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
-
-	    this.$element.trigger(e)
-
-	    if (this.isShown || e.isDefaultPrevented()) return
-
-	    this.isShown = true
-
-	    this.checkScrollbar()
-	    this.$body.addClass('modal-open')
-
-	    this.setScrollbar()
-	    this.escape()
-
-	    this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
-
-	    this.backdrop(function () {
-	      var transition = $.support.transition && that.$element.hasClass('fade')
-
-	      if (!that.$element.parent().length) {
-	        that.$element.appendTo(that.$body) // don't move modals dom position
-	      }
-
-	      that.$element
-	        .show()
-	        .scrollTop(0)
-
-	      if (transition) {
-	        that.$element[0].offsetWidth // force reflow
-	      }
-
-	      that.$element
-	        .addClass('in')
-	        .attr('aria-hidden', false)
-
-	      that.enforceFocus()
-
-	      var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
-
-	      transition ?
-	        that.$element.find('.modal-dialog') // wait for modal to slide in
-	          .one('bsTransitionEnd', function () {
-	            that.$element.trigger('focus').trigger(e)
-	          })
-	          .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-	        that.$element.trigger('focus').trigger(e)
-	    })
-	  }
-
-	  Modal.prototype.hide = function (e) {
-	    if (e) e.preventDefault()
-
-	    e = $.Event('hide.bs.modal')
-
-	    this.$element.trigger(e)
-
-	    if (!this.isShown || e.isDefaultPrevented()) return
-
-	    this.isShown = false
-
-	    this.escape()
-
-	    $(document).off('focusin.bs.modal')
-
-	    this.$element
-	      .removeClass('in')
-	      .attr('aria-hidden', true)
-	      .off('click.dismiss.bs.modal')
-
-	    $.support.transition && this.$element.hasClass('fade') ?
-	      this.$element
-	        .one('bsTransitionEnd', $.proxy(this.hideModal, this))
-	        .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-	      this.hideModal()
-	  }
-
-	  Modal.prototype.enforceFocus = function () {
-	    $(document)
-	      .off('focusin.bs.modal') // guard against infinite focus loop
-	      .on('focusin.bs.modal', $.proxy(function (e) {
-	        if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
-	          this.$element.trigger('focus')
-	        }
-	      }, this))
-	  }
-
-	  Modal.prototype.escape = function () {
-	    if (this.isShown && this.options.keyboard) {
-	      this.$element.on('keydown.dismiss.bs.modal', $.proxy(function (e) {
-	        e.which == 27 && this.hide()
-	      }, this))
-	    } else if (!this.isShown) {
-	      this.$element.off('keydown.dismiss.bs.modal')
-	    }
-	  }
-
-	  Modal.prototype.hideModal = function () {
-	    var that = this
-	    this.$element.hide()
-	    this.backdrop(function () {
-	      that.$body.removeClass('modal-open')
-	      that.resetScrollbar()
-	      that.$element.trigger('hidden.bs.modal')
-	    })
-	  }
-
-	  Modal.prototype.removeBackdrop = function () {
-	    this.$backdrop && this.$backdrop.remove()
-	    this.$backdrop = null
-	  }
-
-	  Modal.prototype.backdrop = function (callback) {
-	    var that = this
-	    var animate = this.$element.hasClass('fade') ? 'fade' : ''
-
-	    if (this.isShown && this.options.backdrop) {
-	      var doAnimate = $.support.transition && animate
-
-	      this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
-	        .prependTo(this.$element)
-	        .on('click.dismiss.bs.modal', $.proxy(function (e) {
-	          if (e.target !== e.currentTarget) return
-	          this.options.backdrop == 'static'
-	            ? this.$element[0].focus.call(this.$element[0])
-	            : this.hide.call(this)
-	        }, this))
-
-	      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
-
-	      this.$backdrop.addClass('in')
-
-	      if (!callback) return
-
-	      doAnimate ?
-	        this.$backdrop
-	          .one('bsTransitionEnd', callback)
-	          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-	        callback()
-
-	    } else if (!this.isShown && this.$backdrop) {
-	      this.$backdrop.removeClass('in')
-
-	      var callbackRemove = function () {
-	        that.removeBackdrop()
-	        callback && callback()
-	      }
-	      $.support.transition && this.$element.hasClass('fade') ?
-	        this.$backdrop
-	          .one('bsTransitionEnd', callbackRemove)
-	          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-	        callbackRemove()
-
-	    } else if (callback) {
-	      callback()
-	    }
-	  }
-
-	  Modal.prototype.checkScrollbar = function () {
-	    this.scrollbarWidth = this.measureScrollbar()
-	  }
-
-	  Modal.prototype.setScrollbar = function () {
-	    var bodyPad = parseInt((this.$body.css('padding-right') || 0), 10)
-	    if (this.scrollbarWidth) this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
-	  }
-
-	  Modal.prototype.resetScrollbar = function () {
-	    this.$body.css('padding-right', '')
-	  }
-
-	  Modal.prototype.measureScrollbar = function () { // thx walsh
-	    if (document.body.clientWidth >= window.innerWidth) return 0
-	    var scrollDiv = document.createElement('div')
-	    scrollDiv.className = 'modal-scrollbar-measure'
-	    this.$body.append(scrollDiv)
-	    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
-	    this.$body[0].removeChild(scrollDiv)
-	    return scrollbarWidth
-	  }
-
-
-	  // MODAL PLUGIN DEFINITION
-	  // =======================
-
-	  function Plugin(option, _relatedTarget) {
-	    return this.each(function () {
-	      var $this   = $(this)
-	      var data    = $this.data('bs.modal')
-	      var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
-
-	      if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
-	      if (typeof option == 'string') data[option](_relatedTarget)
-	      else if (options.show) data.show(_relatedTarget)
-	    })
-	  }
-
-	  var old = $.fn.modal
-
-	  $.fn.modal             = Plugin
-	  $.fn.modal.Constructor = Modal
-
-
-	  // MODAL NO CONFLICT
-	  // =================
-
-	  $.fn.modal.noConflict = function () {
-	    $.fn.modal = old
-	    return this
-	  }
-
-
-	  // MODAL DATA-API
-	  // ==============
-
-	  $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
-	    var $this   = $(this)
-	    var href    = $this.attr('href')
-	    var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) // strip for ie7
-	    var option  = $target.data('bs.modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())
-
-	    if ($this.is('a')) e.preventDefault()
-
-	    $target.one('show.bs.modal', function (showEvent) {
-	      if (showEvent.isDefaultPrevented()) return // only register focus restorer if modal will actually get shown
-	      $target.one('hidden.bs.modal', function () {
-	        $this.is(':visible') && $this.trigger('focus')
-	      })
-	    })
-	    Plugin.call($target, option, this)
-	  })
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: tooltip.js v3.3.0
-	 * http://getbootstrap.com/javascript/#tooltip
-	 * Inspired by the original jQuery.tipsy by Jason Frame
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // TOOLTIP PUBLIC CLASS DEFINITION
-	  // ===============================
-
-	  var Tooltip = function (element, options) {
-	    this.type       =
-	    this.options    =
-	    this.enabled    =
-	    this.timeout    =
-	    this.hoverState =
-	    this.$element   = null
-
-	    this.init('tooltip', element, options)
-	  }
-
-	  Tooltip.VERSION  = '3.3.0'
-
-	  Tooltip.TRANSITION_DURATION = 150
-
-	  Tooltip.DEFAULTS = {
-	    animation: true,
-	    placement: 'top',
-	    selector: false,
-	    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-	    trigger: 'hover focus',
-	    title: '',
-	    delay: 0,
-	    html: false,
-	    container: false,
-	    viewport: {
-	      selector: 'body',
-	      padding: 0
-	    }
-	  }
-
-	  Tooltip.prototype.init = function (type, element, options) {
-	    this.enabled   = true
-	    this.type      = type
-	    this.$element  = $(element)
-	    this.options   = this.getOptions(options)
-	    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
-
-	    var triggers = this.options.trigger.split(' ')
-
-	    for (var i = triggers.length; i--;) {
-	      var trigger = triggers[i]
-
-	      if (trigger == 'click') {
-	        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
-	      } else if (trigger != 'manual') {
-	        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
-	        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
-
-	        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
-	        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
-	      }
-	    }
-
-	    this.options.selector ?
-	      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
-	      this.fixTitle()
-	  }
-
-	  Tooltip.prototype.getDefaults = function () {
-	    return Tooltip.DEFAULTS
-	  }
-
-	  Tooltip.prototype.getOptions = function (options) {
-	    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
-
-	    if (options.delay && typeof options.delay == 'number') {
-	      options.delay = {
-	        show: options.delay,
-	        hide: options.delay
-	      }
-	    }
-
-	    return options
-	  }
-
-	  Tooltip.prototype.getDelegateOptions = function () {
-	    var options  = {}
-	    var defaults = this.getDefaults()
-
-	    this._options && $.each(this._options, function (key, value) {
-	      if (defaults[key] != value) options[key] = value
-	    })
-
-	    return options
-	  }
-
-	  Tooltip.prototype.enter = function (obj) {
-	    var self = obj instanceof this.constructor ?
-	      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-	    if (self && self.$tip && self.$tip.is(':visible')) {
-	      self.hoverState = 'in'
-	      return
-	    }
-
-	    if (!self) {
-	      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-	      $(obj.currentTarget).data('bs.' + this.type, self)
-	    }
-
-	    clearTimeout(self.timeout)
-
-	    self.hoverState = 'in'
-
-	    if (!self.options.delay || !self.options.delay.show) return self.show()
-
-	    self.timeout = setTimeout(function () {
-	      if (self.hoverState == 'in') self.show()
-	    }, self.options.delay.show)
-	  }
-
-	  Tooltip.prototype.leave = function (obj) {
-	    var self = obj instanceof this.constructor ?
-	      obj : $(obj.currentTarget).data('bs.' + this.type)
-
-	    if (!self) {
-	      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
-	      $(obj.currentTarget).data('bs.' + this.type, self)
-	    }
-
-	    clearTimeout(self.timeout)
-
-	    self.hoverState = 'out'
-
-	    if (!self.options.delay || !self.options.delay.hide) return self.hide()
-
-	    self.timeout = setTimeout(function () {
-	      if (self.hoverState == 'out') self.hide()
-	    }, self.options.delay.hide)
-	  }
-
-	  Tooltip.prototype.show = function () {
-	    var e = $.Event('show.bs.' + this.type)
-
-	    if (this.hasContent() && this.enabled) {
-	      this.$element.trigger(e)
-
-	      var inDom = $.contains(this.$element[0].ownerDocument.documentElement, this.$element[0])
-	      if (e.isDefaultPrevented() || !inDom) return
-	      var that = this
-
-	      var $tip = this.tip()
-
-	      var tipId = this.getUID(this.type)
-
-	      this.setContent()
-	      $tip.attr('id', tipId)
-	      this.$element.attr('aria-describedby', tipId)
-
-	      if (this.options.animation) $tip.addClass('fade')
-
-	      var placement = typeof this.options.placement == 'function' ?
-	        this.options.placement.call(this, $tip[0], this.$element[0]) :
-	        this.options.placement
-
-	      var autoToken = /\s?auto?\s?/i
-	      var autoPlace = autoToken.test(placement)
-	      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
-
-	      $tip
-	        .detach()
-	        .css({ top: 0, left: 0, display: 'block' })
-	        .addClass(placement)
-	        .data('bs.' + this.type, this)
-
-	      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
-
-	      var pos          = this.getPosition()
-	      var actualWidth  = $tip[0].offsetWidth
-	      var actualHeight = $tip[0].offsetHeight
-
-	      if (autoPlace) {
-	        var orgPlacement = placement
-	        var $container   = this.options.container ? $(this.options.container) : this.$element.parent()
-	        var containerDim = this.getPosition($container)
-
-	        placement = placement == 'bottom' && pos.bottom + actualHeight > containerDim.bottom ? 'top'    :
-	                    placement == 'top'    && pos.top    - actualHeight < containerDim.top    ? 'bottom' :
-	                    placement == 'right'  && pos.right  + actualWidth  > containerDim.width  ? 'left'   :
-	                    placement == 'left'   && pos.left   - actualWidth  < containerDim.left   ? 'right'  :
-	                    placement
-
-	        $tip
-	          .removeClass(orgPlacement)
-	          .addClass(placement)
-	      }
-
-	      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
-
-	      this.applyPlacement(calculatedOffset, placement)
-
-	      var complete = function () {
-	        var prevHoverState = that.hoverState
-	        that.$element.trigger('shown.bs.' + that.type)
-	        that.hoverState = null
-
-	        if (prevHoverState == 'out') that.leave(that)
-	      }
-
-	      $.support.transition && this.$tip.hasClass('fade') ?
-	        $tip
-	          .one('bsTransitionEnd', complete)
-	          .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
-	        complete()
-	    }
-	  }
-
-	  Tooltip.prototype.applyPlacement = function (offset, placement) {
-	    var $tip   = this.tip()
-	    var width  = $tip[0].offsetWidth
-	    var height = $tip[0].offsetHeight
-
-	    // manually read margins because getBoundingClientRect includes difference
-	    var marginTop = parseInt($tip.css('margin-top'), 10)
-	    var marginLeft = parseInt($tip.css('margin-left'), 10)
-
-	    // we must check for NaN for ie 8/9
-	    if (isNaN(marginTop))  marginTop  = 0
-	    if (isNaN(marginLeft)) marginLeft = 0
-
-	    offset.top  = offset.top  + marginTop
-	    offset.left = offset.left + marginLeft
-
-	    // $.fn.offset doesn't round pixel values
-	    // so we use setOffset directly with our own function B-0
-	    $.offset.setOffset($tip[0], $.extend({
-	      using: function (props) {
-	        $tip.css({
-	          top: Math.round(props.top),
-	          left: Math.round(props.left)
-	        })
-	      }
-	    }, offset), 0)
-
-	    $tip.addClass('in')
-
-	    // check to see if placing tip in new offset caused the tip to resize itself
-	    var actualWidth  = $tip[0].offsetWidth
-	    var actualHeight = $tip[0].offsetHeight
-
-	    if (placement == 'top' && actualHeight != height) {
-	      offset.top = offset.top + height - actualHeight
-	    }
-
-	    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
-
-	    if (delta.left) offset.left += delta.left
-	    else offset.top += delta.top
-
-	    var isVertical          = /top|bottom/.test(placement)
-	    var arrowDelta          = isVertical ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
-	    var arrowOffsetPosition = isVertical ? 'offsetWidth' : 'offsetHeight'
-
-	    $tip.offset(offset)
-	    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], isVertical)
-	  }
-
-	  Tooltip.prototype.replaceArrow = function (delta, dimension, isHorizontal) {
-	    this.arrow()
-	      .css(isHorizontal ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
-	      .css(isHorizontal ? 'top' : 'left', '')
-	  }
-
-	  Tooltip.prototype.setContent = function () {
-	    var $tip  = this.tip()
-	    var title = this.getTitle()
-
-	    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
-	    $tip.removeClass('fade in top bottom left right')
-	  }
-
-	  Tooltip.prototype.hide = function (callback) {
-	    var that = this
-	    var $tip = this.tip()
-	    var e    = $.Event('hide.bs.' + this.type)
-
-	    function complete() {
-	      if (that.hoverState != 'in') $tip.detach()
-	      that.$element
-	        .removeAttr('aria-describedby')
-	        .trigger('hidden.bs.' + that.type)
-	      callback && callback()
-	    }
-
-	    this.$element.trigger(e)
-
-	    if (e.isDefaultPrevented()) return
-
-	    $tip.removeClass('in')
-
-	    $.support.transition && this.$tip.hasClass('fade') ?
-	      $tip
-	        .one('bsTransitionEnd', complete)
-	        .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
-	      complete()
-
-	    this.hoverState = null
-
-	    return this
-	  }
-
-	  Tooltip.prototype.fixTitle = function () {
-	    var $e = this.$element
-	    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
-	      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
-	    }
-	  }
-
-	  Tooltip.prototype.hasContent = function () {
-	    return this.getTitle()
-	  }
-
-	  Tooltip.prototype.getPosition = function ($element) {
-	    $element   = $element || this.$element
-
-	    var el     = $element[0]
-	    var isBody = el.tagName == 'BODY'
-
-	    var elRect    = el.getBoundingClientRect()
-	    if (elRect.width == null) {
-	      // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
-	      elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top })
-	    }
-	    var elOffset  = isBody ? { top: 0, left: 0 } : $element.offset()
-	    var scroll    = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() }
-	    var outerDims = isBody ? { width: $(window).width(), height: $(window).height() } : null
-
-	    return $.extend({}, elRect, scroll, outerDims, elOffset)
-	  }
-
-	  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
-	    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
-	           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
-	           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
-	        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
-
-	  }
-
-	  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
-	    var delta = { top: 0, left: 0 }
-	    if (!this.$viewport) return delta
-
-	    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
-	    var viewportDimensions = this.getPosition(this.$viewport)
-
-	    if (/right|left/.test(placement)) {
-	      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
-	      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
-	      if (topEdgeOffset < viewportDimensions.top) { // top overflow
-	        delta.top = viewportDimensions.top - topEdgeOffset
-	      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
-	        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
-	      }
-	    } else {
-	      var leftEdgeOffset  = pos.left - viewportPadding
-	      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
-	      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
-	        delta.left = viewportDimensions.left - leftEdgeOffset
-	      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
-	        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
-	      }
-	    }
-
-	    return delta
-	  }
-
-	  Tooltip.prototype.getTitle = function () {
-	    var title
-	    var $e = this.$element
-	    var o  = this.options
-
-	    title = $e.attr('data-original-title')
-	      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
-
-	    return title
-	  }
-
-	  Tooltip.prototype.getUID = function (prefix) {
-	    do prefix += ~~(Math.random() * 1000000)
-	    while (document.getElementById(prefix))
-	    return prefix
-	  }
-
-	  Tooltip.prototype.tip = function () {
-	    return (this.$tip = this.$tip || $(this.options.template))
-	  }
-
-	  Tooltip.prototype.arrow = function () {
-	    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
-	  }
-
-	  Tooltip.prototype.enable = function () {
-	    this.enabled = true
-	  }
-
-	  Tooltip.prototype.disable = function () {
-	    this.enabled = false
-	  }
-
-	  Tooltip.prototype.toggleEnabled = function () {
-	    this.enabled = !this.enabled
-	  }
-
-	  Tooltip.prototype.toggle = function (e) {
-	    var self = this
-	    if (e) {
-	      self = $(e.currentTarget).data('bs.' + this.type)
-	      if (!self) {
-	        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
-	        $(e.currentTarget).data('bs.' + this.type, self)
-	      }
-	    }
-
-	    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
-	  }
-
-	  Tooltip.prototype.destroy = function () {
-	    var that = this
-	    clearTimeout(this.timeout)
-	    this.hide(function () {
-	      that.$element.off('.' + that.type).removeData('bs.' + that.type)
-	    })
-	  }
-
-
-	  // TOOLTIP PLUGIN DEFINITION
-	  // =========================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this    = $(this)
-	      var data     = $this.data('bs.tooltip')
-	      var options  = typeof option == 'object' && option
-	      var selector = options && options.selector
-
-	      if (!data && option == 'destroy') return
-	      if (selector) {
-	        if (!data) $this.data('bs.tooltip', (data = {}))
-	        if (!data[selector]) data[selector] = new Tooltip(this, options)
-	      } else {
-	        if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
-	      }
-	      if (typeof option == 'string') data[option]()
-	    })
-	  }
-
-	  var old = $.fn.tooltip
-
-	  $.fn.tooltip             = Plugin
-	  $.fn.tooltip.Constructor = Tooltip
-
-
-	  // TOOLTIP NO CONFLICT
-	  // ===================
-
-	  $.fn.tooltip.noConflict = function () {
-	    $.fn.tooltip = old
-	    return this
-	  }
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: popover.js v3.3.0
-	 * http://getbootstrap.com/javascript/#popovers
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // POPOVER PUBLIC CLASS DEFINITION
-	  // ===============================
-
-	  var Popover = function (element, options) {
-	    this.init('popover', element, options)
-	  }
-
-	  if (!$.fn.tooltip) throw new Error('Popover requires tooltip.js')
-
-	  Popover.VERSION  = '3.3.0'
-
-	  Popover.DEFAULTS = $.extend({}, $.fn.tooltip.Constructor.DEFAULTS, {
-	    placement: 'right',
-	    trigger: 'click',
-	    content: '',
-	    template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-	  })
-
-
-	  // NOTE: POPOVER EXTENDS tooltip.js
-	  // ================================
-
-	  Popover.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype)
-
-	  Popover.prototype.constructor = Popover
-
-	  Popover.prototype.getDefaults = function () {
-	    return Popover.DEFAULTS
-	  }
-
-	  Popover.prototype.setContent = function () {
-	    var $tip    = this.tip()
-	    var title   = this.getTitle()
-	    var content = this.getContent()
-
-	    $tip.find('.popover-title')[this.options.html ? 'html' : 'text'](title)
-	    $tip.find('.popover-content').children().detach().end()[ // we use append for html objects to maintain js events
-	      this.options.html ? (typeof content == 'string' ? 'html' : 'append') : 'text'
-	    ](content)
-
-	    $tip.removeClass('fade top bottom left right in')
-
-	    // IE8 doesn't accept hiding via the `:empty` pseudo selector, we have to do
-	    // this manually by checking the contents.
-	    if (!$tip.find('.popover-title').html()) $tip.find('.popover-title').hide()
-	  }
-
-	  Popover.prototype.hasContent = function () {
-	    return this.getTitle() || this.getContent()
-	  }
-
-	  Popover.prototype.getContent = function () {
-	    var $e = this.$element
-	    var o  = this.options
-
-	    return $e.attr('data-content')
-	      || (typeof o.content == 'function' ?
-	            o.content.call($e[0]) :
-	            o.content)
-	  }
-
-	  Popover.prototype.arrow = function () {
-	    return (this.$arrow = this.$arrow || this.tip().find('.arrow'))
-	  }
-
-	  Popover.prototype.tip = function () {
-	    if (!this.$tip) this.$tip = $(this.options.template)
-	    return this.$tip
-	  }
-
-
-	  // POPOVER PLUGIN DEFINITION
-	  // =========================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this    = $(this)
-	      var data     = $this.data('bs.popover')
-	      var options  = typeof option == 'object' && option
-	      var selector = options && options.selector
-
-	      if (!data && option == 'destroy') return
-	      if (selector) {
-	        if (!data) $this.data('bs.popover', (data = {}))
-	        if (!data[selector]) data[selector] = new Popover(this, options)
-	      } else {
-	        if (!data) $this.data('bs.popover', (data = new Popover(this, options)))
-	      }
-	      if (typeof option == 'string') data[option]()
-	    })
-	  }
-
-	  var old = $.fn.popover
-
-	  $.fn.popover             = Plugin
-	  $.fn.popover.Constructor = Popover
-
-
-	  // POPOVER NO CONFLICT
-	  // ===================
-
-	  $.fn.popover.noConflict = function () {
-	    $.fn.popover = old
-	    return this
-	  }
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: scrollspy.js v3.3.0
-	 * http://getbootstrap.com/javascript/#scrollspy
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // SCROLLSPY CLASS DEFINITION
-	  // ==========================
-
-	  function ScrollSpy(element, options) {
-	    var process  = $.proxy(this.process, this)
-
-	    this.$body          = $('body')
-	    this.$scrollElement = $(element).is('body') ? $(window) : $(element)
-	    this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
-	    this.selector       = (this.options.target || '') + ' .nav li > a'
-	    this.offsets        = []
-	    this.targets        = []
-	    this.activeTarget   = null
-	    this.scrollHeight   = 0
-
-	    this.$scrollElement.on('scroll.bs.scrollspy', process)
-	    this.refresh()
-	    this.process()
-	  }
-
-	  ScrollSpy.VERSION  = '3.3.0'
-
-	  ScrollSpy.DEFAULTS = {
-	    offset: 10
-	  }
-
-	  ScrollSpy.prototype.getScrollHeight = function () {
-	    return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
-	  }
-
-	  ScrollSpy.prototype.refresh = function () {
-	    var offsetMethod = 'offset'
-	    var offsetBase   = 0
-
-	    if (!$.isWindow(this.$scrollElement[0])) {
-	      offsetMethod = 'position'
-	      offsetBase   = this.$scrollElement.scrollTop()
-	    }
-
-	    this.offsets = []
-	    this.targets = []
-	    this.scrollHeight = this.getScrollHeight()
-
-	    var self     = this
-
-	    this.$body
-	      .find(this.selector)
-	      .map(function () {
-	        var $el   = $(this)
-	        var href  = $el.data('target') || $el.attr('href')
-	        var $href = /^#./.test(href) && $(href)
-
-	        return ($href
-	          && $href.length
-	          && $href.is(':visible')
-	          && [[$href[offsetMethod]().top + offsetBase, href]]) || null
-	      })
-	      .sort(function (a, b) { return a[0] - b[0] })
-	      .each(function () {
-	        self.offsets.push(this[0])
-	        self.targets.push(this[1])
-	      })
-	  }
-
-	  ScrollSpy.prototype.process = function () {
-	    var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
-	    var scrollHeight = this.getScrollHeight()
-	    var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
-	    var offsets      = this.offsets
-	    var targets      = this.targets
-	    var activeTarget = this.activeTarget
-	    var i
-
-	    if (this.scrollHeight != scrollHeight) {
-	      this.refresh()
-	    }
-
-	    if (scrollTop >= maxScroll) {
-	      return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
-	    }
-
-	    if (activeTarget && scrollTop < offsets[0]) {
-	      this.activeTarget = null
-	      return this.clear()
-	    }
-
-	    for (i = offsets.length; i--;) {
-	      activeTarget != targets[i]
-	        && scrollTop >= offsets[i]
-	        && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
-	        && this.activate(targets[i])
-	    }
-	  }
-
-	  ScrollSpy.prototype.activate = function (target) {
-	    this.activeTarget = target
-
-	    this.clear()
-
-	    var selector = this.selector +
-	        '[data-target="' + target + '"],' +
-	        this.selector + '[href="' + target + '"]'
-
-	    var active = $(selector)
-	      .parents('li')
-	      .addClass('active')
-
-	    if (active.parent('.dropdown-menu').length) {
-	      active = active
-	        .closest('li.dropdown')
-	        .addClass('active')
-	    }
-
-	    active.trigger('activate.bs.scrollspy')
-	  }
-
-	  ScrollSpy.prototype.clear = function () {
-	    $(this.selector)
-	      .parentsUntil(this.options.target, '.active')
-	      .removeClass('active')
-	  }
-
-
-	  // SCROLLSPY PLUGIN DEFINITION
-	  // ===========================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this   = $(this)
-	      var data    = $this.data('bs.scrollspy')
-	      var options = typeof option == 'object' && option
-
-	      if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
-	      if (typeof option == 'string') data[option]()
-	    })
-	  }
-
-	  var old = $.fn.scrollspy
-
-	  $.fn.scrollspy             = Plugin
-	  $.fn.scrollspy.Constructor = ScrollSpy
-
-
-	  // SCROLLSPY NO CONFLICT
-	  // =====================
-
-	  $.fn.scrollspy.noConflict = function () {
-	    $.fn.scrollspy = old
-	    return this
-	  }
-
-
-	  // SCROLLSPY DATA-API
-	  // ==================
-
-	  $(window).on('load.bs.scrollspy.data-api', function () {
-	    $('[data-spy="scroll"]').each(function () {
-	      var $spy = $(this)
-	      Plugin.call($spy, $spy.data())
-	    })
-	  })
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: tab.js v3.3.0
-	 * http://getbootstrap.com/javascript/#tabs
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // TAB CLASS DEFINITION
-	  // ====================
-
-	  var Tab = function (element) {
-	    this.element = $(element)
-	  }
-
-	  Tab.VERSION = '3.3.0'
-
-	  Tab.TRANSITION_DURATION = 150
-
-	  Tab.prototype.show = function () {
-	    var $this    = this.element
-	    var $ul      = $this.closest('ul:not(.dropdown-menu)')
-	    var selector = $this.data('target')
-
-	    if (!selector) {
-	      selector = $this.attr('href')
-	      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
-	    }
-
-	    if ($this.parent('li').hasClass('active')) return
-
-	    var $previous = $ul.find('.active:last a')
-	    var hideEvent = $.Event('hide.bs.tab', {
-	      relatedTarget: $this[0]
-	    })
-	    var showEvent = $.Event('show.bs.tab', {
-	      relatedTarget: $previous[0]
-	    })
-
-	    $previous.trigger(hideEvent)
-	    $this.trigger(showEvent)
-
-	    if (showEvent.isDefaultPrevented() || hideEvent.isDefaultPrevented()) return
-
-	    var $target = $(selector)
-
-	    this.activate($this.closest('li'), $ul)
-	    this.activate($target, $target.parent(), function () {
-	      $previous.trigger({
-	        type: 'hidden.bs.tab',
-	        relatedTarget: $this[0]
-	      })
-	      $this.trigger({
-	        type: 'shown.bs.tab',
-	        relatedTarget: $previous[0]
-	      })
-	    })
-	  }
-
-	  Tab.prototype.activate = function (element, container, callback) {
-	    var $active    = container.find('> .active')
-	    var transition = callback
-	      && $.support.transition
-	      && (($active.length && $active.hasClass('fade')) || !!container.find('> .fade').length)
-
-	    function next() {
-	      $active
-	        .removeClass('active')
-	        .find('> .dropdown-menu > .active')
-	          .removeClass('active')
-	        .end()
-	        .find('[data-toggle="tab"]')
-	          .attr('aria-expanded', false)
-
-	      element
-	        .addClass('active')
-	        .find('[data-toggle="tab"]')
-	          .attr('aria-expanded', true)
-
-	      if (transition) {
-	        element[0].offsetWidth // reflow for transition
-	        element.addClass('in')
-	      } else {
-	        element.removeClass('fade')
-	      }
-
-	      if (element.parent('.dropdown-menu')) {
-	        element
-	          .closest('li.dropdown')
-	            .addClass('active')
-	          .end()
-	          .find('[data-toggle="tab"]')
-	            .attr('aria-expanded', true)
-	      }
-
-	      callback && callback()
-	    }
-
-	    $active.length && transition ?
-	      $active
-	        .one('bsTransitionEnd', next)
-	        .emulateTransitionEnd(Tab.TRANSITION_DURATION) :
-	      next()
-
-	    $active.removeClass('in')
-	  }
-
-
-	  // TAB PLUGIN DEFINITION
-	  // =====================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this = $(this)
-	      var data  = $this.data('bs.tab')
-
-	      if (!data) $this.data('bs.tab', (data = new Tab(this)))
-	      if (typeof option == 'string') data[option]()
-	    })
-	  }
-
-	  var old = $.fn.tab
-
-	  $.fn.tab             = Plugin
-	  $.fn.tab.Constructor = Tab
-
-
-	  // TAB NO CONFLICT
-	  // ===============
-
-	  $.fn.tab.noConflict = function () {
-	    $.fn.tab = old
-	    return this
-	  }
-
-
-	  // TAB DATA-API
-	  // ============
-
-	  var clickHandler = function (e) {
-	    e.preventDefault()
-	    Plugin.call($(this), 'show')
-	  }
-
-	  $(document)
-	    .on('click.bs.tab.data-api', '[data-toggle="tab"]', clickHandler)
-	    .on('click.bs.tab.data-api', '[data-toggle="pill"]', clickHandler)
-
-	}(jQuery);
-
-	/* ========================================================================
-	 * Bootstrap: affix.js v3.3.0
-	 * http://getbootstrap.com/javascript/#affix
-	 * ========================================================================
-	 * Copyright 2011-2014 Twitter, Inc.
-	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-	 * ======================================================================== */
-
-
-	+function ($) {
-	  'use strict';
-
-	  // AFFIX CLASS DEFINITION
-	  // ======================
-
-	  var Affix = function (element, options) {
-	    this.options = $.extend({}, Affix.DEFAULTS, options)
-
-	    this.$target = $(this.options.target)
-	      .on('scroll.bs.affix.data-api', $.proxy(this.checkPosition, this))
-	      .on('click.bs.affix.data-api',  $.proxy(this.checkPositionWithEventLoop, this))
-
-	    this.$element     = $(element)
-	    this.affixed      =
-	    this.unpin        =
-	    this.pinnedOffset = null
-
-	    this.checkPosition()
-	  }
-
-	  Affix.VERSION  = '3.3.0'
-
-	  Affix.RESET    = 'affix affix-top affix-bottom'
-
-	  Affix.DEFAULTS = {
-	    offset: 0,
-	    target: window
-	  }
-
-	  Affix.prototype.getState = function (scrollHeight, height, offsetTop, offsetBottom) {
-	    var scrollTop    = this.$target.scrollTop()
-	    var position     = this.$element.offset()
-	    var targetHeight = this.$target.height()
-
-	    if (offsetTop != null && this.affixed == 'top') return scrollTop < offsetTop ? 'top' : false
-
-	    if (this.affixed == 'bottom') {
-	      if (offsetTop != null) return (scrollTop + this.unpin <= position.top) ? false : 'bottom'
-	      return (scrollTop + targetHeight <= scrollHeight - offsetBottom) ? false : 'bottom'
-	    }
-
-	    var initializing   = this.affixed == null
-	    var colliderTop    = initializing ? scrollTop : position.top
-	    var colliderHeight = initializing ? targetHeight : height
-
-	    if (offsetTop != null && colliderTop <= offsetTop) return 'top'
-	    if (offsetBottom != null && (colliderTop + colliderHeight >= scrollHeight - offsetBottom)) return 'bottom'
-
-	    return false
-	  }
-
-	  Affix.prototype.getPinnedOffset = function () {
-	    if (this.pinnedOffset) return this.pinnedOffset
-	    this.$element.removeClass(Affix.RESET).addClass('affix')
-	    var scrollTop = this.$target.scrollTop()
-	    var position  = this.$element.offset()
-	    return (this.pinnedOffset = position.top - scrollTop)
-	  }
-
-	  Affix.prototype.checkPositionWithEventLoop = function () {
-	    setTimeout($.proxy(this.checkPosition, this), 1)
-	  }
-
-	  Affix.prototype.checkPosition = function () {
-	    if (!this.$element.is(':visible')) return
-
-	    var height       = this.$element.height()
-	    var offset       = this.options.offset
-	    var offsetTop    = offset.top
-	    var offsetBottom = offset.bottom
-	    var scrollHeight = $('body').height()
-
-	    if (typeof offset != 'object')         offsetBottom = offsetTop = offset
-	    if (typeof offsetTop == 'function')    offsetTop    = offset.top(this.$element)
-	    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element)
-
-	    var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom)
-
-	    if (this.affixed != affix) {
-	      if (this.unpin != null) this.$element.css('top', '')
-
-	      var affixType = 'affix' + (affix ? '-' + affix : '')
-	      var e         = $.Event(affixType + '.bs.affix')
-
-	      this.$element.trigger(e)
-
-	      if (e.isDefaultPrevented()) return
-
-	      this.affixed = affix
-	      this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null
-
-	      this.$element
-	        .removeClass(Affix.RESET)
-	        .addClass(affixType)
-	        .trigger(affixType.replace('affix', 'affixed') + '.bs.affix')
-	    }
-
-	    if (affix == 'bottom') {
-	      this.$element.offset({
-	        top: scrollHeight - height - offsetBottom
-	      })
-	    }
-	  }
-
-
-	  // AFFIX PLUGIN DEFINITION
-	  // =======================
-
-	  function Plugin(option) {
-	    return this.each(function () {
-	      var $this   = $(this)
-	      var data    = $this.data('bs.affix')
-	      var options = typeof option == 'object' && option
-
-	      if (!data) $this.data('bs.affix', (data = new Affix(this, options)))
-	      if (typeof option == 'string') data[option]()
-	    })
-	  }
-
-	  var old = $.fn.affix
-
-	  $.fn.affix             = Plugin
-	  $.fn.affix.Constructor = Affix
-
-
-	  // AFFIX NO CONFLICT
-	  // =================
-
-	  $.fn.affix.noConflict = function () {
-	    $.fn.affix = old
-	    return this
-	  }
-
-
-	  // AFFIX DATA-API
-	  // ==============
-
-	  $(window).on('load', function () {
-	    $('[data-spy="affix"]').each(function () {
-	      var $spy = $(this)
-	      var data = $spy.data()
-
-	      data.offset = data.offset || {}
-
-	      if (data.offsetBottom != null) data.offset.bottom = data.offsetBottom
-	      if (data.offsetTop    != null) data.offset.top    = data.offsetTop
-
-	      Plugin.call($spy, data)
-	    })
-	  })
-
-	}(jQuery);
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(jQuery) {!function (a, b) {
-	    "use strict";
-
-	        if (!jQuery)throw new Error("bootstrap-datetimepicker requires jQuery to be loaded first");
-	        if (!moment)throw new Error("bootstrap-datetimepicker requires moment.js to be loaded first");
-	        b(jQuery, moment);
-	}(this, function (a, b) {
-	    "use strict";
-	    if ("undefined" == typeof b)throw new Error("momentjs is required");
-	    var c = 0, d = function (d, e) {
-	        var f, g = a.fn.datetimepicker.defaults, h = {time: "glyphicon glyphicon-time", date: "glyphicon glyphicon-calendar", up: "glyphicon glyphicon-chevron-up", down: "glyphicon glyphicon-chevron-down"}, i = this, j = !1, k = function () {
-	            var f, j, k = !1;
-	            if (i.options = a.extend({}, g, e), i.options.icons = a.extend({}, h, i.options.icons), i.element = a(d), m(), !i.options.pickTime && !i.options.pickDate)throw new Error("Must choose at least one picker");
-	            if (i.id = c++, b.locale(i.options.language), i.date = b(), i.unset = !1, i.isInput = i.element.is("input"), i.component = !1, i.element.hasClass("input-group") && (i.component = i.element.find(0 === i.element.find(".datepickerbutton").size() ? '[class^="input-group-"]' : ".datepickerbutton")), i.format = i.options.format, f = b().localeData(), i.format || (i.format = i.options.pickDate ? f.longDateFormat("L") : "", i.options.pickDate && i.options.pickTime && (i.format += " "), i.format += i.options.pickTime ? f.longDateFormat("LT") : "", i.options.useSeconds && (-1 !== f.longDateFormat("LT").indexOf(" A") ? i.format = i.format.split(" A")[0] + ":ss A" : i.format += ":ss")), i.use24hours = i.format.toLowerCase().indexOf("a") < 0 && i.format.indexOf("h") < 0, i.component && (k = i.component.find("span")), i.options.pickTime && k && k.addClass(i.options.icons.time), i.options.pickDate && k && (k.removeClass(i.options.icons.time), k.addClass(i.options.icons.date)), i.options.widgetParent = "string" == typeof i.options.widgetParent && i.options.widgetParent || i.element.parents().filter(function () {
-	                return"scroll" === a(this).css("overflow-y")
-	            }).get(0) || "body", i.widget = a(Q()).appendTo(i.options.widgetParent), i.minViewMode = i.options.minViewMode || 0, "string" == typeof i.minViewMode)switch (i.minViewMode) {
-	                case"months":
-	                    i.minViewMode = 1;
-	                    break;
-	                case"years":
-	                    i.minViewMode = 2;
-	                    break;
-	                default:
-	                    i.minViewMode = 0
-	            }
-	            if (i.viewMode = i.options.viewMode || 0, "string" == typeof i.viewMode)switch (i.viewMode) {
-	                case"months":
-	                    i.viewMode = 1;
-	                    break;
-	                case"years":
-	                    i.viewMode = 2;
-	                    break;
-	                default:
-	                    i.viewMode = 0
-	            }
-	            i.viewMode = Math.max(i.viewMode, i.minViewMode), i.options.disabledDates = O(i.options.disabledDates), i.options.enabledDates = O(i.options.enabledDates), i.startViewMode = i.viewMode, i.setMinDate(i.options.minDate), i.setMaxDate(i.options.maxDate), r(), s(), u(), v(), w(), q(), E(), l().prop("disabled") || F(), "" !== i.options.defaultDate && "" === l().val() && i.setValue(i.options.defaultDate), 1 !== i.options.minuteStepping && (j = i.options.minuteStepping, i.date.minutes(Math.round(i.date.minutes() / j) * j % 60).seconds(0))
-	        }, l = function () {
-	            var a;
-	            if (i.isInput)return i.element;
-	            if (a = i.element.find(".datepickerinput"), 0 === a.size())a = i.element.find("input"); else if (!a.is("input"))throw new Error('CSS class "datepickerinput" cannot be applied to non input element');
-	            return a
-	        }, m = function () {
-	            var a;
-	            a = i.element.is("input") ? i.element.data() : i.element.find("input").data(), void 0 !== a.dateFormat && (i.options.format = a.dateFormat), void 0 !== a.datePickdate && (i.options.pickDate = a.datePickdate), void 0 !== a.datePicktime && (i.options.pickTime = a.datePicktime), void 0 !== a.dateUseminutes && (i.options.useMinutes = a.dateUseminutes), void 0 !== a.dateUseseconds && (i.options.useSeconds = a.dateUseseconds), void 0 !== a.dateUsecurrent && (i.options.useCurrent = a.dateUsecurrent), void 0 !== a.calendarWeeks && (i.options.calendarWeeks = a.calendarWeeks), void 0 !== a.dateMinutestepping && (i.options.minuteStepping = a.dateMinutestepping), void 0 !== a.dateMindate && (i.options.minDate = a.dateMindate), void 0 !== a.dateMaxdate && (i.options.maxDate = a.dateMaxdate), void 0 !== a.dateShowtoday && (i.options.showToday = a.dateShowtoday), void 0 !== a.dateCollapse && (i.options.collapse = a.dateCollapse), void 0 !== a.dateLanguage && (i.options.language = a.dateLanguage), void 0 !== a.dateDefaultdate && (i.options.defaultDate = a.dateDefaultdate), void 0 !== a.dateDisableddates && (i.options.disabledDates = a.dateDisableddates), void 0 !== a.dateEnableddates && (i.options.enabledDates = a.dateEnableddates), void 0 !== a.dateIcons && (i.options.icons = a.dateIcons), void 0 !== a.dateUsestrict && (i.options.useStrict = a.dateUsestrict), void 0 !== a.dateDirection && (i.options.direction = a.dateDirection), void 0 !== a.dateSidebyside && (i.options.sideBySide = a.dateSidebyside), void 0 !== a.dateDaysofweekdisabled && (i.options.daysOfWeekDisabled = a.dateDaysofweekdisabled)
-	        }, n = function () {
-	            var b, c = "absolute", d = i.component ? i.component.offset() : i.element.offset(), e = a(window);
-	            i.width = i.component ? i.component.outerWidth() : i.element.outerWidth(), d.top = d.top + i.element.outerHeight(), "up" === i.options.direction ? b = "top" : "bottom" === i.options.direction ? b = "bottom" : "auto" === i.options.direction && (b = d.top + i.widget.height() > e.height() + e.scrollTop() && i.widget.height() + i.element.outerHeight() < d.top ? "top" : "bottom"), "top" === b ? (d.bottom = e.height() - d.top + i.element.outerHeight() + 3, i.widget.addClass("top").removeClass("bottom")) : (d.top += 1, i.widget.addClass("bottom").removeClass("top")), void 0 !== i.options.width && i.widget.width(i.options.width), "left" === i.options.orientation && (i.widget.addClass("left-oriented"), d.left = d.left - i.widget.width() + 20), J() && (c = "fixed", d.top -= e.scrollTop(), d.left -= e.scrollLeft()), e.width() < d.left + i.widget.outerWidth() ? (d.right = e.width() - d.left - i.width, d.left = "auto", i.widget.addClass("pull-right")) : (d.right = "auto", i.widget.removeClass("pull-right")), i.widget.css("top" === b ? {position: c, bottom: d.bottom, top: "auto", left: d.left, right: d.right} : {position: c, top: d.top, bottom: "auto", left: d.left, right: d.right})
-	        }, o = function (a, c) {
-	            (!b(i.date).isSame(b(a)) || j) && (j = !1, i.element.trigger({type: "dp.change", date: b(i.date), oldDate: b(a)}), "change" !== c && i.element.change())
-	        }, p = function (a) {
-	            j = !0, i.element.trigger({type: "dp.error", date: b(a, i.format, i.options.useStrict)})
-	        }, q = function (a) {
-	            b.locale(i.options.language);
-	            var c = a;
-	            c || (c = l().val(), c && (i.date = b(c, i.format, i.options.useStrict)), i.date || (i.date = b())), i.viewDate = b(i.date).startOf("month"), t(), x()
-	        }, r = function () {
-	            b.locale(i.options.language);
-	            var c, d = a("<tr>"), e = b.weekdaysMin();
-	            if (i.options.calendarWeeks === !0 && d.append('<th class="cw">#</th>'), 0 === b().localeData()._week.dow)for (c = 0; 7 > c; c++)d.append('<th class="dow">' + e[c] + "</th>"); else for (c = 1; 8 > c; c++)d.append(7 === c ? '<th class="dow">' + e[0] + "</th>" : '<th class="dow">' + e[c] + "</th>");
-	            i.widget.find(".datepicker-days thead").append(d)
-	        }, s = function () {
-	            b.locale(i.options.language);
-	            var a, c = "", d = b.monthsShort();
-	            for (a = 0; 12 > a; a++)c += '<span class="month">' + d[a] + "</span>";
-	            i.widget.find(".datepicker-months td").append(c)
-	        }, t = function () {
-	            if (i.options.pickDate) {
-	                b.locale(i.options.language);
-	                var c, d, e, f, g, h, j, k, l, m = i.viewDate.year(), n = i.viewDate.month(), o = i.options.minDate.year(), p = i.options.minDate.month(), q = i.options.maxDate.year(), r = i.options.maxDate.month(), s = [], t = b.months();
-	                for (i.widget.find(".datepicker-days").find(".disabled").removeClass("disabled"), i.widget.find(".datepicker-months").find(".disabled").removeClass("disabled"), i.widget.find(".datepicker-years").find(".disabled").removeClass("disabled"), i.widget.find(".datepicker-days th:eq(1)").text(t[n] + " " + m), d = b(i.viewDate, i.format, i.options.useStrict).subtract(1, "months"), j = d.daysInMonth(), d.date(j).startOf("week"), (m === o && p >= n || o > m) && i.widget.find(".datepicker-days th:eq(0)").addClass("disabled"), (m === q && n >= r || m > q) && i.widget.find(".datepicker-days th:eq(2)").addClass("disabled"), e = b(d).add(42, "d"); d.isBefore(e);) {
-	                    if (d.weekday() === b().startOf("week").weekday() && (f = a("<tr>"), s.push(f), i.options.calendarWeeks === !0 && f.append('<td class="cw">' + d.week() + "</td>")), g = "", d.year() < m || d.year() === m && d.month() < n ? g += " old" : (d.year() > m || d.year() === m && d.month() > n) && (g += " new"), d.isSame(b({y: i.date.year(), M: i.date.month(), d: i.date.date()})) && (g += " active"), (M(d, "day") || !N(d)) && (g += " disabled"), i.options.showToday === !0 && d.isSame(b(), "day") && (g += " today"), i.options.daysOfWeekDisabled)for (h = 0; h < i.options.daysOfWeekDisabled.length; h++)if (d.day() === i.options.daysOfWeekDisabled[h]) {
-	                        g += " disabled";
-	                        break
-	                    }
-	                    f.append('<td class="day' + g + '">' + d.date() + "</td>"), c = d.date(), d.add(1, "d"), c === d.date() && d.add(1, "d")
-	                }
-	                for (i.widget.find(".datepicker-days tbody").empty().append(s), l = i.date.year(), t = i.widget.find(".datepicker-months").find("th:eq(1)").text(m).end().find("span").removeClass("active"), l === m && t.eq(i.date.month()).addClass("active"), o > m - 1 && i.widget.find(".datepicker-months th:eq(0)").addClass("disabled"), m + 1 > q && i.widget.find(".datepicker-months th:eq(2)").addClass("disabled"), h = 0; 12 > h; h++)m === o && p > h || o > m ? a(t[h]).addClass("disabled") : (m === q && h > r || m > q) && a(t[h]).addClass("disabled");
-	                for (s = "", m = 10 * parseInt(m / 10, 10), k = i.widget.find(".datepicker-years").find("th:eq(1)").text(m + "-" + (m + 9)).parents("table").find("td"), i.widget.find(".datepicker-years").find("th").removeClass("disabled"), o > m && i.widget.find(".datepicker-years").find("th:eq(0)").addClass("disabled"), m + 9 > q && i.widget.find(".datepicker-years").find("th:eq(2)").addClass("disabled"), m -= 1, h = -1; 11 > h; h++)s += '<span class="year' + (-1 === h || 10 === h ? " old" : "") + (l === m ? " active" : "") + (o > m || m > q ? " disabled" : "") + '">' + m + "</span>", m += 1;
-	                k.html(s)
-	            }
-	        }, u = function () {
-	            b.locale(i.options.language);
-	            var a, c, d, e = i.widget.find(".timepicker .timepicker-hours table"), f = "";
-	            if (e.parent().hide(), i.use24hours)for (a = 0, c = 0; 6 > c; c += 1) {
-	                for (f += "<tr>", d = 0; 4 > d; d += 1)f += '<td class="hour">' + P(a.toString()) + "</td>", a++;
-	                f += "</tr>"
-	            } else for (a = 1, c = 0; 3 > c; c += 1) {
-	                for (f += "<tr>", d = 0; 4 > d; d += 1)f += '<td class="hour">' + P(a.toString()) + "</td>", a++;
-	                f += "</tr>"
-	            }
-	            e.html(f)
-	        }, v = function () {
-	            var a, b, c = i.widget.find(".timepicker .timepicker-minutes table"), d = "", e = 0, f = i.options.minuteStepping;
-	            for (c.parent().hide(), 1 === f && (f = 5), a = 0; a < Math.ceil(60 / f / 4); a++) {
-	                for (d += "<tr>", b = 0; 4 > b; b += 1)60 > e ? (d += '<td class="minute">' + P(e.toString()) + "</td>", e += f) : d += "<td></td>";
-	                d += "</tr>"
-	            }
-	            c.html(d)
-	        }, w = function () {
-	            var a, b, c = i.widget.find(".timepicker .timepicker-seconds table"), d = "", e = 0;
-	            for (c.parent().hide(), a = 0; 3 > a; a++) {
-	                for (d += "<tr>", b = 0; 4 > b; b += 1)d += '<td class="second">' + P(e.toString()) + "</td>", e += 5;
-	                d += "</tr>"
-	            }
-	            c.html(d)
-	        }, x = function () {
-	            if (i.date) {
-	                var a = i.widget.find(".timepicker span[data-time-component]"), b = i.date.hours(), c = i.date.format("A");
-	                i.use24hours || (0 === b ? b = 12 : 12 !== b && (b %= 12), i.widget.find(".timepicker [data-action=togglePeriod]").text(c)), a.filter("[data-time-component=hours]").text(P(b)), a.filter("[data-time-component=minutes]").text(P(i.date.minutes())), a.filter("[data-time-component=seconds]").text(P(i.date.second()))
-	            }
-	        }, y = function (c) {
-	            c.stopPropagation(), c.preventDefault(), i.unset = !1;
-	            var d, e, f, g, h = a(c.target).closest("span, td, th"), j = b(i.date);
-	            if (1 === h.length && !h.is(".disabled"))switch (h[0].nodeName.toLowerCase()) {
-	                case"th":
-	                    switch (h[0].className) {
-	                        case"picker-switch":
-	                            E(1);
-	                            break;
-	                        case"prev":
-	                        case"next":
-	                            f = R.modes[i.viewMode].navStep, "prev" === h[0].className && (f = -1 * f), i.viewDate.add(f, R.modes[i.viewMode].navFnc), t()
-	                    }
-	                    break;
-	                case"span":
-	                    h.is(".month") ? (d = h.parent().find("span").index(h), i.viewDate.month(d)) : (e = parseInt(h.text(), 10) || 0, i.viewDate.year(e)), i.viewMode === i.minViewMode && (i.date = b({y: i.viewDate.year(), M: i.viewDate.month(), d: i.viewDate.date(), h: i.date.hours(), m: i.date.minutes(), s: i.date.seconds()}), K(), o(j, c.type)), E(-1), t();
-	                    break;
-	                case"td":
-	                    h.is(".day") && (g = parseInt(h.text(), 10) || 1, d = i.viewDate.month(), e = i.viewDate.year(), h.is(".old") ? 0 === d ? (d = 11, e -= 1) : d -= 1 : h.is(".new") && (11 === d ? (d = 0, e += 1) : d += 1), i.date = b({y: e, M: d, d: g, h: i.date.hours(), m: i.date.minutes(), s: i.date.seconds()}), i.viewDate = b({y: e, M: d, d: Math.min(28, g)}), t(), K(), o(j, c.type))
-	            }
-	        }, z = {incrementHours: function () {
-	            L("add", "hours", 1)
-	        }, incrementMinutes: function () {
-	            L("add", "minutes", i.options.minuteStepping)
-	        }, incrementSeconds: function () {
-	            L("add", "seconds", 1)
-	        }, decrementHours: function () {
-	            L("subtract", "hours", 1)
-	        }, decrementMinutes: function () {
-	            L("subtract", "minutes", i.options.minuteStepping)
-	        }, decrementSeconds: function () {
-	            L("subtract", "seconds", 1)
-	        }, togglePeriod: function () {
-	            var a = i.date.hours();
-	            a >= 12 ? a -= 12 : a += 12, i.date.hours(a)
-	        }, showPicker: function () {
-	            i.widget.find(".timepicker > div:not(.timepicker-picker)").hide(), i.widget.find(".timepicker .timepicker-picker").show()
-	        }, showHours: function () {
-	            i.widget.find(".timepicker .timepicker-picker").hide(), i.widget.find(".timepicker .timepicker-hours").show()
-	        }, showMinutes: function () {
-	            i.widget.find(".timepicker .timepicker-picker").hide(), i.widget.find(".timepicker .timepicker-minutes").show()
-	        }, showSeconds: function () {
-	            i.widget.find(".timepicker .timepicker-picker").hide(), i.widget.find(".timepicker .timepicker-seconds").show()
-	        }, selectHour: function (b) {
-	            var c = parseInt(a(b.target).text(), 10);
-	            i.use24hours || (i.date.hours() >= 12 ? 12 !== c && (c += 12) : 12 === c && (c = 0)), i.date.hours(c), z.showPicker.call(i)
-	        }, selectMinute: function (b) {
-	            i.date.minutes(parseInt(a(b.target).text(), 10)), z.showPicker.call(i)
-	        }, selectSecond: function (b) {
-	            i.date.seconds(parseInt(a(b.target).text(), 10)), z.showPicker.call(i)
-	        }}, A = function (c) {
-	            var d = b(i.date), e = a(c.currentTarget).data("action"), f = z[e].apply(i, arguments);
-	            return B(c), i.date || (i.date = b({y: 1970})), K(), x(), o(d, c.type), f
-	        }, B = function (a) {
-	            a.stopPropagation(), a.preventDefault()
-	        }, C = function (a) {
-	            27 === a.keyCode && i.hide()
-	        }, D = function (c) {
-	            b.locale(i.options.language);
-	            var d = a(c.target), e = b(i.date), f = b(d.val(), i.format, i.options.useStrict);
-	            f.isValid() && !M(f) && N(f) ? (q(), i.setValue(f), o(e, c.type), K()) : (i.viewDate = e, i.unset = !0, o(e, c.type), p(f))
-	        }, E = function (a) {
-	            a && (i.viewMode = Math.max(i.minViewMode, Math.min(2, i.viewMode + a))), i.widget.find(".datepicker > div").hide().filter(".datepicker-" + R.modes[i.viewMode].clsName).show()
-	        }, F = function () {
-	            var b, c, d, e, f;
-	            i.widget.on("click", ".datepicker *", a.proxy(y, this)), i.widget.on("click", "[data-action]", a.proxy(A, this)), i.widget.on("mousedown", a.proxy(B, this)), i.element.on("keydown", a.proxy(C, this)), i.options.pickDate && i.options.pickTime && i.widget.on("click.togglePicker", ".accordion-toggle", function (g) {
-	                if (g.stopPropagation(), b = a(this), c = b.closest("ul"), d = c.find(".in"), e = c.find(".collapse:not(.in)"), d && d.length) {
-	                    if (f = d.data("collapse"), f && f.transitioning)return;
-	                    d.collapse("hide"), e.collapse("show"), b.find("span").toggleClass(i.options.icons.time + " " + i.options.icons.date), i.component && i.component.find("span").toggleClass(i.options.icons.time + " " + i.options.icons.date)
-	                }
-	            }), i.isInput ? i.element.on({click: a.proxy(i.show, this), focus: a.proxy(i.show, this), change: a.proxy(D, this), blur: a.proxy(i.hide, this)}) : (i.element.on({change: a.proxy(D, this)}, "input"), i.component ? (i.component.on("click", a.proxy(i.show, this)), i.component.on("mousedown", a.proxy(B, this))) : i.element.on("click", a.proxy(i.show, this)))
-	        }, G = function () {
-	            a(window).on("resize.datetimepicker" + i.id, a.proxy(n, this)), i.isInput || a(document).on("mousedown.datetimepicker" + i.id, a.proxy(i.hide, this))
-	        }, H = function () {
-	            i.widget.off("click", ".datepicker *", i.click), i.widget.off("click", "[data-action]"), i.widget.off("mousedown", i.stopEvent), i.options.pickDate && i.options.pickTime && i.widget.off("click.togglePicker"), i.isInput ? i.element.off({focus: i.show, change: D, click: i.show, blur: i.hide}) : (i.element.off({change: D}, "input"), i.component ? (i.component.off("click", i.show), i.component.off("mousedown", i.stopEvent)) : i.element.off("click", i.show))
-	        }, I = function () {
-	            a(window).off("resize.datetimepicker" + i.id), i.isInput || a(document).off("mousedown.datetimepicker" + i.id)
-	        }, J = function () {
-	            if (i.element) {
-	                var b, c = i.element.parents(), d = !1;
-	                for (b = 0; b < c.length; b++)if ("fixed" === a(c[b]).css("position")) {
-	                    d = !0;
-	                    break
-	                }
-	                return d
-	            }
-	            return!1
-	        }, K = function () {
-	            b.locale(i.options.language);
-	            var a = "";
-	            i.unset || (a = b(i.date).format(i.format)), l().val(a), i.element.data("date", a), i.options.pickTime || i.hide()
-	        }, L = function (a, c, d) {
-	            b.locale(i.options.language);
-	            var e;
-	            return"add" === a ? (e = b(i.date), 23 === e.hours() && e.add(d, c), e.add(d, c)) : e = b(i.date).subtract(d, c), M(b(e.subtract(d, c))) || M(e) ? void p(e.format(i.format)) : ("add" === a ? i.date.add(d, c) : i.date.subtract(d, c), void(i.unset = !1))
-	        }, M = function (a, c) {
-	            b.locale(i.options.language);
-	            var d = b(i.options.maxDate, i.format, i.options.useStrict), e = b(i.options.minDate, i.format, i.options.useStrict);
-	            return c && (d = d.endOf(c), e = e.startOf(c)), a.isAfter(d) || a.isBefore(e) ? !0 : i.options.disabledDates === !1 ? !1 : i.options.disabledDates[a.format("YYYY-MM-DD")] === !0
-	        }, N = function (a) {
-	            return b.locale(i.options.language), i.options.enabledDates === !1 ? !0 : i.options.enabledDates[a.format("YYYY-MM-DD")] === !0
-	        }, O = function (a) {
-	            var c, d = {}, e = 0;
-	            for (c = 0; c < a.length; c++)f = b.isMoment(a[c]) || a[c]instanceof Date ? b(a[c]) : b(a[c], i.format, i.options.useStrict), f.isValid() && (d[f.format("YYYY-MM-DD")] = !0, e++);
-	            return e > 0 ? d : !1
-	        }, P = function (a) {
-	            return a = a.toString(), a.length >= 2 ? a : "0" + a
-	        }, Q = function () {
-	            var a = '<thead><tr><th class="prev">&lsaquo;</th><th colspan="' + (i.options.calendarWeeks ? "6" : "5") + '" class="picker-switch"></th><th class="next">&rsaquo;</th></tr></thead>', b = '<tbody><tr><td colspan="' + (i.options.calendarWeeks ? "8" : "7") + '"></td></tr></tbody>', c = '<div class="datepicker-days"><table class="table-condensed">' + a + '<tbody></tbody></table></div><div class="datepicker-months"><table class="table-condensed">' + a + b + '</table></div><div class="datepicker-years"><table class="table-condensed">' + a + b + "</table></div>", d = "";
-	            return i.options.pickDate && i.options.pickTime ? (d = '<div class="bootstrap-datetimepicker-widget' + (i.options.sideBySide ? " timepicker-sbs" : "") + (i.use24hours ? " usetwentyfour" : "") + ' dropdown-menu" style="z-index:9999 !important;">', d += i.options.sideBySide ? '<div class="row"><div class="col-sm-6 datepicker">' + c + '</div><div class="col-sm-6 timepicker">' + S.getTemplate() + "</div></div>" : '<ul class="list-unstyled"><li' + (i.options.collapse ? ' class="collapse in"' : "") + '><div class="datepicker">' + c + '</div></li><li class="picker-switch accordion-toggle"><a class="btn" style="width:100%"><span class="' + i.options.icons.time + '"></span></a></li><li' + (i.options.collapse ? ' class="collapse"' : "") + '><div class="timepicker">' + S.getTemplate() + "</div></li></ul>", d += "</div>") : i.options.pickTime ? '<div class="bootstrap-datetimepicker-widget dropdown-menu"><div class="timepicker">' + S.getTemplate() + "</div></div>" : '<div class="bootstrap-datetimepicker-widget dropdown-menu"><div class="datepicker">' + c + "</div></div>"
-	        }, R = {modes: [
-	            {clsName: "days", navFnc: "month", navStep: 1},
-	            {clsName: "months", navFnc: "year", navStep: 1},
-	            {clsName: "years", navFnc: "year", navStep: 10}
-	        ]}, S = {hourTemplate: '<span data-action="showHours"   data-time-component="hours"   class="timepicker-hour"></span>', minuteTemplate: '<span data-action="showMinutes" data-time-component="minutes" class="timepicker-minute"></span>', secondTemplate: '<span data-action="showSeconds"  data-time-component="seconds" class="timepicker-second"></span>'};
-	        S.getTemplate = function () {
-	            return'<div class="timepicker-picker"><table class="table-condensed"><tr><td><a href="#" class="btn" data-action="incrementHours"><span class="' + i.options.icons.up + '"></span></a></td><td class="separator"></td><td>' + (i.options.useMinutes ? '<a href="#" class="btn" data-action="incrementMinutes"><span class="' + i.options.icons.up + '"></span></a>' : "") + "</td>" + (i.options.useSeconds ? '<td class="separator"></td><td><a href="#" class="btn" data-action="incrementSeconds"><span class="' + i.options.icons.up + '"></span></a></td>' : "") + (i.use24hours ? "" : '<td class="separator"></td>') + "</tr><tr><td>" + S.hourTemplate + '</td> <td class="separator">:</td><td>' + (i.options.useMinutes ? S.minuteTemplate : '<span class="timepicker-minute">00</span>') + "</td> " + (i.options.useSeconds ? '<td class="separator">:</td><td>' + S.secondTemplate + "</td>" : "") + (i.use24hours ? "" : '<td class="separator"></td><td><button type="button" class="btn btn-primary" data-action="togglePeriod"></button></td>') + '</tr><tr><td><a href="#" class="btn" data-action="decrementHours"><span class="' + i.options.icons.down + '"></span></a></td><td class="separator"></td><td>' + (i.options.useMinutes ? '<a href="#" class="btn" data-action="decrementMinutes"><span class="' + i.options.icons.down + '"></span></a>' : "") + "</td>" + (i.options.useSeconds ? '<td class="separator"></td><td><a href="#" class="btn" data-action="decrementSeconds"><span class="' + i.options.icons.down + '"></span></a></td>' : "") + (i.use24hours ? "" : '<td class="separator"></td>') + '</tr></table></div><div class="timepicker-hours" data-action="selectHour"><table class="table-condensed"></table></div><div class="timepicker-minutes" data-action="selectMinute"><table class="table-condensed"></table></div>' + (i.options.useSeconds ? '<div class="timepicker-seconds" data-action="selectSecond"><table class="table-condensed"></table></div>' : "")
-	        }, i.destroy = function () {
-	            H(), I(), i.widget.remove(), i.element.removeData("DateTimePicker"), i.component && i.component.removeData("DateTimePicker")
-	        }, i.show = function (a) {
-	            if (!l().prop("disabled")) {
-	                if (i.options.useCurrent && "" === l().val()) {
-	                    if (1 !== i.options.minuteStepping) {
-	                        var c = b(), d = i.options.minuteStepping;
-	                        c.minutes(Math.round(c.minutes() / d) * d % 60).seconds(0), i.setValue(c.format(i.format))
-	                    } else i.setValue(b().format(i.format));
-	                    o("", a.type)
-	                }
-	                a && "click" === a.type && i.isInput && i.widget.hasClass("picker-open") || (i.widget.hasClass("picker-open") ? (i.widget.hide(), i.widget.removeClass("picker-open")) : (i.widget.show(), i.widget.addClass("picker-open")), i.height = i.component ? i.component.outerHeight() : i.element.outerHeight(), n(), i.element.trigger({type: "dp.show", date: b(i.date)}), G(), a && B(a))
-	            }
-	        }, i.disable = function () {
-	            var a = l();
-	            a.prop("disabled") || (a.prop("disabled", !0), H())
-	        }, i.enable = function () {
-	            var a = l();
-	            a.prop("disabled") && (a.prop("disabled", !1), F())
-	        }, i.hide = function () {
-	            var a, c, d = i.widget.find(".collapse");
-	            for (a = 0; a < d.length; a++)if (c = d.eq(a).data("collapse"), c && c.transitioning)return;
-	            i.widget.hide(), i.widget.removeClass("picker-open"), i.viewMode = i.startViewMode, E(), i.element.trigger({type: "dp.hide", date: b(i.date)}), I()
-	        }, i.setValue = function (a) {
-	            b.locale(i.options.language), a ? i.unset = !1 : (i.unset = !0, K()), a = b.isMoment(a) ? a.locale(i.options.language) : a instanceof Date ? b(a) : b(a, i.format, i.options.useStrict), a.isValid() ? (i.date = a, K(), i.viewDate = b({y: i.date.year(), M: i.date.month()}), t(), x()) : p(a)
-	        }, i.getDate = function () {
-	            return i.unset ? null : b(i.date)
-	        }, i.setDate = function (a) {
-	            var c = b(i.date);
-	            i.setValue(a ? a : null), o(c, "function")
-	        }, i.setDisabledDates = function (a) {
-	            i.options.disabledDates = O(a), i.viewDate && q()
-	        }, i.setEnabledDates = function (a) {
-	            i.options.enabledDates = O(a), i.viewDate && q()
-	        }, i.setMaxDate = function (a) {
-	            void 0 !== a && (i.options.maxDate = b.isMoment(a) || a instanceof Date ? b(a) : b(a, i.format, i.options.useStrict), i.viewDate && q())
-	        }, i.setMinDate = function (a) {
-	            void 0 !== a && (i.options.minDate = b.isMoment(a) || a instanceof Date ? b(a) : b(a, i.format, i.options.useStrict), i.viewDate && q())
-	        }, k()
-	    };
-	    a.fn.datetimepicker = function (b) {
-	        return this.each(function () {
-	            var c = a(this), e = c.data("DateTimePicker");
-	            e || c.data("DateTimePicker", new d(this, b))
-	        })
-	    }, a.fn.datetimepicker.defaults = {format: !1, pickDate: !0, pickTime: !0, useMinutes: !0, useSeconds: !1, useCurrent: !0, calendarWeeks: !1, minuteStepping: 1, minDate: b({y: 1900}), maxDate: b().add(100, "y"), showToday: !0, collapse: !0, language: b.locale(), defaultDate: "", disabledDates: !1, enabledDates: !1, icons: {}, useStrict: !1, direction: "auto", sideBySide: !1, daysOfWeekDisabled: [], widgetParent: !1}
-	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//     Underscore.js 1.5.2
@@ -3988,7 +1389,43 @@
 
 
 /***/ },
-/* 5 */
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {
+	if(!_){
+	    _={};
+	}
+
+	_.formatDate= function(date, formatString){
+	    /*
+	     * eg:formatString="YYYY-MM-DD hh:mm:ss";
+	     */
+	    var o = {
+	        "M+" : date.getMonth()+1,    //month
+	        "D+" : date.getDate(),    //day
+	        "h+" : date.getHours(),    //hour
+	        "m+" : date.getMinutes(),    //minute
+	        "s+" : date.getSeconds(),    //second
+	        "q+" : Math.floor((date.getMonth()+3)/3),    //quarter
+	        "S" : date.getMilliseconds()    //millisecond
+	    }
+
+	    if(/(Y+)/.test(formatString)){
+	        formatString = formatString.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+	    }
+
+	    for(var k in o){
+	        if(new RegExp("("+ k +")").test(formatString)){
+	            formatString = formatString.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+	        }
+	    }
+	    return formatString;
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -13204,14 +10641,14 @@
 
 
 /***/ },
-/* 6 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["moment"] = __webpack_require__(7);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["moment"] = __webpack_require__(5);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 7 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -13482,7 +10919,7 @@
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(17)("./" + name);
+	                __webpack_require__(7)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -16409,192 +13846,199 @@
 	    return _moment;
 
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(108)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
 
 /***/ },
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 21,
-		"./af.js": 21,
-		"./ar": 25,
-		"./ar-ma": 22,
-		"./ar-ma.js": 22,
-		"./ar-sa": 23,
-		"./ar-sa.js": 23,
-		"./ar-tn": 24,
-		"./ar-tn.js": 24,
-		"./ar.js": 25,
-		"./az": 26,
-		"./az.js": 26,
-		"./be": 27,
-		"./be.js": 27,
-		"./bg": 28,
-		"./bg.js": 28,
-		"./bn": 29,
-		"./bn.js": 29,
-		"./bo": 30,
-		"./bo.js": 30,
-		"./br": 31,
-		"./br.js": 31,
-		"./bs": 32,
-		"./bs.js": 32,
-		"./ca": 33,
-		"./ca.js": 33,
-		"./cs": 34,
-		"./cs.js": 34,
-		"./cv": 35,
-		"./cv.js": 35,
-		"./cy": 36,
-		"./cy.js": 36,
-		"./da": 37,
-		"./da.js": 37,
-		"./de": 39,
-		"./de-at": 38,
-		"./de-at.js": 38,
-		"./de.js": 39,
-		"./el": 40,
-		"./el.js": 40,
-		"./en-au": 41,
-		"./en-au.js": 41,
-		"./en-ca": 42,
-		"./en-ca.js": 42,
-		"./en-gb": 43,
-		"./en-gb.js": 43,
-		"./eo": 44,
-		"./eo.js": 44,
-		"./es": 45,
-		"./es.js": 45,
-		"./et": 46,
-		"./et.js": 46,
-		"./eu": 47,
-		"./eu.js": 47,
-		"./fa": 48,
-		"./fa.js": 48,
-		"./fi": 49,
-		"./fi.js": 49,
-		"./fo": 50,
-		"./fo.js": 50,
-		"./fr": 52,
-		"./fr-ca": 51,
-		"./fr-ca.js": 51,
-		"./fr.js": 52,
-		"./fy": 53,
-		"./fy.js": 53,
-		"./gl": 54,
-		"./gl.js": 54,
-		"./he": 55,
-		"./he.js": 55,
-		"./hi": 56,
-		"./hi.js": 56,
-		"./hr": 57,
-		"./hr.js": 57,
-		"./hu": 58,
-		"./hu.js": 58,
-		"./hy-am": 59,
-		"./hy-am.js": 59,
-		"./id": 60,
-		"./id.js": 60,
-		"./is": 61,
-		"./is.js": 61,
-		"./it": 62,
-		"./it.js": 62,
-		"./ja": 63,
-		"./ja.js": 63,
-		"./jv": 64,
-		"./jv.js": 64,
-		"./ka": 65,
-		"./ka.js": 65,
-		"./km": 66,
-		"./km.js": 66,
-		"./ko": 67,
-		"./ko.js": 67,
-		"./lb": 68,
-		"./lb.js": 68,
-		"./lt": 69,
-		"./lt.js": 69,
-		"./lv": 70,
-		"./lv.js": 70,
-		"./me": 71,
-		"./me.js": 71,
-		"./mk": 72,
-		"./mk.js": 72,
-		"./ml": 73,
-		"./ml.js": 73,
-		"./mr": 74,
-		"./mr.js": 74,
-		"./ms": 76,
-		"./ms-my": 75,
-		"./ms-my.js": 75,
-		"./ms.js": 76,
-		"./my": 77,
-		"./my.js": 77,
-		"./nb": 78,
-		"./nb.js": 78,
-		"./ne": 79,
-		"./ne.js": 79,
-		"./nl": 80,
-		"./nl.js": 80,
-		"./nn": 81,
-		"./nn.js": 81,
-		"./pl": 82,
-		"./pl.js": 82,
-		"./pt": 84,
-		"./pt-br": 83,
-		"./pt-br.js": 83,
-		"./pt.js": 84,
-		"./ro": 85,
-		"./ro.js": 85,
-		"./ru": 86,
-		"./ru.js": 86,
-		"./si": 87,
-		"./si.js": 87,
-		"./sk": 88,
-		"./sk.js": 88,
-		"./sl": 89,
-		"./sl.js": 89,
-		"./sq": 90,
-		"./sq.js": 90,
-		"./sr": 92,
-		"./sr-cyrl": 91,
-		"./sr-cyrl.js": 91,
-		"./sr.js": 92,
-		"./sv": 93,
-		"./sv.js": 93,
-		"./ta": 94,
-		"./ta.js": 94,
-		"./th": 95,
-		"./th.js": 95,
-		"./tl-ph": 96,
-		"./tl-ph.js": 96,
-		"./tr": 97,
-		"./tr.js": 97,
-		"./tzl": 98,
-		"./tzl.js": 98,
-		"./tzm": 100,
-		"./tzm-latn": 99,
-		"./tzm-latn.js": 99,
-		"./tzm.js": 100,
-		"./uk": 101,
-		"./uk.js": 101,
-		"./uz": 102,
-		"./uz.js": 102,
-		"./vi": 103,
-		"./vi.js": 103,
-		"./zh-cn": 104,
-		"./zh-cn.js": 104,
-		"./zh-tw": 105,
-		"./zh-tw.js": 105
+		"./af": 8,
+		"./af.js": 8,
+		"./ar": 9,
+		"./ar-ma": 10,
+		"./ar-ma.js": 10,
+		"./ar-sa": 11,
+		"./ar-sa.js": 11,
+		"./ar-tn": 12,
+		"./ar-tn.js": 12,
+		"./ar.js": 9,
+		"./az": 13,
+		"./az.js": 13,
+		"./be": 14,
+		"./be.js": 14,
+		"./bg": 15,
+		"./bg.js": 15,
+		"./bn": 16,
+		"./bn.js": 16,
+		"./bo": 17,
+		"./bo.js": 17,
+		"./br": 18,
+		"./br.js": 18,
+		"./bs": 19,
+		"./bs.js": 19,
+		"./ca": 20,
+		"./ca.js": 20,
+		"./cs": 21,
+		"./cs.js": 21,
+		"./cv": 22,
+		"./cv.js": 22,
+		"./cy": 23,
+		"./cy.js": 23,
+		"./da": 24,
+		"./da.js": 24,
+		"./de": 25,
+		"./de-at": 26,
+		"./de-at.js": 26,
+		"./de.js": 25,
+		"./el": 27,
+		"./el.js": 27,
+		"./en-au": 28,
+		"./en-au.js": 28,
+		"./en-ca": 29,
+		"./en-ca.js": 29,
+		"./en-gb": 30,
+		"./en-gb.js": 30,
+		"./eo": 31,
+		"./eo.js": 31,
+		"./es": 32,
+		"./es.js": 32,
+		"./et": 33,
+		"./et.js": 33,
+		"./eu": 34,
+		"./eu.js": 34,
+		"./fa": 35,
+		"./fa.js": 35,
+		"./fi": 36,
+		"./fi.js": 36,
+		"./fo": 37,
+		"./fo.js": 37,
+		"./fr": 38,
+		"./fr-ca": 39,
+		"./fr-ca.js": 39,
+		"./fr.js": 38,
+		"./fy": 40,
+		"./fy.js": 40,
+		"./gl": 41,
+		"./gl.js": 41,
+		"./he": 42,
+		"./he.js": 42,
+		"./hi": 43,
+		"./hi.js": 43,
+		"./hr": 44,
+		"./hr.js": 44,
+		"./hu": 45,
+		"./hu.js": 45,
+		"./hy-am": 46,
+		"./hy-am.js": 46,
+		"./id": 47,
+		"./id.js": 47,
+		"./is": 48,
+		"./is.js": 48,
+		"./it": 49,
+		"./it.js": 49,
+		"./ja": 50,
+		"./ja.js": 50,
+		"./jv": 51,
+		"./jv.js": 51,
+		"./ka": 52,
+		"./ka.js": 52,
+		"./km": 53,
+		"./km.js": 53,
+		"./ko": 54,
+		"./ko.js": 54,
+		"./lb": 55,
+		"./lb.js": 55,
+		"./lt": 56,
+		"./lt.js": 56,
+		"./lv": 57,
+		"./lv.js": 57,
+		"./me": 58,
+		"./me.js": 58,
+		"./mk": 59,
+		"./mk.js": 59,
+		"./ml": 60,
+		"./ml.js": 60,
+		"./mr": 61,
+		"./mr.js": 61,
+		"./ms": 62,
+		"./ms-my": 63,
+		"./ms-my.js": 63,
+		"./ms.js": 62,
+		"./my": 64,
+		"./my.js": 64,
+		"./nb": 65,
+		"./nb.js": 65,
+		"./ne": 66,
+		"./ne.js": 66,
+		"./nl": 67,
+		"./nl.js": 67,
+		"./nn": 68,
+		"./nn.js": 68,
+		"./pl": 69,
+		"./pl.js": 69,
+		"./pt": 70,
+		"./pt-br": 71,
+		"./pt-br.js": 71,
+		"./pt.js": 70,
+		"./ro": 72,
+		"./ro.js": 72,
+		"./ru": 73,
+		"./ru.js": 73,
+		"./si": 74,
+		"./si.js": 74,
+		"./sk": 75,
+		"./sk.js": 75,
+		"./sl": 76,
+		"./sl.js": 76,
+		"./sq": 77,
+		"./sq.js": 77,
+		"./sr": 78,
+		"./sr-cyrl": 79,
+		"./sr-cyrl.js": 79,
+		"./sr.js": 78,
+		"./sv": 80,
+		"./sv.js": 80,
+		"./ta": 81,
+		"./ta.js": 81,
+		"./th": 82,
+		"./th.js": 82,
+		"./tl-ph": 83,
+		"./tl-ph.js": 83,
+		"./tr": 84,
+		"./tr.js": 84,
+		"./tzl": 85,
+		"./tzl.js": 85,
+		"./tzm": 86,
+		"./tzm-latn": 87,
+		"./tzm-latn.js": 87,
+		"./tzm.js": 86,
+		"./uk": 88,
+		"./uk.js": 88,
+		"./uz": 89,
+		"./uz.js": 89,
+		"./vi": 90,
+		"./vi.js": 90,
+		"./zh-cn": 91,
+		"./zh-cn.js": 91,
+		"./zh-tw": 92,
+		"./zh-tw.js": 92
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -16607,14 +14051,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 17;
+	webpackContext.id = 7;
 
 
 /***/ },
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16622,7 +14063,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -16691,238 +14132,7 @@
 	}));
 
 /***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : Moroccan Arabic (ar-ma)
-	//! author : ElFadili Yassine : https://github.com/ElFadiliY
-	//! author : Abdel Said : https://github.com/abdelsaid
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    var ar_ma = moment.defineLocale('ar-ma', {
-	        months : 'يناير_فبراير_مارس_أبريل_ماي_يونيو_يوليوز_غشت_شتنبر_أكتوبر_نونبر_دجنبر'.split('_'),
-	        monthsShort : 'يناير_فبراير_مارس_أبريل_ماي_يونيو_يوليوز_غشت_شتنبر_أكتوبر_نونبر_دجنبر'.split('_'),
-	        weekdays : 'الأحد_الإتنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
-	        weekdaysShort : 'احد_اتنين_ثلاثاء_اربعاء_خميس_جمعة_سبت'.split('_'),
-	        weekdaysMin : 'ح_ن_ث_ر_خ_ج_س'.split('_'),
-	        longDateFormat : {
-	            LT : 'HH:mm',
-	            LTS : 'HH:mm:ss',
-	            L : 'DD/MM/YYYY',
-	            LL : 'D MMMM YYYY',
-	            LLL : 'D MMMM YYYY HH:mm',
-	            LLLL : 'dddd D MMMM YYYY HH:mm'
-	        },
-	        calendar : {
-	            sameDay: '[اليوم على الساعة] LT',
-	            nextDay: '[غدا على الساعة] LT',
-	            nextWeek: 'dddd [على الساعة] LT',
-	            lastDay: '[أمس على الساعة] LT',
-	            lastWeek: 'dddd [على الساعة] LT',
-	            sameElse: 'L'
-	        },
-	        relativeTime : {
-	            future : 'في %s',
-	            past : 'منذ %s',
-	            s : 'ثوان',
-	            m : 'دقيقة',
-	            mm : '%d دقائق',
-	            h : 'ساعة',
-	            hh : '%d ساعات',
-	            d : 'يوم',
-	            dd : '%d أيام',
-	            M : 'شهر',
-	            MM : '%d أشهر',
-	            y : 'سنة',
-	            yy : '%d سنوات'
-	        },
-	        week : {
-	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
-	        }
-	    });
-
-	    return ar_ma;
-
-	}));
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : Arabic Saudi Arabia (ar-sa)
-	//! author : Suhail Alkowaileet : https://github.com/xsoh
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    var symbolMap = {
-	        '1': '١',
-	        '2': '٢',
-	        '3': '٣',
-	        '4': '٤',
-	        '5': '٥',
-	        '6': '٦',
-	        '7': '٧',
-	        '8': '٨',
-	        '9': '٩',
-	        '0': '٠'
-	    }, numberMap = {
-	        '١': '1',
-	        '٢': '2',
-	        '٣': '3',
-	        '٤': '4',
-	        '٥': '5',
-	        '٦': '6',
-	        '٧': '7',
-	        '٨': '8',
-	        '٩': '9',
-	        '٠': '0'
-	    };
-
-	    var ar_sa = moment.defineLocale('ar-sa', {
-	        months : 'يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_'),
-	        monthsShort : 'يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_'),
-	        weekdays : 'الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
-	        weekdaysShort : 'أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت'.split('_'),
-	        weekdaysMin : 'ح_ن_ث_ر_خ_ج_س'.split('_'),
-	        longDateFormat : {
-	            LT : 'HH:mm',
-	            LTS : 'HH:mm:ss',
-	            L : 'DD/MM/YYYY',
-	            LL : 'D MMMM YYYY',
-	            LLL : 'D MMMM YYYY HH:mm',
-	            LLLL : 'dddd D MMMM YYYY HH:mm'
-	        },
-	        meridiemParse: /ص|م/,
-	        isPM : function (input) {
-	            return 'م' === input;
-	        },
-	        meridiem : function (hour, minute, isLower) {
-	            if (hour < 12) {
-	                return 'ص';
-	            } else {
-	                return 'م';
-	            }
-	        },
-	        calendar : {
-	            sameDay: '[اليوم على الساعة] LT',
-	            nextDay: '[غدا على الساعة] LT',
-	            nextWeek: 'dddd [على الساعة] LT',
-	            lastDay: '[أمس على الساعة] LT',
-	            lastWeek: 'dddd [على الساعة] LT',
-	            sameElse: 'L'
-	        },
-	        relativeTime : {
-	            future : 'في %s',
-	            past : 'منذ %s',
-	            s : 'ثوان',
-	            m : 'دقيقة',
-	            mm : '%d دقائق',
-	            h : 'ساعة',
-	            hh : '%d ساعات',
-	            d : 'يوم',
-	            dd : '%d أيام',
-	            M : 'شهر',
-	            MM : '%d أشهر',
-	            y : 'سنة',
-	            yy : '%d سنوات'
-	        },
-	        preparse: function (string) {
-	            return string.replace(/[١٢٣٤٥٦٧٨٩٠]/g, function (match) {
-	                return numberMap[match];
-	            }).replace(/،/g, ',');
-	        },
-	        postformat: function (string) {
-	            return string.replace(/\d/g, function (match) {
-	                return symbolMap[match];
-	            }).replace(/,/g, '،');
-	        },
-	        week : {
-	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
-	        }
-	    });
-
-	    return ar_sa;
-
-	}));
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale  : Tunisian Arabic (ar-tn)
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    var ar_tn = moment.defineLocale('ar-tn', {
-	        months: 'جانفي_فيفري_مارس_أفريل_ماي_جوان_جويلية_أوت_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_'),
-	        monthsShort: 'جانفي_فيفري_مارس_أفريل_ماي_جوان_جويلية_أوت_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_'),
-	        weekdays: 'الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
-	        weekdaysShort: 'أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت'.split('_'),
-	        weekdaysMin: 'ح_ن_ث_ر_خ_ج_س'.split('_'),
-	        longDateFormat: {
-	            LT: 'HH:mm',
-	            LTS: 'HH:mm:ss',
-	            L: 'DD/MM/YYYY',
-	            LL: 'D MMMM YYYY',
-	            LLL: 'D MMMM YYYY HH:mm',
-	            LLLL: 'dddd D MMMM YYYY HH:mm'
-	        },
-	        calendar: {
-	            sameDay: '[اليوم على الساعة] LT',
-	            nextDay: '[غدا على الساعة] LT',
-	            nextWeek: 'dddd [على الساعة] LT',
-	            lastDay: '[أمس على الساعة] LT',
-	            lastWeek: 'dddd [على الساعة] LT',
-	            sameElse: 'L'
-	        },
-	        relativeTime: {
-	            future: 'في %s',
-	            past: 'منذ %s',
-	            s: 'ثوان',
-	            m: 'دقيقة',
-	            mm: '%d دقائق',
-	            h: 'ساعة',
-	            hh: '%d ساعات',
-	            d: 'يوم',
-	            dd: '%d أيام',
-	            M: 'شهر',
-	            MM: '%d أشهر',
-	            y: 'سنة',
-	            yy: '%d سنوات'
-	        },
-	        week: {
-	            dow: 1, // Monday is the first day of the week.
-	            doy: 4 // The week that contains Jan 4th is the first week of the year.
-	        }
-	    });
-
-	    return ar_tn;
-
-	}));
-
-/***/ },
-/* 25 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16932,7 +14142,7 @@
 	//! Native plural forms: forabi https://github.com/forabi
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17062,7 +14272,238 @@
 	}));
 
 /***/ },
-/* 26 */
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Moroccan Arabic (ar-ma)
+	//! author : ElFadili Yassine : https://github.com/ElFadiliY
+	//! author : Abdel Said : https://github.com/abdelsaid
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    var ar_ma = moment.defineLocale('ar-ma', {
+	        months : 'يناير_فبراير_مارس_أبريل_ماي_يونيو_يوليوز_غشت_شتنبر_أكتوبر_نونبر_دجنبر'.split('_'),
+	        monthsShort : 'يناير_فبراير_مارس_أبريل_ماي_يونيو_يوليوز_غشت_شتنبر_أكتوبر_نونبر_دجنبر'.split('_'),
+	        weekdays : 'الأحد_الإتنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
+	        weekdaysShort : 'احد_اتنين_ثلاثاء_اربعاء_خميس_جمعة_سبت'.split('_'),
+	        weekdaysMin : 'ح_ن_ث_ر_خ_ج_س'.split('_'),
+	        longDateFormat : {
+	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
+	            L : 'DD/MM/YYYY',
+	            LL : 'D MMMM YYYY',
+	            LLL : 'D MMMM YYYY HH:mm',
+	            LLLL : 'dddd D MMMM YYYY HH:mm'
+	        },
+	        calendar : {
+	            sameDay: '[اليوم على الساعة] LT',
+	            nextDay: '[غدا على الساعة] LT',
+	            nextWeek: 'dddd [على الساعة] LT',
+	            lastDay: '[أمس على الساعة] LT',
+	            lastWeek: 'dddd [على الساعة] LT',
+	            sameElse: 'L'
+	        },
+	        relativeTime : {
+	            future : 'في %s',
+	            past : 'منذ %s',
+	            s : 'ثوان',
+	            m : 'دقيقة',
+	            mm : '%d دقائق',
+	            h : 'ساعة',
+	            hh : '%d ساعات',
+	            d : 'يوم',
+	            dd : '%d أيام',
+	            M : 'شهر',
+	            MM : '%d أشهر',
+	            y : 'سنة',
+	            yy : '%d سنوات'
+	        },
+	        week : {
+	            dow : 6, // Saturday is the first day of the week.
+	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	        }
+	    });
+
+	    return ar_ma;
+
+	}));
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Arabic Saudi Arabia (ar-sa)
+	//! author : Suhail Alkowaileet : https://github.com/xsoh
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    var symbolMap = {
+	        '1': '١',
+	        '2': '٢',
+	        '3': '٣',
+	        '4': '٤',
+	        '5': '٥',
+	        '6': '٦',
+	        '7': '٧',
+	        '8': '٨',
+	        '9': '٩',
+	        '0': '٠'
+	    }, numberMap = {
+	        '١': '1',
+	        '٢': '2',
+	        '٣': '3',
+	        '٤': '4',
+	        '٥': '5',
+	        '٦': '6',
+	        '٧': '7',
+	        '٨': '8',
+	        '٩': '9',
+	        '٠': '0'
+	    };
+
+	    var ar_sa = moment.defineLocale('ar-sa', {
+	        months : 'يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_'),
+	        monthsShort : 'يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_'),
+	        weekdays : 'الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
+	        weekdaysShort : 'أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت'.split('_'),
+	        weekdaysMin : 'ح_ن_ث_ر_خ_ج_س'.split('_'),
+	        longDateFormat : {
+	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
+	            L : 'DD/MM/YYYY',
+	            LL : 'D MMMM YYYY',
+	            LLL : 'D MMMM YYYY HH:mm',
+	            LLLL : 'dddd D MMMM YYYY HH:mm'
+	        },
+	        meridiemParse: /ص|م/,
+	        isPM : function (input) {
+	            return 'م' === input;
+	        },
+	        meridiem : function (hour, minute, isLower) {
+	            if (hour < 12) {
+	                return 'ص';
+	            } else {
+	                return 'م';
+	            }
+	        },
+	        calendar : {
+	            sameDay: '[اليوم على الساعة] LT',
+	            nextDay: '[غدا على الساعة] LT',
+	            nextWeek: 'dddd [على الساعة] LT',
+	            lastDay: '[أمس على الساعة] LT',
+	            lastWeek: 'dddd [على الساعة] LT',
+	            sameElse: 'L'
+	        },
+	        relativeTime : {
+	            future : 'في %s',
+	            past : 'منذ %s',
+	            s : 'ثوان',
+	            m : 'دقيقة',
+	            mm : '%d دقائق',
+	            h : 'ساعة',
+	            hh : '%d ساعات',
+	            d : 'يوم',
+	            dd : '%d أيام',
+	            M : 'شهر',
+	            MM : '%d أشهر',
+	            y : 'سنة',
+	            yy : '%d سنوات'
+	        },
+	        preparse: function (string) {
+	            return string.replace(/[١٢٣٤٥٦٧٨٩٠]/g, function (match) {
+	                return numberMap[match];
+	            }).replace(/،/g, ',');
+	        },
+	        postformat: function (string) {
+	            return string.replace(/\d/g, function (match) {
+	                return symbolMap[match];
+	            }).replace(/,/g, '،');
+	        },
+	        week : {
+	            dow : 6, // Saturday is the first day of the week.
+	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	        }
+	    });
+
+	    return ar_sa;
+
+	}));
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale  : Tunisian Arabic (ar-tn)
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    var ar_tn = moment.defineLocale('ar-tn', {
+	        months: 'جانفي_فيفري_مارس_أفريل_ماي_جوان_جويلية_أوت_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_'),
+	        monthsShort: 'جانفي_فيفري_مارس_أفريل_ماي_جوان_جويلية_أوت_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_'),
+	        weekdays: 'الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
+	        weekdaysShort: 'أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت'.split('_'),
+	        weekdaysMin: 'ح_ن_ث_ر_خ_ج_س'.split('_'),
+	        longDateFormat: {
+	            LT: 'HH:mm',
+	            LTS: 'HH:mm:ss',
+	            L: 'DD/MM/YYYY',
+	            LL: 'D MMMM YYYY',
+	            LLL: 'D MMMM YYYY HH:mm',
+	            LLLL: 'dddd D MMMM YYYY HH:mm'
+	        },
+	        calendar: {
+	            sameDay: '[اليوم على الساعة] LT',
+	            nextDay: '[غدا على الساعة] LT',
+	            nextWeek: 'dddd [على الساعة] LT',
+	            lastDay: '[أمس على الساعة] LT',
+	            lastWeek: 'dddd [على الساعة] LT',
+	            sameElse: 'L'
+	        },
+	        relativeTime: {
+	            future: 'في %s',
+	            past: 'منذ %s',
+	            s: 'ثوان',
+	            m: 'دقيقة',
+	            mm: '%d دقائق',
+	            h: 'ساعة',
+	            hh: '%d ساعات',
+	            d: 'يوم',
+	            dd: '%d أيام',
+	            M: 'شهر',
+	            MM: '%d أشهر',
+	            y: 'سنة',
+	            yy: '%d سنوات'
+	        },
+	        week: {
+	            dow: 1, // Monday is the first day of the week.
+	            doy: 4 // The week that contains Jan 4th is the first week of the year.
+	        }
+	    });
+
+	    return ar_tn;
+
+	}));
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17070,7 +14511,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17170,7 +14611,7 @@
 	}));
 
 /***/ },
-/* 27 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17180,7 +14621,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17321,7 +14762,7 @@
 	}));
 
 /***/ },
-/* 28 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17329,7 +14770,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17415,7 +14856,7 @@
 	}));
 
 /***/ },
-/* 29 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17423,7 +14864,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17532,7 +14973,7 @@
 	}));
 
 /***/ },
-/* 30 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17540,7 +14981,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17646,7 +15087,7 @@
 	}));
 
 /***/ },
-/* 31 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17654,7 +15095,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17757,7 +15198,7 @@
 	}));
 
 /***/ },
-/* 32 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17766,7 +15207,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17902,7 +15343,7 @@
 	}));
 
 /***/ },
-/* 33 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17910,7 +15351,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -17985,7 +15426,7 @@
 	}));
 
 /***/ },
-/* 34 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17993,7 +15434,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18146,7 +15587,7 @@
 	}));
 
 /***/ },
-/* 35 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18154,7 +15595,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18213,7 +15654,7 @@
 	}));
 
 /***/ },
-/* 36 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18221,7 +15662,7 @@
 	//! author : Robert Allen
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18296,7 +15737,7 @@
 	}));
 
 /***/ },
-/* 37 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18304,7 +15745,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18360,87 +15801,7 @@
 	}));
 
 /***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : austrian german (de-at)
-	//! author : lluchs : https://github.com/lluchs
-	//! author: Menelion Elensúle: https://github.com/Oire
-	//! author : Martin Groller : https://github.com/MadMG
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    function processRelativeTime(number, withoutSuffix, key, isFuture) {
-	        var format = {
-	            'm': ['eine Minute', 'einer Minute'],
-	            'h': ['eine Stunde', 'einer Stunde'],
-	            'd': ['ein Tag', 'einem Tag'],
-	            'dd': [number + ' Tage', number + ' Tagen'],
-	            'M': ['ein Monat', 'einem Monat'],
-	            'MM': [number + ' Monate', number + ' Monaten'],
-	            'y': ['ein Jahr', 'einem Jahr'],
-	            'yy': [number + ' Jahre', number + ' Jahren']
-	        };
-	        return withoutSuffix ? format[key][0] : format[key][1];
-	    }
-
-	    var de_at = moment.defineLocale('de-at', {
-	        months : 'Jänner_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember'.split('_'),
-	        monthsShort : 'Jän._Febr._Mrz._Apr._Mai_Jun._Jul._Aug._Sept._Okt._Nov._Dez.'.split('_'),
-	        weekdays : 'Sonntag_Montag_Dienstag_Mittwoch_Donnerstag_Freitag_Samstag'.split('_'),
-	        weekdaysShort : 'So._Mo._Di._Mi._Do._Fr._Sa.'.split('_'),
-	        weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
-	        longDateFormat : {
-	            LT: 'HH:mm',
-	            LTS: 'HH:mm:ss',
-	            L : 'DD.MM.YYYY',
-	            LL : 'D. MMMM YYYY',
-	            LLL : 'D. MMMM YYYY HH:mm',
-	            LLLL : 'dddd, D. MMMM YYYY HH:mm'
-	        },
-	        calendar : {
-	            sameDay: '[Heute um] LT [Uhr]',
-	            sameElse: 'L',
-	            nextDay: '[Morgen um] LT [Uhr]',
-	            nextWeek: 'dddd [um] LT [Uhr]',
-	            lastDay: '[Gestern um] LT [Uhr]',
-	            lastWeek: '[letzten] dddd [um] LT [Uhr]'
-	        },
-	        relativeTime : {
-	            future : 'in %s',
-	            past : 'vor %s',
-	            s : 'ein paar Sekunden',
-	            m : processRelativeTime,
-	            mm : '%d Minuten',
-	            h : processRelativeTime,
-	            hh : '%d Stunden',
-	            d : processRelativeTime,
-	            dd : processRelativeTime,
-	            M : processRelativeTime,
-	            MM : processRelativeTime,
-	            y : processRelativeTime,
-	            yy : processRelativeTime
-	        },
-	        ordinalParse: /\d{1,2}\./,
-	        ordinal : '%d.',
-	        week : {
-	            dow : 1, // Monday is the first day of the week.
-	            doy : 4  // The week that contains Jan 4th is the first week of the year.
-	        }
-	    });
-
-	    return de_at;
-
-	}));
-
-/***/ },
-/* 39 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18449,7 +15810,7 @@
 	//! author: Menelion Elensúle: https://github.com/Oire
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18519,7 +15880,87 @@
 	}));
 
 /***/ },
-/* 40 */
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : austrian german (de-at)
+	//! author : lluchs : https://github.com/lluchs
+	//! author: Menelion Elensúle: https://github.com/Oire
+	//! author : Martin Groller : https://github.com/MadMG
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    function processRelativeTime(number, withoutSuffix, key, isFuture) {
+	        var format = {
+	            'm': ['eine Minute', 'einer Minute'],
+	            'h': ['eine Stunde', 'einer Stunde'],
+	            'd': ['ein Tag', 'einem Tag'],
+	            'dd': [number + ' Tage', number + ' Tagen'],
+	            'M': ['ein Monat', 'einem Monat'],
+	            'MM': [number + ' Monate', number + ' Monaten'],
+	            'y': ['ein Jahr', 'einem Jahr'],
+	            'yy': [number + ' Jahre', number + ' Jahren']
+	        };
+	        return withoutSuffix ? format[key][0] : format[key][1];
+	    }
+
+	    var de_at = moment.defineLocale('de-at', {
+	        months : 'Jänner_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember'.split('_'),
+	        monthsShort : 'Jän._Febr._Mrz._Apr._Mai_Jun._Jul._Aug._Sept._Okt._Nov._Dez.'.split('_'),
+	        weekdays : 'Sonntag_Montag_Dienstag_Mittwoch_Donnerstag_Freitag_Samstag'.split('_'),
+	        weekdaysShort : 'So._Mo._Di._Mi._Do._Fr._Sa.'.split('_'),
+	        weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
+	        longDateFormat : {
+	            LT: 'HH:mm',
+	            LTS: 'HH:mm:ss',
+	            L : 'DD.MM.YYYY',
+	            LL : 'D. MMMM YYYY',
+	            LLL : 'D. MMMM YYYY HH:mm',
+	            LLLL : 'dddd, D. MMMM YYYY HH:mm'
+	        },
+	        calendar : {
+	            sameDay: '[Heute um] LT [Uhr]',
+	            sameElse: 'L',
+	            nextDay: '[Morgen um] LT [Uhr]',
+	            nextWeek: 'dddd [um] LT [Uhr]',
+	            lastDay: '[Gestern um] LT [Uhr]',
+	            lastWeek: '[letzten] dddd [um] LT [Uhr]'
+	        },
+	        relativeTime : {
+	            future : 'in %s',
+	            past : 'vor %s',
+	            s : 'ein paar Sekunden',
+	            m : processRelativeTime,
+	            mm : '%d Minuten',
+	            h : processRelativeTime,
+	            hh : '%d Stunden',
+	            d : processRelativeTime,
+	            dd : processRelativeTime,
+	            M : processRelativeTime,
+	            MM : processRelativeTime,
+	            y : processRelativeTime,
+	            yy : processRelativeTime
+	        },
+	        ordinalParse: /\d{1,2}\./,
+	        ordinal : '%d.',
+	        week : {
+	            dow : 1, // Monday is the first day of the week.
+	            doy : 4  // The week that contains Jan 4th is the first week of the year.
+	        }
+	    });
+
+	    return de_at;
+
+	}));
+
+/***/ },
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18527,7 +15968,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18617,14 +16058,14 @@
 	}));
 
 /***/ },
-/* 41 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : australian english (en-au)
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18687,7 +16128,7 @@
 	}));
 
 /***/ },
-/* 42 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18695,7 +16136,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18754,7 +16195,7 @@
 	}));
 
 /***/ },
-/* 43 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18762,7 +16203,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18825,7 +16266,7 @@
 	}));
 
 /***/ },
-/* 44 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18835,7 +16276,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18902,7 +16343,7 @@
 	}));
 
 /***/ },
-/* 45 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18910,7 +16351,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -18985,7 +16426,7 @@
 	}));
 
 /***/ },
-/* 46 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18994,7 +16435,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19069,7 +16510,7 @@
 	}));
 
 /***/ },
-/* 47 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19077,7 +16518,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19137,7 +16578,7 @@
 	}));
 
 /***/ },
-/* 48 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19145,7 +16586,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19246,7 +16687,7 @@
 	}));
 
 /***/ },
-/* 49 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19254,7 +16695,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19357,7 +16798,7 @@
 	}));
 
 /***/ },
-/* 50 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19365,7 +16806,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19421,69 +16862,7 @@
 	}));
 
 /***/ },
-/* 51 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : canadian french (fr-ca)
-	//! author : Jonathan Abourbih : https://github.com/jonbca
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    var fr_ca = moment.defineLocale('fr-ca', {
-	        months : 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
-	        monthsShort : 'janv._févr._mars_avr._mai_juin_juil._août_sept._oct._nov._déc.'.split('_'),
-	        weekdays : 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
-	        weekdaysShort : 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
-	        weekdaysMin : 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
-	        longDateFormat : {
-	            LT : 'HH:mm',
-	            LTS : 'HH:mm:ss',
-	            L : 'YYYY-MM-DD',
-	            LL : 'D MMMM YYYY',
-	            LLL : 'D MMMM YYYY HH:mm',
-	            LLLL : 'dddd D MMMM YYYY HH:mm'
-	        },
-	        calendar : {
-	            sameDay: '[Aujourd\'hui à] LT',
-	            nextDay: '[Demain à] LT',
-	            nextWeek: 'dddd [à] LT',
-	            lastDay: '[Hier à] LT',
-	            lastWeek: 'dddd [dernier à] LT',
-	            sameElse: 'L'
-	        },
-	        relativeTime : {
-	            future : 'dans %s',
-	            past : 'il y a %s',
-	            s : 'quelques secondes',
-	            m : 'une minute',
-	            mm : '%d minutes',
-	            h : 'une heure',
-	            hh : '%d heures',
-	            d : 'un jour',
-	            dd : '%d jours',
-	            M : 'un mois',
-	            MM : '%d mois',
-	            y : 'un an',
-	            yy : '%d ans'
-	        },
-	        ordinalParse: /\d{1,2}(er|e)/,
-	        ordinal : function (number) {
-	            return number + (number === 1 ? 'er' : 'e');
-	        }
-	    });
-
-	    return fr_ca;
-
-	}));
-
-/***/ },
-/* 52 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19491,7 +16870,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19549,7 +16928,69 @@
 	}));
 
 /***/ },
-/* 53 */
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : canadian french (fr-ca)
+	//! author : Jonathan Abourbih : https://github.com/jonbca
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    var fr_ca = moment.defineLocale('fr-ca', {
+	        months : 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
+	        monthsShort : 'janv._févr._mars_avr._mai_juin_juil._août_sept._oct._nov._déc.'.split('_'),
+	        weekdays : 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
+	        weekdaysShort : 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
+	        weekdaysMin : 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
+	        longDateFormat : {
+	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
+	            L : 'YYYY-MM-DD',
+	            LL : 'D MMMM YYYY',
+	            LLL : 'D MMMM YYYY HH:mm',
+	            LLLL : 'dddd D MMMM YYYY HH:mm'
+	        },
+	        calendar : {
+	            sameDay: '[Aujourd\'hui à] LT',
+	            nextDay: '[Demain à] LT',
+	            nextWeek: 'dddd [à] LT',
+	            lastDay: '[Hier à] LT',
+	            lastWeek: 'dddd [dernier à] LT',
+	            sameElse: 'L'
+	        },
+	        relativeTime : {
+	            future : 'dans %s',
+	            past : 'il y a %s',
+	            s : 'quelques secondes',
+	            m : 'une minute',
+	            mm : '%d minutes',
+	            h : 'une heure',
+	            hh : '%d heures',
+	            d : 'un jour',
+	            dd : '%d jours',
+	            M : 'un mois',
+	            MM : '%d mois',
+	            y : 'un an',
+	            yy : '%d ans'
+	        },
+	        ordinalParse: /\d{1,2}(er|e)/,
+	        ordinal : function (number) {
+	            return number + (number === 1 ? 'er' : 'e');
+	        }
+	    });
+
+	    return fr_ca;
+
+	}));
+
+/***/ },
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19557,7 +16998,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19624,7 +17065,7 @@
 	}));
 
 /***/ },
-/* 54 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19632,7 +17073,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19703,7 +17144,7 @@
 	}));
 
 /***/ },
-/* 55 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19713,7 +17154,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19789,7 +17230,7 @@
 	}));
 
 /***/ },
-/* 56 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19797,7 +17238,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -19916,7 +17357,7 @@
 	}));
 
 /***/ },
-/* 57 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19924,7 +17365,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20060,7 +17501,7 @@
 	}));
 
 /***/ },
-/* 58 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20068,7 +17509,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20173,7 +17614,7 @@
 	}));
 
 /***/ },
-/* 59 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20181,7 +17622,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20288,7 +17729,7 @@
 	}));
 
 /***/ },
-/* 60 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20297,7 +17738,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20375,7 +17816,7 @@
 	}));
 
 /***/ },
-/* 61 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20383,7 +17824,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20506,7 +17947,7 @@
 	}));
 
 /***/ },
-/* 62 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20515,7 +17956,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20580,7 +18021,7 @@
 	}));
 
 /***/ },
-/* 63 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20588,7 +18029,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20649,7 +18090,7 @@
 	}));
 
 /***/ },
-/* 64 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20658,7 +18099,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20736,7 +18177,7 @@
 	}));
 
 /***/ },
-/* 65 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20744,7 +18185,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20843,7 +18284,7 @@
 	}));
 
 /***/ },
-/* 66 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20851,7 +18292,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20905,7 +18346,7 @@
 	}));
 
 /***/ },
-/* 67 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20917,7 +18358,7 @@
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -20977,7 +18418,7 @@
 	}));
 
 /***/ },
-/* 68 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20985,7 +18426,7 @@
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -21115,7 +18556,7 @@
 	}));
 
 /***/ },
-/* 69 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -21123,7 +18564,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -21244,7 +18685,7 @@
 	}));
 
 /***/ },
-/* 70 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -21253,7 +18694,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -21344,7 +18785,7 @@
 	}));
 
 /***/ },
-/* 71 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -21352,7 +18793,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -21457,7 +18898,7 @@
 	}));
 
 /***/ },
-/* 72 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -21465,7 +18906,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -21551,7 +18992,7 @@
 	}));
 
 /***/ },
-/* 73 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -21559,7 +19000,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -21626,7 +19067,7 @@
 	}));
 
 /***/ },
-/* 74 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -21634,7 +19075,7 @@
 	//! author : Harshad Kale : https://github.com/kalehv
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -21751,7 +19192,7 @@
 	}));
 
 /***/ },
-/* 75 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -21759,93 +19200,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    var ms_my = moment.defineLocale('ms-my', {
-	        months : 'Januari_Februari_Mac_April_Mei_Jun_Julai_Ogos_September_Oktober_November_Disember'.split('_'),
-	        monthsShort : 'Jan_Feb_Mac_Apr_Mei_Jun_Jul_Ogs_Sep_Okt_Nov_Dis'.split('_'),
-	        weekdays : 'Ahad_Isnin_Selasa_Rabu_Khamis_Jumaat_Sabtu'.split('_'),
-	        weekdaysShort : 'Ahd_Isn_Sel_Rab_Kha_Jum_Sab'.split('_'),
-	        weekdaysMin : 'Ah_Is_Sl_Rb_Km_Jm_Sb'.split('_'),
-	        longDateFormat : {
-	            LT : 'HH.mm',
-	            LTS : 'HH.mm.ss',
-	            L : 'DD/MM/YYYY',
-	            LL : 'D MMMM YYYY',
-	            LLL : 'D MMMM YYYY [pukul] HH.mm',
-	            LLLL : 'dddd, D MMMM YYYY [pukul] HH.mm'
-	        },
-	        meridiemParse: /pagi|tengahari|petang|malam/,
-	        meridiemHour: function (hour, meridiem) {
-	            if (hour === 12) {
-	                hour = 0;
-	            }
-	            if (meridiem === 'pagi') {
-	                return hour;
-	            } else if (meridiem === 'tengahari') {
-	                return hour >= 11 ? hour : hour + 12;
-	            } else if (meridiem === 'petang' || meridiem === 'malam') {
-	                return hour + 12;
-	            }
-	        },
-	        meridiem : function (hours, minutes, isLower) {
-	            if (hours < 11) {
-	                return 'pagi';
-	            } else if (hours < 15) {
-	                return 'tengahari';
-	            } else if (hours < 19) {
-	                return 'petang';
-	            } else {
-	                return 'malam';
-	            }
-	        },
-	        calendar : {
-	            sameDay : '[Hari ini pukul] LT',
-	            nextDay : '[Esok pukul] LT',
-	            nextWeek : 'dddd [pukul] LT',
-	            lastDay : '[Kelmarin pukul] LT',
-	            lastWeek : 'dddd [lepas pukul] LT',
-	            sameElse : 'L'
-	        },
-	        relativeTime : {
-	            future : 'dalam %s',
-	            past : '%s yang lepas',
-	            s : 'beberapa saat',
-	            m : 'seminit',
-	            mm : '%d minit',
-	            h : 'sejam',
-	            hh : '%d jam',
-	            d : 'sehari',
-	            dd : '%d hari',
-	            M : 'sebulan',
-	            MM : '%d bulan',
-	            y : 'setahun',
-	            yy : '%d tahun'
-	        },
-	        week : {
-	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
-	        }
-	    });
-
-	    return ms_my;
-
-	}));
-
-/***/ },
-/* 76 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : Bahasa Malaysia (ms-MY)
-	//! author : Weldan Jamili : https://github.com/weldan
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -21923,7 +19278,93 @@
 	}));
 
 /***/ },
-/* 77 */
+/* 63 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Bahasa Malaysia (ms-MY)
+	//! author : Weldan Jamili : https://github.com/weldan
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    var ms_my = moment.defineLocale('ms-my', {
+	        months : 'Januari_Februari_Mac_April_Mei_Jun_Julai_Ogos_September_Oktober_November_Disember'.split('_'),
+	        monthsShort : 'Jan_Feb_Mac_Apr_Mei_Jun_Jul_Ogs_Sep_Okt_Nov_Dis'.split('_'),
+	        weekdays : 'Ahad_Isnin_Selasa_Rabu_Khamis_Jumaat_Sabtu'.split('_'),
+	        weekdaysShort : 'Ahd_Isn_Sel_Rab_Kha_Jum_Sab'.split('_'),
+	        weekdaysMin : 'Ah_Is_Sl_Rb_Km_Jm_Sb'.split('_'),
+	        longDateFormat : {
+	            LT : 'HH.mm',
+	            LTS : 'HH.mm.ss',
+	            L : 'DD/MM/YYYY',
+	            LL : 'D MMMM YYYY',
+	            LLL : 'D MMMM YYYY [pukul] HH.mm',
+	            LLLL : 'dddd, D MMMM YYYY [pukul] HH.mm'
+	        },
+	        meridiemParse: /pagi|tengahari|petang|malam/,
+	        meridiemHour: function (hour, meridiem) {
+	            if (hour === 12) {
+	                hour = 0;
+	            }
+	            if (meridiem === 'pagi') {
+	                return hour;
+	            } else if (meridiem === 'tengahari') {
+	                return hour >= 11 ? hour : hour + 12;
+	            } else if (meridiem === 'petang' || meridiem === 'malam') {
+	                return hour + 12;
+	            }
+	        },
+	        meridiem : function (hours, minutes, isLower) {
+	            if (hours < 11) {
+	                return 'pagi';
+	            } else if (hours < 15) {
+	                return 'tengahari';
+	            } else if (hours < 19) {
+	                return 'petang';
+	            } else {
+	                return 'malam';
+	            }
+	        },
+	        calendar : {
+	            sameDay : '[Hari ini pukul] LT',
+	            nextDay : '[Esok pukul] LT',
+	            nextWeek : 'dddd [pukul] LT',
+	            lastDay : '[Kelmarin pukul] LT',
+	            lastWeek : 'dddd [lepas pukul] LT',
+	            sameElse : 'L'
+	        },
+	        relativeTime : {
+	            future : 'dalam %s',
+	            past : '%s yang lepas',
+	            s : 'beberapa saat',
+	            m : 'seminit',
+	            mm : '%d minit',
+	            h : 'sejam',
+	            hh : '%d jam',
+	            d : 'sehari',
+	            dd : '%d hari',
+	            M : 'sebulan',
+	            MM : '%d bulan',
+	            y : 'setahun',
+	            yy : '%d tahun'
+	        },
+	        week : {
+	            dow : 1, // Monday is the first day of the week.
+	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	        }
+	    });
+
+	    return ms_my;
+
+	}));
+
+/***/ },
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -21931,7 +19372,7 @@
 	//! author : Squar team, mysquar.com
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22020,7 +19461,7 @@
 	}));
 
 /***/ },
-/* 78 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22029,7 +19470,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22085,7 +19526,7 @@
 	}));
 
 /***/ },
-/* 79 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22093,7 +19534,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22212,7 +19653,7 @@
 	}));
 
 /***/ },
-/* 80 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22220,7 +19661,7 @@
 	//! author : Joris Röling : https://github.com/jjupiter
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22287,7 +19728,7 @@
 	}));
 
 /***/ },
-/* 81 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22295,7 +19736,7 @@
 	//! author : https://github.com/mechuwind
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22351,7 +19792,7 @@
 	}));
 
 /***/ },
-/* 82 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22359,7 +19800,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22460,71 +19901,7 @@
 	}));
 
 /***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : brazilian portuguese (pt-br)
-	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    var pt_br = moment.defineLocale('pt-br', {
-	        months : 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
-	        monthsShort : 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
-	        weekdays : 'Domingo_Segunda-Feira_Terça-Feira_Quarta-Feira_Quinta-Feira_Sexta-Feira_Sábado'.split('_'),
-	        weekdaysShort : 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
-	        weekdaysMin : 'Dom_2ª_3ª_4ª_5ª_6ª_Sáb'.split('_'),
-	        longDateFormat : {
-	            LT : 'HH:mm',
-	            LTS : 'HH:mm:ss',
-	            L : 'DD/MM/YYYY',
-	            LL : 'D [de] MMMM [de] YYYY',
-	            LLL : 'D [de] MMMM [de] YYYY [às] HH:mm',
-	            LLLL : 'dddd, D [de] MMMM [de] YYYY [às] HH:mm'
-	        },
-	        calendar : {
-	            sameDay: '[Hoje às] LT',
-	            nextDay: '[Amanhã às] LT',
-	            nextWeek: 'dddd [às] LT',
-	            lastDay: '[Ontem às] LT',
-	            lastWeek: function () {
-	                return (this.day() === 0 || this.day() === 6) ?
-	                    '[Último] dddd [às] LT' : // Saturday + Sunday
-	                    '[Última] dddd [às] LT'; // Monday - Friday
-	            },
-	            sameElse: 'L'
-	        },
-	        relativeTime : {
-	            future : 'em %s',
-	            past : '%s atrás',
-	            s : 'poucos segundos',
-	            m : 'um minuto',
-	            mm : '%d minutos',
-	            h : 'uma hora',
-	            hh : '%d horas',
-	            d : 'um dia',
-	            dd : '%d dias',
-	            M : 'um mês',
-	            MM : '%d meses',
-	            y : 'um ano',
-	            yy : '%d anos'
-	        },
-	        ordinalParse: /\d{1,2}º/,
-	        ordinal : '%dº'
-	    });
-
-	    return pt_br;
-
-	}));
-
-/***/ },
-/* 84 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22532,7 +19909,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22592,7 +19969,71 @@
 	}));
 
 /***/ },
-/* 85 */
+/* 71 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : brazilian portuguese (pt-br)
+	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    var pt_br = moment.defineLocale('pt-br', {
+	        months : 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
+	        monthsShort : 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
+	        weekdays : 'Domingo_Segunda-Feira_Terça-Feira_Quarta-Feira_Quinta-Feira_Sexta-Feira_Sábado'.split('_'),
+	        weekdaysShort : 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
+	        weekdaysMin : 'Dom_2ª_3ª_4ª_5ª_6ª_Sáb'.split('_'),
+	        longDateFormat : {
+	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
+	            L : 'DD/MM/YYYY',
+	            LL : 'D [de] MMMM [de] YYYY',
+	            LLL : 'D [de] MMMM [de] YYYY [às] HH:mm',
+	            LLLL : 'dddd, D [de] MMMM [de] YYYY [às] HH:mm'
+	        },
+	        calendar : {
+	            sameDay: '[Hoje às] LT',
+	            nextDay: '[Amanhã às] LT',
+	            nextWeek: 'dddd [às] LT',
+	            lastDay: '[Ontem às] LT',
+	            lastWeek: function () {
+	                return (this.day() === 0 || this.day() === 6) ?
+	                    '[Último] dddd [às] LT' : // Saturday + Sunday
+	                    '[Última] dddd [às] LT'; // Monday - Friday
+	            },
+	            sameElse: 'L'
+	        },
+	        relativeTime : {
+	            future : 'em %s',
+	            past : '%s atrás',
+	            s : 'poucos segundos',
+	            m : 'um minuto',
+	            mm : '%d minutos',
+	            h : 'uma hora',
+	            hh : '%d horas',
+	            d : 'um dia',
+	            dd : '%d dias',
+	            M : 'um mês',
+	            MM : '%d meses',
+	            y : 'um ano',
+	            yy : '%d anos'
+	        },
+	        ordinalParse: /\d{1,2}º/,
+	        ordinal : '%dº'
+	    });
+
+	    return pt_br;
+
+	}));
+
+/***/ },
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22601,7 +20042,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22670,7 +20111,7 @@
 	}));
 
 /***/ },
-/* 86 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22679,7 +20120,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22838,7 +20279,7 @@
 	}));
 
 /***/ },
-/* 87 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22846,7 +20287,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -22907,7 +20348,7 @@
 	}));
 
 /***/ },
-/* 88 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -22916,7 +20357,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23069,7 +20510,7 @@
 	}));
 
 /***/ },
-/* 89 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23077,7 +20518,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23233,7 +20674,7 @@
 	}));
 
 /***/ },
-/* 90 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23243,7 +20684,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23306,119 +20747,7 @@
 	}));
 
 /***/ },
-/* 91 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : Serbian-cyrillic (sr-cyrl)
-	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    var translator = {
-	        words: { //Different grammatical cases
-	            m: ['један минут', 'једне минуте'],
-	            mm: ['минут', 'минуте', 'минута'],
-	            h: ['један сат', 'једног сата'],
-	            hh: ['сат', 'сата', 'сати'],
-	            dd: ['дан', 'дана', 'дана'],
-	            MM: ['месец', 'месеца', 'месеци'],
-	            yy: ['година', 'године', 'година']
-	        },
-	        correctGrammaticalCase: function (number, wordKey) {
-	            return number === 1 ? wordKey[0] : (number >= 2 && number <= 4 ? wordKey[1] : wordKey[2]);
-	        },
-	        translate: function (number, withoutSuffix, key) {
-	            var wordKey = translator.words[key];
-	            if (key.length === 1) {
-	                return withoutSuffix ? wordKey[0] : wordKey[1];
-	            } else {
-	                return number + ' ' + translator.correctGrammaticalCase(number, wordKey);
-	            }
-	        }
-	    };
-
-	    var sr_cyrl = moment.defineLocale('sr-cyrl', {
-	        months: ['јануар', 'фебруар', 'март', 'април', 'мај', 'јун', 'јул', 'август', 'септембар', 'октобар', 'новембар', 'децембар'],
-	        monthsShort: ['јан.', 'феб.', 'мар.', 'апр.', 'мај', 'јун', 'јул', 'авг.', 'сеп.', 'окт.', 'нов.', 'дец.'],
-	        weekdays: ['недеља', 'понедељак', 'уторак', 'среда', 'четвртак', 'петак', 'субота'],
-	        weekdaysShort: ['нед.', 'пон.', 'уто.', 'сре.', 'чет.', 'пет.', 'суб.'],
-	        weekdaysMin: ['не', 'по', 'ут', 'ср', 'че', 'пе', 'су'],
-	        longDateFormat: {
-	            LT: 'H:mm',
-	            LTS : 'H:mm:ss',
-	            L: 'DD. MM. YYYY',
-	            LL: 'D. MMMM YYYY',
-	            LLL: 'D. MMMM YYYY H:mm',
-	            LLLL: 'dddd, D. MMMM YYYY H:mm'
-	        },
-	        calendar: {
-	            sameDay: '[данас у] LT',
-	            nextDay: '[сутра у] LT',
-	            nextWeek: function () {
-	                switch (this.day()) {
-	                case 0:
-	                    return '[у] [недељу] [у] LT';
-	                case 3:
-	                    return '[у] [среду] [у] LT';
-	                case 6:
-	                    return '[у] [суботу] [у] LT';
-	                case 1:
-	                case 2:
-	                case 4:
-	                case 5:
-	                    return '[у] dddd [у] LT';
-	                }
-	            },
-	            lastDay  : '[јуче у] LT',
-	            lastWeek : function () {
-	                var lastWeekDays = [
-	                    '[прошле] [недеље] [у] LT',
-	                    '[прошлог] [понедељка] [у] LT',
-	                    '[прошлог] [уторка] [у] LT',
-	                    '[прошле] [среде] [у] LT',
-	                    '[прошлог] [четвртка] [у] LT',
-	                    '[прошлог] [петка] [у] LT',
-	                    '[прошле] [суботе] [у] LT'
-	                ];
-	                return lastWeekDays[this.day()];
-	            },
-	            sameElse : 'L'
-	        },
-	        relativeTime : {
-	            future : 'за %s',
-	            past   : 'пре %s',
-	            s      : 'неколико секунди',
-	            m      : translator.translate,
-	            mm     : translator.translate,
-	            h      : translator.translate,
-	            hh     : translator.translate,
-	            d      : 'дан',
-	            dd     : translator.translate,
-	            M      : 'месец',
-	            MM     : translator.translate,
-	            y      : 'годину',
-	            yy     : translator.translate
-	        },
-	        ordinalParse: /\d{1,2}\./,
-	        ordinal : '%d.',
-	        week : {
-	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
-	        }
-	    });
-
-	    return sr_cyrl;
-
-	}));
-
-/***/ },
-/* 92 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23426,7 +20755,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23530,7 +20859,119 @@
 	}));
 
 /***/ },
-/* 93 */
+/* 79 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Serbian-cyrillic (sr-cyrl)
+	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    var translator = {
+	        words: { //Different grammatical cases
+	            m: ['један минут', 'једне минуте'],
+	            mm: ['минут', 'минуте', 'минута'],
+	            h: ['један сат', 'једног сата'],
+	            hh: ['сат', 'сата', 'сати'],
+	            dd: ['дан', 'дана', 'дана'],
+	            MM: ['месец', 'месеца', 'месеци'],
+	            yy: ['година', 'године', 'година']
+	        },
+	        correctGrammaticalCase: function (number, wordKey) {
+	            return number === 1 ? wordKey[0] : (number >= 2 && number <= 4 ? wordKey[1] : wordKey[2]);
+	        },
+	        translate: function (number, withoutSuffix, key) {
+	            var wordKey = translator.words[key];
+	            if (key.length === 1) {
+	                return withoutSuffix ? wordKey[0] : wordKey[1];
+	            } else {
+	                return number + ' ' + translator.correctGrammaticalCase(number, wordKey);
+	            }
+	        }
+	    };
+
+	    var sr_cyrl = moment.defineLocale('sr-cyrl', {
+	        months: ['јануар', 'фебруар', 'март', 'април', 'мај', 'јун', 'јул', 'август', 'септембар', 'октобар', 'новембар', 'децембар'],
+	        monthsShort: ['јан.', 'феб.', 'мар.', 'апр.', 'мај', 'јун', 'јул', 'авг.', 'сеп.', 'окт.', 'нов.', 'дец.'],
+	        weekdays: ['недеља', 'понедељак', 'уторак', 'среда', 'четвртак', 'петак', 'субота'],
+	        weekdaysShort: ['нед.', 'пон.', 'уто.', 'сре.', 'чет.', 'пет.', 'суб.'],
+	        weekdaysMin: ['не', 'по', 'ут', 'ср', 'че', 'пе', 'су'],
+	        longDateFormat: {
+	            LT: 'H:mm',
+	            LTS : 'H:mm:ss',
+	            L: 'DD. MM. YYYY',
+	            LL: 'D. MMMM YYYY',
+	            LLL: 'D. MMMM YYYY H:mm',
+	            LLLL: 'dddd, D. MMMM YYYY H:mm'
+	        },
+	        calendar: {
+	            sameDay: '[данас у] LT',
+	            nextDay: '[сутра у] LT',
+	            nextWeek: function () {
+	                switch (this.day()) {
+	                case 0:
+	                    return '[у] [недељу] [у] LT';
+	                case 3:
+	                    return '[у] [среду] [у] LT';
+	                case 6:
+	                    return '[у] [суботу] [у] LT';
+	                case 1:
+	                case 2:
+	                case 4:
+	                case 5:
+	                    return '[у] dddd [у] LT';
+	                }
+	            },
+	            lastDay  : '[јуче у] LT',
+	            lastWeek : function () {
+	                var lastWeekDays = [
+	                    '[прошле] [недеље] [у] LT',
+	                    '[прошлог] [понедељка] [у] LT',
+	                    '[прошлог] [уторка] [у] LT',
+	                    '[прошле] [среде] [у] LT',
+	                    '[прошлог] [четвртка] [у] LT',
+	                    '[прошлог] [петка] [у] LT',
+	                    '[прошле] [суботе] [у] LT'
+	                ];
+	                return lastWeekDays[this.day()];
+	            },
+	            sameElse : 'L'
+	        },
+	        relativeTime : {
+	            future : 'за %s',
+	            past   : 'пре %s',
+	            s      : 'неколико секунди',
+	            m      : translator.translate,
+	            mm     : translator.translate,
+	            h      : translator.translate,
+	            hh     : translator.translate,
+	            d      : 'дан',
+	            dd     : translator.translate,
+	            M      : 'месец',
+	            MM     : translator.translate,
+	            y      : 'годину',
+	            yy     : translator.translate
+	        },
+	        ordinalParse: /\d{1,2}\./,
+	        ordinal : '%d.',
+	        week : {
+	            dow : 1, // Monday is the first day of the week.
+	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	        }
+	    });
+
+	    return sr_cyrl;
+
+	}));
+
+/***/ },
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23538,7 +20979,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23601,7 +21042,7 @@
 	}));
 
 /***/ },
-/* 94 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23609,7 +21050,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23700,7 +21141,7 @@
 	}));
 
 /***/ },
-/* 95 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23708,7 +21149,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23769,7 +21210,7 @@
 	}));
 
 /***/ },
-/* 96 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23777,7 +21218,7 @@
 	//! author : Dan Hagman
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23835,7 +21276,7 @@
 	}));
 
 /***/ },
-/* 97 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23844,7 +21285,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -23929,7 +21370,7 @@
 	}));
 
 /***/ },
-/* 98 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -23937,7 +21378,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v with the help of Iustì Canun
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24018,69 +21459,7 @@
 	}));
 
 /***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : Morocco Central Atlas Tamaziɣt in Latin (tzm-latn)
-	//! author : Abdel Said : https://github.com/abdelsaid
-
-	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-
-
-	    var tzm_latn = moment.defineLocale('tzm-latn', {
-	        months : 'innayr_brˤayrˤ_marˤsˤ_ibrir_mayyw_ywnyw_ywlywz_ɣwšt_šwtanbir_ktˤwbrˤ_nwwanbir_dwjnbir'.split('_'),
-	        monthsShort : 'innayr_brˤayrˤ_marˤsˤ_ibrir_mayyw_ywnyw_ywlywz_ɣwšt_šwtanbir_ktˤwbrˤ_nwwanbir_dwjnbir'.split('_'),
-	        weekdays : 'asamas_aynas_asinas_akras_akwas_asimwas_asiḍyas'.split('_'),
-	        weekdaysShort : 'asamas_aynas_asinas_akras_akwas_asimwas_asiḍyas'.split('_'),
-	        weekdaysMin : 'asamas_aynas_asinas_akras_akwas_asimwas_asiḍyas'.split('_'),
-	        longDateFormat : {
-	            LT : 'HH:mm',
-	            LTS : 'HH:mm:ss',
-	            L : 'DD/MM/YYYY',
-	            LL : 'D MMMM YYYY',
-	            LLL : 'D MMMM YYYY HH:mm',
-	            LLLL : 'dddd D MMMM YYYY HH:mm'
-	        },
-	        calendar : {
-	            sameDay: '[asdkh g] LT',
-	            nextDay: '[aska g] LT',
-	            nextWeek: 'dddd [g] LT',
-	            lastDay: '[assant g] LT',
-	            lastWeek: 'dddd [g] LT',
-	            sameElse: 'L'
-	        },
-	        relativeTime : {
-	            future : 'dadkh s yan %s',
-	            past : 'yan %s',
-	            s : 'imik',
-	            m : 'minuḍ',
-	            mm : '%d minuḍ',
-	            h : 'saɛa',
-	            hh : '%d tassaɛin',
-	            d : 'ass',
-	            dd : '%d ossan',
-	            M : 'ayowr',
-	            MM : '%d iyyirn',
-	            y : 'asgas',
-	            yy : '%d isgasn'
-	        },
-	        week : {
-	            dow : 6, // Saturday is the first day of the week.
-	            doy : 12  // The week that contains Jan 1st is the first week of the year.
-	        }
-	    });
-
-	    return tzm_latn;
-
-	}));
-
-/***/ },
-/* 100 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24088,7 +21467,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24142,7 +21521,69 @@
 	}));
 
 /***/ },
-/* 101 */
+/* 87 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : Morocco Central Atlas Tamaziɣt in Latin (tzm-latn)
+	//! author : Abdel Said : https://github.com/abdelsaid
+
+	(function (global, factory) {
+	   true ? factory(__webpack_require__(5)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+
+
+	    var tzm_latn = moment.defineLocale('tzm-latn', {
+	        months : 'innayr_brˤayrˤ_marˤsˤ_ibrir_mayyw_ywnyw_ywlywz_ɣwšt_šwtanbir_ktˤwbrˤ_nwwanbir_dwjnbir'.split('_'),
+	        monthsShort : 'innayr_brˤayrˤ_marˤsˤ_ibrir_mayyw_ywnyw_ywlywz_ɣwšt_šwtanbir_ktˤwbrˤ_nwwanbir_dwjnbir'.split('_'),
+	        weekdays : 'asamas_aynas_asinas_akras_akwas_asimwas_asiḍyas'.split('_'),
+	        weekdaysShort : 'asamas_aynas_asinas_akras_akwas_asimwas_asiḍyas'.split('_'),
+	        weekdaysMin : 'asamas_aynas_asinas_akras_akwas_asimwas_asiḍyas'.split('_'),
+	        longDateFormat : {
+	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
+	            L : 'DD/MM/YYYY',
+	            LL : 'D MMMM YYYY',
+	            LLL : 'D MMMM YYYY HH:mm',
+	            LLLL : 'dddd D MMMM YYYY HH:mm'
+	        },
+	        calendar : {
+	            sameDay: '[asdkh g] LT',
+	            nextDay: '[aska g] LT',
+	            nextWeek: 'dddd [g] LT',
+	            lastDay: '[assant g] LT',
+	            lastWeek: 'dddd [g] LT',
+	            sameElse: 'L'
+	        },
+	        relativeTime : {
+	            future : 'dadkh s yan %s',
+	            past : 'yan %s',
+	            s : 'imik',
+	            m : 'minuḍ',
+	            mm : '%d minuḍ',
+	            h : 'saɛa',
+	            hh : '%d tassaɛin',
+	            d : 'ass',
+	            dd : '%d ossan',
+	            M : 'ayowr',
+	            MM : '%d iyyirn',
+	            y : 'asgas',
+	            yy : '%d isgasn'
+	        },
+	        week : {
+	            dow : 6, // Saturday is the first day of the week.
+	            doy : 12  // The week that contains Jan 1st is the first week of the year.
+	        }
+	    });
+
+	    return tzm_latn;
+
+	}));
+
+/***/ },
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24151,7 +21592,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24299,7 +21740,7 @@
 	}));
 
 /***/ },
-/* 102 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24307,7 +21748,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24361,7 +21802,7 @@
 	}));
 
 /***/ },
-/* 103 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24369,7 +21810,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24431,7 +21872,7 @@
 	}));
 
 /***/ },
-/* 104 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24440,7 +21881,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24562,7 +22003,7 @@
 	}));
 
 /***/ },
-/* 105 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -24570,7 +22011,7 @@
 	//! author : Ben : https://github.com/ben-lin
 
 	(function (global, factory) {
-	   true ? factory(__webpack_require__(7)) :
+	   true ? factory(__webpack_require__(5)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -24667,22 +22108,2567 @@
 	}));
 
 /***/ },
-/* 106 */,
-/* 107 */,
-/* 108 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
+	/* WEBPACK VAR INJECTION */(function(jQuery) {/*!
+	 * Bootstrap v3.3.0 (http://getbootstrap.com)
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 */
+
+	if (typeof jQuery === 'undefined') {
+	  throw new Error('Bootstrap\'s JavaScript requires jQuery')
 	}
 
+	+function ($) {
+	  var version = $.fn.jquery.split(' ')[0].split('.')
+	  if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1)) {
+	    throw new Error('Bootstrap\'s JavaScript requires jQuery version 1.9.1 or higher')
+	  }
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: transition.js v3.3.0
+	 * http://getbootstrap.com/javascript/#transitions
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+	  // ============================================================
+
+	  function transitionEnd() {
+	    var el = document.createElement('bootstrap')
+
+	    var transEndEventNames = {
+	      WebkitTransition : 'webkitTransitionEnd',
+	      MozTransition    : 'transitionend',
+	      OTransition      : 'oTransitionEnd otransitionend',
+	      transition       : 'transitionend'
+	    }
+
+	    for (var name in transEndEventNames) {
+	      if (el.style[name] !== undefined) {
+	        return { end: transEndEventNames[name] }
+	      }
+	    }
+
+	    return false // explicit for ie8 (  ._.)
+	  }
+
+	  // http://blog.alexmaccaw.com/css-transitions
+	  $.fn.emulateTransitionEnd = function (duration) {
+	    var called = false
+	    var $el = this
+	    $(this).one('bsTransitionEnd', function () { called = true })
+	    var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
+	    setTimeout(callback, duration)
+	    return this
+	  }
+
+	  $(function () {
+	    $.support.transition = transitionEnd()
+
+	    if (!$.support.transition) return
+
+	    $.event.special.bsTransitionEnd = {
+	      bindType: $.support.transition.end,
+	      delegateType: $.support.transition.end,
+	      handle: function (e) {
+	        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
+	      }
+	    }
+	  })
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: alert.js v3.3.0
+	 * http://getbootstrap.com/javascript/#alerts
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // ALERT CLASS DEFINITION
+	  // ======================
+
+	  var dismiss = '[data-dismiss="alert"]'
+	  var Alert   = function (el) {
+	    $(el).on('click', dismiss, this.close)
+	  }
+
+	  Alert.VERSION = '3.3.0'
+
+	  Alert.TRANSITION_DURATION = 150
+
+	  Alert.prototype.close = function (e) {
+	    var $this    = $(this)
+	    var selector = $this.attr('data-target')
+
+	    if (!selector) {
+	      selector = $this.attr('href')
+	      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
+	    }
+
+	    var $parent = $(selector)
+
+	    if (e) e.preventDefault()
+
+	    if (!$parent.length) {
+	      $parent = $this.closest('.alert')
+	    }
+
+	    $parent.trigger(e = $.Event('close.bs.alert'))
+
+	    if (e.isDefaultPrevented()) return
+
+	    $parent.removeClass('in')
+
+	    function removeElement() {
+	      // detach from parent, fire event then clean up data
+	      $parent.detach().trigger('closed.bs.alert').remove()
+	    }
+
+	    $.support.transition && $parent.hasClass('fade') ?
+	      $parent
+	        .one('bsTransitionEnd', removeElement)
+	        .emulateTransitionEnd(Alert.TRANSITION_DURATION) :
+	      removeElement()
+	  }
+
+
+	  // ALERT PLUGIN DEFINITION
+	  // =======================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this)
+	      var data  = $this.data('bs.alert')
+
+	      if (!data) $this.data('bs.alert', (data = new Alert(this)))
+	      if (typeof option == 'string') data[option].call($this)
+	    })
+	  }
+
+	  var old = $.fn.alert
+
+	  $.fn.alert             = Plugin
+	  $.fn.alert.Constructor = Alert
+
+
+	  // ALERT NO CONFLICT
+	  // =================
+
+	  $.fn.alert.noConflict = function () {
+	    $.fn.alert = old
+	    return this
+	  }
+
+
+	  // ALERT DATA-API
+	  // ==============
+
+	  $(document).on('click.bs.alert.data-api', dismiss, Alert.prototype.close)
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: button.js v3.3.0
+	 * http://getbootstrap.com/javascript/#buttons
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // BUTTON PUBLIC CLASS DEFINITION
+	  // ==============================
+
+	  var Button = function (element, options) {
+	    this.$element  = $(element)
+	    this.options   = $.extend({}, Button.DEFAULTS, options)
+	    this.isLoading = false
+	  }
+
+	  Button.VERSION  = '3.3.0'
+
+	  Button.DEFAULTS = {
+	    loadingText: 'loading...'
+	  }
+
+	  Button.prototype.setState = function (state) {
+	    var d    = 'disabled'
+	    var $el  = this.$element
+	    var val  = $el.is('input') ? 'val' : 'html'
+	    var data = $el.data()
+
+	    state = state + 'Text'
+
+	    if (data.resetText == null) $el.data('resetText', $el[val]())
+
+	    // push to event loop to allow forms to submit
+	    setTimeout($.proxy(function () {
+	      $el[val](data[state] == null ? this.options[state] : data[state])
+
+	      if (state == 'loadingText') {
+	        this.isLoading = true
+	        $el.addClass(d).attr(d, d)
+	      } else if (this.isLoading) {
+	        this.isLoading = false
+	        $el.removeClass(d).removeAttr(d)
+	      }
+	    }, this), 0)
+	  }
+
+	  Button.prototype.toggle = function () {
+	    var changed = true
+	    var $parent = this.$element.closest('[data-toggle="buttons"]')
+
+	    if ($parent.length) {
+	      var $input = this.$element.find('input')
+	      if ($input.prop('type') == 'radio') {
+	        if ($input.prop('checked') && this.$element.hasClass('active')) changed = false
+	        else $parent.find('.active').removeClass('active')
+	      }
+	      if (changed) $input.prop('checked', !this.$element.hasClass('active')).trigger('change')
+	    } else {
+	      this.$element.attr('aria-pressed', !this.$element.hasClass('active'))
+	    }
+
+	    if (changed) this.$element.toggleClass('active')
+	  }
+
+
+	  // BUTTON PLUGIN DEFINITION
+	  // ========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this   = $(this)
+	      var data    = $this.data('bs.button')
+	      var options = typeof option == 'object' && option
+
+	      if (!data) $this.data('bs.button', (data = new Button(this, options)))
+
+	      if (option == 'toggle') data.toggle()
+	      else if (option) data.setState(option)
+	    })
+	  }
+
+	  var old = $.fn.button
+
+	  $.fn.button             = Plugin
+	  $.fn.button.Constructor = Button
+
+
+	  // BUTTON NO CONFLICT
+	  // ==================
+
+	  $.fn.button.noConflict = function () {
+	    $.fn.button = old
+	    return this
+	  }
+
+
+	  // BUTTON DATA-API
+	  // ===============
+
+	  $(document)
+	    .on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+	      var $btn = $(e.target)
+	      if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
+	      Plugin.call($btn, 'toggle')
+	      e.preventDefault()
+	    })
+	    .on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+	      $(e.target).closest('.btn').toggleClass('focus', e.type == 'focus')
+	    })
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: carousel.js v3.3.0
+	 * http://getbootstrap.com/javascript/#carousel
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // CAROUSEL CLASS DEFINITION
+	  // =========================
+
+	  var Carousel = function (element, options) {
+	    this.$element    = $(element)
+	    this.$indicators = this.$element.find('.carousel-indicators')
+	    this.options     = options
+	    this.paused      =
+	    this.sliding     =
+	    this.interval    =
+	    this.$active     =
+	    this.$items      = null
+
+	    this.options.keyboard && this.$element.on('keydown.bs.carousel', $.proxy(this.keydown, this))
+
+	    this.options.pause == 'hover' && !('ontouchstart' in document.documentElement) && this.$element
+	      .on('mouseenter.bs.carousel', $.proxy(this.pause, this))
+	      .on('mouseleave.bs.carousel', $.proxy(this.cycle, this))
+	  }
+
+	  Carousel.VERSION  = '3.3.0'
+
+	  Carousel.TRANSITION_DURATION = 600
+
+	  Carousel.DEFAULTS = {
+	    interval: 5000,
+	    pause: 'hover',
+	    wrap: true,
+	    keyboard: true
+	  }
+
+	  Carousel.prototype.keydown = function (e) {
+	    switch (e.which) {
+	      case 37: this.prev(); break
+	      case 39: this.next(); break
+	      default: return
+	    }
+
+	    e.preventDefault()
+	  }
+
+	  Carousel.prototype.cycle = function (e) {
+	    e || (this.paused = false)
+
+	    this.interval && clearInterval(this.interval)
+
+	    this.options.interval
+	      && !this.paused
+	      && (this.interval = setInterval($.proxy(this.next, this), this.options.interval))
+
+	    return this
+	  }
+
+	  Carousel.prototype.getItemIndex = function (item) {
+	    this.$items = item.parent().children('.item')
+	    return this.$items.index(item || this.$active)
+	  }
+
+	  Carousel.prototype.getItemForDirection = function (direction, active) {
+	    var delta = direction == 'prev' ? -1 : 1
+	    var activeIndex = this.getItemIndex(active)
+	    var itemIndex = (activeIndex + delta) % this.$items.length
+	    return this.$items.eq(itemIndex)
+	  }
+
+	  Carousel.prototype.to = function (pos) {
+	    var that        = this
+	    var activeIndex = this.getItemIndex(this.$active = this.$element.find('.item.active'))
+
+	    if (pos > (this.$items.length - 1) || pos < 0) return
+
+	    if (this.sliding)       return this.$element.one('slid.bs.carousel', function () { that.to(pos) }) // yes, "slid"
+	    if (activeIndex == pos) return this.pause().cycle()
+
+	    return this.slide(pos > activeIndex ? 'next' : 'prev', this.$items.eq(pos))
+	  }
+
+	  Carousel.prototype.pause = function (e) {
+	    e || (this.paused = true)
+
+	    if (this.$element.find('.next, .prev').length && $.support.transition) {
+	      this.$element.trigger($.support.transition.end)
+	      this.cycle(true)
+	    }
+
+	    this.interval = clearInterval(this.interval)
+
+	    return this
+	  }
+
+	  Carousel.prototype.next = function () {
+	    if (this.sliding) return
+	    return this.slide('next')
+	  }
+
+	  Carousel.prototype.prev = function () {
+	    if (this.sliding) return
+	    return this.slide('prev')
+	  }
+
+	  Carousel.prototype.slide = function (type, next) {
+	    var $active   = this.$element.find('.item.active')
+	    var $next     = next || this.getItemForDirection(type, $active)
+	    var isCycling = this.interval
+	    var direction = type == 'next' ? 'left' : 'right'
+	    var fallback  = type == 'next' ? 'first' : 'last'
+	    var that      = this
+
+	    if (!$next.length) {
+	      if (!this.options.wrap) return
+	      $next = this.$element.find('.item')[fallback]()
+	    }
+
+	    if ($next.hasClass('active')) return (this.sliding = false)
+
+	    var relatedTarget = $next[0]
+	    var slideEvent = $.Event('slide.bs.carousel', {
+	      relatedTarget: relatedTarget,
+	      direction: direction
+	    })
+	    this.$element.trigger(slideEvent)
+	    if (slideEvent.isDefaultPrevented()) return
+
+	    this.sliding = true
+
+	    isCycling && this.pause()
+
+	    if (this.$indicators.length) {
+	      this.$indicators.find('.active').removeClass('active')
+	      var $nextIndicator = $(this.$indicators.children()[this.getItemIndex($next)])
+	      $nextIndicator && $nextIndicator.addClass('active')
+	    }
+
+	    var slidEvent = $.Event('slid.bs.carousel', { relatedTarget: relatedTarget, direction: direction }) // yes, "slid"
+	    if ($.support.transition && this.$element.hasClass('slide')) {
+	      $next.addClass(type)
+	      $next[0].offsetWidth // force reflow
+	      $active.addClass(direction)
+	      $next.addClass(direction)
+	      $active
+	        .one('bsTransitionEnd', function () {
+	          $next.removeClass([type, direction].join(' ')).addClass('active')
+	          $active.removeClass(['active', direction].join(' '))
+	          that.sliding = false
+	          setTimeout(function () {
+	            that.$element.trigger(slidEvent)
+	          }, 0)
+	        })
+	        .emulateTransitionEnd(Carousel.TRANSITION_DURATION)
+	    } else {
+	      $active.removeClass('active')
+	      $next.addClass('active')
+	      this.sliding = false
+	      this.$element.trigger(slidEvent)
+	    }
+
+	    isCycling && this.cycle()
+
+	    return this
+	  }
+
+
+	  // CAROUSEL PLUGIN DEFINITION
+	  // ==========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this   = $(this)
+	      var data    = $this.data('bs.carousel')
+	      var options = $.extend({}, Carousel.DEFAULTS, $this.data(), typeof option == 'object' && option)
+	      var action  = typeof option == 'string' ? option : options.slide
+
+	      if (!data) $this.data('bs.carousel', (data = new Carousel(this, options)))
+	      if (typeof option == 'number') data.to(option)
+	      else if (action) data[action]()
+	      else if (options.interval) data.pause().cycle()
+	    })
+	  }
+
+	  var old = $.fn.carousel
+
+	  $.fn.carousel             = Plugin
+	  $.fn.carousel.Constructor = Carousel
+
+
+	  // CAROUSEL NO CONFLICT
+	  // ====================
+
+	  $.fn.carousel.noConflict = function () {
+	    $.fn.carousel = old
+	    return this
+	  }
+
+
+	  // CAROUSEL DATA-API
+	  // =================
+
+	  var clickHandler = function (e) {
+	    var href
+	    var $this   = $(this)
+	    var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) // strip for ie7
+	    if (!$target.hasClass('carousel')) return
+	    var options = $.extend({}, $target.data(), $this.data())
+	    var slideIndex = $this.attr('data-slide-to')
+	    if (slideIndex) options.interval = false
+
+	    Plugin.call($target, options)
+
+	    if (slideIndex) {
+	      $target.data('bs.carousel').to(slideIndex)
+	    }
+
+	    e.preventDefault()
+	  }
+
+	  $(document)
+	    .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
+	    .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler)
+
+	  $(window).on('load', function () {
+	    $('[data-ride="carousel"]').each(function () {
+	      var $carousel = $(this)
+	      Plugin.call($carousel, $carousel.data())
+	    })
+	  })
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: collapse.js v3.3.0
+	 * http://getbootstrap.com/javascript/#collapse
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // COLLAPSE PUBLIC CLASS DEFINITION
+	  // ================================
+
+	  var Collapse = function (element, options) {
+	    this.$element      = $(element)
+	    this.options       = $.extend({}, Collapse.DEFAULTS, options)
+	    this.$trigger      = $(this.options.trigger).filter('[href="#' + element.id + '"], [data-target="#' + element.id + '"]')
+	    this.transitioning = null
+
+	    if (this.options.parent) {
+	      this.$parent = this.getParent()
+	    } else {
+	      this.addAriaAndCollapsedClass(this.$element, this.$trigger)
+	    }
+
+	    if (this.options.toggle) this.toggle()
+	  }
+
+	  Collapse.VERSION  = '3.3.0'
+
+	  Collapse.TRANSITION_DURATION = 350
+
+	  Collapse.DEFAULTS = {
+	    toggle: true,
+	    trigger: '[data-toggle="collapse"]'
+	  }
+
+	  Collapse.prototype.dimension = function () {
+	    var hasWidth = this.$element.hasClass('width')
+	    return hasWidth ? 'width' : 'height'
+	  }
+
+	  Collapse.prototype.show = function () {
+	    if (this.transitioning || this.$element.hasClass('in')) return
+
+	    var activesData
+	    var actives = this.$parent && this.$parent.find('> .panel').children('.in, .collapsing')
+
+	    if (actives && actives.length) {
+	      activesData = actives.data('bs.collapse')
+	      if (activesData && activesData.transitioning) return
+	    }
+
+	    var startEvent = $.Event('show.bs.collapse')
+	    this.$element.trigger(startEvent)
+	    if (startEvent.isDefaultPrevented()) return
+
+	    if (actives && actives.length) {
+	      Plugin.call(actives, 'hide')
+	      activesData || actives.data('bs.collapse', null)
+	    }
+
+	    var dimension = this.dimension()
+
+	    this.$element
+	      .removeClass('collapse')
+	      .addClass('collapsing')[dimension](0)
+	      .attr('aria-expanded', true)
+
+	    this.$trigger
+	      .removeClass('collapsed')
+	      .attr('aria-expanded', true)
+
+	    this.transitioning = 1
+
+	    var complete = function () {
+	      this.$element
+	        .removeClass('collapsing')
+	        .addClass('collapse in')[dimension]('')
+	      this.transitioning = 0
+	      this.$element
+	        .trigger('shown.bs.collapse')
+	    }
+
+	    if (!$.support.transition) return complete.call(this)
+
+	    var scrollSize = $.camelCase(['scroll', dimension].join('-'))
+
+	    this.$element
+	      .one('bsTransitionEnd', $.proxy(complete, this))
+	      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
+	  }
+
+	  Collapse.prototype.hide = function () {
+	    if (this.transitioning || !this.$element.hasClass('in')) return
+
+	    var startEvent = $.Event('hide.bs.collapse')
+	    this.$element.trigger(startEvent)
+	    if (startEvent.isDefaultPrevented()) return
+
+	    var dimension = this.dimension()
+
+	    this.$element[dimension](this.$element[dimension]())[0].offsetHeight
+
+	    this.$element
+	      .addClass('collapsing')
+	      .removeClass('collapse in')
+	      .attr('aria-expanded', false)
+
+	    this.$trigger
+	      .addClass('collapsed')
+	      .attr('aria-expanded', false)
+
+	    this.transitioning = 1
+
+	    var complete = function () {
+	      this.transitioning = 0
+	      this.$element
+	        .removeClass('collapsing')
+	        .addClass('collapse')
+	        .trigger('hidden.bs.collapse')
+	    }
+
+	    if (!$.support.transition) return complete.call(this)
+
+	    this.$element
+	      [dimension](0)
+	      .one('bsTransitionEnd', $.proxy(complete, this))
+	      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)
+	  }
+
+	  Collapse.prototype.toggle = function () {
+	    this[this.$element.hasClass('in') ? 'hide' : 'show']()
+	  }
+
+	  Collapse.prototype.getParent = function () {
+	    return $(this.options.parent)
+	      .find('[data-toggle="collapse"][data-parent="' + this.options.parent + '"]')
+	      .each($.proxy(function (i, element) {
+	        var $element = $(element)
+	        this.addAriaAndCollapsedClass(getTargetFromTrigger($element), $element)
+	      }, this))
+	      .end()
+	  }
+
+	  Collapse.prototype.addAriaAndCollapsedClass = function ($element, $trigger) {
+	    var isOpen = $element.hasClass('in')
+
+	    $element.attr('aria-expanded', isOpen)
+	    $trigger
+	      .toggleClass('collapsed', !isOpen)
+	      .attr('aria-expanded', isOpen)
+	  }
+
+	  function getTargetFromTrigger($trigger) {
+	    var href
+	    var target = $trigger.attr('data-target')
+	      || (href = $trigger.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') // strip for ie7
+
+	    return $(target)
+	  }
+
+
+	  // COLLAPSE PLUGIN DEFINITION
+	  // ==========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this   = $(this)
+	      var data    = $this.data('bs.collapse')
+	      var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
+
+	      if (!data && options.toggle && option == 'show') options.toggle = false
+	      if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
+	      if (typeof option == 'string') data[option]()
+	    })
+	  }
+
+	  var old = $.fn.collapse
+
+	  $.fn.collapse             = Plugin
+	  $.fn.collapse.Constructor = Collapse
+
+
+	  // COLLAPSE NO CONFLICT
+	  // ====================
+
+	  $.fn.collapse.noConflict = function () {
+	    $.fn.collapse = old
+	    return this
+	  }
+
+
+	  // COLLAPSE DATA-API
+	  // =================
+
+	  $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
+	    var $this   = $(this)
+
+	    if (!$this.attr('data-target')) e.preventDefault()
+
+	    var $target = getTargetFromTrigger($this)
+	    var data    = $target.data('bs.collapse')
+	    var option  = data ? 'toggle' : $.extend({}, $this.data(), { trigger: this })
+
+	    Plugin.call($target, option)
+	  })
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: dropdown.js v3.3.0
+	 * http://getbootstrap.com/javascript/#dropdowns
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // DROPDOWN CLASS DEFINITION
+	  // =========================
+
+	  var backdrop = '.dropdown-backdrop'
+	  var toggle   = '[data-toggle="dropdown"]'
+	  var Dropdown = function (element) {
+	    $(element).on('click.bs.dropdown', this.toggle)
+	  }
+
+	  Dropdown.VERSION = '3.3.0'
+
+	  Dropdown.prototype.toggle = function (e) {
+	    var $this = $(this)
+
+	    if ($this.is('.disabled, :disabled')) return
+
+	    var $parent  = getParent($this)
+	    var isActive = $parent.hasClass('open')
+
+	    clearMenus()
+
+	    if (!isActive) {
+	      if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
+	        // if mobile we use a backdrop because click events don't delegate
+	        $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
+	      }
+
+	      var relatedTarget = { relatedTarget: this }
+	      $parent.trigger(e = $.Event('show.bs.dropdown', relatedTarget))
+
+	      if (e.isDefaultPrevented()) return
+
+	      $this
+	        .trigger('focus')
+	        .attr('aria-expanded', 'true')
+
+	      $parent
+	        .toggleClass('open')
+	        .trigger('shown.bs.dropdown', relatedTarget)
+	    }
+
+	    return false
+	  }
+
+	  Dropdown.prototype.keydown = function (e) {
+	    if (!/(38|40|27|32)/.test(e.which)) return
+
+	    var $this = $(this)
+
+	    e.preventDefault()
+	    e.stopPropagation()
+
+	    if ($this.is('.disabled, :disabled')) return
+
+	    var $parent  = getParent($this)
+	    var isActive = $parent.hasClass('open')
+
+	    if ((!isActive && e.which != 27) || (isActive && e.which == 27)) {
+	      if (e.which == 27) $parent.find(toggle).trigger('focus')
+	      return $this.trigger('click')
+	    }
+
+	    var desc = ' li:not(.divider):visible a'
+	    var $items = $parent.find('[role="menu"]' + desc + ', [role="listbox"]' + desc)
+
+	    if (!$items.length) return
+
+	    var index = $items.index(e.target)
+
+	    if (e.which == 38 && index > 0)                 index--                        // up
+	    if (e.which == 40 && index < $items.length - 1) index++                        // down
+	    if (!~index)                                      index = 0
+
+	    $items.eq(index).trigger('focus')
+	  }
+
+	  function clearMenus(e) {
+	    if (e && e.which === 3) return
+	    $(backdrop).remove()
+	    $(toggle).each(function () {
+	      var $this         = $(this)
+	      var $parent       = getParent($this)
+	      var relatedTarget = { relatedTarget: this }
+
+	      if (!$parent.hasClass('open')) return
+
+	      $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
+
+	      if (e.isDefaultPrevented()) return
+
+	      $this.attr('aria-expanded', 'false')
+	      $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
+	    })
+	  }
+
+	  function getParent($this) {
+	    var selector = $this.attr('data-target')
+
+	    if (!selector) {
+	      selector = $this.attr('href')
+	      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
+	    }
+
+	    var $parent = selector && $(selector)
+
+	    return $parent && $parent.length ? $parent : $this.parent()
+	  }
+
+
+	  // DROPDOWN PLUGIN DEFINITION
+	  // ==========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this)
+	      var data  = $this.data('bs.dropdown')
+
+	      if (!data) $this.data('bs.dropdown', (data = new Dropdown(this)))
+	      if (typeof option == 'string') data[option].call($this)
+	    })
+	  }
+
+	  var old = $.fn.dropdown
+
+	  $.fn.dropdown             = Plugin
+	  $.fn.dropdown.Constructor = Dropdown
+
+
+	  // DROPDOWN NO CONFLICT
+	  // ====================
+
+	  $.fn.dropdown.noConflict = function () {
+	    $.fn.dropdown = old
+	    return this
+	  }
+
+
+	  // APPLY TO STANDARD DROPDOWN ELEMENTS
+	  // ===================================
+
+	  $(document)
+	    .on('click.bs.dropdown.data-api', clearMenus)
+	    .on('click.bs.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
+	    .on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle)
+	    .on('keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown)
+	    .on('keydown.bs.dropdown.data-api', '[role="menu"]', Dropdown.prototype.keydown)
+	    .on('keydown.bs.dropdown.data-api', '[role="listbox"]', Dropdown.prototype.keydown)
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: modal.js v3.3.0
+	 * http://getbootstrap.com/javascript/#modals
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // MODAL CLASS DEFINITION
+	  // ======================
+
+	  var Modal = function (element, options) {
+	    this.options        = options
+	    this.$body          = $(document.body)
+	    this.$element       = $(element)
+	    this.$backdrop      =
+	    this.isShown        = null
+	    this.scrollbarWidth = 0
+
+	    if (this.options.remote) {
+	      this.$element
+	        .find('.modal-content')
+	        .load(this.options.remote, $.proxy(function () {
+	          this.$element.trigger('loaded.bs.modal')
+	        }, this))
+	    }
+	  }
+
+	  Modal.VERSION  = '3.3.0'
+
+	  Modal.TRANSITION_DURATION = 300
+	  Modal.BACKDROP_TRANSITION_DURATION = 150
+
+	  Modal.DEFAULTS = {
+	    backdrop: true,
+	    keyboard: true,
+	    show: true
+	  }
+
+	  Modal.prototype.toggle = function (_relatedTarget) {
+	    return this.isShown ? this.hide() : this.show(_relatedTarget)
+	  }
+
+	  Modal.prototype.show = function (_relatedTarget) {
+	    var that = this
+	    var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
+
+	    this.$element.trigger(e)
+
+	    if (this.isShown || e.isDefaultPrevented()) return
+
+	    this.isShown = true
+
+	    this.checkScrollbar()
+	    this.$body.addClass('modal-open')
+
+	    this.setScrollbar()
+	    this.escape()
+
+	    this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
+
+	    this.backdrop(function () {
+	      var transition = $.support.transition && that.$element.hasClass('fade')
+
+	      if (!that.$element.parent().length) {
+	        that.$element.appendTo(that.$body) // don't move modals dom position
+	      }
+
+	      that.$element
+	        .show()
+	        .scrollTop(0)
+
+	      if (transition) {
+	        that.$element[0].offsetWidth // force reflow
+	      }
+
+	      that.$element
+	        .addClass('in')
+	        .attr('aria-hidden', false)
+
+	      that.enforceFocus()
+
+	      var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
+
+	      transition ?
+	        that.$element.find('.modal-dialog') // wait for modal to slide in
+	          .one('bsTransitionEnd', function () {
+	            that.$element.trigger('focus').trigger(e)
+	          })
+	          .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+	        that.$element.trigger('focus').trigger(e)
+	    })
+	  }
+
+	  Modal.prototype.hide = function (e) {
+	    if (e) e.preventDefault()
+
+	    e = $.Event('hide.bs.modal')
+
+	    this.$element.trigger(e)
+
+	    if (!this.isShown || e.isDefaultPrevented()) return
+
+	    this.isShown = false
+
+	    this.escape()
+
+	    $(document).off('focusin.bs.modal')
+
+	    this.$element
+	      .removeClass('in')
+	      .attr('aria-hidden', true)
+	      .off('click.dismiss.bs.modal')
+
+	    $.support.transition && this.$element.hasClass('fade') ?
+	      this.$element
+	        .one('bsTransitionEnd', $.proxy(this.hideModal, this))
+	        .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+	      this.hideModal()
+	  }
+
+	  Modal.prototype.enforceFocus = function () {
+	    $(document)
+	      .off('focusin.bs.modal') // guard against infinite focus loop
+	      .on('focusin.bs.modal', $.proxy(function (e) {
+	        if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
+	          this.$element.trigger('focus')
+	        }
+	      }, this))
+	  }
+
+	  Modal.prototype.escape = function () {
+	    if (this.isShown && this.options.keyboard) {
+	      this.$element.on('keydown.dismiss.bs.modal', $.proxy(function (e) {
+	        e.which == 27 && this.hide()
+	      }, this))
+	    } else if (!this.isShown) {
+	      this.$element.off('keydown.dismiss.bs.modal')
+	    }
+	  }
+
+	  Modal.prototype.hideModal = function () {
+	    var that = this
+	    this.$element.hide()
+	    this.backdrop(function () {
+	      that.$body.removeClass('modal-open')
+	      that.resetScrollbar()
+	      that.$element.trigger('hidden.bs.modal')
+	    })
+	  }
+
+	  Modal.prototype.removeBackdrop = function () {
+	    this.$backdrop && this.$backdrop.remove()
+	    this.$backdrop = null
+	  }
+
+	  Modal.prototype.backdrop = function (callback) {
+	    var that = this
+	    var animate = this.$element.hasClass('fade') ? 'fade' : ''
+
+	    if (this.isShown && this.options.backdrop) {
+	      var doAnimate = $.support.transition && animate
+
+	      this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
+	        .prependTo(this.$element)
+	        .on('click.dismiss.bs.modal', $.proxy(function (e) {
+	          if (e.target !== e.currentTarget) return
+	          this.options.backdrop == 'static'
+	            ? this.$element[0].focus.call(this.$element[0])
+	            : this.hide.call(this)
+	        }, this))
+
+	      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
+
+	      this.$backdrop.addClass('in')
+
+	      if (!callback) return
+
+	      doAnimate ?
+	        this.$backdrop
+	          .one('bsTransitionEnd', callback)
+	          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
+	        callback()
+
+	    } else if (!this.isShown && this.$backdrop) {
+	      this.$backdrop.removeClass('in')
+
+	      var callbackRemove = function () {
+	        that.removeBackdrop()
+	        callback && callback()
+	      }
+	      $.support.transition && this.$element.hasClass('fade') ?
+	        this.$backdrop
+	          .one('bsTransitionEnd', callbackRemove)
+	          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
+	        callbackRemove()
+
+	    } else if (callback) {
+	      callback()
+	    }
+	  }
+
+	  Modal.prototype.checkScrollbar = function () {
+	    this.scrollbarWidth = this.measureScrollbar()
+	  }
+
+	  Modal.prototype.setScrollbar = function () {
+	    var bodyPad = parseInt((this.$body.css('padding-right') || 0), 10)
+	    if (this.scrollbarWidth) this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
+	  }
+
+	  Modal.prototype.resetScrollbar = function () {
+	    this.$body.css('padding-right', '')
+	  }
+
+	  Modal.prototype.measureScrollbar = function () { // thx walsh
+	    if (document.body.clientWidth >= window.innerWidth) return 0
+	    var scrollDiv = document.createElement('div')
+	    scrollDiv.className = 'modal-scrollbar-measure'
+	    this.$body.append(scrollDiv)
+	    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
+	    this.$body[0].removeChild(scrollDiv)
+	    return scrollbarWidth
+	  }
+
+
+	  // MODAL PLUGIN DEFINITION
+	  // =======================
+
+	  function Plugin(option, _relatedTarget) {
+	    return this.each(function () {
+	      var $this   = $(this)
+	      var data    = $this.data('bs.modal')
+	      var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
+
+	      if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
+	      if (typeof option == 'string') data[option](_relatedTarget)
+	      else if (options.show) data.show(_relatedTarget)
+	    })
+	  }
+
+	  var old = $.fn.modal
+
+	  $.fn.modal             = Plugin
+	  $.fn.modal.Constructor = Modal
+
+
+	  // MODAL NO CONFLICT
+	  // =================
+
+	  $.fn.modal.noConflict = function () {
+	    $.fn.modal = old
+	    return this
+	  }
+
+
+	  // MODAL DATA-API
+	  // ==============
+
+	  $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
+	    var $this   = $(this)
+	    var href    = $this.attr('href')
+	    var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) // strip for ie7
+	    var option  = $target.data('bs.modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())
+
+	    if ($this.is('a')) e.preventDefault()
+
+	    $target.one('show.bs.modal', function (showEvent) {
+	      if (showEvent.isDefaultPrevented()) return // only register focus restorer if modal will actually get shown
+	      $target.one('hidden.bs.modal', function () {
+	        $this.is(':visible') && $this.trigger('focus')
+	      })
+	    })
+	    Plugin.call($target, option, this)
+	  })
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: tooltip.js v3.3.0
+	 * http://getbootstrap.com/javascript/#tooltip
+	 * Inspired by the original jQuery.tipsy by Jason Frame
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // TOOLTIP PUBLIC CLASS DEFINITION
+	  // ===============================
+
+	  var Tooltip = function (element, options) {
+	    this.type       =
+	    this.options    =
+	    this.enabled    =
+	    this.timeout    =
+	    this.hoverState =
+	    this.$element   = null
+
+	    this.init('tooltip', element, options)
+	  }
+
+	  Tooltip.VERSION  = '3.3.0'
+
+	  Tooltip.TRANSITION_DURATION = 150
+
+	  Tooltip.DEFAULTS = {
+	    animation: true,
+	    placement: 'top',
+	    selector: false,
+	    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+	    trigger: 'hover focus',
+	    title: '',
+	    delay: 0,
+	    html: false,
+	    container: false,
+	    viewport: {
+	      selector: 'body',
+	      padding: 0
+	    }
+	  }
+
+	  Tooltip.prototype.init = function (type, element, options) {
+	    this.enabled   = true
+	    this.type      = type
+	    this.$element  = $(element)
+	    this.options   = this.getOptions(options)
+	    this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
+
+	    var triggers = this.options.trigger.split(' ')
+
+	    for (var i = triggers.length; i--;) {
+	      var trigger = triggers[i]
+
+	      if (trigger == 'click') {
+	        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+	      } else if (trigger != 'manual') {
+	        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+	        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+
+	        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+	        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+	      }
+	    }
+
+	    this.options.selector ?
+	      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+	      this.fixTitle()
+	  }
+
+	  Tooltip.prototype.getDefaults = function () {
+	    return Tooltip.DEFAULTS
+	  }
+
+	  Tooltip.prototype.getOptions = function (options) {
+	    options = $.extend({}, this.getDefaults(), this.$element.data(), options)
+
+	    if (options.delay && typeof options.delay == 'number') {
+	      options.delay = {
+	        show: options.delay,
+	        hide: options.delay
+	      }
+	    }
+
+	    return options
+	  }
+
+	  Tooltip.prototype.getDelegateOptions = function () {
+	    var options  = {}
+	    var defaults = this.getDefaults()
+
+	    this._options && $.each(this._options, function (key, value) {
+	      if (defaults[key] != value) options[key] = value
+	    })
+
+	    return options
+	  }
+
+	  Tooltip.prototype.enter = function (obj) {
+	    var self = obj instanceof this.constructor ?
+	      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+	    if (self && self.$tip && self.$tip.is(':visible')) {
+	      self.hoverState = 'in'
+	      return
+	    }
+
+	    if (!self) {
+	      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+	      $(obj.currentTarget).data('bs.' + this.type, self)
+	    }
+
+	    clearTimeout(self.timeout)
+
+	    self.hoverState = 'in'
+
+	    if (!self.options.delay || !self.options.delay.show) return self.show()
+
+	    self.timeout = setTimeout(function () {
+	      if (self.hoverState == 'in') self.show()
+	    }, self.options.delay.show)
+	  }
+
+	  Tooltip.prototype.leave = function (obj) {
+	    var self = obj instanceof this.constructor ?
+	      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+	    if (!self) {
+	      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+	      $(obj.currentTarget).data('bs.' + this.type, self)
+	    }
+
+	    clearTimeout(self.timeout)
+
+	    self.hoverState = 'out'
+
+	    if (!self.options.delay || !self.options.delay.hide) return self.hide()
+
+	    self.timeout = setTimeout(function () {
+	      if (self.hoverState == 'out') self.hide()
+	    }, self.options.delay.hide)
+	  }
+
+	  Tooltip.prototype.show = function () {
+	    var e = $.Event('show.bs.' + this.type)
+
+	    if (this.hasContent() && this.enabled) {
+	      this.$element.trigger(e)
+
+	      var inDom = $.contains(this.$element[0].ownerDocument.documentElement, this.$element[0])
+	      if (e.isDefaultPrevented() || !inDom) return
+	      var that = this
+
+	      var $tip = this.tip()
+
+	      var tipId = this.getUID(this.type)
+
+	      this.setContent()
+	      $tip.attr('id', tipId)
+	      this.$element.attr('aria-describedby', tipId)
+
+	      if (this.options.animation) $tip.addClass('fade')
+
+	      var placement = typeof this.options.placement == 'function' ?
+	        this.options.placement.call(this, $tip[0], this.$element[0]) :
+	        this.options.placement
+
+	      var autoToken = /\s?auto?\s?/i
+	      var autoPlace = autoToken.test(placement)
+	      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
+
+	      $tip
+	        .detach()
+	        .css({ top: 0, left: 0, display: 'block' })
+	        .addClass(placement)
+	        .data('bs.' + this.type, this)
+
+	      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
+
+	      var pos          = this.getPosition()
+	      var actualWidth  = $tip[0].offsetWidth
+	      var actualHeight = $tip[0].offsetHeight
+
+	      if (autoPlace) {
+	        var orgPlacement = placement
+	        var $container   = this.options.container ? $(this.options.container) : this.$element.parent()
+	        var containerDim = this.getPosition($container)
+
+	        placement = placement == 'bottom' && pos.bottom + actualHeight > containerDim.bottom ? 'top'    :
+	                    placement == 'top'    && pos.top    - actualHeight < containerDim.top    ? 'bottom' :
+	                    placement == 'right'  && pos.right  + actualWidth  > containerDim.width  ? 'left'   :
+	                    placement == 'left'   && pos.left   - actualWidth  < containerDim.left   ? 'right'  :
+	                    placement
+
+	        $tip
+	          .removeClass(orgPlacement)
+	          .addClass(placement)
+	      }
+
+	      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
+
+	      this.applyPlacement(calculatedOffset, placement)
+
+	      var complete = function () {
+	        var prevHoverState = that.hoverState
+	        that.$element.trigger('shown.bs.' + that.type)
+	        that.hoverState = null
+
+	        if (prevHoverState == 'out') that.leave(that)
+	      }
+
+	      $.support.transition && this.$tip.hasClass('fade') ?
+	        $tip
+	          .one('bsTransitionEnd', complete)
+	          .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
+	        complete()
+	    }
+	  }
+
+	  Tooltip.prototype.applyPlacement = function (offset, placement) {
+	    var $tip   = this.tip()
+	    var width  = $tip[0].offsetWidth
+	    var height = $tip[0].offsetHeight
+
+	    // manually read margins because getBoundingClientRect includes difference
+	    var marginTop = parseInt($tip.css('margin-top'), 10)
+	    var marginLeft = parseInt($tip.css('margin-left'), 10)
+
+	    // we must check for NaN for ie 8/9
+	    if (isNaN(marginTop))  marginTop  = 0
+	    if (isNaN(marginLeft)) marginLeft = 0
+
+	    offset.top  = offset.top  + marginTop
+	    offset.left = offset.left + marginLeft
+
+	    // $.fn.offset doesn't round pixel values
+	    // so we use setOffset directly with our own function B-0
+	    $.offset.setOffset($tip[0], $.extend({
+	      using: function (props) {
+	        $tip.css({
+	          top: Math.round(props.top),
+	          left: Math.round(props.left)
+	        })
+	      }
+	    }, offset), 0)
+
+	    $tip.addClass('in')
+
+	    // check to see if placing tip in new offset caused the tip to resize itself
+	    var actualWidth  = $tip[0].offsetWidth
+	    var actualHeight = $tip[0].offsetHeight
+
+	    if (placement == 'top' && actualHeight != height) {
+	      offset.top = offset.top + height - actualHeight
+	    }
+
+	    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
+
+	    if (delta.left) offset.left += delta.left
+	    else offset.top += delta.top
+
+	    var isVertical          = /top|bottom/.test(placement)
+	    var arrowDelta          = isVertical ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
+	    var arrowOffsetPosition = isVertical ? 'offsetWidth' : 'offsetHeight'
+
+	    $tip.offset(offset)
+	    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], isVertical)
+	  }
+
+	  Tooltip.prototype.replaceArrow = function (delta, dimension, isHorizontal) {
+	    this.arrow()
+	      .css(isHorizontal ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
+	      .css(isHorizontal ? 'top' : 'left', '')
+	  }
+
+	  Tooltip.prototype.setContent = function () {
+	    var $tip  = this.tip()
+	    var title = this.getTitle()
+
+	    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
+	    $tip.removeClass('fade in top bottom left right')
+	  }
+
+	  Tooltip.prototype.hide = function (callback) {
+	    var that = this
+	    var $tip = this.tip()
+	    var e    = $.Event('hide.bs.' + this.type)
+
+	    function complete() {
+	      if (that.hoverState != 'in') $tip.detach()
+	      that.$element
+	        .removeAttr('aria-describedby')
+	        .trigger('hidden.bs.' + that.type)
+	      callback && callback()
+	    }
+
+	    this.$element.trigger(e)
+
+	    if (e.isDefaultPrevented()) return
+
+	    $tip.removeClass('in')
+
+	    $.support.transition && this.$tip.hasClass('fade') ?
+	      $tip
+	        .one('bsTransitionEnd', complete)
+	        .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
+	      complete()
+
+	    this.hoverState = null
+
+	    return this
+	  }
+
+	  Tooltip.prototype.fixTitle = function () {
+	    var $e = this.$element
+	    if ($e.attr('title') || typeof ($e.attr('data-original-title')) != 'string') {
+	      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
+	    }
+	  }
+
+	  Tooltip.prototype.hasContent = function () {
+	    return this.getTitle()
+	  }
+
+	  Tooltip.prototype.getPosition = function ($element) {
+	    $element   = $element || this.$element
+
+	    var el     = $element[0]
+	    var isBody = el.tagName == 'BODY'
+
+	    var elRect    = el.getBoundingClientRect()
+	    if (elRect.width == null) {
+	      // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
+	      elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top })
+	    }
+	    var elOffset  = isBody ? { top: 0, left: 0 } : $element.offset()
+	    var scroll    = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() }
+	    var outerDims = isBody ? { width: $(window).width(), height: $(window).height() } : null
+
+	    return $.extend({}, elRect, scroll, outerDims, elOffset)
+	  }
+
+	  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+	    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
+	           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
+	           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+	        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
+
+	  }
+
+	  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
+	    var delta = { top: 0, left: 0 }
+	    if (!this.$viewport) return delta
+
+	    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
+	    var viewportDimensions = this.getPosition(this.$viewport)
+
+	    if (/right|left/.test(placement)) {
+	      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
+	      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
+	      if (topEdgeOffset < viewportDimensions.top) { // top overflow
+	        delta.top = viewportDimensions.top - topEdgeOffset
+	      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
+	        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
+	      }
+	    } else {
+	      var leftEdgeOffset  = pos.left - viewportPadding
+	      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
+	      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
+	        delta.left = viewportDimensions.left - leftEdgeOffset
+	      } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
+	        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
+	      }
+	    }
+
+	    return delta
+	  }
+
+	  Tooltip.prototype.getTitle = function () {
+	    var title
+	    var $e = this.$element
+	    var o  = this.options
+
+	    title = $e.attr('data-original-title')
+	      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+	    return title
+	  }
+
+	  Tooltip.prototype.getUID = function (prefix) {
+	    do prefix += ~~(Math.random() * 1000000)
+	    while (document.getElementById(prefix))
+	    return prefix
+	  }
+
+	  Tooltip.prototype.tip = function () {
+	    return (this.$tip = this.$tip || $(this.options.template))
+	  }
+
+	  Tooltip.prototype.arrow = function () {
+	    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
+	  }
+
+	  Tooltip.prototype.enable = function () {
+	    this.enabled = true
+	  }
+
+	  Tooltip.prototype.disable = function () {
+	    this.enabled = false
+	  }
+
+	  Tooltip.prototype.toggleEnabled = function () {
+	    this.enabled = !this.enabled
+	  }
+
+	  Tooltip.prototype.toggle = function (e) {
+	    var self = this
+	    if (e) {
+	      self = $(e.currentTarget).data('bs.' + this.type)
+	      if (!self) {
+	        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
+	        $(e.currentTarget).data('bs.' + this.type, self)
+	      }
+	    }
+
+	    self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
+	  }
+
+	  Tooltip.prototype.destroy = function () {
+	    var that = this
+	    clearTimeout(this.timeout)
+	    this.hide(function () {
+	      that.$element.off('.' + that.type).removeData('bs.' + that.type)
+	    })
+	  }
+
+
+	  // TOOLTIP PLUGIN DEFINITION
+	  // =========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this    = $(this)
+	      var data     = $this.data('bs.tooltip')
+	      var options  = typeof option == 'object' && option
+	      var selector = options && options.selector
+
+	      if (!data && option == 'destroy') return
+	      if (selector) {
+	        if (!data) $this.data('bs.tooltip', (data = {}))
+	        if (!data[selector]) data[selector] = new Tooltip(this, options)
+	      } else {
+	        if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+	      }
+	      if (typeof option == 'string') data[option]()
+	    })
+	  }
+
+	  var old = $.fn.tooltip
+
+	  $.fn.tooltip             = Plugin
+	  $.fn.tooltip.Constructor = Tooltip
+
+
+	  // TOOLTIP NO CONFLICT
+	  // ===================
+
+	  $.fn.tooltip.noConflict = function () {
+	    $.fn.tooltip = old
+	    return this
+	  }
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: popover.js v3.3.0
+	 * http://getbootstrap.com/javascript/#popovers
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // POPOVER PUBLIC CLASS DEFINITION
+	  // ===============================
+
+	  var Popover = function (element, options) {
+	    this.init('popover', element, options)
+	  }
+
+	  if (!$.fn.tooltip) throw new Error('Popover requires tooltip.js')
+
+	  Popover.VERSION  = '3.3.0'
+
+	  Popover.DEFAULTS = $.extend({}, $.fn.tooltip.Constructor.DEFAULTS, {
+	    placement: 'right',
+	    trigger: 'click',
+	    content: '',
+	    template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+	  })
+
+
+	  // NOTE: POPOVER EXTENDS tooltip.js
+	  // ================================
+
+	  Popover.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype)
+
+	  Popover.prototype.constructor = Popover
+
+	  Popover.prototype.getDefaults = function () {
+	    return Popover.DEFAULTS
+	  }
+
+	  Popover.prototype.setContent = function () {
+	    var $tip    = this.tip()
+	    var title   = this.getTitle()
+	    var content = this.getContent()
+
+	    $tip.find('.popover-title')[this.options.html ? 'html' : 'text'](title)
+	    $tip.find('.popover-content').children().detach().end()[ // we use append for html objects to maintain js events
+	      this.options.html ? (typeof content == 'string' ? 'html' : 'append') : 'text'
+	    ](content)
+
+	    $tip.removeClass('fade top bottom left right in')
+
+	    // IE8 doesn't accept hiding via the `:empty` pseudo selector, we have to do
+	    // this manually by checking the contents.
+	    if (!$tip.find('.popover-title').html()) $tip.find('.popover-title').hide()
+	  }
+
+	  Popover.prototype.hasContent = function () {
+	    return this.getTitle() || this.getContent()
+	  }
+
+	  Popover.prototype.getContent = function () {
+	    var $e = this.$element
+	    var o  = this.options
+
+	    return $e.attr('data-content')
+	      || (typeof o.content == 'function' ?
+	            o.content.call($e[0]) :
+	            o.content)
+	  }
+
+	  Popover.prototype.arrow = function () {
+	    return (this.$arrow = this.$arrow || this.tip().find('.arrow'))
+	  }
+
+	  Popover.prototype.tip = function () {
+	    if (!this.$tip) this.$tip = $(this.options.template)
+	    return this.$tip
+	  }
+
+
+	  // POPOVER PLUGIN DEFINITION
+	  // =========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this    = $(this)
+	      var data     = $this.data('bs.popover')
+	      var options  = typeof option == 'object' && option
+	      var selector = options && options.selector
+
+	      if (!data && option == 'destroy') return
+	      if (selector) {
+	        if (!data) $this.data('bs.popover', (data = {}))
+	        if (!data[selector]) data[selector] = new Popover(this, options)
+	      } else {
+	        if (!data) $this.data('bs.popover', (data = new Popover(this, options)))
+	      }
+	      if (typeof option == 'string') data[option]()
+	    })
+	  }
+
+	  var old = $.fn.popover
+
+	  $.fn.popover             = Plugin
+	  $.fn.popover.Constructor = Popover
+
+
+	  // POPOVER NO CONFLICT
+	  // ===================
+
+	  $.fn.popover.noConflict = function () {
+	    $.fn.popover = old
+	    return this
+	  }
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: scrollspy.js v3.3.0
+	 * http://getbootstrap.com/javascript/#scrollspy
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // SCROLLSPY CLASS DEFINITION
+	  // ==========================
+
+	  function ScrollSpy(element, options) {
+	    var process  = $.proxy(this.process, this)
+
+	    this.$body          = $('body')
+	    this.$scrollElement = $(element).is('body') ? $(window) : $(element)
+	    this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+	    this.selector       = (this.options.target || '') + ' .nav li > a'
+	    this.offsets        = []
+	    this.targets        = []
+	    this.activeTarget   = null
+	    this.scrollHeight   = 0
+
+	    this.$scrollElement.on('scroll.bs.scrollspy', process)
+	    this.refresh()
+	    this.process()
+	  }
+
+	  ScrollSpy.VERSION  = '3.3.0'
+
+	  ScrollSpy.DEFAULTS = {
+	    offset: 10
+	  }
+
+	  ScrollSpy.prototype.getScrollHeight = function () {
+	    return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+	  }
+
+	  ScrollSpy.prototype.refresh = function () {
+	    var offsetMethod = 'offset'
+	    var offsetBase   = 0
+
+	    if (!$.isWindow(this.$scrollElement[0])) {
+	      offsetMethod = 'position'
+	      offsetBase   = this.$scrollElement.scrollTop()
+	    }
+
+	    this.offsets = []
+	    this.targets = []
+	    this.scrollHeight = this.getScrollHeight()
+
+	    var self     = this
+
+	    this.$body
+	      .find(this.selector)
+	      .map(function () {
+	        var $el   = $(this)
+	        var href  = $el.data('target') || $el.attr('href')
+	        var $href = /^#./.test(href) && $(href)
+
+	        return ($href
+	          && $href.length
+	          && $href.is(':visible')
+	          && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+	      })
+	      .sort(function (a, b) { return a[0] - b[0] })
+	      .each(function () {
+	        self.offsets.push(this[0])
+	        self.targets.push(this[1])
+	      })
+	  }
+
+	  ScrollSpy.prototype.process = function () {
+	    var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+	    var scrollHeight = this.getScrollHeight()
+	    var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+	    var offsets      = this.offsets
+	    var targets      = this.targets
+	    var activeTarget = this.activeTarget
+	    var i
+
+	    if (this.scrollHeight != scrollHeight) {
+	      this.refresh()
+	    }
+
+	    if (scrollTop >= maxScroll) {
+	      return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+	    }
+
+	    if (activeTarget && scrollTop < offsets[0]) {
+	      this.activeTarget = null
+	      return this.clear()
+	    }
+
+	    for (i = offsets.length; i--;) {
+	      activeTarget != targets[i]
+	        && scrollTop >= offsets[i]
+	        && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+	        && this.activate(targets[i])
+	    }
+	  }
+
+	  ScrollSpy.prototype.activate = function (target) {
+	    this.activeTarget = target
+
+	    this.clear()
+
+	    var selector = this.selector +
+	        '[data-target="' + target + '"],' +
+	        this.selector + '[href="' + target + '"]'
+
+	    var active = $(selector)
+	      .parents('li')
+	      .addClass('active')
+
+	    if (active.parent('.dropdown-menu').length) {
+	      active = active
+	        .closest('li.dropdown')
+	        .addClass('active')
+	    }
+
+	    active.trigger('activate.bs.scrollspy')
+	  }
+
+	  ScrollSpy.prototype.clear = function () {
+	    $(this.selector)
+	      .parentsUntil(this.options.target, '.active')
+	      .removeClass('active')
+	  }
+
+
+	  // SCROLLSPY PLUGIN DEFINITION
+	  // ===========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this   = $(this)
+	      var data    = $this.data('bs.scrollspy')
+	      var options = typeof option == 'object' && option
+
+	      if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+	      if (typeof option == 'string') data[option]()
+	    })
+	  }
+
+	  var old = $.fn.scrollspy
+
+	  $.fn.scrollspy             = Plugin
+	  $.fn.scrollspy.Constructor = ScrollSpy
+
+
+	  // SCROLLSPY NO CONFLICT
+	  // =====================
+
+	  $.fn.scrollspy.noConflict = function () {
+	    $.fn.scrollspy = old
+	    return this
+	  }
+
+
+	  // SCROLLSPY DATA-API
+	  // ==================
+
+	  $(window).on('load.bs.scrollspy.data-api', function () {
+	    $('[data-spy="scroll"]').each(function () {
+	      var $spy = $(this)
+	      Plugin.call($spy, $spy.data())
+	    })
+	  })
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: tab.js v3.3.0
+	 * http://getbootstrap.com/javascript/#tabs
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // TAB CLASS DEFINITION
+	  // ====================
+
+	  var Tab = function (element) {
+	    this.element = $(element)
+	  }
+
+	  Tab.VERSION = '3.3.0'
+
+	  Tab.TRANSITION_DURATION = 150
+
+	  Tab.prototype.show = function () {
+	    var $this    = this.element
+	    var $ul      = $this.closest('ul:not(.dropdown-menu)')
+	    var selector = $this.data('target')
+
+	    if (!selector) {
+	      selector = $this.attr('href')
+	      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
+	    }
+
+	    if ($this.parent('li').hasClass('active')) return
+
+	    var $previous = $ul.find('.active:last a')
+	    var hideEvent = $.Event('hide.bs.tab', {
+	      relatedTarget: $this[0]
+	    })
+	    var showEvent = $.Event('show.bs.tab', {
+	      relatedTarget: $previous[0]
+	    })
+
+	    $previous.trigger(hideEvent)
+	    $this.trigger(showEvent)
+
+	    if (showEvent.isDefaultPrevented() || hideEvent.isDefaultPrevented()) return
+
+	    var $target = $(selector)
+
+	    this.activate($this.closest('li'), $ul)
+	    this.activate($target, $target.parent(), function () {
+	      $previous.trigger({
+	        type: 'hidden.bs.tab',
+	        relatedTarget: $this[0]
+	      })
+	      $this.trigger({
+	        type: 'shown.bs.tab',
+	        relatedTarget: $previous[0]
+	      })
+	    })
+	  }
+
+	  Tab.prototype.activate = function (element, container, callback) {
+	    var $active    = container.find('> .active')
+	    var transition = callback
+	      && $.support.transition
+	      && (($active.length && $active.hasClass('fade')) || !!container.find('> .fade').length)
+
+	    function next() {
+	      $active
+	        .removeClass('active')
+	        .find('> .dropdown-menu > .active')
+	          .removeClass('active')
+	        .end()
+	        .find('[data-toggle="tab"]')
+	          .attr('aria-expanded', false)
+
+	      element
+	        .addClass('active')
+	        .find('[data-toggle="tab"]')
+	          .attr('aria-expanded', true)
+
+	      if (transition) {
+	        element[0].offsetWidth // reflow for transition
+	        element.addClass('in')
+	      } else {
+	        element.removeClass('fade')
+	      }
+
+	      if (element.parent('.dropdown-menu')) {
+	        element
+	          .closest('li.dropdown')
+	            .addClass('active')
+	          .end()
+	          .find('[data-toggle="tab"]')
+	            .attr('aria-expanded', true)
+	      }
+
+	      callback && callback()
+	    }
+
+	    $active.length && transition ?
+	      $active
+	        .one('bsTransitionEnd', next)
+	        .emulateTransitionEnd(Tab.TRANSITION_DURATION) :
+	      next()
+
+	    $active.removeClass('in')
+	  }
+
+
+	  // TAB PLUGIN DEFINITION
+	  // =====================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this)
+	      var data  = $this.data('bs.tab')
+
+	      if (!data) $this.data('bs.tab', (data = new Tab(this)))
+	      if (typeof option == 'string') data[option]()
+	    })
+	  }
+
+	  var old = $.fn.tab
+
+	  $.fn.tab             = Plugin
+	  $.fn.tab.Constructor = Tab
+
+
+	  // TAB NO CONFLICT
+	  // ===============
+
+	  $.fn.tab.noConflict = function () {
+	    $.fn.tab = old
+	    return this
+	  }
+
+
+	  // TAB DATA-API
+	  // ============
+
+	  var clickHandler = function (e) {
+	    e.preventDefault()
+	    Plugin.call($(this), 'show')
+	  }
+
+	  $(document)
+	    .on('click.bs.tab.data-api', '[data-toggle="tab"]', clickHandler)
+	    .on('click.bs.tab.data-api', '[data-toggle="pill"]', clickHandler)
+
+	}(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: affix.js v3.3.0
+	 * http://getbootstrap.com/javascript/#affix
+	 * ========================================================================
+	 * Copyright 2011-2014 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+
+	+function ($) {
+	  'use strict';
+
+	  // AFFIX CLASS DEFINITION
+	  // ======================
+
+	  var Affix = function (element, options) {
+	    this.options = $.extend({}, Affix.DEFAULTS, options)
+
+	    this.$target = $(this.options.target)
+	      .on('scroll.bs.affix.data-api', $.proxy(this.checkPosition, this))
+	      .on('click.bs.affix.data-api',  $.proxy(this.checkPositionWithEventLoop, this))
+
+	    this.$element     = $(element)
+	    this.affixed      =
+	    this.unpin        =
+	    this.pinnedOffset = null
+
+	    this.checkPosition()
+	  }
+
+	  Affix.VERSION  = '3.3.0'
+
+	  Affix.RESET    = 'affix affix-top affix-bottom'
+
+	  Affix.DEFAULTS = {
+	    offset: 0,
+	    target: window
+	  }
+
+	  Affix.prototype.getState = function (scrollHeight, height, offsetTop, offsetBottom) {
+	    var scrollTop    = this.$target.scrollTop()
+	    var position     = this.$element.offset()
+	    var targetHeight = this.$target.height()
+
+	    if (offsetTop != null && this.affixed == 'top') return scrollTop < offsetTop ? 'top' : false
+
+	    if (this.affixed == 'bottom') {
+	      if (offsetTop != null) return (scrollTop + this.unpin <= position.top) ? false : 'bottom'
+	      return (scrollTop + targetHeight <= scrollHeight - offsetBottom) ? false : 'bottom'
+	    }
+
+	    var initializing   = this.affixed == null
+	    var colliderTop    = initializing ? scrollTop : position.top
+	    var colliderHeight = initializing ? targetHeight : height
+
+	    if (offsetTop != null && colliderTop <= offsetTop) return 'top'
+	    if (offsetBottom != null && (colliderTop + colliderHeight >= scrollHeight - offsetBottom)) return 'bottom'
+
+	    return false
+	  }
+
+	  Affix.prototype.getPinnedOffset = function () {
+	    if (this.pinnedOffset) return this.pinnedOffset
+	    this.$element.removeClass(Affix.RESET).addClass('affix')
+	    var scrollTop = this.$target.scrollTop()
+	    var position  = this.$element.offset()
+	    return (this.pinnedOffset = position.top - scrollTop)
+	  }
+
+	  Affix.prototype.checkPositionWithEventLoop = function () {
+	    setTimeout($.proxy(this.checkPosition, this), 1)
+	  }
+
+	  Affix.prototype.checkPosition = function () {
+	    if (!this.$element.is(':visible')) return
+
+	    var height       = this.$element.height()
+	    var offset       = this.options.offset
+	    var offsetTop    = offset.top
+	    var offsetBottom = offset.bottom
+	    var scrollHeight = $('body').height()
+
+	    if (typeof offset != 'object')         offsetBottom = offsetTop = offset
+	    if (typeof offsetTop == 'function')    offsetTop    = offset.top(this.$element)
+	    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element)
+
+	    var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom)
+
+	    if (this.affixed != affix) {
+	      if (this.unpin != null) this.$element.css('top', '')
+
+	      var affixType = 'affix' + (affix ? '-' + affix : '')
+	      var e         = $.Event(affixType + '.bs.affix')
+
+	      this.$element.trigger(e)
+
+	      if (e.isDefaultPrevented()) return
+
+	      this.affixed = affix
+	      this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null
+
+	      this.$element
+	        .removeClass(Affix.RESET)
+	        .addClass(affixType)
+	        .trigger(affixType.replace('affix', 'affixed') + '.bs.affix')
+	    }
+
+	    if (affix == 'bottom') {
+	      this.$element.offset({
+	        top: scrollHeight - height - offsetBottom
+	      })
+	    }
+	  }
+
+
+	  // AFFIX PLUGIN DEFINITION
+	  // =======================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this   = $(this)
+	      var data    = $this.data('bs.affix')
+	      var options = typeof option == 'object' && option
+
+	      if (!data) $this.data('bs.affix', (data = new Affix(this, options)))
+	      if (typeof option == 'string') data[option]()
+	    })
+	  }
+
+	  var old = $.fn.affix
+
+	  $.fn.affix             = Plugin
+	  $.fn.affix.Constructor = Affix
+
+
+	  // AFFIX NO CONFLICT
+	  // =================
+
+	  $.fn.affix.noConflict = function () {
+	    $.fn.affix = old
+	    return this
+	  }
+
+
+	  // AFFIX DATA-API
+	  // ==============
+
+	  $(window).on('load', function () {
+	    $('[data-spy="affix"]').each(function () {
+	      var $spy = $(this)
+	      var data = $spy.data()
+
+	      data.offset = data.offset || {}
+
+	      if (data.offsetBottom != null) data.offset.bottom = data.offsetBottom
+	      if (data.offsetTop    != null) data.offset.top    = data.offsetTop
+
+	      Plugin.call($spy, data)
+	    })
+	  })
+
+	}(jQuery);
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(jQuery) {!function (a, b) {
+	    "use strict";
+
+	        if (!jQuery)throw new Error("bootstrap-datetimepicker requires jQuery to be loaded first");
+	        if (!moment)throw new Error("bootstrap-datetimepicker requires moment.js to be loaded first");
+	        b(jQuery, moment);
+	}(this, function (a, b) {
+	    "use strict";
+	    if ("undefined" == typeof b)throw new Error("momentjs is required");
+	    var c = 0, d = function (d, e) {
+	        var f, g = a.fn.datetimepicker.defaults, h = {time: "glyphicon glyphicon-time", date: "glyphicon glyphicon-calendar", up: "glyphicon glyphicon-chevron-up", down: "glyphicon glyphicon-chevron-down"}, i = this, j = !1, k = function () {
+	            var f, j, k = !1;
+	            if (i.options = a.extend({}, g, e), i.options.icons = a.extend({}, h, i.options.icons), i.element = a(d), m(), !i.options.pickTime && !i.options.pickDate)throw new Error("Must choose at least one picker");
+	            if (i.id = c++, b.locale(i.options.language), i.date = b(), i.unset = !1, i.isInput = i.element.is("input"), i.component = !1, i.element.hasClass("input-group") && (i.component = i.element.find(0 === i.element.find(".datepickerbutton").size() ? '[class^="input-group-"]' : ".datepickerbutton")), i.format = i.options.format, f = b().localeData(), i.format || (i.format = i.options.pickDate ? f.longDateFormat("L") : "", i.options.pickDate && i.options.pickTime && (i.format += " "), i.format += i.options.pickTime ? f.longDateFormat("LT") : "", i.options.useSeconds && (-1 !== f.longDateFormat("LT").indexOf(" A") ? i.format = i.format.split(" A")[0] + ":ss A" : i.format += ":ss")), i.use24hours = i.format.toLowerCase().indexOf("a") < 0 && i.format.indexOf("h") < 0, i.component && (k = i.component.find("span")), i.options.pickTime && k && k.addClass(i.options.icons.time), i.options.pickDate && k && (k.removeClass(i.options.icons.time), k.addClass(i.options.icons.date)), i.options.widgetParent = "string" == typeof i.options.widgetParent && i.options.widgetParent || i.element.parents().filter(function () {
+	                return"scroll" === a(this).css("overflow-y")
+	            }).get(0) || "body", i.widget = a(Q()).appendTo(i.options.widgetParent), i.minViewMode = i.options.minViewMode || 0, "string" == typeof i.minViewMode)switch (i.minViewMode) {
+	                case"months":
+	                    i.minViewMode = 1;
+	                    break;
+	                case"years":
+	                    i.minViewMode = 2;
+	                    break;
+	                default:
+	                    i.minViewMode = 0
+	            }
+	            if (i.viewMode = i.options.viewMode || 0, "string" == typeof i.viewMode)switch (i.viewMode) {
+	                case"months":
+	                    i.viewMode = 1;
+	                    break;
+	                case"years":
+	                    i.viewMode = 2;
+	                    break;
+	                default:
+	                    i.viewMode = 0
+	            }
+	            i.viewMode = Math.max(i.viewMode, i.minViewMode), i.options.disabledDates = O(i.options.disabledDates), i.options.enabledDates = O(i.options.enabledDates), i.startViewMode = i.viewMode, i.setMinDate(i.options.minDate), i.setMaxDate(i.options.maxDate), r(), s(), u(), v(), w(), q(), E(), l().prop("disabled") || F(), "" !== i.options.defaultDate && "" === l().val() && i.setValue(i.options.defaultDate), 1 !== i.options.minuteStepping && (j = i.options.minuteStepping, i.date.minutes(Math.round(i.date.minutes() / j) * j % 60).seconds(0))
+	        }, l = function () {
+	            var a;
+	            if (i.isInput)return i.element;
+	            if (a = i.element.find(".datepickerinput"), 0 === a.size())a = i.element.find("input"); else if (!a.is("input"))throw new Error('CSS class "datepickerinput" cannot be applied to non input element');
+	            return a
+	        }, m = function () {
+	            var a;
+	            a = i.element.is("input") ? i.element.data() : i.element.find("input").data(), void 0 !== a.dateFormat && (i.options.format = a.dateFormat), void 0 !== a.datePickdate && (i.options.pickDate = a.datePickdate), void 0 !== a.datePicktime && (i.options.pickTime = a.datePicktime), void 0 !== a.dateUseminutes && (i.options.useMinutes = a.dateUseminutes), void 0 !== a.dateUseseconds && (i.options.useSeconds = a.dateUseseconds), void 0 !== a.dateUsecurrent && (i.options.useCurrent = a.dateUsecurrent), void 0 !== a.calendarWeeks && (i.options.calendarWeeks = a.calendarWeeks), void 0 !== a.dateMinutestepping && (i.options.minuteStepping = a.dateMinutestepping), void 0 !== a.dateMindate && (i.options.minDate = a.dateMindate), void 0 !== a.dateMaxdate && (i.options.maxDate = a.dateMaxdate), void 0 !== a.dateShowtoday && (i.options.showToday = a.dateShowtoday), void 0 !== a.dateCollapse && (i.options.collapse = a.dateCollapse), void 0 !== a.dateLanguage && (i.options.language = a.dateLanguage), void 0 !== a.dateDefaultdate && (i.options.defaultDate = a.dateDefaultdate), void 0 !== a.dateDisableddates && (i.options.disabledDates = a.dateDisableddates), void 0 !== a.dateEnableddates && (i.options.enabledDates = a.dateEnableddates), void 0 !== a.dateIcons && (i.options.icons = a.dateIcons), void 0 !== a.dateUsestrict && (i.options.useStrict = a.dateUsestrict), void 0 !== a.dateDirection && (i.options.direction = a.dateDirection), void 0 !== a.dateSidebyside && (i.options.sideBySide = a.dateSidebyside), void 0 !== a.dateDaysofweekdisabled && (i.options.daysOfWeekDisabled = a.dateDaysofweekdisabled)
+	        }, n = function () {
+	            var b, c = "absolute", d = i.component ? i.component.offset() : i.element.offset(), e = a(window);
+	            i.width = i.component ? i.component.outerWidth() : i.element.outerWidth(), d.top = d.top + i.element.outerHeight(), "up" === i.options.direction ? b = "top" : "bottom" === i.options.direction ? b = "bottom" : "auto" === i.options.direction && (b = d.top + i.widget.height() > e.height() + e.scrollTop() && i.widget.height() + i.element.outerHeight() < d.top ? "top" : "bottom"), "top" === b ? (d.bottom = e.height() - d.top + i.element.outerHeight() + 3, i.widget.addClass("top").removeClass("bottom")) : (d.top += 1, i.widget.addClass("bottom").removeClass("top")), void 0 !== i.options.width && i.widget.width(i.options.width), "left" === i.options.orientation && (i.widget.addClass("left-oriented"), d.left = d.left - i.widget.width() + 20), J() && (c = "fixed", d.top -= e.scrollTop(), d.left -= e.scrollLeft()), e.width() < d.left + i.widget.outerWidth() ? (d.right = e.width() - d.left - i.width, d.left = "auto", i.widget.addClass("pull-right")) : (d.right = "auto", i.widget.removeClass("pull-right")), i.widget.css("top" === b ? {position: c, bottom: d.bottom, top: "auto", left: d.left, right: d.right} : {position: c, top: d.top, bottom: "auto", left: d.left, right: d.right})
+	        }, o = function (a, c) {
+	            (!b(i.date).isSame(b(a)) || j) && (j = !1, i.element.trigger({type: "dp.change", date: b(i.date), oldDate: b(a)}), "change" !== c && i.element.change())
+	        }, p = function (a) {
+	            j = !0, i.element.trigger({type: "dp.error", date: b(a, i.format, i.options.useStrict)})
+	        }, q = function (a) {
+	            b.locale(i.options.language);
+	            var c = a;
+	            c || (c = l().val(), c && (i.date = b(c, i.format, i.options.useStrict)), i.date || (i.date = b())), i.viewDate = b(i.date).startOf("month"), t(), x()
+	        }, r = function () {
+	            b.locale(i.options.language);
+	            var c, d = a("<tr>"), e = b.weekdaysMin();
+	            if (i.options.calendarWeeks === !0 && d.append('<th class="cw">#</th>'), 0 === b().localeData()._week.dow)for (c = 0; 7 > c; c++)d.append('<th class="dow">' + e[c] + "</th>"); else for (c = 1; 8 > c; c++)d.append(7 === c ? '<th class="dow">' + e[0] + "</th>" : '<th class="dow">' + e[c] + "</th>");
+	            i.widget.find(".datepicker-days thead").append(d)
+	        }, s = function () {
+	            b.locale(i.options.language);
+	            var a, c = "", d = b.monthsShort();
+	            for (a = 0; 12 > a; a++)c += '<span class="month">' + d[a] + "</span>";
+	            i.widget.find(".datepicker-months td").append(c)
+	        }, t = function () {
+	            if (i.options.pickDate) {
+	                b.locale(i.options.language);
+	                var c, d, e, f, g, h, j, k, l, m = i.viewDate.year(), n = i.viewDate.month(), o = i.options.minDate.year(), p = i.options.minDate.month(), q = i.options.maxDate.year(), r = i.options.maxDate.month(), s = [], t = b.months();
+	                for (i.widget.find(".datepicker-days").find(".disabled").removeClass("disabled"), i.widget.find(".datepicker-months").find(".disabled").removeClass("disabled"), i.widget.find(".datepicker-years").find(".disabled").removeClass("disabled"), i.widget.find(".datepicker-days th:eq(1)").text(t[n] + " " + m), d = b(i.viewDate, i.format, i.options.useStrict).subtract(1, "months"), j = d.daysInMonth(), d.date(j).startOf("week"), (m === o && p >= n || o > m) && i.widget.find(".datepicker-days th:eq(0)").addClass("disabled"), (m === q && n >= r || m > q) && i.widget.find(".datepicker-days th:eq(2)").addClass("disabled"), e = b(d).add(42, "d"); d.isBefore(e);) {
+	                    if (d.weekday() === b().startOf("week").weekday() && (f = a("<tr>"), s.push(f), i.options.calendarWeeks === !0 && f.append('<td class="cw">' + d.week() + "</td>")), g = "", d.year() < m || d.year() === m && d.month() < n ? g += " old" : (d.year() > m || d.year() === m && d.month() > n) && (g += " new"), d.isSame(b({y: i.date.year(), M: i.date.month(), d: i.date.date()})) && (g += " active"), (M(d, "day") || !N(d)) && (g += " disabled"), i.options.showToday === !0 && d.isSame(b(), "day") && (g += " today"), i.options.daysOfWeekDisabled)for (h = 0; h < i.options.daysOfWeekDisabled.length; h++)if (d.day() === i.options.daysOfWeekDisabled[h]) {
+	                        g += " disabled";
+	                        break
+	                    }
+	                    f.append('<td class="day' + g + '">' + d.date() + "</td>"), c = d.date(), d.add(1, "d"), c === d.date() && d.add(1, "d")
+	                }
+	                for (i.widget.find(".datepicker-days tbody").empty().append(s), l = i.date.year(), t = i.widget.find(".datepicker-months").find("th:eq(1)").text(m).end().find("span").removeClass("active"), l === m && t.eq(i.date.month()).addClass("active"), o > m - 1 && i.widget.find(".datepicker-months th:eq(0)").addClass("disabled"), m + 1 > q && i.widget.find(".datepicker-months th:eq(2)").addClass("disabled"), h = 0; 12 > h; h++)m === o && p > h || o > m ? a(t[h]).addClass("disabled") : (m === q && h > r || m > q) && a(t[h]).addClass("disabled");
+	                for (s = "", m = 10 * parseInt(m / 10, 10), k = i.widget.find(".datepicker-years").find("th:eq(1)").text(m + "-" + (m + 9)).parents("table").find("td"), i.widget.find(".datepicker-years").find("th").removeClass("disabled"), o > m && i.widget.find(".datepicker-years").find("th:eq(0)").addClass("disabled"), m + 9 > q && i.widget.find(".datepicker-years").find("th:eq(2)").addClass("disabled"), m -= 1, h = -1; 11 > h; h++)s += '<span class="year' + (-1 === h || 10 === h ? " old" : "") + (l === m ? " active" : "") + (o > m || m > q ? " disabled" : "") + '">' + m + "</span>", m += 1;
+	                k.html(s)
+	            }
+	        }, u = function () {
+	            b.locale(i.options.language);
+	            var a, c, d, e = i.widget.find(".timepicker .timepicker-hours table"), f = "";
+	            if (e.parent().hide(), i.use24hours)for (a = 0, c = 0; 6 > c; c += 1) {
+	                for (f += "<tr>", d = 0; 4 > d; d += 1)f += '<td class="hour">' + P(a.toString()) + "</td>", a++;
+	                f += "</tr>"
+	            } else for (a = 1, c = 0; 3 > c; c += 1) {
+	                for (f += "<tr>", d = 0; 4 > d; d += 1)f += '<td class="hour">' + P(a.toString()) + "</td>", a++;
+	                f += "</tr>"
+	            }
+	            e.html(f)
+	        }, v = function () {
+	            var a, b, c = i.widget.find(".timepicker .timepicker-minutes table"), d = "", e = 0, f = i.options.minuteStepping;
+	            for (c.parent().hide(), 1 === f && (f = 5), a = 0; a < Math.ceil(60 / f / 4); a++) {
+	                for (d += "<tr>", b = 0; 4 > b; b += 1)60 > e ? (d += '<td class="minute">' + P(e.toString()) + "</td>", e += f) : d += "<td></td>";
+	                d += "</tr>"
+	            }
+	            c.html(d)
+	        }, w = function () {
+	            var a, b, c = i.widget.find(".timepicker .timepicker-seconds table"), d = "", e = 0;
+	            for (c.parent().hide(), a = 0; 3 > a; a++) {
+	                for (d += "<tr>", b = 0; 4 > b; b += 1)d += '<td class="second">' + P(e.toString()) + "</td>", e += 5;
+	                d += "</tr>"
+	            }
+	            c.html(d)
+	        }, x = function () {
+	            if (i.date) {
+	                var a = i.widget.find(".timepicker span[data-time-component]"), b = i.date.hours(), c = i.date.format("A");
+	                i.use24hours || (0 === b ? b = 12 : 12 !== b && (b %= 12), i.widget.find(".timepicker [data-action=togglePeriod]").text(c)), a.filter("[data-time-component=hours]").text(P(b)), a.filter("[data-time-component=minutes]").text(P(i.date.minutes())), a.filter("[data-time-component=seconds]").text(P(i.date.second()))
+	            }
+	        }, y = function (c) {
+	            c.stopPropagation(), c.preventDefault(), i.unset = !1;
+	            var d, e, f, g, h = a(c.target).closest("span, td, th"), j = b(i.date);
+	            if (1 === h.length && !h.is(".disabled"))switch (h[0].nodeName.toLowerCase()) {
+	                case"th":
+	                    switch (h[0].className) {
+	                        case"picker-switch":
+	                            E(1);
+	                            break;
+	                        case"prev":
+	                        case"next":
+	                            f = R.modes[i.viewMode].navStep, "prev" === h[0].className && (f = -1 * f), i.viewDate.add(f, R.modes[i.viewMode].navFnc), t()
+	                    }
+	                    break;
+	                case"span":
+	                    h.is(".month") ? (d = h.parent().find("span").index(h), i.viewDate.month(d)) : (e = parseInt(h.text(), 10) || 0, i.viewDate.year(e)), i.viewMode === i.minViewMode && (i.date = b({y: i.viewDate.year(), M: i.viewDate.month(), d: i.viewDate.date(), h: i.date.hours(), m: i.date.minutes(), s: i.date.seconds()}), K(), o(j, c.type)), E(-1), t();
+	                    break;
+	                case"td":
+	                    h.is(".day") && (g = parseInt(h.text(), 10) || 1, d = i.viewDate.month(), e = i.viewDate.year(), h.is(".old") ? 0 === d ? (d = 11, e -= 1) : d -= 1 : h.is(".new") && (11 === d ? (d = 0, e += 1) : d += 1), i.date = b({y: e, M: d, d: g, h: i.date.hours(), m: i.date.minutes(), s: i.date.seconds()}), i.viewDate = b({y: e, M: d, d: Math.min(28, g)}), t(), K(), o(j, c.type))
+	            }
+	        }, z = {incrementHours: function () {
+	            L("add", "hours", 1)
+	        }, incrementMinutes: function () {
+	            L("add", "minutes", i.options.minuteStepping)
+	        }, incrementSeconds: function () {
+	            L("add", "seconds", 1)
+	        }, decrementHours: function () {
+	            L("subtract", "hours", 1)
+	        }, decrementMinutes: function () {
+	            L("subtract", "minutes", i.options.minuteStepping)
+	        }, decrementSeconds: function () {
+	            L("subtract", "seconds", 1)
+	        }, togglePeriod: function () {
+	            var a = i.date.hours();
+	            a >= 12 ? a -= 12 : a += 12, i.date.hours(a)
+	        }, showPicker: function () {
+	            i.widget.find(".timepicker > div:not(.timepicker-picker)").hide(), i.widget.find(".timepicker .timepicker-picker").show()
+	        }, showHours: function () {
+	            i.widget.find(".timepicker .timepicker-picker").hide(), i.widget.find(".timepicker .timepicker-hours").show()
+	        }, showMinutes: function () {
+	            i.widget.find(".timepicker .timepicker-picker").hide(), i.widget.find(".timepicker .timepicker-minutes").show()
+	        }, showSeconds: function () {
+	            i.widget.find(".timepicker .timepicker-picker").hide(), i.widget.find(".timepicker .timepicker-seconds").show()
+	        }, selectHour: function (b) {
+	            var c = parseInt(a(b.target).text(), 10);
+	            i.use24hours || (i.date.hours() >= 12 ? 12 !== c && (c += 12) : 12 === c && (c = 0)), i.date.hours(c), z.showPicker.call(i)
+	        }, selectMinute: function (b) {
+	            i.date.minutes(parseInt(a(b.target).text(), 10)), z.showPicker.call(i)
+	        }, selectSecond: function (b) {
+	            i.date.seconds(parseInt(a(b.target).text(), 10)), z.showPicker.call(i)
+	        }}, A = function (c) {
+	            var d = b(i.date), e = a(c.currentTarget).data("action"), f = z[e].apply(i, arguments);
+	            return B(c), i.date || (i.date = b({y: 1970})), K(), x(), o(d, c.type), f
+	        }, B = function (a) {
+	            a.stopPropagation(), a.preventDefault()
+	        }, C = function (a) {
+	            27 === a.keyCode && i.hide()
+	        }, D = function (c) {
+	            b.locale(i.options.language);
+	            var d = a(c.target), e = b(i.date), f = b(d.val(), i.format, i.options.useStrict);
+	            f.isValid() && !M(f) && N(f) ? (q(), i.setValue(f), o(e, c.type), K()) : (i.viewDate = e, i.unset = !0, o(e, c.type), p(f))
+	        }, E = function (a) {
+	            a && (i.viewMode = Math.max(i.minViewMode, Math.min(2, i.viewMode + a))), i.widget.find(".datepicker > div").hide().filter(".datepicker-" + R.modes[i.viewMode].clsName).show()
+	        }, F = function () {
+	            var b, c, d, e, f;
+	            i.widget.on("click", ".datepicker *", a.proxy(y, this)), i.widget.on("click", "[data-action]", a.proxy(A, this)), i.widget.on("mousedown", a.proxy(B, this)), i.element.on("keydown", a.proxy(C, this)), i.options.pickDate && i.options.pickTime && i.widget.on("click.togglePicker", ".accordion-toggle", function (g) {
+	                if (g.stopPropagation(), b = a(this), c = b.closest("ul"), d = c.find(".in"), e = c.find(".collapse:not(.in)"), d && d.length) {
+	                    if (f = d.data("collapse"), f && f.transitioning)return;
+	                    d.collapse("hide"), e.collapse("show"), b.find("span").toggleClass(i.options.icons.time + " " + i.options.icons.date), i.component && i.component.find("span").toggleClass(i.options.icons.time + " " + i.options.icons.date)
+	                }
+	            }), i.isInput ? i.element.on({click: a.proxy(i.show, this), focus: a.proxy(i.show, this), change: a.proxy(D, this), blur: a.proxy(i.hide, this)}) : (i.element.on({change: a.proxy(D, this)}, "input"), i.component ? (i.component.on("click", a.proxy(i.show, this)), i.component.on("mousedown", a.proxy(B, this))) : i.element.on("click", a.proxy(i.show, this)))
+	        }, G = function () {
+	            a(window).on("resize.datetimepicker" + i.id, a.proxy(n, this)), i.isInput || a(document).on("mousedown.datetimepicker" + i.id, a.proxy(i.hide, this))
+	        }, H = function () {
+	            i.widget.off("click", ".datepicker *", i.click), i.widget.off("click", "[data-action]"), i.widget.off("mousedown", i.stopEvent), i.options.pickDate && i.options.pickTime && i.widget.off("click.togglePicker"), i.isInput ? i.element.off({focus: i.show, change: D, click: i.show, blur: i.hide}) : (i.element.off({change: D}, "input"), i.component ? (i.component.off("click", i.show), i.component.off("mousedown", i.stopEvent)) : i.element.off("click", i.show))
+	        }, I = function () {
+	            a(window).off("resize.datetimepicker" + i.id), i.isInput || a(document).off("mousedown.datetimepicker" + i.id)
+	        }, J = function () {
+	            if (i.element) {
+	                var b, c = i.element.parents(), d = !1;
+	                for (b = 0; b < c.length; b++)if ("fixed" === a(c[b]).css("position")) {
+	                    d = !0;
+	                    break
+	                }
+	                return d
+	            }
+	            return!1
+	        }, K = function () {
+	            b.locale(i.options.language);
+	            var a = "";
+	            i.unset || (a = b(i.date).format(i.format)), l().val(a), i.element.data("date", a), i.options.pickTime || i.hide()
+	        }, L = function (a, c, d) {
+	            b.locale(i.options.language);
+	            var e;
+	            return"add" === a ? (e = b(i.date), 23 === e.hours() && e.add(d, c), e.add(d, c)) : e = b(i.date).subtract(d, c), M(b(e.subtract(d, c))) || M(e) ? void p(e.format(i.format)) : ("add" === a ? i.date.add(d, c) : i.date.subtract(d, c), void(i.unset = !1))
+	        }, M = function (a, c) {
+	            b.locale(i.options.language);
+	            var d = b(i.options.maxDate, i.format, i.options.useStrict), e = b(i.options.minDate, i.format, i.options.useStrict);
+	            return c && (d = d.endOf(c), e = e.startOf(c)), a.isAfter(d) || a.isBefore(e) ? !0 : i.options.disabledDates === !1 ? !1 : i.options.disabledDates[a.format("YYYY-MM-DD")] === !0
+	        }, N = function (a) {
+	            return b.locale(i.options.language), i.options.enabledDates === !1 ? !0 : i.options.enabledDates[a.format("YYYY-MM-DD")] === !0
+	        }, O = function (a) {
+	            var c, d = {}, e = 0;
+	            for (c = 0; c < a.length; c++)f = b.isMoment(a[c]) || a[c]instanceof Date ? b(a[c]) : b(a[c], i.format, i.options.useStrict), f.isValid() && (d[f.format("YYYY-MM-DD")] = !0, e++);
+	            return e > 0 ? d : !1
+	        }, P = function (a) {
+	            return a = a.toString(), a.length >= 2 ? a : "0" + a
+	        }, Q = function () {
+	            var a = '<thead><tr><th class="prev">&lsaquo;</th><th colspan="' + (i.options.calendarWeeks ? "6" : "5") + '" class="picker-switch"></th><th class="next">&rsaquo;</th></tr></thead>', b = '<tbody><tr><td colspan="' + (i.options.calendarWeeks ? "8" : "7") + '"></td></tr></tbody>', c = '<div class="datepicker-days"><table class="table-condensed">' + a + '<tbody></tbody></table></div><div class="datepicker-months"><table class="table-condensed">' + a + b + '</table></div><div class="datepicker-years"><table class="table-condensed">' + a + b + "</table></div>", d = "";
+	            return i.options.pickDate && i.options.pickTime ? (d = '<div class="bootstrap-datetimepicker-widget' + (i.options.sideBySide ? " timepicker-sbs" : "") + (i.use24hours ? " usetwentyfour" : "") + ' dropdown-menu" style="z-index:9999 !important;">', d += i.options.sideBySide ? '<div class="row"><div class="col-sm-6 datepicker">' + c + '</div><div class="col-sm-6 timepicker">' + S.getTemplate() + "</div></div>" : '<ul class="list-unstyled"><li' + (i.options.collapse ? ' class="collapse in"' : "") + '><div class="datepicker">' + c + '</div></li><li class="picker-switch accordion-toggle"><a class="btn" style="width:100%"><span class="' + i.options.icons.time + '"></span></a></li><li' + (i.options.collapse ? ' class="collapse"' : "") + '><div class="timepicker">' + S.getTemplate() + "</div></li></ul>", d += "</div>") : i.options.pickTime ? '<div class="bootstrap-datetimepicker-widget dropdown-menu"><div class="timepicker">' + S.getTemplate() + "</div></div>" : '<div class="bootstrap-datetimepicker-widget dropdown-menu"><div class="datepicker">' + c + "</div></div>"
+	        }, R = {modes: [
+	            {clsName: "days", navFnc: "month", navStep: 1},
+	            {clsName: "months", navFnc: "year", navStep: 1},
+	            {clsName: "years", navFnc: "year", navStep: 10}
+	        ]}, S = {hourTemplate: '<span data-action="showHours"   data-time-component="hours"   class="timepicker-hour"></span>', minuteTemplate: '<span data-action="showMinutes" data-time-component="minutes" class="timepicker-minute"></span>', secondTemplate: '<span data-action="showSeconds"  data-time-component="seconds" class="timepicker-second"></span>'};
+	        S.getTemplate = function () {
+	            return'<div class="timepicker-picker"><table class="table-condensed"><tr><td><a href="#" class="btn" data-action="incrementHours"><span class="' + i.options.icons.up + '"></span></a></td><td class="separator"></td><td>' + (i.options.useMinutes ? '<a href="#" class="btn" data-action="incrementMinutes"><span class="' + i.options.icons.up + '"></span></a>' : "") + "</td>" + (i.options.useSeconds ? '<td class="separator"></td><td><a href="#" class="btn" data-action="incrementSeconds"><span class="' + i.options.icons.up + '"></span></a></td>' : "") + (i.use24hours ? "" : '<td class="separator"></td>') + "</tr><tr><td>" + S.hourTemplate + '</td> <td class="separator">:</td><td>' + (i.options.useMinutes ? S.minuteTemplate : '<span class="timepicker-minute">00</span>') + "</td> " + (i.options.useSeconds ? '<td class="separator">:</td><td>' + S.secondTemplate + "</td>" : "") + (i.use24hours ? "" : '<td class="separator"></td><td><button type="button" class="btn btn-primary" data-action="togglePeriod"></button></td>') + '</tr><tr><td><a href="#" class="btn" data-action="decrementHours"><span class="' + i.options.icons.down + '"></span></a></td><td class="separator"></td><td>' + (i.options.useMinutes ? '<a href="#" class="btn" data-action="decrementMinutes"><span class="' + i.options.icons.down + '"></span></a>' : "") + "</td>" + (i.options.useSeconds ? '<td class="separator"></td><td><a href="#" class="btn" data-action="decrementSeconds"><span class="' + i.options.icons.down + '"></span></a></td>' : "") + (i.use24hours ? "" : '<td class="separator"></td>') + '</tr></table></div><div class="timepicker-hours" data-action="selectHour"><table class="table-condensed"></table></div><div class="timepicker-minutes" data-action="selectMinute"><table class="table-condensed"></table></div>' + (i.options.useSeconds ? '<div class="timepicker-seconds" data-action="selectSecond"><table class="table-condensed"></table></div>' : "")
+	        }, i.destroy = function () {
+	            H(), I(), i.widget.remove(), i.element.removeData("DateTimePicker"), i.component && i.component.removeData("DateTimePicker")
+	        }, i.show = function (a) {
+	            if (!l().prop("disabled")) {
+	                if (i.options.useCurrent && "" === l().val()) {
+	                    if (1 !== i.options.minuteStepping) {
+	                        var c = b(), d = i.options.minuteStepping;
+	                        c.minutes(Math.round(c.minutes() / d) * d % 60).seconds(0), i.setValue(c.format(i.format))
+	                    } else i.setValue(b().format(i.format));
+	                    o("", a.type)
+	                }
+	                a && "click" === a.type && i.isInput && i.widget.hasClass("picker-open") || (i.widget.hasClass("picker-open") ? (i.widget.hide(), i.widget.removeClass("picker-open")) : (i.widget.show(), i.widget.addClass("picker-open")), i.height = i.component ? i.component.outerHeight() : i.element.outerHeight(), n(), i.element.trigger({type: "dp.show", date: b(i.date)}), G(), a && B(a))
+	            }
+	        }, i.disable = function () {
+	            var a = l();
+	            a.prop("disabled") || (a.prop("disabled", !0), H())
+	        }, i.enable = function () {
+	            var a = l();
+	            a.prop("disabled") && (a.prop("disabled", !1), F())
+	        }, i.hide = function () {
+	            var a, c, d = i.widget.find(".collapse");
+	            for (a = 0; a < d.length; a++)if (c = d.eq(a).data("collapse"), c && c.transitioning)return;
+	            i.widget.hide(), i.widget.removeClass("picker-open"), i.viewMode = i.startViewMode, E(), i.element.trigger({type: "dp.hide", date: b(i.date)}), I()
+	        }, i.setValue = function (a) {
+	            b.locale(i.options.language), a ? i.unset = !1 : (i.unset = !0, K()), a = b.isMoment(a) ? a.locale(i.options.language) : a instanceof Date ? b(a) : b(a, i.format, i.options.useStrict), a.isValid() ? (i.date = a, K(), i.viewDate = b({y: i.date.year(), M: i.date.month()}), t(), x()) : p(a)
+	        }, i.getDate = function () {
+	            return i.unset ? null : b(i.date)
+	        }, i.setDate = function (a) {
+	            var c = b(i.date);
+	            i.setValue(a ? a : null), o(c, "function")
+	        }, i.setDisabledDates = function (a) {
+	            i.options.disabledDates = O(a), i.viewDate && q()
+	        }, i.setEnabledDates = function (a) {
+	            i.options.enabledDates = O(a), i.viewDate && q()
+	        }, i.setMaxDate = function (a) {
+	            void 0 !== a && (i.options.maxDate = b.isMoment(a) || a instanceof Date ? b(a) : b(a, i.format, i.options.useStrict), i.viewDate && q())
+	        }, i.setMinDate = function (a) {
+	            void 0 !== a && (i.options.minDate = b.isMoment(a) || a instanceof Date ? b(a) : b(a, i.format, i.options.useStrict), i.viewDate && q())
+	        }, k()
+	    };
+	    a.fn.datetimepicker = function (b) {
+	        return this.each(function () {
+	            var c = a(this), e = c.data("DateTimePicker");
+	            e || c.data("DateTimePicker", new d(this, b))
+	        })
+	    }, a.fn.datetimepicker.defaults = {format: !1, pickDate: !0, pickTime: !0, useMinutes: !0, useSeconds: !1, useCurrent: !0, calendarWeeks: !1, minuteStepping: 1, minDate: b({y: 1900}), maxDate: b().add(100, "y"), showToday: !0, collapse: !0, language: b.locale(), defaultDate: "", disabledDates: !1, enabledDates: !1, icons: {}, useStrict: !1, direction: "auto", sideBySide: !1, daysOfWeekDisabled: [], widgetParent: !1}
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }
 /******/ ]);

@@ -1,23 +1,419 @@
-webpackJsonp([2],{
+webpackJsonp([8],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(14);
+	var log  =__webpack_require__(113);
 
 	log.init();
 
 /***/ },
 
-/***/ 14:
+/***/ 96:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(20);
-	var Delegator = __webpack_require__(19);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(97);
+	var modal = __webpack_require__(98);
 
-	var logTable = __webpack_require__(111);
-	var keyword = __webpack_require__(112);
-	var debar = __webpack_require__(113);
+	    var container;
+
+	    function hide() {
+	        container.removeClass('in');
+	        container.find('.modal-backdrop').removeClass('in');
+	        setTimeout(function () {
+	            container.remove();
+	            container = undefined;
+	        }, 300);
+	    }
+
+	    function Dialog (param) {
+	        if (container) {
+	            container.remove();
+	            container = undefined;
+	        }
+	        container = $(modal({it :param}))
+	            .appendTo(document.body)
+	            .show();
+
+	        var key,
+	            action,
+	            delegator,
+	            on = param.on || {};
+
+	        delegator = (new Delegator(container))
+	            .on('click', 'close', hide);
+
+	        for (key in on) {
+	            action = key.split('/');
+	            delegator.on(action[0], action[1], on[key]);
+	        }
+
+	        setTimeout(function () {
+	            container.addClass('in');
+	            container.find('.modal-backdrop').addClass('in');
+	        }, 0);
+	    }
+
+	    Dialog.hide = hide;
+
+	module.exports =  Dialog;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+
+/***/ 97:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Map
+	 * @class
+	 */
+	function Map() {
+	    this.map = {};
+	    this.length = 0;
+	}
+	Map.prototype = {
+	    constructor: Map,
+	    /**
+	     * has
+	     * @param {String} key
+	     * @returns {Boolean}
+	     */
+	    has: function (key) {
+	        return (key in this.map);
+	    },
+	    /**
+	     * get
+	     * @param {String} key
+	     * @returns {Any}
+	     */
+	    get: function (key) {
+	        return this.map[key];
+	    },
+	    /**
+	     * set
+	     * @param {String} key
+	     * @param {Any} value
+	     */
+	    set: function (key, value) {
+	        !this.has(key) && this.length++;
+	        return (this.map[key] = value);
+	    },
+	    /**
+	     * count
+	     * @returns {Number}
+	     */
+	    count: function () {
+	        return this.length;
+	    },
+	    /**
+	     * remove
+	     * @param {String} key
+	     */
+	    remove: function (key) {
+	        if (this.has(key)) {
+	            this.map[key] = null;
+	            delete this.map[key];
+	            this.length--;
+	        }
+	    }
+	};
+
+	var cache = new Map(), set = cache.set, uid = 0;
+	cache.set = function (node, value) {
+	    if (!value) {
+	        value = node;
+	        set.call(cache, ++uid + '', value);
+	        return uid;
+	    } else {
+	        typeof node === 'string' &&
+	        (node = $(node)[0]);
+	        $.data(node, 'event-data', value);
+	        return this;
+	    }
+	};
+
+	function _key(arr) {
+	    if (!arr) return {};
+	    arr = arr.split(' ');
+	    var obj = {};
+	    for (var i = 0, l = arr.length; i < l; i++) {
+	        obj[arr[i]] = true;
+	    }
+	    return obj;
+	}
+
+	/**
+	 * Delegator
+	 * @class
+	 * @param {Selector} container
+	 */
+	function Delegator(container) {
+	    this.container = $(container);
+	    this.listenerMap = new Map();
+	}
+
+	/**
+	 * getKey
+	 * @param {Any} value
+	 * @returns {Number}
+	 */
+	Delegator.set = cache.set;
+	/**
+	 * cache
+	 * @class
+	 * @static
+	 */
+	Delegator.cache = cache;
+
+	Delegator.prototype = {
+	    constructor: Delegator,
+	    _getListener: function (type) {
+	        if (this.listenerMap.has(type)) {
+	            return this.listenerMap.get(type);
+	        }
+	        function listener(e) {
+	            var data = $.data(this),
+	                routes = data['event-' + type + '-routes'],
+	                eventData = data['event-data'], handle, dataKey;
+
+	            // preprocessing
+	            if (!routes && (routes = this.getAttribute('data-event-' + type))) {
+	                (routes = routes.split(' ')) &&
+	                (data['event-' + type + '-routes'] = routes);
+	                !eventData &&
+	                (dataKey = this.getAttribute('data-event-data')) &&
+	                (eventData = cache.get(dataKey)) &&
+	                (data['event-data'] = eventData) &&
+	                (cache.remove(dataKey));
+	                !data['event-stop-propagation'] &&
+	                (data['event-stop-propagation'] = _key(this.getAttribute('data-event-stop-propagation')));
+	            }
+
+	            if (routes) {
+	                for (var i = 0, l = routes.length; i < l; i++) {
+	                    handle = listener.handleMap.get(routes[i]);
+
+	                    if (handle) {
+	                        handle.call(this, e, eventData);
+	                    }
+	                    data['event-stop-propagation'][type] &&
+	                    e.stopPropagation();
+	                }
+	            }
+	        }
+
+	        listener.handleMap = new Map();
+	        this.listenerMap.set(type, listener);
+	        this.container.on(type, '[data-event-' + type + ']', listener);
+	        return listener;
+	    },
+	    /**
+	     * on
+	     * @param {String} type
+	     * @param {String} name
+	     * @param {Function} handle
+	     */
+	    on: function (type, name, handle) {
+	        var listener = this._getListener(type);
+	        listener.handleMap.set(name, handle);
+	        return this;
+	    },
+	    /**
+	     * off
+	     * @param {String} type
+	     * @param {String} name
+	     */
+	    off: function (type, name) {
+	        var listener = this._getListener(type),
+	            handleMap = listener.handleMap;
+	        handleMap.remove(name);
+	        if (!handleMap.count()) {
+	            this.container.off(type, '[data-event-' + type + ']', listener);
+	            this.listenerMap.remove(type);
+	        }
+	    }
+	};
+
+	module.exports = Delegator;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+
+/***/ 98:
+/***/ function(module, exports) {
+
+	module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="' +
+	((__t = (it.id || '' )) == null ? '' : __t) +
+	'">\r\n  <div class="modal-backdrop fade"></div>\r\n  <div class="modal-dialog">\r\n    <div class="modal-content">\r\n\r\n      <div class="modal-header">\r\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\r\n        <h4 class="modal-title">' +
+	((__t = (it.header)) == null ? '' : __t) +
+	'</h4>\r\n      </div>\r\n      <div class="modal-body">\r\n        ' +
+	((__t = (it.body)) == null ? '' : __t) +
+	'\r\n      </div>\r\n      <div class="modal-footer">\r\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>';
+
+	}
+	return __p
+	}
+
+/***/ },
+
+/***/ 108:
+/***/ function(module, exports) {
+
+	module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<a class="keyword-tag">' +
+	((__t = (it.value)) == null ? '' : __t) +
+	'<span class="keyword-del" data-event-click="removeKeyword" data-event-data="' +
+	((__t = (opt.set(it.value))) == null ? '' : __t) +
+	'">x</span></a>';
+
+	}
+	return __p
+	}
+
+/***/ },
+
+/***/ 109:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '', __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
+	with (obj) {
+
+
+	var urls;
+	for (var i = 0 , l = it.length, type; i < l; i++) {
+	switch(it[i].level) {
+	    case '8':
+	        type = 'warning';
+	        break;
+	    case '4':
+	        type = 'err';
+	        break;
+	    case '2':
+	        type = 'info';
+	        break;
+	    case '1':
+	        type = 'debug';
+	        break;
+	}
+
+	 function getBrowserType(ua){
+	        if(!ua){
+	            return '';
+	        }
+	        ua = ua.toLowerCase();
+
+	        if(ua.indexOf('qqbrowser')>-1){
+	            return  'ico-qb';
+	        }else if(ua.indexOf('qq/')>-1){
+	            return  'ico-qq';
+	        }else if(ua.indexOf('micromessenger')>-1){
+	            return  'ico-wx';
+	        }else if(ua.indexOf('chrome')>-1){
+	            return  'ico-chrome';
+	        }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
+	            return 'ico-ie';
+	        }else if(ua.indexOf('firefox')>-1){
+	            return 'ico-ff';
+	        }else if(ua.indexOf('safari')>-1){
+	            return 'ico-safari';
+	        }else if(ua.indexOf('android')>-1){
+	            return  'ico-android';
+	        }else if(ua.indexOf('iphone')>-1){
+	            return  'ico-ios';
+	        }
+	}
+
+	var isHtml = /^.+?\.html\??/.test(it[i].target);
+	;
+	__p += '\r\n<tr id="tr-' +
+	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
+	'">\r\n    <td  class="td-1 info-type-' +
+	((__t = (type)) == null ? '' : __t) +
+	'">' +
+	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
+	'</td>\r\n    <td  class="td-2">' +
+	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
+	'</td>\r\n    <td  style="" class="td-3">' +
+	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
+	'</td>\r\n    <td  class="td-4">' +
+	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
+	'</td>\r\n    <td  class="td-5">' +
+	((__t = (it[i].ip )) == null ? '' : __t) +
+	'</td>\r\n    <td  class="td-6"><span class="ico-browser ' +
+	((__t = ( getBrowserType(it[i].userAgent))) == null ? '' : __t) +
+	'" title="' +
+	((__t = (it[i].userAgent)) == null ? '' : __t) +
+	'"></span></td>\r\n    <td class="td-7">\r\n  ';
+	if(false){;
+	__p += '\r\n        <a style="word-break:break-all;display: block" >\r\n  ';
+	}else {;
+	__p += '\r\n        <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="' +
+	((__t = (opt.set(it[i]))) == null ? '' : __t) +
+	'">\r\n  ';
+	};
+	__p += '\r\n\r\n        ' +
+	((__t = ( opt.encodeHtml(it[i].target || it[i].url || ''))) == null ? '' : __t) +
+	'</a>\r\n        <span class="err-where">' +
+	((__t = (opt.encodeHtml(it[i].rowNum || 0) )) == null ? '' : __t) +
+	'行' +
+	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
+	'列</span>\r\n        <a style="font-size:12px;" href="' +
+	((__t = ( opt.encodeHtml((it[i].from)) )) == null ? '' : __t) +
+	'" target="_blank">页面查看</a>\r\n    </td>\r\n</tr>\r\n';
+	 } ;
+	__p += '\r\n\r\n';
+	 if(it.length == 0 ){;
+	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
+	};
+
+
+	}
+	return __p
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ },
+
+/***/ 110:
+/***/ function(module, exports) {
+
+	module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<a class="keyword-tag">' +
+	((__t = (it.value)) == null ? '' : __t) +
+	'<span class="keyword-del" data-event-click="removeDebar" data-event-data="' +
+	((__t = (opt.set(it.value))) == null ? '' : __t) +
+	'">x</span></a>';
+
+	}
+	return __p
+	}
+
+/***/ },
+
+/***/ 113:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(96);
+	var Delegator = __webpack_require__(97);
+
+	var logTable = __webpack_require__(109);
+	var keyword = __webpack_require__(108);
+	var debar = __webpack_require__(110);
 
 
 	    var logConfig = {
@@ -218,403 +614,7 @@ webpackJsonp([2],{
 
 
 	exports.init = init;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-
-/***/ 19:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {/**
-	 * Map
-	 * @class
-	 */
-	function Map() {
-	    this.map = {};
-	    this.length = 0;
-	}
-	Map.prototype = {
-	    constructor: Map,
-	    /**
-	     * has
-	     * @param {String} key
-	     * @returns {Boolean}
-	     */
-	    has: function (key) {
-	        return (key in this.map);
-	    },
-	    /**
-	     * get
-	     * @param {String} key
-	     * @returns {Any}
-	     */
-	    get: function (key) {
-	        return this.map[key];
-	    },
-	    /**
-	     * set
-	     * @param {String} key
-	     * @param {Any} value
-	     */
-	    set: function (key, value) {
-	        !this.has(key) && this.length++;
-	        return (this.map[key] = value);
-	    },
-	    /**
-	     * count
-	     * @returns {Number}
-	     */
-	    count: function () {
-	        return this.length;
-	    },
-	    /**
-	     * remove
-	     * @param {String} key
-	     */
-	    remove: function (key) {
-	        if (this.has(key)) {
-	            this.map[key] = null;
-	            delete this.map[key];
-	            this.length--;
-	        }
-	    }
-	};
-
-	var cache = new Map(), set = cache.set, uid = 0;
-	cache.set = function (node, value) {
-	    if (!value) {
-	        value = node;
-	        set.call(cache, ++uid + '', value);
-	        return uid;
-	    } else {
-	        typeof node === 'string' &&
-	        (node = $(node)[0]);
-	        $.data(node, 'event-data', value);
-	        return this;
-	    }
-	};
-
-	function _key(arr) {
-	    if (!arr) return {};
-	    arr = arr.split(' ');
-	    var obj = {};
-	    for (var i = 0, l = arr.length; i < l; i++) {
-	        obj[arr[i]] = true;
-	    }
-	    return obj;
-	}
-
-	/**
-	 * Delegator
-	 * @class
-	 * @param {Selector} container
-	 */
-	function Delegator(container) {
-	    this.container = $(container);
-	    this.listenerMap = new Map();
-	}
-
-	/**
-	 * getKey
-	 * @param {Any} value
-	 * @returns {Number}
-	 */
-	Delegator.set = cache.set;
-	/**
-	 * cache
-	 * @class
-	 * @static
-	 */
-	Delegator.cache = cache;
-
-	Delegator.prototype = {
-	    constructor: Delegator,
-	    _getListener: function (type) {
-	        if (this.listenerMap.has(type)) {
-	            return this.listenerMap.get(type);
-	        }
-	        function listener(e) {
-	            var data = $.data(this),
-	                routes = data['event-' + type + '-routes'],
-	                eventData = data['event-data'], handle, dataKey;
-
-	            // preprocessing
-	            if (!routes && (routes = this.getAttribute('data-event-' + type))) {
-	                (routes = routes.split(' ')) &&
-	                (data['event-' + type + '-routes'] = routes);
-	                !eventData &&
-	                (dataKey = this.getAttribute('data-event-data')) &&
-	                (eventData = cache.get(dataKey)) &&
-	                (data['event-data'] = eventData) &&
-	                (cache.remove(dataKey));
-	                !data['event-stop-propagation'] &&
-	                (data['event-stop-propagation'] = _key(this.getAttribute('data-event-stop-propagation')));
-	            }
-
-	            if (routes) {
-	                for (var i = 0, l = routes.length; i < l; i++) {
-	                    handle = listener.handleMap.get(routes[i]);
-
-	                    if (handle) {
-	                        handle.call(this, e, eventData);
-	                    }
-	                    data['event-stop-propagation'][type] &&
-	                    e.stopPropagation();
-	                }
-	            }
-	        }
-
-	        listener.handleMap = new Map();
-	        this.listenerMap.set(type, listener);
-	        this.container.on(type, '[data-event-' + type + ']', listener);
-	        return listener;
-	    },
-	    /**
-	     * on
-	     * @param {String} type
-	     * @param {String} name
-	     * @param {Function} handle
-	     */
-	    on: function (type, name, handle) {
-	        var listener = this._getListener(type);
-	        listener.handleMap.set(name, handle);
-	        return this;
-	    },
-	    /**
-	     * off
-	     * @param {String} type
-	     * @param {String} name
-	     */
-	    off: function (type, name) {
-	        var listener = this._getListener(type),
-	            handleMap = listener.handleMap;
-	        handleMap.remove(name);
-	        if (!handleMap.count()) {
-	            this.container.off(type, '[data-event-' + type + ']', listener);
-	            this.listenerMap.remove(type);
-	        }
-	    }
-	};
-
-	module.exports = Delegator;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-
-/***/ 20:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
-	var modal = __webpack_require__(117);
-
-	    var container;
-
-	    function hide() {
-	        container.removeClass('in');
-	        container.find('.modal-backdrop').removeClass('in');
-	        setTimeout(function () {
-	            container.remove();
-	            container = undefined;
-	        }, 300);
-	    }
-
-	    function Dialog (param) {
-	        if (container) {
-	            container.remove();
-	            container = undefined;
-	        }
-	        container = $(modal({it :param}))
-	            .appendTo(document.body)
-	            .show();
-
-	        var key,
-	            action,
-	            delegator,
-	            on = param.on || {};
-
-	        delegator = (new Delegator(container))
-	            .on('click', 'close', hide);
-
-	        for (key in on) {
-	            action = key.split('/');
-	            delegator.on(action[0], action[1], on[key]);
-	        }
-
-	        setTimeout(function () {
-	            container.addClass('in');
-	            container.find('.modal-backdrop').addClass('in');
-	        }, 0);
-	    }
-
-	    Dialog.hide = hide;
-
-	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-
-/***/ 111:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
-	obj || (obj = {});
-	var __t, __p = '', __j = Array.prototype.join;
-	function print() { __p += __j.call(arguments, '') }
-	with (obj) {
-
-
-	var urls;
-	for (var i = 0 , l = it.length, type; i < l; i++) {
-	switch(it[i].level) {
-	    case '8':
-	        type = 'warning';
-	        break;
-	    case '4':
-	        type = 'err';
-	        break;
-	    case '2':
-	        type = 'info';
-	        break;
-	    case '1':
-	        type = 'debug';
-	        break;
-	}
-
-	 function getBrowserType(ua){
-	        if(!ua){
-	            return '';
-	        }
-	        ua = ua.toLowerCase();
-
-	        if(ua.indexOf('qqbrowser')>-1){
-	            return  'ico-qb';
-	        }else if(ua.indexOf('qq/')>-1){
-	            return  'ico-qq';
-	        }else if(ua.indexOf('micromessenger')>-1){
-	            return  'ico-wx';
-	        }else if(ua.indexOf('chrome')>-1){
-	            return  'ico-chrome';
-	        }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
-	            return 'ico-ie';
-	        }else if(ua.indexOf('firefox')>-1){
-	            return 'ico-ff';
-	        }else if(ua.indexOf('safari')>-1){
-	            return 'ico-safari';
-	        }else if(ua.indexOf('android')>-1){
-	            return  'ico-android';
-	        }else if(ua.indexOf('iphone')>-1){
-	            return  'ico-ios';
-	        }
-	}
-
-	var isHtml = /^.+?\.html\??/.test(it[i].target);
-	;
-	__p += '\r\n<tr id="tr-' +
-	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'">\r\n    <td  class="td-1 info-type-' +
-	((__t = (type)) == null ? '' : __t) +
-	'">' +
-	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-2">' +
-	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'</td>\r\n    <td  style="" class="td-3">' +
-	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-4">' +
-	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-5">' +
-	((__t = (it[i].ip )) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-6"><span class="ico-browser ' +
-	((__t = ( getBrowserType(it[i].userAgent))) == null ? '' : __t) +
-	'" title="' +
-	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"></span></td>\r\n    <td class="td-7">\r\n  ';
-	if(false){;
-	__p += '\r\n        <a style="word-break:break-all;display: block" >\r\n  ';
-	}else {;
-	__p += '\r\n        <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="' +
-	((__t = (opt.set(it[i]))) == null ? '' : __t) +
-	'">\r\n  ';
-	};
-	__p += '\r\n\r\n        ' +
-	((__t = ( opt.encodeHtml(it[i].target || it[i].url || ''))) == null ? '' : __t) +
-	'</a>\r\n        <span class="err-where">' +
-	((__t = (opt.encodeHtml(it[i].rowNum || 0) )) == null ? '' : __t) +
-	'行' +
-	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
-	'列</span>\r\n        <a style="font-size:12px;" href="' +
-	((__t = ( opt.encodeHtml((it[i].from)) )) == null ? '' : __t) +
-	'" target="_blank">页面查看</a>\r\n    </td>\r\n</tr>\r\n';
-	 } ;
-	__p += '\r\n\r\n';
-	 if(it.length == 0 ){;
-	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
-	};
-
-
-	}
-	return __p
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-
-/***/ 112:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function (obj) {
-	obj || (obj = {});
-	var __t, __p = '';
-	with (obj) {
-	__p += '<a class="keyword-tag">' +
-	((__t = (it.value)) == null ? '' : __t) +
-	'<span class="keyword-del" data-event-click="removeKeyword" data-event-data="' +
-	((__t = (opt.set(it.value))) == null ? '' : __t) +
-	'">x</span></a>';
-
-	}
-	return __p
-	}
-
-/***/ },
-
-/***/ 113:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function (obj) {
-	obj || (obj = {});
-	var __t, __p = '';
-	with (obj) {
-	__p += '<a class="keyword-tag">' +
-	((__t = (it.value)) == null ? '' : __t) +
-	'<span class="keyword-del" data-event-click="removeDebar" data-event-data="' +
-	((__t = (opt.set(it.value))) == null ? '' : __t) +
-	'">x</span></a>';
-
-	}
-	return __p
-	}
-
-/***/ },
-
-/***/ 117:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function (obj) {
-	obj || (obj = {});
-	var __t, __p = '';
-	with (obj) {
-	__p += '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="' +
-	((__t = (it.id || '' )) == null ? '' : __t) +
-	'">\r\n  <div class="modal-backdrop fade"></div>\r\n  <div class="modal-dialog">\r\n    <div class="modal-content">\r\n\r\n      <div class="modal-header">\r\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\r\n        <h4 class="modal-title">' +
-	((__t = (it.header)) == null ? '' : __t) +
-	'</h4>\r\n      </div>\r\n      <div class="modal-body">\r\n        ' +
-	((__t = (it.body)) == null ? '' : __t) +
-	'\r\n      </div>\r\n      <div class="modal-footer">\r\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>';
-
-	}
-	return __p
-	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }
 
