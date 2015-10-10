@@ -113,16 +113,18 @@ EmailService.prototype = {
 
             html.push('<table style="border-collapse:collapse;;width:95%"><tr style="background-color:#188eee;text-align:left;color:#fff"><th style="padding:2px 0 2px 10px;border:1px solid #dedede;width:60px">#</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede;;width:120px">出现次数</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede">错误内容</th></tr>');
             var total_top = 0;
-            content.forEach(function(v, i) {
+            var index = 0;
+            content.forEach(function(v) {
                 v = typeof v === 'object' ? v : null;
                 if (v) {
                     html.push('<tr style="background-color:{{bgc}}"><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{index}}</td><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{times}}</td><td style="padding:2px 0 2px 10px;border:1px solid #dedede">{{desc}}</td></tr>'
-                        .replace(/{{index}}/g, i + 1)
+                        .replace(/{{index}}/g, index + 1)
                         .replace(/{{times}}/g, v.total)
                         .replace(/{{desc}}/g, encodeHtml(v.title))
-                        .replace(/{{bgc}}/g, i % 2 ? '#fff' : '#eee')
+                        .replace(/{{bgc}}/g, index % 2 ? '#fff' : '#eee')
                     );
                     total_top += v.total;
+                    ++index;
                 }
             });
             html.push('</table>');

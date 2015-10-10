@@ -1,5 +1,5 @@
 {
-     "host" : "http://badjs.server.com/",
+    "host" : "http://badjs.server.com/",
     "port": 8081,
     "mysql" : {
         "url" : "mysql://root:root@localhost:3306/badjs"
