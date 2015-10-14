@@ -2190,25 +2190,25 @@ webpackJsonp([9],{
 	with (obj) {
 
 
-
-	  if(!it.data || !it.data[0] || !it.data[0].content[0]){
+	    if (!it.data || !it.data[0] || !it.data[0].content || !it.data[0].content[0]) {
 	;
-	__p += '\r\n        <tr ><td colspan="3" style="text-align: center">当天没有统计数据</td></tr>\r\n';
+	__p += '\r\n    <tr ><td colspan="3" style="text-align: center">当天没有统计数据</td></tr>\r\n';
 
-	  }else {
-	var count = 0 ;
-	var content = it.data[0].content;
-	$.each(content , function (key , value){
+	    } else {
+	        var count = 0 ;
+	        var content = it.data[0].content;
+	        $.each(content , function (key , value) {
 	;
 	__p += '\r\n<tr class="listRow">\r\n    <td>' +
 	((__t = ( ++count )) == null ? '' : __t) +
 	'</td>\r\n    <td>' +
 	((__t = ( value.total )) == null ? '' : __t) +
-	'</td>\r\n    <td>\r\n        ' +
-	((__t = (  opt.encodeHtml(value.title) )) == null ? '' : __t) +
-	'\r\n    </td>\r\n</tr>\r\n';
+	'</td>\r\n    <td>' +
+	((__t = ( opt.encodeHtml(value.title) )) == null ? '' : __t) +
+	'</td>\r\n</tr>\r\n';
 
-	})}
+	        });
+	    }
 	;
 	__p += '\r\n';
 

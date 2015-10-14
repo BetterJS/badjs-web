@@ -1,21 +1,19 @@
 <%
-
-  if(!it.data || !it.data[0] || !it.data[0].content[0]){
+    if (!it.data || !it.data[0] || !it.data[0].content || !it.data[0].content[0]) {
 %>
-        <tr ><td colspan="3" style="text-align: center">当天没有统计数据</td></tr>
+    <tr ><td colspan="3" style="text-align: center">当天没有统计数据</td></tr>
 <%
-  }else {
-var count = 0 ;
-var content = it.data[0].content;
-$.each(content , function (key , value){
+    } else {
+        var count = 0 ;
+        var content = it.data[0].content;
+        $.each(content , function (key , value) {
 %>
 <tr class="listRow">
     <td><%= ++count %></td>
     <td><%= value.total %></td>
-    <td>
-        <%=  opt.encodeHtml(value.title) %>
-    </td>
+    <td><%= opt.encodeHtml(value.title) %></td>
 </tr>
 <%
-})}
+        });
+    }
 %>
