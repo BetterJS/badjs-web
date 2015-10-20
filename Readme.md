@@ -2,11 +2,25 @@
 
 > badjs manage system . 
 
+# 运行
+```javascript 
+node app.js
+```
 
 # 启动参数
 --debug  log 采用debug 级别, 默认使用info 
 
 --project 使用测试环境（ project.debug.json ）配置 ， 默认使用 project.json
+
+# 构建
+静态页面使用webpack ，开发阶段使用
+```javascript
+webpack -w
+```
+上线阶段需要打包打包命令
+```javascript
+webpack 
+```
 
 # 数据库初始化
 db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理员帐号是 admin ， 密码是 admin
