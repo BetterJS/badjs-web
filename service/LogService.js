@@ -76,21 +76,14 @@ LogService.prototype = {
 
             businessService.findBusiness(function(err, item) {
 
-                var strParams = '';
                 var projectsInfo = {};
 
-                _.each(item, function(value, ke) {
-                    strParams += value.id + "|" + value.appkey + "_";
-                    projectsInfo[value.id] = value;
+                _.each(item, function(value) {
+                    projectsInfo[value.id] = {id : value.id , url : value.url , appkey : value.appkey};
                 });
-
-                if (strParams.length > 0) {
-                    strParams = strParams.substring(0, strParams.length - 1);
-                }
 
                 var result = [0, 0];
                 
-                // todo fix ? post is async
                 var resultCall = function() {
                     if (result[0] < 0 && result[1] < 0) {
                         callback(new Error("error"));
@@ -101,7 +94,6 @@ LogService.prototype = {
 
                 request.post(self.pushProjectUrl, {
                     form: {
-                        projectsId: strParams,
                         projectsInfo: JSON.stringify(projectsInfo),
                         auth: "badjsAccepter"
                     }
@@ -118,7 +110,7 @@ LogService.prototype = {
 
                 request.post(self.pushProjectUrl2, {
                     form: {
-                        projectsId: strParams,
+                        projectsInfo: JSON.stringify(projectsInfo),
                         auth: "badjsOpen"
                     }
                 }, function(err) {

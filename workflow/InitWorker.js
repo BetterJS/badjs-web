@@ -1,6 +1,8 @@
 var  log4js = require('log4js'),
     logger = log4js.getLogger();
 
+var path = require("path");
+
 
 
 var argv = process.argv.slice();
@@ -14,9 +16,9 @@ if(argv.indexOf('--debug') >= 0){
 }
 
 if(argv.indexOf('--project') >= 0){
-    GLOBAL.pjconfig =  require('../project.debug.json');
+    GLOBAL.pjconfig =  require(path.join(__dirname , ".." , '/project.debug.json'));
 }else {
-    GLOBAL.pjconfig = require('../project.json');
+    GLOBAL.pjconfig = require(path.join(__dirname , ".." , 'project.json'));
 }
 
 
