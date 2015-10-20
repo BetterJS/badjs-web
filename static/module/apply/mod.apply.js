@@ -15,10 +15,15 @@ function bindEvent() {
     applyBox.on('click', '.apply-submit', function(e) {
         e.preventDefault();
         var mainpage = $.trim($(".apply-url").val());
-        if (!REG_DOMAIN_STAR.test(mainpage) && !REG_REFERER.test(mainpage)) {
-            alert("业务URL格式错误");
+        if ($('.apply-name').val().length <= 0) {
+            alert("请填写业务名称");
             return;
         }
+        if (!REG_DOMAIN_STAR.test(mainpage) && !REG_REFERER.test(mainpage)) {
+            alert("业务URL格式错误 , eg: http://www.qq.com/");
+            return;
+        }
+
         var params = {};
         //申请数据
         $.extend(params, {
