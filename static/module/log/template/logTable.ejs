@@ -24,6 +24,10 @@ switch(it[i].level) {
 
         if(ua.indexOf('qqbrowser')>-1){
             return  'ico-qb';
+        }else if(ua.indexOf('metasr')>-1){
+            return  'ico-sougou';
+        }else if(ua.indexOf('360se')>-1){
+            return  'ico-360';
         }else if(ua.indexOf('qq/')>-1){
             return  'ico-qq';
         }else if(ua.indexOf('micromessenger')>-1){
@@ -53,13 +57,10 @@ var isHtml = /^.+?\.html\??/.test(it[i].target);
     <td  class="td-5"><%=it[i].ip %></td>
     <td  class="td-6"><span class="ico-browser <%= getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
     <td class="td-7">
-  <%if(false){%>
-        <a style="word-break:break-all;display: block" >
-  <%}else {%>
-        <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
-  <%}%>
 
-        <%= opt.encodeHtml(it[i].target || it[i].url || '')%></a>
+        <a style="word-break:break-all;display: block" target="_blank" href="<%= opt.encodeHtml(it[i].target || it[i].url || '')%>" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
+        <%= opt.encodeHtml(it[i].target || it[i].url || '')%>
+        </a>
         <span class="err-where"><%=opt.encodeHtml(it[i].rowNum || 0) %>行<%=opt.encodeHtml(it[i].colNum || 0)%>列</span>
         <a style="font-size:12px;" href="<%= opt.encodeHtml((it[i].from)) %>" target="_blank">页面查看</a>
     </td>

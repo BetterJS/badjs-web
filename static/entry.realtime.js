@@ -1,19 +1,19 @@
-webpackJsonp([6],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(12);
+	var log  =__webpack_require__(11);
 
 	log.init();
 
 /***/ },
 
-/***/ 12:
+/***/ 11:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
-	var Delegator = __webpack_require__(19);
+	var Delegator = __webpack_require__(18);
 
 	var logTable = __webpack_require__(105);
 	var keyword = __webpack_require__(106);
@@ -222,7 +222,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 19:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -405,7 +405,7 @@ webpackJsonp([6],{
 /***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
 	var modal = __webpack_require__(112);
 
 	    var container;
@@ -489,6 +489,10 @@ webpackJsonp([6],{
 
 	        if(ua.indexOf('qqbrowser')>-1){
 	            return  'ico-qb';
+	        }else if(ua.indexOf('metasr')>-1){
+	            return  'ico-sougou';
+	        }else if(ua.indexOf('360se')>-1){
+	            return  'ico-360';
 	        }else if(ua.indexOf('qq/')>-1){
 	            return  'ico-qq';
 	        }else if(ua.indexOf('micromessenger')>-1){
@@ -528,17 +532,13 @@ webpackJsonp([6],{
 	((__t = ( getBrowserType(it[i].userAgent))) == null ? '' : __t) +
 	'" title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"></span></td>\r\n    <td class="td-7">\r\n  ';
-	if(false){;
-	__p += '\r\n        <a style="word-break:break-all;display: block" >\r\n  ';
-	}else {;
-	__p += '\r\n        <a style="word-break:break-all;display: block" href="javascript:;" data-event-click="showSource" data-event-data="' +
-	((__t = (opt.set(it[i]))) == null ? '' : __t) +
-	'">\r\n  ';
-	};
-	__p += '\r\n\r\n        ' +
+	'"></span></td>\r\n    <td class="td-7">\r\n\r\n        <a style="word-break:break-all;display: block" target="_blank" href="' +
 	((__t = ( opt.encodeHtml(it[i].target || it[i].url || ''))) == null ? '' : __t) +
-	'</a>\r\n        <span class="err-where">' +
+	'" data-event-click="showSource" data-event-data="' +
+	((__t = (opt.set(it[i]))) == null ? '' : __t) +
+	'">\r\n        ' +
+	((__t = ( opt.encodeHtml(it[i].target || it[i].url || ''))) == null ? '' : __t) +
+	'\r\n        </a>\r\n        <span class="err-where">' +
 	((__t = (opt.encodeHtml(it[i].rowNum || 0) )) == null ? '' : __t) +
 	'行' +
 	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
