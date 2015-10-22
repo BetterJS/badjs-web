@@ -3,21 +3,21 @@ webpackJsonp([2],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(11);
+	var log  =__webpack_require__(13);
 
 	log.init();
 
 /***/ },
 
-/***/ 11:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
-	var Delegator = __webpack_require__(18);
+	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(105);
-	var keyword = __webpack_require__(106);
-	var debar = __webpack_require__(107);
+	var logTable = __webpack_require__(106);
+	var keyword = __webpack_require__(107);
+	var debar = __webpack_require__(108);
 
 
 	    var logConfig = {
@@ -222,7 +222,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 18:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -405,7 +405,7 @@ webpackJsonp([2],{
 /***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
 	var modal = __webpack_require__(112);
 
 	    var container;
@@ -454,7 +454,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 105:
+/***/ 106:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -491,6 +491,8 @@ webpackJsonp([2],{
 	            return  'ico-qb';
 	        }else if(ua.indexOf('metasr')>-1){
 	            return  'ico-sougou';
+	        }else if(ua.indexOf('maxthon')>-1){
+	            return  'ico-maxthon';
 	        }else if(ua.indexOf('360se')>-1){
 	            return  'ico-360';
 	        }else if(ua.indexOf('qq/')>-1){
@@ -559,7 +561,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 106:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -578,7 +580,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 107:
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
