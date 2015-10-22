@@ -1,92 +1,13 @@
-
 <header>
-    <div class="head-logo"><a href="index.html"><img src="/static/img/logo.png" alt=""/></a></div>
+    <%=include('./logo.html')(it, opt)%>
     <div class="head-user">
         <% if (it.user) { %>
+        <img src="/static/img/face1.jpg" />
         <span class="head-face"><%= it.user.chineseName %>(<%= it.user.loginName %>)</span>
         <a href="/logout">退出</a>
-
-        <img src="/static/img/face1.jpg" />
         <% } else { %>
         <a href="/user/login">登录</a>
         <% } %>
     </div>
-    <nav id="navbar">
-        <ul class="nav">
-            <li class="item <%= it.index=='log'?'active':''%>">
-                <a href="index.html">历史日志</a>
-            </li>
-            <li class="item <%= it.index=='realtime'?'active':''%>">
-                <a href="realtimelog.html">实时日志</a>
-            </li>
-         <!--   <li class="item <%= it.index=='monitor'?'active':''%>">
-                <a  href="monitor.html">实时监控</a>
-            </li>-->
-            <li class="item items <%= it.index=='statistics'?'active':''%>">
-                <a><%= it.statisticsTitle?it.statisticsTitle:"统计" %></a>
-                <ul class="subNav">
-                    <li class="item">
-                        <a  href="statistics.html">日志统计</a>
-                    </li>
-                    <li class="item">
-                        <a  href="charts.html">图表统计</a>
-                    </li>
-                    <% if(it.user.role == 1) { %>
-                    <li class="item">
-                        <a  href="projectTotal.html">项目统计</a>
-                    </li>
-                    <% } %>
-                    <!--<li class="item">-->
-                    <!--<a href=""></a>-->
-                    <!--</li>-->
-                </ul>
-            </li>
-            <li class="item <%= it.index=='apply'?'active':''%>">
-                <a href="apply.html">申请接入</a>
-            </li>
-            <li class="item items <%= it.index=='manage'?'active':''%>">
-
-                <a><%= it.manageTitle?it.manageTitle:"管理" %></a>
-                <ul class="subNav">
-                    <li class="item">
-                        <a  href="userManage.html">用户列表</a>
-                    </li>
-                    <li class="item">
-                        <a  href="applyList.html">申请列表</a>
-                    </li>
-
-                    <%
-                    if(it.user.role == 1){
-                    %>
-                    <li class="item">
-                        <a  href="authUserManage.html">用户授权</a>
-                    </li>
-                    <%
-                    }
-                    %>
-                    <li class="item">
-                        <a  href="modifyUser.html">密码修改</a>
-                    </li>
-                    <!--<li class="item">-->
-                        <!--<a href=""></a>-->
-                    <!--</li>-->
-                </ul>
-            </li>
-            <li class="item items <%= it.index==('systemIntroduce'||'guide')?'active':''%>">
-                <a href="introduce.html">帮助</a>
-               <!-- <ul class="subNav">
-                    <li class="item">
-                        <a href="introduce.html">系统介绍</a>
-                    </li>
-                    <li class="item">
-                        <a href="help.html">使用指南</a>
-                    </li>
-                    &lt;!&ndash;<li class="item">&ndash;&gt;
-                    &lt;!&ndash;<a href=""></a>&ndash;&gt;
-                    &lt;!&ndash;</li>&ndash;&gt;
-                </ul>-->
-            </li>
-        </ul>
-    </nav>
-
 </header>
+<%=include('./nav.html')(it, opt)%>

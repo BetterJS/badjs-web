@@ -1,228 +1,72 @@
-webpackJsonp([2],{
+webpackJsonp([8],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log  =__webpack_require__(11);
-
+	var log = __webpack_require__(115);
 	log.init();
 
+	var source_trigger = __webpack_require__(111);
+	source_trigger.init();
+
+	var last_select = __webpack_require__(112);
+	last_select.init();
+
 /***/ },
 
-/***/ 11:
+/***/ 96:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
-	var Delegator = __webpack_require__(18);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(97);
+	var modal = __webpack_require__(98);
 
-	var logTable = __webpack_require__(105);
-	var keyword = __webpack_require__(106);
-	var debar = __webpack_require__(107);
+	    var container;
 
+	    function hide() {
+	        container.removeClass('in');
+	        container.find('.modal-backdrop').removeClass('in');
+	        setTimeout(function () {
+	            container.remove();
+	            container = undefined;
+	        }, 300);
+	    }
 
-	    var logConfig = {
-	            id: 0,
-	            startDate: 0,
-	            endDate: 0,
-	            include: [],
-	            exclude: [],
-	            index: 0,
-	            level:[4]
-	        },
-
-	        encodeHtml = function (str) {
-	            return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
-	        };
-
-
-	    var websocket ;
-
-
-
-
-	    var currentSelectId = -1, currentIndex = 0  , noData = false , MAX_LIMIT = 500 , loading = false, monitorTimeId;
-
-	    function addKeyword() {
-	        var value = $.trim($('#keyword-ipt').val());
-	        if (value !== '') {
-	            if (!removeValue(value, logConfig.include)) {
-	                $('#keyword-group').append(keyword( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
-	            }
-	            logConfig.include.push(value);
-	            $('#keyword-ipt').val('');
+	    function Dialog (param) {
+	        if (container) {
+	            container.remove();
+	            container = undefined;
 	        }
-	    }
+	        container = $(modal({it :param}))
+	            .appendTo(document.body)
+	            .show();
 
-	    function addDebar() {
-	        var value = $.trim($('#debar-ipt').val());
-	        if (value !== '') {
-	            if (!removeValue(value, logConfig.exclude)) {
-	                $('#debar-group').append(debar( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
-	            }
-	            logConfig.exclude.push(value);
-	            $('#debar-ipt').val('');
-	        }
-	    }
+	        var key,
+	            action,
+	            delegator,
+	            on = param.on || {};
 
+	        delegator = (new Delegator(container))
+	            .on('click', 'close', hide);
 
-
-	    function bindEvent() {
-	        new Delegator(document.body)
-	            .on('click', 'searchBusiness', function () {
-	                // search business
-	            }).on('click', 'addKeyword', addKeyword)
-	            .on('keyup', 'addKeyword', function (e) {
-	                if (e.which === 13) addKeyword();
-	            }).on('click', 'removeKeywords', function () {
-	                logConfig.include.length = 0;
-	                $('#keyword-group').empty();
-	            }).on('click', 'removeKeyword', function (e, value) {
-	                $(this).closest('.keyword-tag').remove();
-	                removeValue(value, logConfig.include);
-	            }).on('click', 'addDebar', addDebar)
-	            .on('keyup', 'addDebar', function (e) {
-	                if (e.which === 13) addDebar();
-	            }).on('click', 'removeDebars', function () {
-	                logConfig.exclude.length = 0;
-	                $('#debar-group').empty();
-	            }).on('click', 'removeDebar', function (e, value) {
-	                $(this).closest('.keyword-tag').remove();
-	                removeValue(value, logConfig.exclude);
-	            }).on('click', 'showLogs', function () {
-	                if(logConfig.id <= 0 || loading){
-	                    !loading && Dialog({
-	                        header: '警告',
-	                        body:'请选择一个项目'
-	                    });
-	                    return ;
-	                }
-
-	                if(!$(this).data("stop")){
-	                    $(this).data("stop" ,true);
-	                    $('#log-table').html('');
-	                    startMonitor(logConfig.id);
-	                    $(this).text('停止监听');
-	                }else {
-	                    $(this).data("stop" ,false);
-	                    websocket.close();
-	                    $(this).text('开始监听')
-	                }
-
-	            })
-	            .on('click', 'showSource', function (e, data) {
-	                // 内网服务器，拉取不到 外网数据,所以屏蔽掉请求
-	                return ;
-
-	            }).on('change' ,'selectBusiness' , function (){
-	                var val = $(this).val()-0;
-	                currentSelectId = val;
-	                $('#log-table').html('');
-	                currentIndex = 0;
-	                noData = false;
-	                logConfig.id = val;
-
-	            }).on('click', 'errorTypeClick', function () {
-	                if($(this).hasClass('msg-dis')){
-	                    logConfig.level.push(4);
-	                    $(this).removeClass('msg-dis');
-	                }else{
-	                    logConfig.level.splice($.inArray(4,logConfig.level),1);
-	                    $(this).addClass('msg-dis');
-	                }
-	                console.log('log', logConfig.level);
-
-	            }).on('click', 'logTypeClick', function(){
-	                if($(this).hasClass('msg-dis')){
-	                    logConfig.level.push(2);
-	                    $(this).removeClass('msg-dis');
-	                }else{
-	                    logConfig.level.splice($.inArray(2,logConfig.level),1);
-	                    $(this).addClass('msg-dis');
-	                }
-
-
-	            }).on('click', 'debugTypeClick', function () {
-	                if($(this).hasClass('msg-dis')){
-	                    logConfig.level.push(1);
-	                    $(this).removeClass('msg-dis');
-	                }else{
-	                    logConfig.level.splice($.inArray(1,logConfig.level),1);
-	                    $(this).addClass('msg-dis');
-	                }
-	            });
-
-
-
-	    }
-
-	    function removeValue(value, arr) {
-	        for (var l = arr.length; l--;) {
-	            if (arr[l] === value) {
-	                return arr.splice(l, 1);
-	            }
-	        }
-	    }
-
-
-	    var keepAliveTimeoutId ;
-	    var currentIndex;
-	    var maxShow = 100;
-	    var startMonitor = function (id){
-
-	        websocket = new WebSocket("ws://"+location.host+"/ws/realtimeLog");
-
-
-	        currentIndex = 0;
-	        websocket.onmessage = function (evt){
-	            showLogs(JSON.parse(evt.data).message);
+	        for (key in on) {
+	            action = key.split('/');
+	            delegator.on(action[0], action[1], on[key]);
 	        }
 
-	        websocket.onclose = function (){
-	            clearTimeout(keepAliveTimeoutId);
-	        }
-
-	        websocket.onopen = function (){
-
-	            websocket.send(JSON.stringify({type:"INIT" , include : logConfig.include , exclude: logConfig.exclude , level:logConfig.level , id:id}));
-
-	            keepAliveTimeoutId = setInterval(function (){
-	                websocket.send(JSON.stringify({type:"KEEPALIVE"}));
-	            },5000);
-	        }
+	        setTimeout(function () {
+	            container.addClass('in');
+	            container.find('.modal-backdrop').addClass('in');
+	        }, 0);
 	    }
 
+	    Dialog.hide = hide;
 
-	    function showLogs(data){
-
-	            var param = {
-	                encodeHtml: encodeHtml,
-	                set: Delegator.set,
-	                startIndex : currentIndex
-	            }
-
-	            var $table = $('#log-table');
-
-	            if(maxShow%100 == 0){
-	                $table.html($table.html().split("</tr>").slice(0,maxShow).join("</tr>"));
-	            }
-	            $table.prepend(logTable({ it : [data], opt : param}));
-	            currentIndex ++;
-	    }
-
-
-
-
-	    function init() {
-	        bindEvent();
-	    }
-
-
-	exports.init = init;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	module.exports =  Dialog;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 
-/***/ 18:
+/***/ 97:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -398,63 +242,51 @@ webpackJsonp([2],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 
-/***/ 100:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 98:
+/***/ function(module, exports) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
-	var modal = __webpack_require__(112);
+	module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="' +
+	((__t = (it.id || '' )) == null ? '' : __t) +
+	'">\r\n  <div class="modal-backdrop fade"></div>\r\n  <div class="modal-dialog">\r\n    <div class="modal-content">\r\n\r\n      <div class="modal-header">\r\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\r\n        <h4 class="modal-title">' +
+	((__t = (it.header)) == null ? '' : __t) +
+	'</h4>\r\n      </div>\r\n      <div class="modal-body">\r\n        ' +
+	((__t = (it.body)) == null ? '' : __t) +
+	'\r\n      </div>\r\n      <div class="modal-footer">\r\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>';
 
-	    var container;
-
-	    function hide() {
-	        container.removeClass('in');
-	        container.find('.modal-backdrop').removeClass('in');
-	        setTimeout(function () {
-	            container.remove();
-	            container = undefined;
-	        }, 300);
-	    }
-
-	    function Dialog (param) {
-	        if (container) {
-	            container.remove();
-	            container = undefined;
-	        }
-	        container = $(modal({it :param}))
-	            .appendTo(document.body)
-	            .show();
-
-	        var key,
-	            action,
-	            delegator,
-	            on = param.on || {};
-
-	        delegator = (new Delegator(container))
-	            .on('click', 'close', hide);
-
-	        for (key in on) {
-	            action = key.split('/');
-	            delegator.on(action[0], action[1], on[key]);
-	        }
-
-	        setTimeout(function () {
-	            container.addClass('in');
-	            container.find('.modal-backdrop').addClass('in');
-	        }, 0);
-	    }
-
-	    Dialog.hide = hide;
-
-	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	}
+	return __p
+	}
 
 /***/ },
 
-/***/ 105:
+/***/ 108:
+/***/ function(module, exports) {
+
+	module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<a class="keyword-tag">' +
+	((__t = (it.value)) == null ? '' : __t) +
+	'<span class="keyword-del" data-event-click="removeKeyword" data-event-data="' +
+	((__t = (opt.set(it.value))) == null ? '' : __t) +
+	'">x</span></a>';
+
+	}
+	return __p
+	}
+
+/***/ },
+
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -465,6 +297,10 @@ webpackJsonp([2],{
 
 
 	var urls;
+	var not_show_source_page = false;
+	try {
+	    not_show_source_page = !!localStorage.not_show_source_page;
+	} catch (ex) {}
 	for (var i = 0 , l = it.length, type; i < l; i++) {
 	switch(it[i].level) {
 	    case '8':
@@ -481,7 +317,7 @@ webpackJsonp([2],{
 	        break;
 	}
 
-	 function getBrowserType(ua){
+	function getBrowserType(ua){
 	        if(!ua){
 	            return '';
 	        }
@@ -512,6 +348,25 @@ webpackJsonp([2],{
 	        }
 	}
 
+	function sourcePage(data, type, opt) {
+	    var from = data.from || ''
+	    if (/view/.test(type)) {
+	        var view = ['页面查看', opt.encodeHtml(from)];
+	        return 'viewtext' === type ? view[0] :
+	            'viewlink' === type ? view[1] :
+	            not_show_source_page ? view[0] : view[1];
+	    } else {
+	        var href = opt.encodeHtml(from);
+	        var msg = data.msg || '';
+	        if (href.indexOf('#') === -1) {
+	            href += '#BJ_ERROR=' + encodeURIComponent(msg);
+	        } else {
+	            href += '&BJ_ERROR=' + encodeURIComponent(msg);
+	        }
+	        return href;
+	    }
+	}
+
 	var isHtml = /^.+?\.html\??/.test(it[i].target);
 	;
 	__p += '\r\n<tr id="tr-' +
@@ -532,7 +387,7 @@ webpackJsonp([2],{
 	((__t = ( getBrowserType(it[i].userAgent))) == null ? '' : __t) +
 	'" title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"></span></td>\r\n    <td class="td-7">\r\n\r\n        <a style="word-break:break-all;display: block" target="_blank" href="' +
+	'"></span></td>\r\n    <td class="td-7">\r\n        <a style="word-break:break-all;display: block" target="_blank" href="' +
 	((__t = ( opt.encodeHtml(it[i].target || it[i].url || ''))) == null ? '' : __t) +
 	'" data-event-click="showSource" data-event-data="' +
 	((__t = (opt.set(it[i]))) == null ? '' : __t) +
@@ -542,9 +397,15 @@ webpackJsonp([2],{
 	((__t = (opt.encodeHtml(it[i].rowNum || 0) )) == null ? '' : __t) +
 	'行' +
 	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
-	'列</span>\r\n        <a style="font-size:12px;" href="' +
-	((__t = ( opt.encodeHtml((it[i].from)) )) == null ? '' : __t) +
-	'" target="_blank">页面查看</a>\r\n    </td>\r\n</tr>\r\n';
+	'列</span>\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
+	((__t = (sourcePage(it[i], 'href', opt) )) == null ? '' : __t) +
+	'"\r\n            data-viewtext="' +
+	((__t = (sourcePage(it[i], 'viewtext', opt))) == null ? '' : __t) +
+	'"\r\n            data-viewlink="' +
+	((__t = (sourcePage(it[i], 'viewlink', opt))) == null ? '' : __t) +
+	'"\r\n        >' +
+	((__t = (sourcePage(it[i], 'view', opt))) == null ? '' : __t) +
+	'</a>\r\n    </td>\r\n</tr>\r\n';
 	 } ;
 	__p += '\r\n\r\n';
 	 if(it.length == 0 ){;
@@ -555,31 +416,12 @@ webpackJsonp([2],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ },
 
-/***/ 106:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function (obj) {
-	obj || (obj = {});
-	var __t, __p = '';
-	with (obj) {
-	__p += '<a class="keyword-tag">' +
-	((__t = (it.value)) == null ? '' : __t) +
-	'<span class="keyword-del" data-event-click="removeKeyword" data-event-data="' +
-	((__t = (opt.set(it.value))) == null ? '' : __t) +
-	'">x</span></a>';
-
-	}
-	return __p
-	}
-
-/***/ },
-
-/***/ 107:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 110:
+/***/ function(module, exports) {
 
 	module.exports = function (obj) {
 	obj || (obj = {});
@@ -597,24 +439,306 @@ webpackJsonp([2],{
 
 /***/ },
 
+/***/ 111:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
+		var not_show_source_page = false;
+
+		try {
+		    not_show_source_page = !!localStorage.not_show_source_page;
+		} catch (ex) {}
+
+		var update_source = function(show_source_page){
+			if (show_source_page) {
+				$('#log-table .source_page_link').each(function(){
+					var $this = $(this);
+					$this.text($this.data('viewlink'));
+				});
+			} else {
+				$('#log-table .source_page_link').each(function(){
+					var $this = $(this);
+					$this.text($this.data('viewtext'));
+				});
+			}
+		};
+
+		var $ssp = $('#show_source_page');
+		$ssp.prop('checked', !not_show_source_page).on('change', function(){
+			try {
+				var show_source_page = $ssp.prop('checked');
+				localStorage.not_show_source_page = show_source_page ? '' : '1';
+				update_source(show_source_page);
+			} catch (ex) {}
+		});
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+
 /***/ 112:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function (obj) {
-	obj || (obj = {});
-	var __t, __p = '';
-	with (obj) {
-	__p += '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="' +
-	((__t = (it.id || '' )) == null ? '' : __t) +
-	'">\r\n  <div class="modal-backdrop fade"></div>\r\n  <div class="modal-dialog">\r\n    <div class="modal-content">\r\n\r\n      <div class="modal-header">\r\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\r\n        <h4 class="modal-title">' +
-	((__t = (it.header)) == null ? '' : __t) +
-	'</h4>\r\n      </div>\r\n      <div class="modal-body">\r\n        ' +
-	((__t = (it.body)) == null ? '' : __t) +
-	'\r\n      </div>\r\n      <div class="modal-footer">\r\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>';
+	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
+		var last_select = -1;
+		
+		try {
+
+		    last_select = localStorage.last_select >> 0; // jshint ignore:line
+			
+			var $sb = $('#select-business');
+			
+			last_select > 0 && $sb.find('[value=' + last_select + ']').length && $sb.val(last_select);
+
+			$sb.on('change', function(){
+				localStorage.last_select = $sb.val();
+			});
+
+		} catch (ex) {}
+
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+
+/***/ 115:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(96);
+	var Delegator = __webpack_require__(97);
+
+	var logTable = __webpack_require__(109);
+	var keyword = __webpack_require__(108);
+	var debar = __webpack_require__(110);
+
+
+	var logConfig = {
+	        id: 0,
+	        startDate: 0,
+	        endDate: 0,
+	        include: [],
+	        exclude: [],
+	        index: 0,
+	        level: [4]
+	    },
+
+	    encodeHtml = function(str) {
+	        return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+	    };
+
+
+	var websocket;
+
+
+
+	var currentSelectId = -1,
+	    currentIndex = 0,
+	    noData = false,
+	    MAX_LIMIT = 500,
+	    loading = false,
+	    monitorTimeId;
+
+	function addKeyword() {
+	    var value = $.trim($('#keyword-ipt').val());
+	    if (value !== '') {
+	        if (!removeValue(value, logConfig.include)) {
+	            $('#keyword-group').append(keyword({
+	                it: {
+	                    value: value
+	                },
+	                opt: {
+	                    encodeHtml: encodeHtml,
+	                    set: Delegator.set
+	                }
+	            }));
+	        }
+	        logConfig.include.push(value);
+	        $('#keyword-ipt').val('');
+	    }
+	}
+
+	function addDebar() {
+	    var value = $.trim($('#debar-ipt').val());
+	    if (value !== '') {
+	        if (!removeValue(value, logConfig.exclude)) {
+	            $('#debar-group').append(debar({
+	                it: {
+	                    value: value
+	                },
+	                opt: {
+	                    encodeHtml: encodeHtml,
+	                    set: Delegator.set
+	                }
+	            }));
+	        }
+	        logConfig.exclude.push(value);
+	        $('#debar-ipt').val('');
+	    }
+	}
+
+
+
+	function bindEvent() {
+	    new Delegator(document.body)
+	        .on('click', 'searchBusiness', function() {
+	            // search business
+	        }).on('click', 'addKeyword', addKeyword)
+	        .on('keyup', 'addKeyword', function(e) {
+	            if (e.which === 13) addKeyword();
+	        }).on('click', 'removeKeywords', function() {
+	            logConfig.include.length = 0;
+	            $('#keyword-group').empty();
+	        }).on('click', 'removeKeyword', function(e, value) {
+	            $(this).closest('.keyword-tag').remove();
+	            removeValue(value, logConfig.include);
+	        }).on('click', 'addDebar', addDebar)
+	        .on('keyup', 'addDebar', function(e) {
+	            if (e.which === 13) addDebar();
+	        }).on('click', 'removeDebars', function() {
+	            logConfig.exclude.length = 0;
+	            $('#debar-group').empty();
+	        }).on('click', 'removeDebar', function(e, value) {
+	            $(this).closest('.keyword-tag').remove();
+	            removeValue(value, logConfig.exclude);
+	        }).on('click', 'showLogs', function() {
+	            logConfig.id = $('#select-business').val() >> 0; // jshint ignore:line
+	            if (logConfig.id <= 0 || loading) {
+	                !loading && dialog({
+	                    header: '警告',
+	                    body: '请选择一个项目'
+	                });
+	                return;
+	            }
+
+	            if (!$(this).data("stop")) {
+	                $(this).data("stop", true);
+	                $('#log-table').html('');
+	                startMonitor(logConfig.id);
+	                $(this).text('停止监听');
+	            } else {
+	                $(this).data("stop", false);
+	                websocket.close();
+	                $(this).text('开始监听');
+	            }
+
+	        })
+	        .on('click', 'showSource', function(e, data) {
+	            // 内网服务器，拉取不到 外网数据,所以屏蔽掉请求
+	            return;
+
+	        }).on('change', 'selectBusiness', function() {
+	            var val = $(this).val() - 0;
+	            currentSelectId = val;
+	            $('#log-table').html('');
+	            currentIndex = 0;
+	            noData = false;
+	            logConfig.id = val;
+
+	        }).on('click', 'errorTypeClick', function() {
+	            if ($(this).hasClass('msg-dis')) {
+	                logConfig.level.push(4);
+	                $(this).removeClass('msg-dis');
+	            } else {
+	                logConfig.level.splice($.inArray(4, logConfig.level), 1);
+	                $(this).addClass('msg-dis');
+	            }
+	            console.log('log', logConfig.level);
+
+	        }).on('click', 'logTypeClick', function() {
+	            if ($(this).hasClass('msg-dis')) {
+	                logConfig.level.push(2);
+	                $(this).removeClass('msg-dis');
+	            } else {
+	                logConfig.level.splice($.inArray(2, logConfig.level), 1);
+	                $(this).addClass('msg-dis');
+	            }
+
+
+	        }).on('click', 'debugTypeClick', function() {
+	            if ($(this).hasClass('msg-dis')) {
+	                logConfig.level.push(1);
+	                $(this).removeClass('msg-dis');
+	            } else {
+	                logConfig.level.splice($.inArray(1, logConfig.level), 1);
+	                $(this).addClass('msg-dis');
+	            }
+	        });
+
+
 
 	}
-	return __p
+
+	function removeValue(value, arr) {
+	    for (var l = arr.length; l--;) {
+	        if (arr[l] === value) {
+	            return arr.splice(l, 1);
+	        }
+	    }
 	}
+
+	var keepAliveTimeoutId;
+	var currentIndex;
+	var maxShow = 100;
+	var startMonitor = function(id) {
+
+	    websocket = new WebSocket("ws://" + location.host + "/ws/realtimeLog");
+	    
+	    currentIndex = 0;
+	    websocket.onmessage = function(evt) {
+	        showLogs(JSON.parse(evt.data).message);
+	    };
+
+	    websocket.onclose = function() {
+	        clearTimeout(keepAliveTimeoutId);
+	    };
+
+	    websocket.onopen = function() {
+
+	        websocket.send(JSON.stringify({
+	            type: "INIT",
+	            include: logConfig.include,
+	            exclude: logConfig.exclude,
+	            level: logConfig.level,
+	            id: id
+	        }));
+
+	        keepAliveTimeoutId = setInterval(function() {
+	            websocket.send(JSON.stringify({
+	                type: "KEEPALIVE"
+	            }));
+	        }, 5000);
+	    };
+	};
+
+
+	function showLogs(data) {
+
+	    var param = {
+	        encodeHtml: encodeHtml,
+	        set: Delegator.set,
+	        startIndex: currentIndex
+	    };
+
+	    var $table = $('#log-table');
+
+	    if (maxShow % 100 === 0) {
+	        $table.html($table.html().split("</tr>").slice(0, maxShow).join("</tr>"));
+	    }
+	    $table.prepend(logTable({
+	        it: [data],
+	        opt: param
+	    }));
+	    currentIndex++;
+	}
+
+
+
+	function init() {
+	    bindEvent();
+	}
+
+	exports.init = init;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }
 

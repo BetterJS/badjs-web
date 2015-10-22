@@ -1,7 +1,5 @@
 <header style="border-bottom:1px solid #B8B8B8;position:fixed;top:0">
-    <div class="head-logo">
-        <a href="index.html" ><img src="/static/img/logo.png" alt=""/></a>
-    </div>
+    <%=include('./logo.html')(it, opt)%>
     <div class="head-user">
         <a href="/register.html">注册新用户</a>
         <a href="/user/index.html">我的业务</a>

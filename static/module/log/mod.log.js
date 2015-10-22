@@ -1,4 +1,5 @@
-var Dialog = require("dialog/dialog");
+/* global _ */
+var dialog = require("dialog/dialog");
 var Delegator = require("delegator");
 
 var logTable = require("./template/logTable.ejs");
@@ -17,21 +18,31 @@ var logConfig = {
         level: [4]
     },
 
-    encodeHtml = function (str) {
+    encodeHtml = function(str) {
         return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
     };
 
-
 var maxDate = 60 * 60 * 1000 * 24 * 2;
 
-
-var currentSelectId = -1, currentIndex = 0, noData = false, MAX_LIMIT = 500, loading = false;
+var currentSelectId = -1,
+    currentIndex = 0,
+    noData = false,
+    MAX_LIMIT = 500,
+    loading = false;
 
 function addKeyword() {
     var value = $.trim($('#keyword-ipt').val());
     if (value !== '') {
         if (!removeValue(value, logConfig.include)) {
-            $('#keyword-group').append(keyword( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
+            $('#keyword-group').append(keyword({
+                it: {
+                    value: value
+                },
+                opt: {
+                    encodeHtml: encodeHtml,
+                    set: Delegator.set
+                }
+            }));
         }
         logConfig.include.push(value);
         $('#keyword-ipt').val('');
@@ -42,62 +53,67 @@ function addDebar() {
     var value = $.trim($('#debar-ipt').val());
     if (value !== '') {
         if (!removeValue(value, logConfig.exclude)) {
-            $('#debar-group').append(debar( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
+            $('#debar-group').append(debar({
+                it: {
+                    value: value
+                },
+                opt: {
+                    encodeHtml: encodeHtml,
+                    set: Delegator.set
+                }
+            }));
         }
         logConfig.exclude.push(value);
         $('#debar-ipt').val('');
     }
 }
 
-
 function bindEvent() {
     new Delegator(document.body)
-        .on('click', 'searchBusiness', function () {
+        .on('click', 'searchBusiness', function() {
             // search business
         }).on('click', 'addKeyword', addKeyword)
-        .on('keyup', 'addKeyword', function (e) {
+        .on('keyup', 'addKeyword', function(e) {
             if (e.which === 13) addKeyword();
-        }).on('click', 'removeKeywords', function () {
+        }).on('click', 'removeKeywords', function() {
             logConfig.include.length = 0;
             $('#keyword-group').empty();
-        }).on('click', 'removeKeyword', function (e, value) {
+        }).on('click', 'removeKeyword', function(e, value) {
             $(this).closest('.keyword-tag').remove();
             removeValue(value, logConfig.include);
         }).on('click', 'addDebar', addDebar)
-        .on('keyup', 'addDebar', function (e) {
+        .on('keyup', 'addDebar', function(e) {
             if (e.which === 13) addDebar();
-        }).on('click', 'removeDebars', function () {
+        }).on('click', 'removeDebars', function() {
             logConfig.exclude.length = 0;
             $('#debar-group').empty();
-        }).on('click', 'removeDebar', function (e, value) {
+        }).on('click', 'removeDebar', function(e, value) {
             $(this).closest('.keyword-tag').remove();
             removeValue(value, logConfig.exclude);
-        }).on('click', 'showLogs', function () {
+        }).on('click', 'showLogs', function() {
             var startTime = $('#startTime').val(),
                 endTime = $('#endTime').val();
-            //console.log('data', endTime);
-            logConfig.startDate = startTime == '' ? new Date().getTime() - maxDate : new Date(startTime).getTime();
-            logConfig.endDate = endTime == '' ? new Date().getTime() : new Date(endTime).getTime();
-            //console.log('data', logConfig);
+            logConfig.startDate = startTime === '' ?
+                new Date().getTime() - maxDate :
+                new Date(startTime).getTime();
+            logConfig.endDate = endTime === '' ?
+                new Date().getTime() :
+                new Date(endTime).getTime();
             //测试时间是否符合
             if (isTimeRight(logConfig.startDate, logConfig.endDate)) {
                 showLogs(logConfig, false);
             }
-
         })
-        .on('click', 'showSource', function (e, data) {
+        .on('click', 'showSource', function(e, data) {
             // 内网服务器，拉取不到 外网数据,所以屏蔽掉请求
-
-        }).on('change', 'selectBusiness', function () {
+        }).on('change', 'selectBusiness', function() {
             var val = $(this).val() - 0;
             currentSelectId = val;
             $('#log-table').html('');
             currentIndex = 0;
             noData = false;
             logConfig.id = val;
-            //  showLogs(logConfig, false);
-
-        }).on('click', 'errorTypeClick', function () {
+        }).on('click', 'errorTypeClick', function() {
             if ($(this).hasClass('msg-dis')) {
                 logConfig.level.push(4);
                 $(this).removeClass('msg-dis');
@@ -105,10 +121,7 @@ function bindEvent() {
                 logConfig.level.splice($.inArray(4, logConfig.level), 1);
                 $(this).addClass('msg-dis');
             }
-            console.log('log', logConfig.level);
-            // showLogs(logConfig, false);
-
-        }).on('click', 'logTypeClick', function () {
+        }).on('click', 'logTypeClick', function() {
             if ($(this).hasClass('msg-dis')) {
                 logConfig.level.push(2);
                 $(this).removeClass('msg-dis');
@@ -116,10 +129,7 @@ function bindEvent() {
                 logConfig.level.splice($.inArray(2, logConfig.level), 1);
                 $(this).addClass('msg-dis');
             }
-
-            //   showLogs(logConfig, false);
-
-        }).on('click', 'debugTypeClick', function () {
+        }).on('click', 'debugTypeClick', function() {
             if ($(this).hasClass('msg-dis')) {
                 logConfig.level.push(1);
                 $(this).removeClass('msg-dis');
@@ -127,10 +137,9 @@ function bindEvent() {
                 logConfig.level.splice($.inArray(1, logConfig.level), 1);
                 $(this).addClass('msg-dis');
             }
-            //     showLogs(logConfig, false);
         });
 
-    var throttled = _.throttle(function (e) {
+    var throttled = _.throttle(function(e) {
         var $this = $(this);
         var top = $this.scrollTop();
         var height = $this.height();
@@ -140,22 +149,21 @@ function bindEvent() {
             logConfig.id = currentSelectId;
             showLogs(logConfig, true);
         }
-
-
     }, 100);
+
     $('.main-mid').scroll(throttled);
 
 }
 
 function isTimeRight(begin, end) {
     if (begin > end) {
-        Dialog({
+        dialog({
             header: '时间范围错误',
             body: '结束时间必须在开始时间之后！'
         });
         return false;
     } else if (end - maxDate > begin) {
-        Dialog({
+        dialog({
             header: '时间范围错误',
             body: '结束时间和开始时间间隔需在三天之内！'
         });
@@ -164,6 +172,7 @@ function isTimeRight(begin, end) {
     return true;
 
 }
+
 function removeValue(value, arr) {
     for (var l = arr.length; l--;) {
         if (arr[l] === value) {
@@ -174,9 +183,9 @@ function removeValue(value, arr) {
 
 
 function showLogs(opts, isAdd) {
-
+    opts.id = $('#select-business').val() >> 0; // jshint ignore:line
     if (opts.id <= 0 || loading) {
-        !loading && Dialog({
+        !loading && dialog({
             header: '警告',
             body: '请选择一个项目'
         });
@@ -203,29 +212,35 @@ function showLogs(opts, isAdd) {
             _t: new Date() - 0,
             level: opts.level
         },
-        success: function (data) {
+        success: function(data) {
             var ret = data.ret;
-            if (ret == 0) {
+            if (ret === 0) {
                 var param = {
                     encodeHtml: encodeHtml,
                     set: Delegator.set,
                     startIndex: currentIndex * MAX_LIMIT
-                }
+                };
 
                 if (isAdd) {
-                    $('#log-table').append(logTable({it : data.data , opt : param}));
+                    $('#log-table').append(logTable({
+                        it: data.data,
+                        opt: param
+                    }));
                 } else {
-                    $('#log-table').html(logTable({it : data.data , opt : param}));
+                    $('#log-table').html(logTable({
+                        it: data.data,
+                        opt: param
+                    }));
                 }
 
                 currentIndex++;
-                if (data.data.length == 0) {
+                if (data.data.length === 0) {
                     noData = true;
                 }
             }
             loading = false;
         },
-        error: function () {
+        error: function() {
             loading = false;
         }
     });
@@ -233,11 +248,12 @@ function showLogs(opts, isAdd) {
 
 function init() {
     bindEvent();
-    $(".datetimepicker").datetimepicker({format: 'YYYY-MM-DD HH:mm'}).data("DateTimePicker").setMaxDate(new Date());
+    $(".datetimepicker").datetimepicker({
+        format: 'YYYY-MM-DD HH:mm'
+    }).data("DateTimePicker").setMaxDate(new Date());
 
     $('#startTime').data("DateTimePicker").setDate(new Date(new Date() - maxDate));
     $('#endTime').data("DateTimePicker").setDate(new Date());
 }
 
 exports.init = init;
-

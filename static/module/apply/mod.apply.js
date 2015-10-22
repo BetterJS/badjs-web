@@ -39,7 +39,7 @@ function bindEvent() {
                 case 0: //成功
                     //执行成功回调函数.
                     alert("成功");
-                    location.reload();
+                    location.href = '/user/applyList.html';
                     break;
                 case 1: //没有登陆态或登陆态失效
                     alert("失败");

@@ -1,5 +1,9 @@
 <%
 var urls;
+var not_show_source_page = false;
+try {
+    not_show_source_page = !!localStorage.not_show_source_page;
+} catch (ex) {}
 for (var i = 0 , l = it.length, type; i < l; i++) {
 switch(it[i].level) {
     case '8':
@@ -16,7 +20,7 @@ switch(it[i].level) {
         break;
 }
 
- function getBrowserType(ua){
+function getBrowserType(ua){
         if(!ua){
             return '';
         }
@@ -47,6 +51,25 @@ switch(it[i].level) {
         }
 }
 
+function sourcePage(data, type, opt) {
+    var from = data.from || ''
+    if (/view/.test(type)) {
+        var view = ['页面查看', opt.encodeHtml(from)];
+        return 'viewtext' === type ? view[0] :
+            'viewlink' === type ? view[1] :
+            not_show_source_page ? view[0] : view[1];
+    } else {
+        var href = opt.encodeHtml(from);
+        var msg = data.msg || '';
+        if (href.indexOf('#') === -1) {
+            href += '#BJ_ERROR=' + encodeURIComponent(msg);
+        } else {
+            href += '&BJ_ERROR=' + encodeURIComponent(msg);
+        }
+        return href;
+    }
+}
+
 var isHtml = /^.+?\.html\??/.test(it[i].target);
 %>
 <tr id="tr-<%=i + 1 + opt.startIndex%>">
@@ -57,12 +80,18 @@ var isHtml = /^.+?\.html\??/.test(it[i].target);
     <td  class="td-5"><%=it[i].ip %></td>
     <td  class="td-6"><span class="ico-browser <%= getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
     <td class="td-7">
-
         <a style="word-break:break-all;display: block" target="_blank" href="<%= opt.encodeHtml(it[i].target || it[i].url || '')%>" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
         <%= opt.encodeHtml(it[i].target || it[i].url || '')%>
         </a>
         <span class="err-where"><%=opt.encodeHtml(it[i].rowNum || 0) %>行<%=opt.encodeHtml(it[i].colNum || 0)%>列</span>
-        <a style="font-size:12px;" href="<%= opt.encodeHtml((it[i].from)) %>" target="_blank">页面查看</a>
+        <a
+            class="source_page_link"
+            style="font-size:12px"
+            target="_blank"
+            href="<%=sourcePage(it[i], 'href', opt) %>"
+            data-viewtext="<%=sourcePage(it[i], 'viewtext', opt)%>"
+            data-viewlink="<%=sourcePage(it[i], 'viewlink', opt)%>"
+        ><%=sourcePage(it[i], 'view', opt)%></a>
     </td>
 </tr>
 <% } %>

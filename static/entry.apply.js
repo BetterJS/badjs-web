@@ -1,15 +1,15 @@
-webpackJsonp([10],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(8);
+	var apply = __webpack_require__(95);
 
 	apply.init();
 
 /***/ },
 
-/***/ 8:
+/***/ 95:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -20,7 +20,7 @@ webpackJsonp([10],{
 	var REG_REFERER = /^https?:\/\/[^\/]+\//i;
 	var REG_DOMAIN_STAR = /^\*(\.[^\/]+)?$/;
 
-	var Dialog = __webpack_require__(100);
+	var Dialog = __webpack_require__(96);
 
 
 	var applyBox = $("#applyContainer");
@@ -53,7 +53,7 @@ webpackJsonp([10],{
 	                case 0: //成功
 	                    //执行成功回调函数.
 	                    alert("成功");
-	                    location.reload();
+	                    location.href = '/user/applyList.html';
 	                    break;
 	                case 1: //没有登陆态或登陆态失效
 	                    alert("失败");
@@ -72,11 +72,63 @@ webpackJsonp([10],{
 	module.exports = {
 	    init: init
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 
-/***/ 18:
+/***/ 96:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(97);
+	var modal = __webpack_require__(98);
+
+	    var container;
+
+	    function hide() {
+	        container.removeClass('in');
+	        container.find('.modal-backdrop').removeClass('in');
+	        setTimeout(function () {
+	            container.remove();
+	            container = undefined;
+	        }, 300);
+	    }
+
+	    function Dialog (param) {
+	        if (container) {
+	            container.remove();
+	            container = undefined;
+	        }
+	        container = $(modal({it :param}))
+	            .appendTo(document.body)
+	            .show();
+
+	        var key,
+	            action,
+	            delegator,
+	            on = param.on || {};
+
+	        delegator = (new Delegator(container))
+	            .on('click', 'close', hide);
+
+	        for (key in on) {
+	            action = key.split('/');
+	            delegator.on(action[0], action[1], on[key]);
+	        }
+
+	        setTimeout(function () {
+	            container.addClass('in');
+	            container.find('.modal-backdrop').addClass('in');
+	        }, 0);
+	    }
+
+	    Dialog.hide = hide;
+
+	module.exports =  Dialog;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+
+/***/ 97:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -252,64 +304,12 @@ webpackJsonp([10],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 
-/***/ 100:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(18);
-	var modal = __webpack_require__(112);
-
-	    var container;
-
-	    function hide() {
-	        container.removeClass('in');
-	        container.find('.modal-backdrop').removeClass('in');
-	        setTimeout(function () {
-	            container.remove();
-	            container = undefined;
-	        }, 300);
-	    }
-
-	    function Dialog (param) {
-	        if (container) {
-	            container.remove();
-	            container = undefined;
-	        }
-	        container = $(modal({it :param}))
-	            .appendTo(document.body)
-	            .show();
-
-	        var key,
-	            action,
-	            delegator,
-	            on = param.on || {};
-
-	        delegator = (new Delegator(container))
-	            .on('click', 'close', hide);
-
-	        for (key in on) {
-	            action = key.split('/');
-	            delegator.on(action[0], action[1], on[key]);
-	        }
-
-	        setTimeout(function () {
-	            container.addClass('in');
-	            container.find('.modal-backdrop').addClass('in');
-	        }, 0);
-	    }
-
-	    Dialog.hide = hide;
-
-	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-
-/***/ 112:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 98:
+/***/ function(module, exports) {
 
 	module.exports = function (obj) {
 	obj || (obj = {});
