@@ -1128,7 +1128,6 @@ form
     display: inline-block;
 
     height: 20px;
-    margin-left: 20px;
 
     vertical-align: middle;
 }
@@ -1138,7 +1137,7 @@ form
     margin: 0 3px 0 0;
 
     cursor: pointer;
-    vertical-align: -2px;
+    vertical-align: -1px;
 }
 
 .source_page_trigger label
