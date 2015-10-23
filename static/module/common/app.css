@@ -998,6 +998,11 @@ form
     word-break: break-all;
 }
 
+.main-table-hidefrom .td-7
+{
+    width: 135px;
+}
+
 #statistics section
 {
     padding: 10px 0 ;
