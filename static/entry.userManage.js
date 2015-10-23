@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 webpackJsonp([10],{
-=======
-webpackJsonp([6],{
->>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -16,28 +12,8 @@ webpackJsonp([6],{
 /***/ 96:
 /***/ function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(97);
 	var modal = __webpack_require__(98);
-=======
-	/* WEBPACK VAR INJECTION */(function($) {/**
-	 * @info 用户列表js
-	 * @author coverguo
-	 * */
-
-	var Dialog = __webpack_require__(100);
-	var userTable = __webpack_require__(111);
-
-
-	    var encodeHtml = function (str) {
-	        return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
-	    };
-	    function bindEvent() {
-
-	        $(".searchBtn").on("click", function (){
-	            reloadPage();
-	        });
->>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	    var container;
 
@@ -85,11 +61,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-<<<<<<< HEAD
 /***/ 97:
-=======
-/***/ 19:
->>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -293,7 +265,6 @@ webpackJsonp([6],{
 /***/ 118:
 /***/ function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 	/* WEBPACK VAR INJECTION */(function($) {/**
 	 * @info 用户列表js
 	 * @author coverguo
@@ -301,10 +272,6 @@ webpackJsonp([6],{
 
 	var Dialog = __webpack_require__(96);
 	var userTable = __webpack_require__(119);
-=======
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
-	var modal = __webpack_require__(112);
->>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 
 	    var encodeHtml = function (str) {
@@ -453,13 +420,8 @@ webpackJsonp([6],{
 
 /***/ },
 
-<<<<<<< HEAD
 /***/ 119:
 /***/ function(module, exports) {
-=======
-/***/ 111:
-/***/ function(module, exports, __webpack_require__) {
->>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	module.exports = function (obj) {
 	obj || (obj = {});
