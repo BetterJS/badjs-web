@@ -1,15 +1,27 @@
+<<<<<<< HEAD
 webpackJsonp([3],{
+=======
+webpackJsonp([5],{
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 	var usermanger = __webpack_require__(101);
+=======
+	var usermanger = __webpack_require__(10);
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	usermanger.init();
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 101:
+=======
+/***/ 10:
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -17,7 +29,11 @@ webpackJsonp([3],{
 	 * @author coverguo
 	 * */
 
+<<<<<<< HEAD
 	var userTable = __webpack_require__(102);
+=======
+	var userTable = __webpack_require__(105);
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 
 	    var encodeHtml = function (str) {
@@ -96,8 +112,13 @@ webpackJsonp([3],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 102:
 /***/ function(module, exports) {
+=======
+/***/ 105:
+/***/ function(module, exports, __webpack_require__) {
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	module.exports = function (obj) {
 	obj || (obj = {});

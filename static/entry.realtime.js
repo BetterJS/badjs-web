@@ -3,11 +3,75 @@ webpackJsonp([8],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 	var log = __webpack_require__(115);
 	log.init();
 
 	var source_trigger = __webpack_require__(111);
 	source_trigger.init();
+=======
+	var log  =__webpack_require__(13);
+
+	log.init();
+
+/***/ },
+
+/***/ 13:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Dialog = __webpack_require__(100);
+	var Delegator = __webpack_require__(19);
+
+	var logTable = __webpack_require__(106);
+	var keyword = __webpack_require__(107);
+	var debar = __webpack_require__(108);
+
+
+	    var logConfig = {
+	            id: 0,
+	            startDate: 0,
+	            endDate: 0,
+	            include: [],
+	            exclude: [],
+	            index: 0,
+	            level:[4]
+	        },
+
+	        encodeHtml = function (str) {
+	            return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+	        };
+
+
+	    var websocket ;
+
+
+
+
+	    var currentSelectId = -1, currentIndex = 0  , noData = false , MAX_LIMIT = 500 , loading = false, monitorTimeId;
+
+	    function addKeyword() {
+	        var value = $.trim($('#keyword-ipt').val());
+	        if (value !== '') {
+	            if (!removeValue(value, logConfig.include)) {
+	                $('#keyword-group').append(keyword( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
+	            }
+	            logConfig.include.push(value);
+	            $('#keyword-ipt').val('');
+	        }
+	    }
+
+	    function addDebar() {
+	        var value = $.trim($('#debar-ipt').val());
+	        if (value !== '') {
+	            if (!removeValue(value, logConfig.exclude)) {
+	                $('#debar-group').append(debar( { it : { value: value } , opt: { encodeHtml: encodeHtml, set: Delegator.set }}));
+	            }
+	            logConfig.exclude.push(value);
+	            $('#debar-ipt').val('');
+	        }
+	    }
+
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	var last_select = __webpack_require__(112);
 	last_select.init();
@@ -66,7 +130,11 @@ webpackJsonp([8],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 97:
+=======
+/***/ 19:
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -246,8 +314,16 @@ webpackJsonp([8],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 98:
 /***/ function(module, exports) {
+=======
+/***/ 100:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	var modal = __webpack_require__(112);
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	module.exports = function (obj) {
 	obj || (obj = {});
@@ -286,7 +362,11 @@ webpackJsonp([8],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 109:
+=======
+/***/ 106:
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -327,6 +407,8 @@ webpackJsonp([8],{
 	            return  'ico-qb';
 	        }else if(ua.indexOf('metasr')>-1){
 	            return  'ico-sougou';
+	        }else if(ua.indexOf('maxthon')>-1){
+	            return  'ico-maxthon';
 	        }else if(ua.indexOf('360se')>-1){
 	            return  'ico-360';
 	        }else if(ua.indexOf('qq/')>-1){
@@ -420,8 +502,13 @@ webpackJsonp([8],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 110:
 /***/ function(module, exports) {
+=======
+/***/ 107:
+/***/ function(module, exports, __webpack_require__) {
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	module.exports = function (obj) {
 	obj || (obj = {});
@@ -439,7 +526,11 @@ webpackJsonp([8],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 111:
+=======
+/***/ 108:
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){

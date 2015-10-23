@@ -325,6 +325,7 @@ form
 
     width: 22px;
     height: 22px;
+<<<<<<< HEAD
 
     cursor: pointer;
 }
@@ -382,6 +383,40 @@ form
 }
 #content .right-side
 {
+=======
+    cursor: pointer; }
+#content .mid-side .main-table .ico-ie {
+    background: url(/static/img/ico-ie.png) no-repeat; }
+#content .mid-side .main-table .ico-chrome {
+    background: url(/static/img/ico-chrome.png) no-repeat; }
+#content .mid-side .main-table .ico-ff {
+    background: url(/static/img/ico-ff.png) no-repeat; }
+#content .mid-side .main-table .ico-opera {
+    background: url(/static/img/ico-opera.png) no-repeat; }
+#content .mid-side .main-table .ico-safari {
+    background: url(/static/img/ico-safari.png) no-repeat; }
+#content .mid-side .main-table .ico-qq {
+    background: url(/static/img/ico-qq.png) no-repeat; }
+#content .mid-side .main-table .ico-sougou {
+    background: url(/static/img/ico-sougou.png) no-repeat; }
+#content .mid-side .main-table .ico-360 {
+    background: url(/static/img/ico-360.png) no-repeat; }
+#content .mid-side .main-table .ico-qb {
+    background: url(/static/img/ico-qb.png) no-repeat; }
+#content .mid-side .main-table .ico-liebao {
+    background: url(/static/img/ico-liebao.png) no-repeat; }
+#content .mid-side .main-table .ico-android {
+    background: url(/static/img/ico-android.png) no-repeat; }
+#content .mid-side .main-table .ico-ios {
+    background: url(/static/img/ico-ios.png) no-repeat; }
+#content .mid-side .main-table .ico-wx {
+    background: url(/static/img/ico-wx.png) no-repeat; }
+#content .mid-side .main-table .ico-maxthon {
+    background: url(/static/img/ico-maxthon.png) no-repeat; }
+#content .right-side {
+    width: 250px;
+    height: 100%;
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
     position: absolute;
     top: 0;
     right: 0;

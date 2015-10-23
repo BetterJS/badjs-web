@@ -1,13 +1,47 @@
-webpackJsonp([6],{
+webpackJsonp([7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 	var log = __webpack_require__(107);
 	log.init();
 
 	var source_trigger = __webpack_require__(111);
 	source_trigger.init();
+=======
+	var log  =__webpack_require__(12);
+
+	log.init();
+
+/***/ },
+
+/***/ 12:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($, _) {var Dialog = __webpack_require__(100);
+	var Delegator = __webpack_require__(19);
+
+	var logTable = __webpack_require__(106);
+	var keyword = __webpack_require__(107);
+	var debar = __webpack_require__(108);
+
+	__webpack_require__(18);
+
+	var logConfig = {
+	        id: 0,
+	        startDate: 0,
+	        endDate: 0,
+	        include: [],
+	        exclude: [],
+	        index: 0,
+	        level: [4]
+	    },
+
+	    encodeHtml = function (str) {
+	        return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+	    };
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	var last_select = __webpack_require__(112);
 	last_select.init();
@@ -69,6 +103,7 @@ webpackJsonp([6],{
 /***/ 97:
 /***/ function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 	/* WEBPACK VAR INJECTION */(function($) {/**
 	 * Map
 	 * @class
@@ -270,6 +305,8 @@ webpackJsonp([6],{
 /***/ 104:
 /***/ function(module, exports, __webpack_require__) {
 
+=======
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(jQuery) {/**
 	 * @preserve jQuery DateTimePicker plugin v2.4.1
 	 * @homepage http://xdsoft.net/jqplugins/datetimepicker/
@@ -2126,12 +2163,200 @@ webpackJsonp([6],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {/* global _ */
 	var dialog = __webpack_require__(96);
 	var Delegator = __webpack_require__(97);
+=======
+/***/ 19:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Map
+	 * @class
+	 */
+	function Map() {
+	    this.map = {};
+	    this.length = 0;
+	}
+	Map.prototype = {
+	    constructor: Map,
+	    /**
+	     * has
+	     * @param {String} key
+	     * @returns {Boolean}
+	     */
+	    has: function (key) {
+	        return (key in this.map);
+	    },
+	    /**
+	     * get
+	     * @param {String} key
+	     * @returns {Any}
+	     */
+	    get: function (key) {
+	        return this.map[key];
+	    },
+	    /**
+	     * set
+	     * @param {String} key
+	     * @param {Any} value
+	     */
+	    set: function (key, value) {
+	        !this.has(key) && this.length++;
+	        return (this.map[key] = value);
+	    },
+	    /**
+	     * count
+	     * @returns {Number}
+	     */
+	    count: function () {
+	        return this.length;
+	    },
+	    /**
+	     * remove
+	     * @param {String} key
+	     */
+	    remove: function (key) {
+	        if (this.has(key)) {
+	            this.map[key] = null;
+	            delete this.map[key];
+	            this.length--;
+	        }
+	    }
+	};
+
+	var cache = new Map(), set = cache.set, uid = 0;
+	cache.set = function (node, value) {
+	    if (!value) {
+	        value = node;
+	        set.call(cache, ++uid + '', value);
+	        return uid;
+	    } else {
+	        typeof node === 'string' &&
+	        (node = $(node)[0]);
+	        $.data(node, 'event-data', value);
+	        return this;
+	    }
+	};
+
+	function _key(arr) {
+	    if (!arr) return {};
+	    arr = arr.split(' ');
+	    var obj = {};
+	    for (var i = 0, l = arr.length; i < l; i++) {
+	        obj[arr[i]] = true;
+	    }
+	    return obj;
+	}
+
+	/**
+	 * Delegator
+	 * @class
+	 * @param {Selector} container
+	 */
+	function Delegator(container) {
+	    this.container = $(container);
+	    this.listenerMap = new Map();
+	}
+
+	/**
+	 * getKey
+	 * @param {Any} value
+	 * @returns {Number}
+	 */
+	Delegator.set = cache.set;
+	/**
+	 * cache
+	 * @class
+	 * @static
+	 */
+	Delegator.cache = cache;
+
+	Delegator.prototype = {
+	    constructor: Delegator,
+	    _getListener: function (type) {
+	        if (this.listenerMap.has(type)) {
+	            return this.listenerMap.get(type);
+	        }
+	        function listener(e) {
+	            var data = $.data(this),
+	                routes = data['event-' + type + '-routes'],
+	                eventData = data['event-data'], handle, dataKey;
+
+	            // preprocessing
+	            if (!routes && (routes = this.getAttribute('data-event-' + type))) {
+	                (routes = routes.split(' ')) &&
+	                (data['event-' + type + '-routes'] = routes);
+	                !eventData &&
+	                (dataKey = this.getAttribute('data-event-data')) &&
+	                (eventData = cache.get(dataKey)) &&
+	                (data['event-data'] = eventData) &&
+	                (cache.remove(dataKey));
+	                !data['event-stop-propagation'] &&
+	                (data['event-stop-propagation'] = _key(this.getAttribute('data-event-stop-propagation')));
+	            }
+
+	            if (routes) {
+	                for (var i = 0, l = routes.length; i < l; i++) {
+	                    handle = listener.handleMap.get(routes[i]);
+
+	                    if (handle) {
+	                        handle.call(this, e, eventData);
+	                    }
+	                    data['event-stop-propagation'][type] &&
+	                    e.stopPropagation();
+	                }
+	            }
+	        }
+
+	        listener.handleMap = new Map();
+	        this.listenerMap.set(type, listener);
+	        this.container.on(type, '[data-event-' + type + ']', listener);
+	        return listener;
+	    },
+	    /**
+	     * on
+	     * @param {String} type
+	     * @param {String} name
+	     * @param {Function} handle
+	     */
+	    on: function (type, name, handle) {
+	        var listener = this._getListener(type);
+	        listener.handleMap.set(name, handle);
+	        return this;
+	    },
+	    /**
+	     * off
+	     * @param {String} type
+	     * @param {String} name
+	     */
+	    off: function (type, name) {
+	        var listener = this._getListener(type),
+	            handleMap = listener.handleMap;
+	        handleMap.remove(name);
+	        if (!handleMap.count()) {
+	            this.container.off(type, '[data-event-' + type + ']', listener);
+	            this.listenerMap.remove(type);
+	        }
+	    }
+	};
+
+	module.exports = Delegator;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+
+/***/ 100:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	var modal = __webpack_require__(112);
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	var logTable = __webpack_require__(109);
 	var keyword = __webpack_require__(108);
@@ -2392,6 +2617,7 @@ webpackJsonp([6],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 108:
 /***/ function(module, exports) {
 
@@ -2412,6 +2638,9 @@ webpackJsonp([6],{
 /***/ },
 
 /***/ 109:
+=======
+/***/ 106:
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -2452,6 +2681,8 @@ webpackJsonp([6],{
 	            return  'ico-qb';
 	        }else if(ua.indexOf('metasr')>-1){
 	            return  'ico-sougou';
+	        }else if(ua.indexOf('maxthon')>-1){
+	            return  'ico-maxthon';
 	        }else if(ua.indexOf('360se')>-1){
 	            return  'ico-360';
 	        }else if(ua.indexOf('qq/')>-1){
@@ -2545,8 +2776,13 @@ webpackJsonp([6],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 110:
 /***/ function(module, exports) {
+=======
+/***/ 107:
+/***/ function(module, exports, __webpack_require__) {
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	module.exports = function (obj) {
 	obj || (obj = {});
@@ -2564,7 +2800,11 @@ webpackJsonp([6],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 111:
+=======
+/***/ 108:
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){

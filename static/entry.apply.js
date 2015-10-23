@@ -76,6 +76,7 @@ webpackJsonp([1],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 96:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -129,6 +130,9 @@ webpackJsonp([1],{
 /***/ },
 
 /***/ 97:
+=======
+/***/ 19:
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -308,8 +312,65 @@ webpackJsonp([1],{
 
 /***/ },
 
+<<<<<<< HEAD
 /***/ 98:
 /***/ function(module, exports) {
+=======
+/***/ 100:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	var modal = __webpack_require__(112);
+
+	    var container;
+
+	    function hide() {
+	        container.removeClass('in');
+	        container.find('.modal-backdrop').removeClass('in');
+	        setTimeout(function () {
+	            container.remove();
+	            container = undefined;
+	        }, 300);
+	    }
+
+	    function Dialog (param) {
+	        if (container) {
+	            container.remove();
+	            container = undefined;
+	        }
+	        container = $(modal({it :param}))
+	            .appendTo(document.body)
+	            .show();
+
+	        var key,
+	            action,
+	            delegator,
+	            on = param.on || {};
+
+	        delegator = (new Delegator(container))
+	            .on('click', 'close', hide);
+
+	        for (key in on) {
+	            action = key.split('/');
+	            delegator.on(action[0], action[1], on[key]);
+	        }
+
+	        setTimeout(function () {
+	            container.addClass('in');
+	            container.find('.modal-backdrop').addClass('in');
+	        }, 0);
+	    }
+
+	    Dialog.hide = hide;
+
+	module.exports =  Dialog;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+
+/***/ 112:
+/***/ function(module, exports, __webpack_require__) {
+>>>>>>> f0f038f2df2357956a76de6b7d9d4acdf853e94e
 
 	module.exports = function (obj) {
 	obj || (obj = {});
