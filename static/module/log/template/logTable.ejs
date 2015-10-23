@@ -82,10 +82,6 @@ var isHtml = /^.+?\.html\??/.test(it[i].target);
     <td  class="td-5"><%=it[i].ip %></td>
     <td  class="td-6"><span class="ico-browser <%= getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
     <td class="td-7">
-        <a style="word-break:break-all;display: block" target="_blank" href="<%= opt.encodeHtml(it[i].target || it[i].url || '')%>" data-event-click="showSource" data-event-data="<%=opt.set(it[i])%>">
-        <%= opt.encodeHtml(it[i].target || it[i].url || '')%>
-        </a>
-        <span class="err-where"><%=opt.encodeHtml(it[i].rowNum || 0) %>行<%=opt.encodeHtml(it[i].colNum || 0)%>列</span>
         <a
             class="source_page_link"
             style="font-size:12px"

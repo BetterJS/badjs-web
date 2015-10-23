@@ -277,6 +277,7 @@ form
     width: 99%;
     margin: 0 auto;
 
+    table-layout: fixed;
     border-collapse: collapse;
 
     border: 1px solid #dedede;
@@ -972,8 +973,6 @@ form
 
 .td-3
 {
-    width: 400px;
-
     word-break: break-all;
 }
 
@@ -994,7 +993,9 @@ form
 
 .td-7
 {
-    min-width: 185px;
+    width: 500px;
+
+    word-break: break-all;
 }
 
 #statistics section
