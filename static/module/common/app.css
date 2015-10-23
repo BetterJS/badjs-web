@@ -21,35 +21,44 @@ header
 {
     z-index: 1;
 
-    height: 40px;
     width: 100%;
+    height: 40px;
 
     color: #f5ca51;
     background: #463a32;
 }
-
+.head-logo
+{
+    display: none;
+}
 .head-logo img
 {
+    float: left;
+
     max-width: 36px;
     max-height: 36px;
-    float: left;
 }
 
-.head-logo span {
-    padding-left: 5px;
+.head-logo span
+{
     font-size: 1.6em;
     line-height: 40px;
+
     display: none;
+
+    padding-left: 5px;
 }
 
 .head-user
 {
     line-height: 38px;
+
     position: absolute;
     top: 0;
     right: 1em;
 }
-.head-user a {
+.head-user a
+{
     color: #cbec80;
 }
 .head-user a:hover
@@ -60,6 +69,7 @@ header
 {
     width: 36px;
     height: 36px;
+
     border-radius: 36px;
 }
 
@@ -210,22 +220,22 @@ form
 }
 #content .left-side li.active  a
 {
-    color: #fff; 
+    color: #fff;
     background: #656c7e;
 }
 #content .left-side li.active:hover
 {
-    color: #fff; 
+    color: #fff;
     background: #656c7e;
 }
 #content .left-side li:hover
 {
-    color: #fff; 
+    color: #fff;
     background: #3e424b;
 }
 #content .mid-side
 {
-    position: relative; 
+    position: relative;
 
     height: 100%;
     margin-right: 250px;
@@ -240,19 +250,19 @@ form
     font-family: '微软雅黑';
     font-size: 24px;
 
-    float: left; 
+    float: left;
 
     margin: 0;
 }
 #content .mid-side .main-top .main-count
 {
-    display: inline-block; 
+    display: inline-block;
 
     margin: 6px 0 0 30px;
 }
 #content .mid-side .main-top .main-count em
 {
-    font-style: normal; 
+    font-style: normal;
 
     color: #88b6f2;
 }
@@ -265,10 +275,9 @@ form
 #content .mid-side .main-table
 {
     width: 99%;
-
     margin: 0 auto;
-    
-    border-collapse: collapse; 
+
+    border-collapse: collapse;
 
     border: 1px solid #dedede;
 }
@@ -288,7 +297,7 @@ form
 #content .mid-side .main-table td,
 #content .mid-side .main-table th
 {
-    padding: 0 10px; 
+    padding: 0 10px;
 
     border: 1px solid #dedede;
 }
@@ -311,7 +320,7 @@ form
 {
     font-family: Menlo, Monaco, Andale Mono, lucida console, Courier New, monospace;
 
-    display: inline-block; 
+    display: inline-block;
 
     margin: 0 3px;
     padding: 1px 3px;
@@ -389,38 +398,66 @@ form
     width: 250px;
     height: 100%;
 
-    color: #333; 
+    color: #333;
     background: #ededed;
 }
 
-#content .mid-side .main-table .ico-ie {
-    background: url(/static/img/ico-ie.png) no-repeat; }
-#content .mid-side .main-table .ico-chrome {
-    background: url(/static/img/ico-chrome.png) no-repeat; }
-#content .mid-side .main-table .ico-ff {
-    background: url(/static/img/ico-ff.png) no-repeat; }
-#content .mid-side .main-table .ico-opera {
-    background: url(/static/img/ico-opera.png) no-repeat; }
-#content .mid-side .main-table .ico-safari {
-    background: url(/static/img/ico-safari.png) no-repeat; }
-#content .mid-side .main-table .ico-qq {
-    background: url(/static/img/ico-qq.png) no-repeat; }
-#content .mid-side .main-table .ico-sougou {
-    background: url(/static/img/ico-sougou.png) no-repeat; }
-#content .mid-side .main-table .ico-360 {
-    background: url(/static/img/ico-360.png) no-repeat; }
-#content .mid-side .main-table .ico-qb {
-    background: url(/static/img/ico-qb.png) no-repeat; }
-#content .mid-side .main-table .ico-liebao {
-    background: url(/static/img/ico-liebao.png) no-repeat; }
-#content .mid-side .main-table .ico-android {
-    background: url(/static/img/ico-android.png) no-repeat; }
-#content .mid-side .main-table .ico-ios {
-    background: url(/static/img/ico-ios.png) no-repeat; }
-#content .mid-side .main-table .ico-wx {
-    background: url(/static/img/ico-wx.png) no-repeat; }
-#content .mid-side .main-table .ico-maxthon {
-    background: url(/static/img/ico-maxthon.png) no-repeat; }
+#content .mid-side .main-table .ico-ie
+{
+    background: url(/static/img/ico-ie.png) no-repeat;
+}
+#content .mid-side .main-table .ico-chrome
+{
+    background: url(/static/img/ico-chrome.png) no-repeat;
+}
+#content .mid-side .main-table .ico-ff
+{
+    background: url(/static/img/ico-ff.png) no-repeat;
+}
+#content .mid-side .main-table .ico-opera
+{
+    background: url(/static/img/ico-opera.png) no-repeat;
+}
+#content .mid-side .main-table .ico-safari
+{
+    background: url(/static/img/ico-safari.png) no-repeat;
+}
+#content .mid-side .main-table .ico-qq
+{
+    background: url(/static/img/ico-qq.png) no-repeat;
+}
+#content .mid-side .main-table .ico-sougou
+{
+    background: url(/static/img/ico-sougou.png) no-repeat;
+}
+#content .mid-side .main-table .ico-360
+{
+    background: url(/static/img/ico-360.png) no-repeat;
+}
+#content .mid-side .main-table .ico-qb
+{
+    background: url(/static/img/ico-qb.png) no-repeat;
+}
+#content .mid-side .main-table .ico-liebao
+{
+    background: url(/static/img/ico-liebao.png) no-repeat;
+}
+#content .mid-side .main-table .ico-android
+{
+    background: url(/static/img/ico-android.png) no-repeat;
+}
+#content .mid-side .main-table .ico-ios
+{
+    background: url(/static/img/ico-ios.png) no-repeat;
+}
+#content .mid-side .main-table .ico-wx
+{
+    background: url(/static/img/ico-wx.png) no-repeat;
+}
+#content .mid-side .main-table .ico-maxthon
+{
+    background: url(/static/img/ico-maxthon.png) no-repeat;
+}
 
 #content .right-side section
 {
@@ -454,7 +491,7 @@ form
 
     list-style: none;
 
-    cursor: pointer; 
+    cursor: pointer;
     text-align: center;
 
     color: #fff;
@@ -475,7 +512,7 @@ form
 }
 #content .right-side .setting-msg li.msg-dis
 {
-    color: #333; 
+    color: #333;
     background: #d6d6d6;
 }
 #content .right-side .keyword-ctn .keyword-ipt
@@ -491,7 +528,7 @@ form
     font-size: 12px;
 
     height: 25px;
-    margin-left: 10px; 
+    margin-left: 10px;
     padding: 3px;
 }
 #content .right-side .setting-search
@@ -503,7 +540,7 @@ form
     width: 137px;
     height: 37px;
 
-    cursor: pointer; 
+    cursor: pointer;
     text-align: center;
 
     color: #fff;
@@ -536,7 +573,7 @@ form
 #content .right-side .keyword-tag .keyword-del
 {
     margin: 0 5px 0 5px;
-    padding: 0 4px; 
+    padding: 0 4px;
 
     cursor: pointer;
 
@@ -553,7 +590,7 @@ form
     top: 0;
     left: -18px;
 
-    width: 0; 
+    width: 0;
     height: 0;
 
     content: ' ';
@@ -568,7 +605,7 @@ form
     top: 7px;
     left: 2px;
 
-    width: 4px; 
+    width: 4px;
     height: 4px;
 
     content: ' ';
@@ -596,7 +633,7 @@ form
     height: 20px;
     margin: 0 3px 30px;
 
-    text-decoration: none; 
+    text-decoration: none;
 
     color: #fff;
     -webkit-border-radius: 50%;
@@ -607,13 +644,13 @@ form
 }
 .page-nav .current
 {
-    cursor: default; 
+    cursor: default;
 
     background: #88acdb;
 }
 .page-nav .extend
 {
-    margin: 0 27px; 
+    margin: 0 27px;
 
     color: #4d4d4d;
 }
@@ -1110,15 +1147,21 @@ form
     cursor: pointer;
 }
 
-.input-tips {
-    text-align: left;
-    padding-top: 5px;
+.input-tips
+{
     line-height: 1.8em;
+
+    padding-top: 5px;
+
+    text-align: left;
 }
-.input-tips b {
-    border: 1px solid #ccc;
-    background: #eee;
-    padding: 0 5px;
-    border-radius: 2px;
+.input-tips b
+{
     font-weight: normal;
+
+    padding: 0 5px;
+
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background: #eee;
 }
