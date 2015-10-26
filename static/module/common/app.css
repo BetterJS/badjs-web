@@ -1,8 +1,8 @@
-@charset "UTF-8";
+@charset 'UTF-8';
 body,
 html
 {
-    font-family: "Hiragino Sans GB", "Microsoft Yahei", arial, \5b8b\4f53, "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    font-family: 'Hiragino Sans GB', 'Microsoft Yahei', arial, \5b8b\4f53, 'Helvetica Neue', Helvetica, STHeiTi, sans-serif;
 
     height: 100%;
 
@@ -239,7 +239,6 @@ form
 }
 #content .mid-side .main-top .main-title
 {
-    font-family: 'Î¢ÈíÑÅºÚ';
     font-size: 24px;
 
     float: left;
@@ -312,8 +311,6 @@ form
 }
 #content .mid-side .main-table .err-where
 {
-    font-family: Menlo, Monaco, Andale Mono, lucida console, Courier New, monospace;
-
     display: inline-block;
 
     margin: 0 3px;
@@ -751,7 +748,6 @@ form
 }
 .searchPanel
 {
-    font-family: 'Î¢ÈíÑÅºÚ';
     font-size: 16px;
 
     margin: 0 20px;
@@ -900,8 +896,6 @@ form
 }
 .ListTable
 {
-    font-family: 'Î¢ÈíÑÅºÚ';
-
     padding: 10px 20px ;
 }
 .ListTable .operationPanel
@@ -914,7 +908,6 @@ form
 }
 .infoPanel .info
 {
-    font-family: 'Î¢ÈíÑÅºÚ';
     font-size: 18px;
     font-weight: bold;
     line-height: 45px;
