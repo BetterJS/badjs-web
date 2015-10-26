@@ -1,7 +1,8 @@
+@charset "UTF-8";
 body,
 html
 {
-    font-family: 'Î¢ÈíÑÅºÚ';
+    font-family: "Hiragino Sans GB", "Microsoft Yahei", arial, \5b8b\4f53, "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
 
     height: 100%;
 
