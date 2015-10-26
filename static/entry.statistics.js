@@ -2230,7 +2230,7 @@ webpackJsonp([9],{
 	((__t = ( ++count )) == null ? '' : __t) +
 	'</td>\r\n    <td class="td-row-2" style="width:120px;">' +
 	((__t = ( value.total )) == null ? '' : __t) +
-	'</td>\r\n    <td class="td-row-3" style="">' +
+	'</td>\r\n    <td class="td-row-3" style="word-break:break-all">' +
 	((__t = ( opt.encodeHtml(value.title) )) == null ? '' : __t) +
 	'</td>\r\n</tr>\r\n';
 
