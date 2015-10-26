@@ -390,7 +390,7 @@ webpackJsonp([8],{
 	((__t = ( getBrowserType(it[i].userAgent))) == null ? '' : __t) +
 	'" title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"></span></td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block;height:24px"\r\n            href="' +
+	'"></span></td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
 	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
 	'"\r\n            target="_blank"\r\n            data-event-click="showSource"\r\n            data-event-data="' +
 	((__t = (opt.set(it[i]))) == null ? '' : __t) +
