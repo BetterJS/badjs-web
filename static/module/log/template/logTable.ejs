@@ -4,53 +4,38 @@ var not_show_source_page = false;
 try {
     not_show_source_page = !!localStorage.not_show_source_page;
 } catch (ex) {}
-for (var i = 0 , l = it.length, type; i < l; i++) {
-switch(it[i].level) {
-    case '8':
-        type = 'warning';
-        break;
-    case '4':
-        type = 'err';
-        break;
-    case '2':
-        type = 'info';
-        break;
-    case '1':
-        type = 'debug';
-        break;
-}
 
 function getBrowserType(ua){
-        if(!ua){
-            return '';
-        }
-        ua = ua.toLowerCase();
+    if(!ua){
+        return '';
+    }
+    ua = ua.toLowerCase();
 
-        if(ua.indexOf('qqbrowser')>-1){
-            return  'ico-qb';
-        }else if(ua.indexOf('metasr')>-1){
-            return  'ico-sougou';
-        }else if(ua.indexOf('maxthon')>-1){
-            return  'ico-maxthon';
-        }else if(ua.indexOf('360se')>-1){
-            return  'ico-360';
-        }else if(ua.indexOf('qq/')>-1){
-            return  'ico-qq';
-        }else if(ua.indexOf('micromessenger')>-1){
-            return  'ico-wx';
-        }else if(ua.indexOf('chrome')>-1){
-            return  'ico-chrome';
-        }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
-            return 'ico-ie';
-        }else if(ua.indexOf('firefox')>-1){
-            return 'ico-ff';
-        }else if(ua.indexOf('safari')>-1){
-            return 'ico-safari';
-        }else if(ua.indexOf('android')>-1){
-            return  'ico-android';
-        }else if(ua.indexOf('iphone')>-1){
-            return  'ico-ios';
-        }
+    if(ua.indexOf('qqbrowser')>-1){
+        return  'ico-qb';
+    }else if(ua.indexOf('metasr')>-1){
+        return  'ico-sougou';
+    }else if(ua.indexOf('maxthon')>-1){
+        return  'ico-maxthon';
+    }else if(ua.indexOf('360se')>-1){
+        return  'ico-360';
+    }else if(ua.indexOf('qq/')>-1){
+        return  'ico-qq';
+    }else if(ua.indexOf('micromessenger')>-1){
+        return  'ico-wx';
+    }else if(ua.indexOf('chrome')>-1){
+        return  'ico-chrome';
+    }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
+        return 'ico-ie';
+    }else if(ua.indexOf('firefox')>-1){
+        return 'ico-ff';
+    }else if(ua.indexOf('safari')>-1){
+        return 'ico-safari';
+    }else if(ua.indexOf('android')>-1){
+        return  'ico-android';
+    }else if(ua.indexOf('iphone')>-1){
+        return  'ico-ios';
+    }
 }
 
 function sourcePage(data, type, opt) {
@@ -72,8 +57,24 @@ function sourcePage(data, type, opt) {
     }
 }
 
-var isHtml = /^.+?\.html\??/.test(it[i].target);
-var _target = it[i]._target = (it[i].target || it[i].url || '').replace(/\)/g, '');
+for (var i = 0 , l = it.length, type = ''; i < l; i++) {
+    switch(it[i].level.toString()) {
+        case '8':
+            type = 'warning';
+            break;
+        case '4':
+            type = 'err';
+            break;
+        case '2':
+            type = 'info';
+            break;
+        case '1':
+            type = 'debug';
+            break;
+    }
+
+    var isHtml = /^.+?\.html\??/.test(it[i].target);
+    var _target = it[i]._target = (it[i].target || it[i].url || '').replace(/\)/g, '');
 %>
 <tr id="tr-<%=i + 1 + opt.startIndex%>">
     <td  class="td-1 info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
