@@ -2226,7 +2226,7 @@ webpackJsonp([9],{
 	        var content = it.data[0].content;
 	        $.each(content , function (key , value) {
 	;
-	__p += '\r\n<tr class="listRow">\r\n    <td class="td-row-1" style="width:20px;">' +
+	__p += '\r\n<tr class="listRow">\r\n    <td class="td-row-1" style="width:40px;">' +
 	((__t = ( ++count )) == null ? '' : __t) +
 	'</td>\r\n    <td class="td-row-2" style="width:120px;">' +
 	((__t = ( value.total )) == null ? '' : __t) +
