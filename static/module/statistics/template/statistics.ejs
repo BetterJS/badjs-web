@@ -9,9 +9,9 @@
         $.each(content , function (key , value) {
 %>
 <tr class="listRow">
-    <td><%= ++count %></td>
-    <td><%= value.total %></td>
-    <td><%= opt.encodeHtml(value.title) %></td>
+    <td class="td-row-1" style="width:20px;"><%= ++count %></td>
+    <td class="td-row-2" style="width:120px;"><%= value.total %></td>
+    <td class="td-row-3" style=""><%= opt.encodeHtml(value.title) %></td>
 </tr>
 <%
         });
