@@ -370,7 +370,7 @@ webpackJsonp([8],{
 	}
 
 	var isHtml = /^.+?\.html\??/.test(it[i].target);
-	var _target = it[i]._target = it[i].target || it[i].url || '';
+	var _target = it[i]._target = (it[i].target || it[i].url || '').replace(/\)/g, '');
 	;
 	__p += '\r\n<tr id="tr-' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
@@ -390,17 +390,17 @@ webpackJsonp([8],{
 	((__t = ( getBrowserType(it[i].userAgent))) == null ? '' : __t) +
 	'" title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"></span></td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
+	'"></span></td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block;height:24px"\r\n            href="' +
 	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
 	'"\r\n            target="_blank"\r\n            data-event-click="showSource"\r\n            data-event-data="' +
 	((__t = (opt.set(it[i]))) == null ? '' : __t) +
 	'"\r\n        >\r\n            ' +
 	((__t = (opt.encodeHtml(_target))) == null ? '' : __t) +
-	'\r\n        </a>\r\n        <span class="err-where">' +
-	((__t = (opt.encodeHtml(it[i].rowNum || 0) )) == null ? '' : __t) +
-	'行' +
+	'\r\n            <span\r\n                class="err-where"\r\n                style="height:24px;line-height:24px;border-radius:3px"\r\n            >\r\n                ' +
+	((__t = (opt.encodeHtml(it[i].rowNum || 0))) == null ? '' : __t) +
+	'行\r\n                ' +
 	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
-	'列</span>\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
+	'列\r\n            </span>\r\n        </a>\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
 	((__t = (sourcePage(it[i], 'href', opt))) == null ? '' : __t) +
 	'"\r\n            data-viewtext="' +
 	((__t = (sourcePage(it[i], 'viewtext', opt))) == null ? '' : __t) +
