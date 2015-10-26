@@ -62,7 +62,7 @@ function sourcePage(data, type, opt) {
             not_show_source_page ? view[0] : view[1];
     } else {
         var href = opt.encodeHtml(from);
-        var msg = data.msg || '';
+        var msg = [data._target, data.rowNum, data.colNum].join(':') + ' ' + data.msg;
         if (href.indexOf('#') === -1) {
             href += '#BJ_ERROR=' + encodeURIComponent(msg);
         } else {
@@ -73,6 +73,7 @@ function sourcePage(data, type, opt) {
 }
 
 var isHtml = /^.+?\.html\??/.test(it[i].target);
+var _target = it[i]._target = it[i].target || it[i].url || '';
 %>
 <tr id="tr-<%=i + 1 + opt.startIndex%>">
     <td  class="td-1 info-type-<%=type%>"><%=i + 1 + opt.startIndex%></td>
@@ -83,10 +84,20 @@ var isHtml = /^.+?\.html\??/.test(it[i].target);
     <td  class="td-6"><span class="ico-browser <%= getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
     <td class="td-7">
         <a
+            style="word-break:break-all;display:block"
+            href="<%= opt.encodeHtml(_target)%>"
+            target="_blank"
+            data-event-click="showSource"
+            data-event-data="<%=opt.set(it[i])%>"
+        >
+            <%=opt.encodeHtml(_target)%>
+        </a>
+        <span class="err-where"><%=opt.encodeHtml(it[i].rowNum || 0) %>行<%=opt.encodeHtml(it[i].colNum || 0)%>列</span>
+        <a
             class="source_page_link"
             style="font-size:12px"
             target="_blank"
-            href="<%=sourcePage(it[i], 'href', opt) %>"
+            href="<%=sourcePage(it[i], 'href', opt)%>"
             data-viewtext="<%=sourcePage(it[i], 'viewtext', opt)%>"
             data-viewlink="<%=sourcePage(it[i], 'viewlink', opt)%>"
         ><%=sourcePage(it[i], 'view', opt)%></a>
@@ -94,7 +105,7 @@ var isHtml = /^.+?\.html\??/.test(it[i].target);
 </tr>
 <% } %>
 
-<% if(it.length == 0 ){%>
+<% if(it.length === 0 ){%>
 <td colspan="7" style="
     text-align: center;
     background: rgb(221, 221, 221);

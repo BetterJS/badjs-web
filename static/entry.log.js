@@ -2484,7 +2484,7 @@ webpackJsonp([6],{
 	            not_show_source_page ? view[0] : view[1];
 	    } else {
 	        var href = opt.encodeHtml(from);
-	        var msg = data.msg || '';
+	        var msg = [data._target, data.rowNum, data.colNum].join(':') + ' ' + data.msg;
 	        if (href.indexOf('#') === -1) {
 	            href += '#BJ_ERROR=' + encodeURIComponent(msg);
 	        } else {
@@ -2495,6 +2495,7 @@ webpackJsonp([6],{
 	}
 
 	var isHtml = /^.+?\.html\??/.test(it[i].target);
+	var _target = it[i]._target = it[i].target || it[i].url || '';
 	;
 	__p += '\r\n<tr id="tr-' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
@@ -2514,8 +2515,18 @@ webpackJsonp([6],{
 	((__t = ( getBrowserType(it[i].userAgent))) == null ? '' : __t) +
 	'" title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"></span></td>\r\n    <td class="td-7">\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
-	((__t = (sourcePage(it[i], 'href', opt) )) == null ? '' : __t) +
+	'"></span></td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
+	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
+	'"\r\n            target="_blank"\r\n            data-event-click="showSource"\r\n            data-event-data="' +
+	((__t = (opt.set(it[i]))) == null ? '' : __t) +
+	'"\r\n        >\r\n            ' +
+	((__t = (opt.encodeHtml(_target))) == null ? '' : __t) +
+	'\r\n        </a>\r\n        <span class="err-where">' +
+	((__t = (opt.encodeHtml(it[i].rowNum || 0) )) == null ? '' : __t) +
+	'行' +
+	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
+	'列</span>\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
+	((__t = (sourcePage(it[i], 'href', opt))) == null ? '' : __t) +
 	'"\r\n            data-viewtext="' +
 	((__t = (sourcePage(it[i], 'viewtext', opt))) == null ? '' : __t) +
 	'"\r\n            data-viewlink="' +
@@ -2525,7 +2536,7 @@ webpackJsonp([6],{
 	'</a>\r\n    </td>\r\n</tr>\r\n';
 	 } ;
 	__p += '\r\n\r\n';
-	 if(it.length == 0 ){;
+	 if(it.length === 0 ){;
 	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
 	};
 

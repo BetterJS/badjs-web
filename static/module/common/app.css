@@ -1,7 +1,7 @@
 body,
 html
 {
-    font-family: '微软雅黑';
+    font-family: '΢���ź�';
 
     height: 100%;
 
@@ -25,7 +25,8 @@ header
     height: 40px;
 
     color: #f5ca51;
-    background: #463a32;
+    background: #353434;
+    border-bottom: 1px solid #666;
 }
 .head-logo
 {
@@ -247,7 +248,7 @@ form
 }
 #content .mid-side .main-top .main-title
 {
-    font-family: '微软雅黑';
+    font-family: '΢���ź�';
     font-size: 24px;
 
     float: left;
@@ -758,7 +759,7 @@ form
 }
 .searchPanel
 {
-    font-family: '微软雅黑';
+    font-family: '΢���ź�';
     font-size: 16px;
 
     margin: 0 20px;
@@ -907,7 +908,7 @@ form
 }
 .ListTable
 {
-    font-family: '微软雅黑';
+    font-family: '΢���ź�';
 
     padding: 10px 20px ;
 }
@@ -921,7 +922,7 @@ form
 }
 .infoPanel .info
 {
-    font-family: '微软雅黑';
+    font-family: '΢���ź�';
     font-size: 18px;
     font-weight: bold;
     line-height: 45px;
@@ -1037,7 +1038,7 @@ form
     text-overflow: ellipsis;
 }
 
-/*charts 图表*/
+/*charts ͼ��*/
 
 #chart-table
 {
