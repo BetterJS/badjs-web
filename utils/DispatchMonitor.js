@@ -1,9 +1,9 @@
-var  zmq = require('zmq')
-    , client = zmq.socket('sub')
-    , port = "tcp://10.143.132.205:10000"
-    , service = "badjs";
+var zmq = require('zmq'),
+    client = zmq.socket('sub'),
+    port = "tcp://10.143.132.205:10000",
+    service = "badjs";
 
-var spawn  = require("child_process").spawn
+var spawn = require("child_process").spawn;
 
 var badjsKey = "635658";
 
@@ -12,26 +12,26 @@ var path = "/usr/local/agenttools/agent/agentRepSum";
 client.connect(port);
 client.subscribe(service);
 
-var total = 0 ;
+var total = 0;
 
-client.on("message" , function (data){
+client.on("message", function(data) {
     var dataStr = data.toString();
     data = dataStr.substring(dataStr.indexOf(' '));
-    try{
+    try {
         data = JSON.parse(data);
-    }catch(e){}
+    } catch (e) {}
 
 
-    if(data.mmid){
+    if (data.mmid) {
 
     }
 
-    total ++ ;
+    total++;
 
 });
 
 // 一个小时上报一次
-setInterval(function (){
-    spawn(path ,[badjsKey , total]);
+setInterval(function() {
+    spawn(path, [badjsKey, total]);
     total = 0;
-},3600000);
+}, 3600000);

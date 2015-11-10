@@ -5,6 +5,8 @@
     // ==============预定义变量============
     "globals":{
         "$": true,
+        "GLOBAL": true,
+        "global": true,
         "jQuery": true,
         "exports": true,
         "module": true,

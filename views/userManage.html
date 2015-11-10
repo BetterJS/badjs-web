@@ -11,8 +11,14 @@
                 <label class="search-info">当前项目</label>
                 <select class="search-applyId">
                     <option value="-1">全部</option>
-                    <%  for(var i = 0 ; i < it.items.length ;i ++){
-                    var itemOne = it.items[i];
+                    <%
+                        var items = it.items;
+                        var items_length = items.length;
+                        items.sort(function(x, y) {
+                            return x.id - y.id;
+                        });
+                        for(var i = 0; i < items_length; i++) {
+                            var itemOne = items[i];
                     %>
                     <option value="<%=itemOne.id%>">(<%=itemOne.id%>) <%=itemOne.name%></option>
                     <%}%>

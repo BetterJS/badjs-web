@@ -67,25 +67,24 @@ var getImageData = function(name, data) {
 
     return {
         data: {
+            width: 800,
+            title: {
+                text: "The last " + DAY_LENGTH + " days line charts"
+            },
             xAxis: {
                 categories: categories
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Total'
+                }
             },
             series: [{
                 data: totalArray,
                 name: "-"
             }]
-        },
-        options: {
-            title: {
-                text: "The last " + DAY_LENGTH + " days line charts"
-            },
-            "yAxis": {
-                "title": {
-                    "text": "total"
-                }
-            }
-        },
-        width: 800
+        }
     };
 };
 
@@ -175,9 +174,9 @@ EmailService.prototype = {
                             name = v.name;
                         }); // jshint ignore:line
 
-                        //测试代码
+                        // 测试代码
                         if (sendObject) {
-                            if (sendObject.sendId && sendObject.sendId != applyId) {
+                            if (sendObject.sendId && sendObject.sendId !== applyId) {
                                 return;
                             }
                             if (sendObject.sendToList.length) {

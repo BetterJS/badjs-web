@@ -2222,8 +2222,8 @@ webpackJsonp([6],{
 	            $(this).closest('.keyword-tag').remove();
 	            removeValue(value, logConfig.exclude);
 	        }).on('click', 'showLogs', function() {
-	            var startTime = $('#startTime').val(),
-	                endTime = $('#endTime').val();
+	            var startTime = ($('#startTime').val() || '').replace(/-/g, '/'),
+	                endTime = ($('#endTime').val() || '').replace(/-/g, '/');
 	            logConfig.startDate = startTime === '' ?
 	                new Date().getTime() - maxDate :
 	                new Date(startTime).getTime();
