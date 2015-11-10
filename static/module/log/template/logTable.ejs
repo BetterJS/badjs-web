@@ -73,6 +73,10 @@ for (var i = 0 , l = it.length, type = ''; i < l; i++) {
             break;
     }
 
+    if (_.isArray(it[i].target)) {
+        it[i].target = it[i].target[0];
+    }
+
     var isHtml = /^.+?\.html\??/.test(it[i].target);
     var _target = it[i]._target = (it[i].target || it[i].url || '').replace(/\)/g, '');
 %>
@@ -82,7 +86,12 @@ for (var i = 0 , l = it.length, type = ''; i < l; i++) {
     <td  style="" class="td-3"><%= opt.encodeHtml(it[i].msg) %></td>
     <td  class="td-4"><%=  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin )%></td>
     <td  class="td-5"><%=it[i].ip %></td>
-    <td  class="td-6"><span class="ico-browser <%= getBrowserType(it[i].userAgent)%>" title="<%=it[i].userAgent%>"></span></td>
+    <td  class="td-6">
+        <span
+            class="ico-browser <%=getBrowserType(it[i].userAgent)%>"
+            title="<%=it[i].userAgent%>"
+        ></span>
+    </td>
     <td class="td-7">
         <a
             style="word-break:break-all;display:block"

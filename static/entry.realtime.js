@@ -370,52 +370,56 @@ webpackJsonp([8],{
 	            break;
 	    }
 
+	    if (_.isArray(it[i].target)) {
+	        it[i].target = it[i].target[0];
+	    }
+
 	    var isHtml = /^.+?\.html\??/.test(it[i].target);
 	    var _target = it[i]._target = (it[i].target || it[i].url || '').replace(/\)/g, '');
 	;
-	__p += '\r\n<tr id="tr-' +
+	__p += '\n<tr id="tr-' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'">\r\n    <td  class="td-1 info-type-' +
+	'">\n    <td  class="td-1 info-type-' +
 	((__t = (type)) == null ? '' : __t) +
 	'">' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-2">' +
+	'</td>\n    <td  class="td-2">' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'</td>\r\n    <td  style="" class="td-3">' +
+	'</td>\n    <td  style="" class="td-3">' +
 	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-4">' +
+	'</td>\n    <td  class="td-4">' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-5">' +
+	'</td>\n    <td  class="td-5">' +
 	((__t = (it[i].ip )) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-6"><span class="ico-browser ' +
-	((__t = ( getBrowserType(it[i].userAgent))) == null ? '' : __t) +
-	'" title="' +
+	'</td>\n    <td  class="td-6">\n        <span\n            class="ico-browser ' +
+	((__t = (getBrowserType(it[i].userAgent))) == null ? '' : __t) +
+	'"\n            title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"></span></td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
+	'"\n        ></span>\n    </td>\n    <td class="td-7">\n        <a\n            style="word-break:break-all;display:block"\n            href="' +
 	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
-	'"\r\n            target="_blank"\r\n            data-event-click="showSource"\r\n            data-event-data="' +
+	'"\n            target="_blank"\n            data-event-click="showSource"\n            data-event-data="' +
 	((__t = (opt.set(it[i]))) == null ? '' : __t) +
-	'"\r\n        >\r\n            ' +
+	'"\n        >\n            ' +
 	((__t = (opt.encodeHtml(_target))) == null ? '' : __t) +
-	'\r\n            <span\r\n                class="err-where"\r\n                style="height:24px;line-height:24px;border-radius:3px"\r\n            >\r\n                ' +
+	'\n            <span\n                class="err-where"\n                style="height:24px;line-height:24px;border-radius:3px"\n            >\n                ' +
 	((__t = (opt.encodeHtml(it[i].rowNum || 0))) == null ? '' : __t) +
-	'行\r\n                ' +
+	'行\n                ' +
 	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
-	'列\r\n            </span>\r\n        </a>\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
+	'列\n            </span>\n        </a>\n        <a\n            class="source_page_link"\n            style="font-size:12px"\n            target="_blank"\n            href="' +
 	((__t = (sourcePage(it[i], 'href', opt))) == null ? '' : __t) +
-	'"\r\n            data-viewtext="' +
+	'"\n            data-viewtext="' +
 	((__t = (sourcePage(it[i], 'viewtext', opt))) == null ? '' : __t) +
-	'"\r\n            data-viewlink="' +
+	'"\n            data-viewlink="' +
 	((__t = (sourcePage(it[i], 'viewlink', opt))) == null ? '' : __t) +
-	'"\r\n        >' +
+	'"\n        >' +
 	((__t = (sourcePage(it[i], 'view', opt))) == null ? '' : __t) +
-	'</a>\r\n    </td>\r\n</tr>\r\n';
+	'</a>\n    </td>\n</tr>\n';
 	 } ;
-	__p += '\r\n\r\n';
+	__p += '\n\n';
 	 if(it.length === 0 ){;
-	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
+	__p += '\n<td colspan="7" style="\n    text-align: center;\n    background: rgb(221, 221, 221);\n">无更多数据</td>\n';
 	};
-
+	__p += '\n';
 
 	}
 	return __p
