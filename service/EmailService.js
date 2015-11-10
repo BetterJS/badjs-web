@@ -176,7 +176,7 @@ EmailService.prototype = {
 
                         // 测试代码
                         if (sendObject) {
-                            if (sendObject.sendId && sendObject.sendId !== applyId) {
+                            if (sendObject.sendId && sendObject.sendId == applyId) {
                                 return;
                             }
                             if (sendObject.sendToList.length) {
