@@ -1,4 +1,4 @@
-var tof = require('./oa/node-tof');
+var oa = require('yourOaModuel');
 var crypto = require('crypto');
 var log4js = require('log4js'),
     logger = log4js.getLogger();
@@ -17,25 +17,29 @@ var isError = function(res, error) {
 module.exports = function(req, res, next) {
     var params = req.query,
         user = req.session.user,
-    //»ñÈ¡ÓÃ»§model
         userDao = req.models.userDao;
 
     req.indexUrl = req.protocol + "://" + req.get('host') + '/user/index.html';
 
-    if (/^\/oalogin/i.test(req.url)) { // µÇÂ¼
+    //è·³è½¬åˆ° oa è¿›è¡Œç™»å½•
+    if (/^\/oalogin/i.test(req.url)) {
         var redirectUrl = req.indexUrl;
-        res.redirect('http://passport.oa.com/modules/passport/signin.ashx?url=' + redirectUrl);
+        res.redirect('http://youroalogin.com?url=' + redirectUrl);
         return;
     }
-    if (params && params.ticket) { // oa µÇÂ¼Ìø×ª
-        tof.passport(params.ticket, function(result) {
+    //åˆ¤æ–­æ˜¯å¦æœ‰ticket ï¼Œä¸€èˆ¬çš„oaç»Ÿä¸€ç™»å½•éƒ½ä¼šæœ‰ç”¨ ticketè¿›è¡Œç»Ÿä¸€ç™»å½•
+    if (params && params.ticket) {
+        // è°ƒç”¨ä½ çš„oa ç»„ä»¶ï¼Œè¿›è¡Œç™»å½•å¤„ç†
+        oa.passport(params.ticket, function(result) {
             if (result) {
-                //µÇÂ¼³É¹¦
+
+                // å­˜å…¥session ï¼Œç”¨äºåˆ¤æ–­æ­¤ç”¨æˆ·å·²ç»ç™»å½•
                 user = req.session.user = {
                     loginName: result.LoginName,
                     chineseName: result.ChineseName,
                     role: 0
                 };
+
 
                 userDao.one({
                     loginName: result.LoginName
@@ -44,7 +48,8 @@ module.exports = function(req, res, next) {
                         return;
                     }
 
-                    if (!dbUser) { //µÚÒ»´ÎµÇÂ½£¬½«ÓÃ»§ĞÅÏ¢Ğ´ÈëÊı¾İ¿â
+                    // ç”¨æˆ·æ²¡æœ‰ç™»å½• badjsï¼Œ è¿›è¡Œåˆ›å»ºç”¨æˆ·ä¿¡æ¯
+                    if (!dbUser) {
                         req.session.user.email = user.loginName + GLOBAL.pjconfig.email.emailSuffix;
                         req.session.user.password = crypto.createHash("md5").update(user.loginName).digest('hex');
 
@@ -59,13 +64,15 @@ module.exports = function(req, res, next) {
                             logger.info("New User:" + JSON.stringify(req.session.user) + "insert into db-badjs");
                             next();
                         });
-                    } else { // ÒÑ¾­µÇÂ¼¹ı£¬ÅĞ¶ÏÊÇ·ñ¸üĞÂĞÅÏ¢
+                    } else {
+                        // å·²ç»ç™»é™†è¿‡äº†ï¼Œå°†æ›´åŠ è¯¦ç»†çš„ä¿¡æ¯æ³¨å…¥åˆ°sessionä¸­
                         logger.info("Old User:" + JSON.stringify(req.session.user));
                         req.session.user.role = dbUser.role;
                         req.session.user.id = dbUser.id;
                         req.session.user.email = dbUser.email;
 
-                        // ÉĞÎ´µÇÂ¼¹ı£¬ µ«ÊÇÌí¼Ó¹ı£¬·ÖÅäÖĞÎÄÃû×Ö
+                        // ç”¨æˆ·æ²¡æœ‰ç™»é™†è¿‡ï¼Œä½†æ˜¯åœ¨ http://badjs.server.com/user/userManage.html åˆ›å»ºè¿‡id
+                        // è®²oa å›ä¼ çš„ä¿¡æ¯å­˜å…¥æ•°æ®åº“
                         if (!dbUser.chineseName) {
                             dbUser.chineseName = result.ChineseName;
                             dbUser.save(function(err, result) {});

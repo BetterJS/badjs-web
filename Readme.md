@@ -48,18 +48,18 @@ db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理�
     },
     "email": {      // 发送 email 配置
         "homepage": "http://badjs.server.com/user/index.html",  // 邮件中的 快捷入口
-        "from": "noreply-badjs@tencent.com",                    //邮件中的发送者名字
-        "smtp": "smtp.tencent.com",                             // smtp 服务器
-        "emailSuffix" : "@tencent.com",         //收件人的邮件后缀，收件人地址 username +  emailSuffix
+        "from": "noreply-badjs@demo.com",                    //邮件中的发送者名字
+        "smtp": "smtp.demo.com",                             // smtp 服务器
+        "emailSuffix" : "@demo.com",         //收件人的邮件后缀，收件人地址 username +  emailSuffix
         "time": "09:00:00",                     // 几点发送邮件
         "top": 20,                            //邮件只发送错误排名的配置的top20
         "module": "email_tof"                 // 邮件发送模块
     },
     "oos" : {                                 //接入公司的统一登录， 删掉使用系统自己的用户管理
-        "module":"tencent/tencentoos"
+        "module":"demo/demooos"
     }
 }
 ```
 
 # oos 接入
-查看当前目录的 oos/tencentoos.js 如何处理。
+查看当前目录的 oos/demooos.js 如何处理。
