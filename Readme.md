@@ -1,14 +1,14 @@
 #badjs-storage
 
-> badjs manage system . 
+> badjs manage system .
 
 # 运行
-```javascript 
+```javascript
 node app.js
 ```
 
 # 启动参数
---debug  log 采用debug 级别, 默认使用info 
+--debug  log 采用debug 级别, 默认使用info
 
 --project 使用测试环境（ project.debug.json ）配置 ， 默认使用 project.json
 
@@ -19,7 +19,7 @@ webpack -w
 ```
 上线阶段需要打包打包命令
 ```javascript
-webpack 
+webpack
 ```
 
 # 数据库初始化
@@ -42,7 +42,7 @@ db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理�
      "openapi": {        //badjs-acceptor 模块的地址， 这里用于同步审核通过的业务的appkey 到openapi 进行验证
         "pushProjectUrl" : "http://127.0.0.1:9002/getProjects"
     },
-    "zmq" : {       // badjs-mq 的地址  
+    "zmq" : {       // badjs-mq 的地址
          "url" : "tcp://127.0.0.1:10000",
         "subscribe" : "badjs"     // 跟 badjs-aceptor 中的subscribe 对应
     },
@@ -63,3 +63,4 @@ db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理�
 
 # oos 接入
 查看当前目录的 oos/demooos.js 如何处理。
+> 腾讯内部接入可以[参考](https://github.com/BetterJS/oos-tencent)

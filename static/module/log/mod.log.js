@@ -15,7 +15,7 @@ var logConfig = {
         include: [],
         exclude: [],
         index: 0,
-        level: [4]
+        level: [1, 2, 4]
     },
 
     encodeHtml = function(str) {

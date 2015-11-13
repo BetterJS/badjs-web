@@ -531,17 +531,14 @@ webpackJsonp([8],{
 	        include: [],
 	        exclude: [],
 	        index: 0,
-	        level: [4]
+	        level: [1, 2, 4]
 	    },
 
 	    encodeHtml = function(str) {
 	        return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
 	    };
 
-
 	var websocket;
-
-
 
 	var currentSelectId = -1,
 	    currentIndex = 0,
@@ -694,7 +691,7 @@ webpackJsonp([8],{
 	var startMonitor = function(id) {
 
 	    websocket = new WebSocket("ws://" + location.host + "/ws/realtimeLog");
-	    
+
 	    currentIndex = 0;
 	    websocket.onmessage = function(evt) {
 	        showLogs(JSON.parse(evt.data).message);
@@ -750,6 +747,7 @@ webpackJsonp([8],{
 	}
 
 	exports.init = init;
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }

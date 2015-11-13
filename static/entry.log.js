@@ -2146,7 +2146,7 @@ webpackJsonp([6],{
 	        include: [],
 	        exclude: [],
 	        index: 0,
-	        level: [4]
+	        level: [1, 2, 4]
 	    },
 
 	    encodeHtml = function(str) {
@@ -2388,6 +2388,7 @@ webpackJsonp([6],{
 	}
 
 	exports.init = init;
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1)))
 
 /***/ },
