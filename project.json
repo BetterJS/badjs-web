@@ -1,34 +1,33 @@
 {
     "host" : "http://badjs.server.com/",
-    "port": 8081,
     "mysql" : {
-        "url" : "mysql://root:root@localhost:3306/badjs"
-    },
-    "storage" : {
-        "errorMsgTopUrl" : "http://127.0.0.1:9000/errorMsgTop",
-        "errorMsgTopCacheUrl" : "http://127.0.0.1:9000/errorMsgTopCache",
-        "queryUrl" : "http://127.0.0.1:9000/query"
-    },
-    "acceptor": {
-        "pushProjectUrl" : "http://127.0.0.1:9001/getProjects"
+        "url" : "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs"
     },
     "openapi": {
-        "pushProjectUrl" : "http://127.0.0.1:9002/getProjects"
+         "pushProjectUrl" : "http://127.0.0.1:9002/getProjects"
+     },
+    "storage" : {
+        "errorMsgTopUrl" : "http://10.143.132.205:9000/errorMsgTop",
+        "errorMsgTopCacheUrl" : "http://10.143.132.205:9000/errorMsgTopCache",
+        "queryUrl" : "http://10.143.132.205:9000/query"
+    },
+    "acceptor": {
+        "pushProjectUrl" : "http://10.143.132.205:9001/getProjects"
     },
     "zmq" : {
-      "url" : "tcp://127.0.0.1:10000",
-      "subscribe" : "badjs"
+        "url" : "tcp://10.143.132.205:10000",
+        "subscribe" : "badjs"
     },
     "email": {
         "homepage": "http://badjs.server.com/user/index.html",
-        "from": "noreply-badjs@demo.com",
-        "emailSuffix" : "@demo.com",
-        "smtp": "smtp.demo.com",
+        "from": "noreply-badjs@tencent.com",
+        "smtp": "smtp.tencent.com",
+        "emailSuffix" : "@tencent.com",
         "time": "09:00:00",
         "top": 20,
-        "module": "email"
+        "module": "email_tof"
     },
     "oos" : {
-        "module":"demo/demooos"
+        "module":"tencent/tencentoos"
     }
 }
