@@ -1,168 +1,187 @@
-var  zmq = require('zmq');
+/* global process */
+var zmq = require('zmq');
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
 
 var port = process.env.port;
 var service = process.env.service;
-var isDebug = process.env.debug == "false" ? false: true;
+var isDebug = process.env.debug == "false" ? false : true;
 
-if(isDebug){
+if (isDebug) {
     logger.setLevel('DEBUG');
 }
 
 
 var filter = {};
-var isInclude = function (str, regs){
+var isInclude = function(str, regs) {
     var result = true;
 
-    regs.forEach(function (value , key){
-        if(str.indexOf(value) >= 0){
+    regs.forEach(function(value, key) {
+        if (str.indexOf(value) >= 0) {
             result = result && true;
-        }else {
+        } else {
             result = result && false;
         }
     });
     return result;
-}
+};
 
-var isExclude = function (str, regs){
+var isExclude = function(str, regs) {
     var result = true;
-    regs.forEach(function (value , key){
-        if(str.indexOf(value) >= 0){
+    regs.forEach(function(value, key) {
+        if (str.indexOf(value) >= 0) {
             result = result && true;
-        }else {
+        } else {
             result = result && false;
         }
     });
 
     return result;
-}
+};
 
 
 
-var Worker = {
+var monitorWorker = {
 
-    wbClient : {},
+    wbClient: {},
 
-    filter : {},
+    filter: {},
 
-    monitorKey : '',
+    monitorKey: '',
 
-    zmqClient : null,
+    zmqClient: null,
 
-    _resetTimeoutFlag : function (){
-        this.wbClient._keepalive = new Date - 0 ;
+    _resetTimeoutFlag: function() {
+        this.wbClient._keepalive = new Date - 0;
         this.wbClient._timeoutTimes = 0;
     },
 
-    _keepAliveMonitor : function (){
+    _keepAliveMonitor: function() {
         var self = this;
-        if(this._monitorTimeoutId ){
+        if (this._monitorTimeoutId) {
             clearInterval(this._monitorTimeoutId);
         }
-        this._monitorTimeoutId = setInterval(function (){
+        this._monitorTimeoutId = setInterval(function() {
             var currentDate = new Date - 0;
-            if(!self.wbClient._keepalive){
+            if (!self.wbClient._keepalive) {
                 self._resetTimeoutFlag();
             }
-            if (currentDate - self.wbClient._keepalive  > 5000) {
+            if (currentDate - self.wbClient._keepalive > 5000) {
                 self.wbClient._timeoutTimes++;
             }
 
-            if(self.wbClient._timeoutTimes >2){
+            if (self.wbClient._timeoutTimes > 2) {
                 logger.info("one client timeout ");
-                process.send({type: "_STOP_" });
+                process.send({
+                    type: "_STOP_"
+                });
                 self.stopMonitor();
             }
-        },5000);
+        }, 5000);
     },
 
 
-    init : function (){
+    init: function() {
         var self = this;
-        process.on("message" , function (data){
-            switch(data.type){
-                case "KEEPALIVE": self._resetTimeoutFlag() ; break;
-                case "READY":  self._keepAliveMonitor(); break;
-                case "INIT" : self.startMonitor(data) ; break;
-                case "STOP" : self.stopMonitor();  break;
-                default:break;
+        process.on("message", function(data) {
+            switch (data.type) {
+                case "KEEPALIVE":
+                    self._resetTimeoutFlag();
+                    break;
+                case "READY":
+                    self._keepAliveMonitor();
+                    break;
+                case "INIT":
+                    self.startMonitor(data);
+                    break;
+                case "STOP":
+                    self.stopMonitor();
+                    break;
+                default:
+                    break;
             }
 
-            if(isDebug ){
-                logger.debug( "pid="+ process.pid + " , " +JSON.stringify(data));
+            if (isDebug) {
+                logger.debug("pid=" + process.pid + " , " + JSON.stringify(data));
             }
 
         });
     },
 
-    isMatch : function (data){
+    isMatch: function(data) {
 
-        try{
-            var msg = data.msg + "||" + data.uin + "||" + data.url + "||" + data.userAgent+ "||" + data.from
+        try {
+            var msg = data.msg + "||" + data.uin + "||" + data.url + "||" + data.userAgent + "||" + data.from;
 
-            if(filter.level.indexOf(data.level) <0){
+            if (filter.level.indexOf(data.level) < 0) {
                 return false;
             }
 
-            if(filter.include && filter.include.length != 0){
-                if(!isInclude(msg , filter.include)){
+            if (filter.include && filter.include.length !== 0) {
+                if (!isInclude(msg, filter.include)) {
                     return false;
                 }
             }
-            if( filter.exclude && filter.exclude.length != 0){
-                if(isExclude(msg , filter.exclude)){
+            if (filter.exclude && filter.exclude.length !== 0) {
+                if (isExclude(msg, filter.exclude)) {
                     return false;
                 }
             }
-        }catch(e){
-            logger.error("isMatch error : " + e +  "data :" + JSON.stringify(data))
+        } catch (e) {
+            logger.error("isMatch error : " + e + "data :" + JSON.stringify(data));
         }
 
         return true;
     },
 
-    startMonitor :function (data){
+    startMonitor: function(data) {
         var self = this;
 
-        this.monitorKey = service+data.id+"|" ;
+        this.monitorKey = service + data.id + "|";
 
         this.zmqClient = zmq.socket('sub');
 
         this.zmqClient.connect(port);
         this.zmqClient.subscribe(this.monitorKey);
 
-        filter = {level : data.level , include : data.include , exclude : data.exclude};
+        filter = {
+            level: data.level,
+            include: data.include,
+            exclude: data.exclude
+        };
 
-        logger.info("worker("+process.pid+") start accept service:" + this.monitorKey);
+        logger.info("worker(" + process.pid + ") start accept service:" + this.monitorKey);
 
 
-        this.zmqClient.on("message" , function (data){
+        this.zmqClient.on("message", function(data) {
             var dataStr = data.toString();
             data = dataStr.substring(dataStr.indexOf(' '));
-            try{
+            try {
                 data = JSON.parse(data);
-            }catch(e){}
+            } catch (e) {}
 
 
-            if(self.isMatch(data)){
-                process.send({type: "MESSAGE" , message : data});
+            if (self.isMatch(data)) {
+                process.send({
+                    type: "MESSAGE",
+                    message: data
+                });
             }
 
         });
     },
 
-    stopMonitor : function (){
-        logger.info("worker("+process.pid+") stop accept, service:" + this.monitorKey );
-        this.zmqClient && this.zmqClient.close();
+    stopMonitor: function() {
+        logger.info("worker(" + process.pid + ") stop accept, service:" + this.monitorKey);
+        try {
+            this.zmqClient && this.zmqClient.close();
+        } catch (ex) {
+            logger.error('zmq client close error!');
+        }
         this.wbClient = {};
         clearInterval(this._monitorTimeoutId);
     }
-}
+};
 
-
-
-
-Worker.init();
-
+monitorWorker.init();
