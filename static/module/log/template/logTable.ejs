@@ -23,6 +23,8 @@ function getBrowserType(ua){
         return  'ico-qq';
     }else if(ua.indexOf('micromessenger')>-1){
         return  'ico-wx';
+    }else if(ua.indexOf('edge')>-1){
+        return  'ico-edge';
     }else if(ua.indexOf('chrome')>-1){
         return  'ico-chrome';
     }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
