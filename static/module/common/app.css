@@ -328,6 +328,10 @@ form
 
     cursor: pointer;
 }
+#content .mid-side .main-table .ico-edge
+{
+    background: url(/static/img/ico-edge.png) no-repeat;
+}
 #content .mid-side .main-table .ico-ie
 {
     background: url(/static/img/ico-ie.png) no-repeat;
@@ -1023,7 +1027,7 @@ form
     text-overflow: ellipsis;
 }
 
-/*charts Í¼±í*/
+/*charts Í¼ï¿½ï¿½*/
 
 #chart-table
 {
