@@ -105,11 +105,11 @@ function bindEvent() {
                 $(this).data("stop", true);
                 $('#log-table').html('');
                 startMonitor(logConfig.id);
-                $(this).text('停止监听');
+                $(this).addClass("stop").text('停止监听');
             } else {
                 $(this).data("stop", false);
                 websocket.close();
-                $(this).text('开始监听');
+                $(this).removeClass("stop").text('开始监听');
             }
 
         })

@@ -194,6 +194,9 @@ function showLogs(opts, isAdd) {
 
     loading = true;
 
+    $(".setting-search").text("正在加载...")
+
+
     if (!isAdd) {
         currentIndex = 0;
         noData = false;
@@ -213,6 +216,7 @@ function showLogs(opts, isAdd) {
             level: opts.level
         },
         success: function(data) {
+            $(".setting-search").text("查询日志")
             var ret = data.ret;
             if (ret === 0) {
                 var param = {
@@ -237,10 +241,16 @@ function showLogs(opts, isAdd) {
                 if (data.data.length === 0) {
                     noData = true;
                 }
+            }else {
+                dialog({
+                    header: '查询失败',
+                    body: JSON.stringify(data.msg)
+                });
             }
             loading = false;
         },
         error: function() {
+            $(".setting-search").text("查询日志")
             loading = false;
         }
     });

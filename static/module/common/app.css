@@ -29,7 +29,7 @@ header
 }
 .head-logo
 {
-    display: none;
+    /*display: none;*/
 }
 .head-logo img
 {
@@ -41,10 +41,10 @@ header
 
 .head-logo span
 {
-    font-size: 1.6em;
+    /*font-size: 1.6em;*/
     line-height: 40px;
 
-    display: none;
+    /*display: none;*/
 
     padding-left: 5px;
 }
@@ -542,6 +542,17 @@ form
     border-radius: 3px;
     background: #2d82f2;
 }
+
+#content .right-side .setting-search.stop
+{
+    background: #A94442;
+}
+
+#content .right-side .setting-search.stop:hover
+{
+    background: #922523;
+}
+
 #content .right-side .setting-search:hover
 {
     background: #165db8;
@@ -1159,4 +1170,8 @@ form
     border: 1px solid #ccc;
     border-radius: 2px;
     background: #eee;
+}
+
+.modal-body {
+    word-break: break-all;
 }

@@ -1,8 +1,9 @@
-webpackJsonp([2],[
-/* 0 */
+webpackJsonp([7],{
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log = __webpack_require__(12);
+	var log = __webpack_require__(9);
 	log.init();
 
 	var source_trigger = __webpack_require__(10);
@@ -12,91 +13,19 @@ webpackJsonp([2],[
 	last_select.init();
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
-		var not_show_source_page = false;
-		var hideform_class_name = 'main-table-hidefrom';
-
-		try {
-			not_show_source_page = !!localStorage.not_show_source_page;
-			$('.main-table')[not_show_source_page ? 'addClass' : 'removeClass'](hideform_class_name);
-		} catch (ex) {}
-
-		var update_source = function(show_source_page) {
-			if (show_source_page) {
-				$('.main-table').removeClass(hideform_class_name);
-				$('#log-table .source_page_link').each(function() {
-					var $this = $(this);
-					$this.text($this.data('viewlink'));
-				});
-			} else {
-				$('.main-table').addClass(hideform_class_name);
-				$('#log-table .source_page_link').each(function() {
-					var $this = $(this);
-					$this.text($this.data('viewtext'));
-				});
-			}
-		};
-
-		var $ssp = $('#show_source_page');
-		$ssp.prop('checked', !not_show_source_page).on('change', function() {
-			try {
-				var show_source_page = $ssp.prop('checked');
-				localStorage.not_show_source_page = show_source_page ? '' : '1';
-				update_source(show_source_page);
-			} catch (ex) {}
-		});
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
-		var last_select = -1;
-		
-		try {
-
-		    last_select = localStorage.last_select >> 0; // jshint ignore:line
-			
-			var $sb = $('#select-business');
-			
-			last_select > 0 && $sb.find('[value=' + last_select + ']').length && $sb.val(last_select);
-
-			$sb.on('change', function(){
-				localStorage.last_select = $sb.val();
-			});
-
-		} catch (ex) {}
-
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
-
-/***/ },
-/* 12 */
+/***/ 9:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {/* global _ */
 	var dialog = __webpack_require__(21);
-	var Delegator = __webpack_require__(19);
+	var Delegator = __webpack_require__(20);
 
-	var logTable = __webpack_require__(27);
-	var keyword = __webpack_require__(28);
-	var debar = __webpack_require__(29);
+	var logTable = __webpack_require__(107);
+	var keyword = __webpack_require__(108);
+	var debar = __webpack_require__(109);
 
-	__webpack_require__(20);
+	__webpack_require__(19);
 
 	var logConfig = {
 	        id: 0,
@@ -284,6 +213,9 @@ webpackJsonp([2],[
 
 	    loading = true;
 
+	    $(".setting-search").text("正在加载...")
+
+
 	    if (!isAdd) {
 	        currentIndex = 0;
 	        noData = false;
@@ -303,6 +235,7 @@ webpackJsonp([2],[
 	            level: opts.level
 	        },
 	        success: function(data) {
+	            $(".setting-search").text("查询日志")
 	            var ret = data.ret;
 	            if (ret === 0) {
 	                var param = {
@@ -327,10 +260,16 @@ webpackJsonp([2],[
 	                if (data.data.length === 0) {
 	                    noData = true;
 	                }
+	            }else {
+	                dialog({
+	                    header: '查询失败',
+	                    body: JSON.stringify(data.msg)
+	                });
 	            }
 	            loading = false;
 	        },
 	        error: function() {
+	            $(".setting-search").text("查询日志")
 	            loading = false;
 	        }
 	    });
@@ -351,192 +290,74 @@ webpackJsonp([2],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(4)))
 
 /***/ },
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */
+
+/***/ 10:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {/**
-	 * Map
-	 * @class
-	 */
-	function Map() {
-	    this.map = {};
-	    this.length = 0;
-	}
-	Map.prototype = {
-	    constructor: Map,
-	    /**
-	     * has
-	     * @param {String} key
-	     * @returns {Boolean}
-	     */
-	    has: function (key) {
-	        return (key in this.map);
-	    },
-	    /**
-	     * get
-	     * @param {String} key
-	     * @returns {Any}
-	     */
-	    get: function (key) {
-	        return this.map[key];
-	    },
-	    /**
-	     * set
-	     * @param {String} key
-	     * @param {Any} value
-	     */
-	    set: function (key, value) {
-	        !this.has(key) && this.length++;
-	        return (this.map[key] = value);
-	    },
-	    /**
-	     * count
-	     * @returns {Number}
-	     */
-	    count: function () {
-	        return this.length;
-	    },
-	    /**
-	     * remove
-	     * @param {String} key
-	     */
-	    remove: function (key) {
-	        if (this.has(key)) {
-	            this.map[key] = null;
-	            delete this.map[key];
-	            this.length--;
-	        }
-	    }
+	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
+		var not_show_source_page = false;
+		var hideform_class_name = 'main-table-hidefrom';
+
+		try {
+			not_show_source_page = !!localStorage.not_show_source_page;
+			$('.main-table')[not_show_source_page ? 'addClass' : 'removeClass'](hideform_class_name);
+		} catch (ex) {}
+
+		var update_source = function(show_source_page) {
+			if (show_source_page) {
+				$('.main-table').removeClass(hideform_class_name);
+				$('#log-table .source_page_link').each(function() {
+					var $this = $(this);
+					$this.text($this.data('viewlink'));
+				});
+			} else {
+				$('.main-table').addClass(hideform_class_name);
+				$('#log-table .source_page_link').each(function() {
+					var $this = $(this);
+					$this.text($this.data('viewtext'));
+				});
+			}
+		};
+
+		var $ssp = $('#show_source_page');
+		$ssp.prop('checked', !not_show_source_page).on('change', function() {
+			try {
+				var show_source_page = $ssp.prop('checked');
+				localStorage.not_show_source_page = show_source_page ? '' : '1';
+				update_source(show_source_page);
+			} catch (ex) {}
+		});
 	};
-
-	var cache = new Map(), set = cache.set, uid = 0;
-	cache.set = function (node, value) {
-	    if (!value) {
-	        value = node;
-	        set.call(cache, ++uid + '', value);
-	        return uid;
-	    } else {
-	        typeof node === 'string' &&
-	        (node = $(node)[0]);
-	        $.data(node, 'event-data', value);
-	        return this;
-	    }
-	};
-
-	function _key(arr) {
-	    if (!arr) return {};
-	    arr = arr.split(' ');
-	    var obj = {};
-	    for (var i = 0, l = arr.length; i < l; i++) {
-	        obj[arr[i]] = true;
-	    }
-	    return obj;
-	}
-
-	/**
-	 * Delegator
-	 * @class
-	 * @param {Selector} container
-	 */
-	function Delegator(container) {
-	    this.container = $(container);
-	    this.listenerMap = new Map();
-	}
-
-	/**
-	 * getKey
-	 * @param {Any} value
-	 * @returns {Number}
-	 */
-	Delegator.set = cache.set;
-	/**
-	 * cache
-	 * @class
-	 * @static
-	 */
-	Delegator.cache = cache;
-
-	Delegator.prototype = {
-	    constructor: Delegator,
-	    _getListener: function (type) {
-	        if (this.listenerMap.has(type)) {
-	            return this.listenerMap.get(type);
-	        }
-	        function listener(e) {
-	            var data = $.data(this),
-	                routes = data['event-' + type + '-routes'],
-	                eventData = data['event-data'], handle, dataKey;
-
-	            // preprocessing
-	            if (!routes && (routes = this.getAttribute('data-event-' + type))) {
-	                (routes = routes.split(' ')) &&
-	                (data['event-' + type + '-routes'] = routes);
-	                !eventData &&
-	                (dataKey = this.getAttribute('data-event-data')) &&
-	                (eventData = cache.get(dataKey)) &&
-	                (data['event-data'] = eventData) &&
-	                (cache.remove(dataKey));
-	                !data['event-stop-propagation'] &&
-	                (data['event-stop-propagation'] = _key(this.getAttribute('data-event-stop-propagation')));
-	            }
-
-	            if (routes) {
-	                for (var i = 0, l = routes.length; i < l; i++) {
-	                    handle = listener.handleMap.get(routes[i]);
-
-	                    if (handle) {
-	                        handle.call(this, e, eventData);
-	                    }
-	                    data['event-stop-propagation'][type] &&
-	                    e.stopPropagation();
-	                }
-	            }
-	        }
-
-	        listener.handleMap = new Map();
-	        this.listenerMap.set(type, listener);
-	        this.container.on(type, '[data-event-' + type + ']', listener);
-	        return listener;
-	    },
-	    /**
-	     * on
-	     * @param {String} type
-	     * @param {String} name
-	     * @param {Function} handle
-	     */
-	    on: function (type, name, handle) {
-	        var listener = this._getListener(type);
-	        listener.handleMap.set(name, handle);
-	        return this;
-	    },
-	    /**
-	     * off
-	     * @param {String} type
-	     * @param {String} name
-	     */
-	    off: function (type, name) {
-	        var listener = this._getListener(type),
-	            handleMap = listener.handleMap;
-	        handleMap.remove(name);
-	        if (!handleMap.count()) {
-	            this.container.off(type, '[data-event-' + type + ']', listener);
-	            this.listenerMap.remove(type);
-	        }
-	    }
-	};
-
-	module.exports = Delegator;
-
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
-/* 20 */
+
+/***/ 11:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
+		var last_select = -1;
+		
+		try {
+
+		    last_select = localStorage.last_select >> 0; // jshint ignore:line
+			
+			var $sb = $('#select-business');
+			
+			last_select > 0 && $sb.find('[value=' + last_select + ']').length && $sb.val(last_select);
+
+			$sb.on('change', function(){
+				localStorage.last_select = $sb.val();
+			});
+
+		} catch (ex) {}
+
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
+
+/***/ },
+
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(jQuery) {/**
@@ -2394,11 +2215,192 @@ webpackJsonp([2],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
-/* 21 */
+
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
-	var modal = __webpack_require__(34);
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Map
+	 * @class
+	 */
+	function Map() {
+	    this.map = {};
+	    this.length = 0;
+	}
+	Map.prototype = {
+	    constructor: Map,
+	    /**
+	     * has
+	     * @param {String} key
+	     * @returns {Boolean}
+	     */
+	    has: function (key) {
+	        return (key in this.map);
+	    },
+	    /**
+	     * get
+	     * @param {String} key
+	     * @returns {Any}
+	     */
+	    get: function (key) {
+	        return this.map[key];
+	    },
+	    /**
+	     * set
+	     * @param {String} key
+	     * @param {Any} value
+	     */
+	    set: function (key, value) {
+	        !this.has(key) && this.length++;
+	        return (this.map[key] = value);
+	    },
+	    /**
+	     * count
+	     * @returns {Number}
+	     */
+	    count: function () {
+	        return this.length;
+	    },
+	    /**
+	     * remove
+	     * @param {String} key
+	     */
+	    remove: function (key) {
+	        if (this.has(key)) {
+	            this.map[key] = null;
+	            delete this.map[key];
+	            this.length--;
+	        }
+	    }
+	};
+
+	var cache = new Map(), set = cache.set, uid = 0;
+	cache.set = function (node, value) {
+	    if (!value) {
+	        value = node;
+	        set.call(cache, ++uid + '', value);
+	        return uid;
+	    } else {
+	        typeof node === 'string' &&
+	        (node = $(node)[0]);
+	        $.data(node, 'event-data', value);
+	        return this;
+	    }
+	};
+
+	function _key(arr) {
+	    if (!arr) return {};
+	    arr = arr.split(' ');
+	    var obj = {};
+	    for (var i = 0, l = arr.length; i < l; i++) {
+	        obj[arr[i]] = true;
+	    }
+	    return obj;
+	}
+
+	/**
+	 * Delegator
+	 * @class
+	 * @param {Selector} container
+	 */
+	function Delegator(container) {
+	    this.container = $(container);
+	    this.listenerMap = new Map();
+	}
+
+	/**
+	 * getKey
+	 * @param {Any} value
+	 * @returns {Number}
+	 */
+	Delegator.set = cache.set;
+	/**
+	 * cache
+	 * @class
+	 * @static
+	 */
+	Delegator.cache = cache;
+
+	Delegator.prototype = {
+	    constructor: Delegator,
+	    _getListener: function (type) {
+	        if (this.listenerMap.has(type)) {
+	            return this.listenerMap.get(type);
+	        }
+	        function listener(e) {
+	            var data = $.data(this),
+	                routes = data['event-' + type + '-routes'],
+	                eventData = data['event-data'], handle, dataKey;
+
+	            // preprocessing
+	            if (!routes && (routes = this.getAttribute('data-event-' + type))) {
+	                (routes = routes.split(' ')) &&
+	                (data['event-' + type + '-routes'] = routes);
+	                !eventData &&
+	                (dataKey = this.getAttribute('data-event-data')) &&
+	                (eventData = cache.get(dataKey)) &&
+	                (data['event-data'] = eventData) &&
+	                (cache.remove(dataKey));
+	                !data['event-stop-propagation'] &&
+	                (data['event-stop-propagation'] = _key(this.getAttribute('data-event-stop-propagation')));
+	            }
+
+	            if (routes) {
+	                for (var i = 0, l = routes.length; i < l; i++) {
+	                    handle = listener.handleMap.get(routes[i]);
+
+	                    if (handle) {
+	                        handle.call(this, e, eventData);
+	                    }
+	                    data['event-stop-propagation'][type] &&
+	                    e.stopPropagation();
+	                }
+	            }
+	        }
+
+	        listener.handleMap = new Map();
+	        this.listenerMap.set(type, listener);
+	        this.container.on(type, '[data-event-' + type + ']', listener);
+	        return listener;
+	    },
+	    /**
+	     * on
+	     * @param {String} type
+	     * @param {String} name
+	     * @param {Function} handle
+	     */
+	    on: function (type, name, handle) {
+	        var listener = this._getListener(type);
+	        listener.handleMap.set(name, handle);
+	        return this;
+	    },
+	    /**
+	     * off
+	     * @param {String} type
+	     * @param {String} name
+	     */
+	    off: function (type, name) {
+	        var listener = this._getListener(type),
+	            handleMap = listener.handleMap;
+	        handleMap.remove(name);
+	        if (!handleMap.count()) {
+	            this.container.off(type, '[data-event-' + type + ']', listener);
+	            this.listenerMap.remove(type);
+	        }
+	    }
+	};
+
+	module.exports = Delegator;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
+
+/***/ },
+
+/***/ 21:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(20);
+	var modal = __webpack_require__(114);
 
 	    var container;
 
@@ -2445,12 +2447,8 @@ webpackJsonp([2],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */
+
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -2543,49 +2541,49 @@ webpackJsonp([2],[
 	    var isHtml = /^.+?\.html\??/.test(it[i].target);
 	    var _target = it[i]._target = (it[i].target || it[i].url || '').replace(/\)/g, '');
 	;
-	__p += '\n<tr id="tr-' +
+	__p += '\r\n<tr id="tr-' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'">\n    <td  class="td-1 info-type-' +
+	'">\r\n    <td  class="td-1 info-type-' +
 	((__t = (type)) == null ? '' : __t) +
 	'">' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'</td>\n    <td  class="td-2">' +
+	'</td>\r\n    <td  class="td-2">' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'</td>\n    <td  style="" class="td-3">' +
+	'</td>\r\n    <td  style="" class="td-3">' +
 	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
-	'</td>\n    <td  class="td-4">' +
+	'</td>\r\n    <td  class="td-4">' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
-	'</td>\n    <td  class="td-5">' +
+	'</td>\r\n    <td  class="td-5">' +
 	((__t = (it[i].ip )) == null ? '' : __t) +
-	'</td>\n    <td  class="td-6">\n        <span\n            class="ico-browser ' +
+	'</td>\r\n    <td  class="td-6">\r\n        <span\r\n            class="ico-browser ' +
 	((__t = (getBrowserType(it[i].userAgent))) == null ? '' : __t) +
-	'"\n            title="' +
+	'"\r\n            title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"\n        ></span>\n    </td>\n    <td class="td-7">\n        <a\n            style="word-break:break-all;display:block"\n            href="' +
+	'"\r\n        ></span>\r\n    </td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
 	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
-	'"\n            target="_blank"\n            data-event-click="showSource"\n            data-event-data="' +
+	'"\r\n            target="_blank"\r\n            data-event-click="showSource"\r\n            data-event-data="' +
 	((__t = (opt.set(it[i]))) == null ? '' : __t) +
-	'"\n        >\n            ' +
+	'"\r\n        >\r\n            ' +
 	((__t = (opt.encodeHtml(_target))) == null ? '' : __t) +
-	'\n            <span\n                class="err-where"\n                style="height:24px;line-height:24px;border-radius:3px"\n            >\n                ' +
+	'\r\n            <span\r\n                class="err-where"\r\n                style="height:24px;line-height:24px;border-radius:3px"\r\n            >\r\n                ' +
 	((__t = (opt.encodeHtml(it[i].rowNum || 0))) == null ? '' : __t) +
-	'行\n                ' +
+	'行\r\n                ' +
 	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
-	'列\n            </span>\n        </a>\n        <a\n            class="source_page_link"\n            style="font-size:12px"\n            target="_blank"\n            href="' +
+	'列\r\n            </span>\r\n        </a>\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
 	((__t = (sourcePage(it[i], 'href', opt))) == null ? '' : __t) +
-	'"\n            data-viewtext="' +
+	'"\r\n            data-viewtext="' +
 	((__t = (sourcePage(it[i], 'viewtext', opt))) == null ? '' : __t) +
-	'"\n            data-viewlink="' +
+	'"\r\n            data-viewlink="' +
 	((__t = (sourcePage(it[i], 'viewlink', opt))) == null ? '' : __t) +
-	'"\n        >' +
+	'"\r\n        >' +
 	((__t = (sourcePage(it[i], 'view', opt))) == null ? '' : __t) +
-	'</a>\n    </td>\n</tr>\n';
+	'</a>\r\n    </td>\r\n</tr>\r\n';
 	 } ;
-	__p += '\n\n';
+	__p += '\r\n\r\n';
 	 if(it.length === 0 ){;
-	__p += '\n<td colspan="7" style="\n    text-align: center;\n    background: rgb(221, 221, 221);\n">无更多数据</td>\n';
+	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
 	};
-	__p += '\n';
+	__p += '\r\n';
 
 	}
 	return __p
@@ -2593,7 +2591,8 @@ webpackJsonp([2],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 28 */
+
+/***/ 108:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -2611,7 +2610,8 @@ webpackJsonp([2],[
 	}
 
 /***/ },
-/* 29 */
+
+/***/ 109:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -2629,11 +2629,8 @@ webpackJsonp([2],[
 	}
 
 /***/ },
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */
+
+/***/ 114:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -2653,4 +2650,5 @@ webpackJsonp([2],[
 	}
 
 /***/ }
-]);
+
+});
