@@ -53,7 +53,7 @@ db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理�
         "emailSuffix" : "@demo.com",         //收件人的邮件后缀，收件人地址 username +  emailSuffix
         "time": "09:00:00",                     // 几点发送邮件
         "top": 20,                            //邮件只发送错误排名的配置的top20
-        "module": "email_tof"                 // 邮件发送模块
+        "module": "email"                 // 邮件发送模块
     },
     "oos" : {                                 //接入公司的统一登录， 删掉使用系统自己的用户管理
         "module":"demo/demooos"
