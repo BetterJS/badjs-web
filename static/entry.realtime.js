@@ -1,20 +1,20 @@
-webpackJsonp([1],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log = __webpack_require__(15);
+	var log = __webpack_require__(14);
 	log.init();
 
-	var source_trigger = __webpack_require__(13);
+	var source_trigger = __webpack_require__(12);
 	source_trigger.init();
 
-	var last_select = __webpack_require__(14);
+	var last_select = __webpack_require__(13);
 	last_select.init();
 
 /***/ },
 
-/***/ 13:
+/***/ 12:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
@@ -51,11 +51,11 @@ webpackJsonp([1],{
 			} catch (ex) {}
 		});
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
 
-/***/ 14:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
@@ -76,19 +76,19 @@ webpackJsonp([1],{
 		} catch (ex) {}
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
 
-/***/ 15:
+/***/ 14:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(102);
-	var Delegator = __webpack_require__(21);
+	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(21);
+	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(108);
-	var keyword = __webpack_require__(109);
-	var debar = __webpack_require__(110);
+	var logTable = __webpack_require__(27);
+	var keyword = __webpack_require__(28);
+	var debar = __webpack_require__(29);
 
 
 	var logConfig = {
@@ -315,11 +315,11 @@ webpackJsonp([1],{
 
 	exports.init = init;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
 
-/***/ 21:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -495,14 +495,14 @@ webpackJsonp([1],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
 
-/***/ 102:
+/***/ 21:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
 	var modal = __webpack_require__(114);
 
 	    var container;
@@ -547,11 +547,11 @@ webpackJsonp([1],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
 
-/***/ 108:
+/***/ 27:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -644,49 +644,51 @@ webpackJsonp([1],{
 	    var isHtml = /^.+?\.html\??/.test(it[i].target);
 	    var _target = it[i]._target = (it[i].target || it[i].url || '').replace(/\)/g, '');
 	;
-	__p += '\r\n<tr id="tr-' +
+	__p += '\n<tr id="tr-' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'">\r\n    <td  class="td-1 info-type-' +
+	'">\n    <td  class="td-1 info-type-' +
 	((__t = (type)) == null ? '' : __t) +
 	'">' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-2">' +
+	'</td>\n    <td  class="td-2">' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'</td>\r\n    <td  style="" class="td-3">' +
+	'</td>\n    <td  style="" class="td-3">' +
 	((__t = ( opt.encodeHtml(it[i].msg) )) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-4">' +
+	'</td>\n    <td  class="td-4" title="' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-5">' +
+	'" style="text-overflow: ellipsis;overflow: hidden;" >\n        ' +
+	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
+	'\n    </td>\n    <td  class="td-5">' +
 	((__t = (it[i].ip )) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-6">\r\n        <span\r\n            class="ico-browser ' +
+	'</td>\n    <td  class="td-6">\n        <span\n            class="ico-browser ' +
 	((__t = (getBrowserType(it[i].userAgent))) == null ? '' : __t) +
-	'"\r\n            title="' +
+	'"\n            title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"\r\n        ></span>\r\n    </td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
+	'"\n        ></span>\n    </td>\n    <td class="td-7">\n        <a\n            style="word-break:break-all;display:block"\n            href="' +
 	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
-	'"\r\n            target="_blank"\r\n            data-event-click="showSource"\r\n            data-event-data="' +
+	'"\n            target="_blank"\n            data-event-click="showSource"\n            data-event-data="' +
 	((__t = (opt.set(it[i]))) == null ? '' : __t) +
-	'"\r\n        >\r\n            ' +
+	'"\n        >\n            ' +
 	((__t = (opt.encodeHtml(_target))) == null ? '' : __t) +
-	'\r\n            <span\r\n                class="err-where"\r\n                style="height:24px;line-height:24px;border-radius:3px"\r\n            >\r\n                ' +
+	'\n            <span\n                class="err-where"\n                style="height:24px;line-height:24px;border-radius:3px"\n            >\n                ' +
 	((__t = (opt.encodeHtml(it[i].rowNum || 0))) == null ? '' : __t) +
-	'行\r\n                ' +
+	'行\n                ' +
 	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
-	'列\r\n            </span>\r\n        </a>\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
+	'列\n            </span>\n        </a>\n        <a\n            class="source_page_link"\n            style="font-size:12px"\n            target="_blank"\n            href="' +
 	((__t = (sourcePage(it[i], 'href', opt))) == null ? '' : __t) +
-	'"\r\n            data-viewtext="' +
+	'"\n            data-viewtext="' +
 	((__t = (sourcePage(it[i], 'viewtext', opt))) == null ? '' : __t) +
-	'"\r\n            data-viewlink="' +
+	'"\n            data-viewlink="' +
 	((__t = (sourcePage(it[i], 'viewlink', opt))) == null ? '' : __t) +
-	'"\r\n        >' +
+	'"\n        >' +
 	((__t = (sourcePage(it[i], 'view', opt))) == null ? '' : __t) +
-	'</a>\r\n    </td>\r\n</tr>\r\n';
+	'</a>\n    </td>\n</tr>\n';
 	 } ;
-	__p += '\r\n\r\n';
+	__p += '\n\n';
 	 if(it.length === 0 ){;
-	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
+	__p += '\n<td colspan="7" style="\n    text-align: center;\n    background: rgb(221, 221, 221);\n">无更多数据</td>\n';
 	};
-	__p += '\r\n';
+	__p += '\n';
 
 	}
 	return __p
@@ -695,7 +697,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 109:
+/***/ 28:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -714,7 +716,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 110:
+/***/ 29:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
