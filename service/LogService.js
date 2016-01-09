@@ -41,9 +41,9 @@ LogService.prototype = {
         var strParams = '';
         for (var key in params) {
             if (key == 'index') {
-                strParams += key + '=' + params[key] + '&';
+                strParams += key + "=" + params[key] + "&";
             } else {
-                strParams += key + '=' + JSON.stringify(params[key]) + '&';
+                strParams += key + "=" + encodeURIComponent(JSON.stringify(params[key])) + "&";
             }
         }
         strParams += '_=1';
@@ -83,7 +83,7 @@ LogService.prototype = {
                 });
 
                 var result = [0, 0];
-                
+
                 var resultCall = function() {
                     if (result[0] < 0 && result[1] < 0) {
                         callback(new Error("error"));
