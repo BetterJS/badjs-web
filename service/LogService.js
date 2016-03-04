@@ -37,7 +37,7 @@ var LogService = function() {
 
 LogService.prototype = {
     query: function(params, callback) {
-
+        var startDate = new Date;
         var strParams = '';
         for (var key in params) {
             if (key == 'index') {
@@ -58,6 +58,7 @@ LogService.prototype = {
                 } catch (e) {
                     callback(e);
                 }
+                logger.info('query log spend : ' + (new Date - startDate) + "ms");
             });
 
         }).on('error', function(err) {
