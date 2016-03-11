@@ -58,7 +58,7 @@ LogService.prototype = {
                 } catch (e) {
                     callback(e);
                 }
-                logger.info('query log spend : ' + (new Date - startDate) + "ms");
+                logger.info('query log spend : ' + (new Date - startDate) + "ms by " + params.id);
             });
 
         }).on('error', function(err) {
