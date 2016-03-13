@@ -166,6 +166,9 @@ EmailService.prototype = {
                 });
                 for (var applyId in orderByApplyId) {
                     (function(users, applyId) {
+                        setTimeout(function (){
+
+
                         var to_list = []; // 收件方
                         var cc_list = []; // 抄送方
                         var name = '';
@@ -229,6 +232,7 @@ EmailService.prototype = {
                                 logger.error('Send email data format error');
                             }
                         }); // jshint ignore:line
+                    },1000)
                     })(orderByApplyId[applyId], applyId); // jshint ignore:line
                 }
             }
