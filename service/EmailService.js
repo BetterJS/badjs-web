@@ -164,11 +164,9 @@ EmailService.prototype = {
                         orderByApplyId[v.applyId] = [v];
                     }
                 });
+                var count = 0 ;
                 for (var applyId in orderByApplyId) {
                     (function(users, applyId) {
-                        setTimeout(function (){
-
-
                         var to_list = []; // 收件方
                         var cc_list = []; // 抄送方
                         var name = '';
@@ -187,7 +185,6 @@ EmailService.prototype = {
                             }
                             cc_list = [];
                         }
-
                         that.statisticsService.queryById({
                             top: that.top,
                             projectId: applyId,
@@ -206,33 +203,35 @@ EmailService.prototype = {
                                             title: name
                                         }, data[0]);
                                     } else {
-                                        exporting(getImageData(name, chartData.data), function(err, image) {
-                                            if (err) {
-                                                logger.info("generate image error " + err.toString() + ", id =" + applyId);
-                                                that.sendEmail({
-                                                    to: to_list,
-                                                    cc: cc_list,
-                                                    title: name
-                                                }, data[0]);
-                                            } else {
-                                                var imagePath = "static/img/tmp/" + (new Date - 0 + applyId) + ".png";
-                                                fs.writeFile(path.join(__dirname, "..", imagePath), new Buffer(image, 'base64'), function() {
+                                        count ++ ;
+                                        setTimeout(function (){
+                                            exporting(getImageData(name, chartData.data), function(err, image) {
+                                                if (err) {
+                                                    logger.info("generate image error " + err.toString() + ", id =" + applyId);
                                                     that.sendEmail({
                                                         to: to_list,
                                                         cc: cc_list,
-                                                        title: name,
-                                                        imagePath: imagePath
+                                                        title: name
                                                     }, data[0]);
-                                                });
-                                            }
-                                        });
+                                                } else {
+                                                    var imagePath = "static/img/tmp/" + (new Date - 0 + applyId) + ".png";
+                                                    fs.writeFile(path.join(__dirname, "..", imagePath), new Buffer(image, 'base64'), function() {
+                                                        that.sendEmail({
+                                                            to: to_list,
+                                                            cc: cc_list,
+                                                            title: name,
+                                                            imagePath: imagePath
+                                                        }, data[0]);
+                                                    });
+                                                }
+                                            });
+                                        }, 1000 * count)
                                     }
                                 });
                             } else {
                                 logger.error('Send email data format error');
                             }
                         }); // jshint ignore:line
-                    },1000)
                     })(orderByApplyId[applyId], applyId); // jshint ignore:line
                 }
             }
