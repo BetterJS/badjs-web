@@ -20,6 +20,10 @@ var logConfig = {
 
     encodeHtml = function(str) {
         return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+    },
+
+    formatMsg = function (str){
+        return str.replace(/@/gi , "<br/>@ ")
     };
 
 var maxDate = 60 * 60 * 1000 * 24 * 2;
@@ -222,7 +226,8 @@ function showLogs(opts, isAdd) {
                 var param = {
                     encodeHtml: encodeHtml,
                     set: Delegator.set,
-                    startIndex: currentIndex * MAX_LIMIT
+                    startIndex: currentIndex * MAX_LIMIT,
+                    formatMsg : formatMsg
                 };
 
                 if (isAdd) {
