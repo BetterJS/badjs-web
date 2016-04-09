@@ -18,6 +18,10 @@ var logConfig = {
 
     encodeHtml = function(str) {
         return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+    },
+
+    formatMsg = function (str){
+        return str.replace(/@/gi , "<br/>@ ")
     };
 
 var websocket;
@@ -207,7 +211,8 @@ function showLogs(data) {
     var param = {
         encodeHtml: encodeHtml,
         set: Delegator.set,
-        startIndex: currentIndex
+        startIndex: currentIndex,
+        formatMsg : formatMsg
     };
 
     var $table = $('#log-table');
