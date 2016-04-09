@@ -51,7 +51,7 @@ webpackJsonp([1],{
 			} catch (ex) {}
 		});
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
@@ -76,19 +76,19 @@ webpackJsonp([1],{
 		} catch (ex) {}
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
 /***/ 15:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(103);
-	var Delegator = __webpack_require__(101);
+	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(107);
+	var Delegator = __webpack_require__(21);
 
-	var logTable = __webpack_require__(106);
-	var keyword = __webpack_require__(107);
-	var debar = __webpack_require__(108);
+	var logTable = __webpack_require__(113);
+	var keyword = __webpack_require__(114);
+	var debar = __webpack_require__(115);
 
 
 	var logConfig = {
@@ -106,7 +106,7 @@ webpackJsonp([1],{
 	    },
 
 	    formatMsg = function (str){
-	        return str.replace(/@/gi , "<br/>@ ")
+	        return str.replace(/@/gi , '<br/><b style="color:#A78830;">@</b> ')
 	    };
 
 	var websocket;
@@ -320,11 +320,11 @@ webpackJsonp([1],{
 
 	exports.init = init;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 101:
+/***/ 21:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -500,15 +500,15 @@ webpackJsonp([1],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 103:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(101);
-	var modal = __webpack_require__(114);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
+	var modal = __webpack_require__(119);
 
 	    var container;
 
@@ -552,11 +552,11 @@ webpackJsonp([1],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 106:
+/***/ 113:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -698,11 +698,11 @@ webpackJsonp([1],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
-/***/ 107:
+/***/ 114:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -721,7 +721,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 108:
+/***/ 115:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -740,7 +740,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 114:
+/***/ 119:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -749,11 +749,11 @@ webpackJsonp([1],{
 	with (obj) {
 	__p += '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="' +
 	((__t = (it.id || '' )) == null ? '' : __t) +
-	'">\r\n  <div class="modal-backdrop fade"></div>\r\n  <div class="modal-dialog">\r\n    <div class="modal-content">\r\n\r\n      <div class="modal-header">\r\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\r\n        <h4 class="modal-title">' +
+	'">\n  <div class="modal-backdrop fade"></div>\n  <div class="modal-dialog">\n    <div class="modal-content">\n\n      <div class="modal-header">\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\n        <h4 class="modal-title">' +
 	((__t = (it.header)) == null ? '' : __t) +
-	'</h4>\r\n      </div>\r\n      <div class="modal-body">\r\n        ' +
+	'</h4>\n      </div>\n      <div class="modal-body">\n        ' +
 	((__t = (it.body)) == null ? '' : __t) +
-	'\r\n      </div>\r\n      <div class="modal-footer">\r\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>';
+	'\n      </div>\n      <div class="modal-footer">\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\n      </div>\n\n    </div>\n  </div>\n</div>';
 
 	}
 	return __p

@@ -1,4 +1,4 @@
-webpackJsonp([7],{
+webpackJsonp([5],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -17,8 +17,8 @@ webpackJsonp([7],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(103);
-	var userTable = __webpack_require__(113);
+	var Dialog = __webpack_require__(107);
+	var userTable = __webpack_require__(118);
 
 
 	    var encodeHtml = function (str) {
@@ -163,11 +163,11 @@ webpackJsonp([7],{
 	        init: init
 	    }
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 101:
+/***/ 21:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -343,15 +343,15 @@ webpackJsonp([7],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 103:
+/***/ 107:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(101);
-	var modal = __webpack_require__(114);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
+	var modal = __webpack_require__(119);
 
 	    var container;
 
@@ -395,11 +395,11 @@ webpackJsonp([7],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 113:
+/***/ 118:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -414,33 +414,33 @@ webpackJsonp([7],{
 	        role ="项目管理员";
 	    }
 	;
-	__p += '\r\n<tr class="listRow">\r\n    <td>' +
+	__p += '\n<tr class="listRow">\n    <td>' +
 	((__t = ( i+1)) == null ? '' : __t) +
-	'</td>\r\n    <td>' +
+	'</td>\n    <td>' +
 	((__t = ( it[i].loginName)) == null ? '' : __t) +
-	'</td>\r\n    <td>' +
+	'</td>\n    <td>' +
 	((__t = ( it[i].chineseName?it[i].chineseName:"无")) == null ? '' : __t) +
-	'</td>\r\n    <td>' +
+	'</td>\n    <td>' +
 	((__t = ( it[i].name)) == null ? '' : __t) +
-	'</td>\r\n    <td>' +
+	'</td>\n    <td>' +
 	((__t = ( role)) == null ? '' : __t) +
-	' </td>\r\n    <td>\r\n        ';
+	' </td>\n    <td>\n        ';
 	if(it[i].role != 1 ){;
-	__p += '\r\n            <button class="user-authBtn btn-default modifyBtn" data-uaid = "' +
+	__p += '\n            <button class="user-authBtn btn-default modifyBtn" data-uaid = "' +
 	((__t = ( it[i].id)) == null ? '' : __t) +
-	'">授权管理员</button>\r\n            <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
+	'">授权管理员</button>\n            <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
 	((__t = ( it[i].id)) == null ? '' : __t) +
-	'">删除</button>\r\n        ';
+	'">删除</button>\n        ';
 	};
-	__p += '\r\n\r\n        ';
+	__p += '\n\n        ';
 	if(it[i].role ==1 && opt.isAdmin){;
-	__p += '\r\n        <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
+	__p += '\n        <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
 	((__t = ( it[i].id)) == null ? '' : __t) +
-	'">删除</button>\r\n        ';
+	'">删除</button>\n        ';
 	};
-	__p += '\r\n\r\n    </td>\r\n</tr>\r\n';
+	__p += '\n\n    </td>\n</tr>\n';
 	};
-	__p += '\r\n';
+	__p += '\n';
 
 	}
 	return __p
@@ -448,7 +448,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 114:
+/***/ 119:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -457,11 +457,11 @@ webpackJsonp([7],{
 	with (obj) {
 	__p += '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="' +
 	((__t = (it.id || '' )) == null ? '' : __t) +
-	'">\r\n  <div class="modal-backdrop fade"></div>\r\n  <div class="modal-dialog">\r\n    <div class="modal-content">\r\n\r\n      <div class="modal-header">\r\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\r\n        <h4 class="modal-title">' +
+	'">\n  <div class="modal-backdrop fade"></div>\n  <div class="modal-dialog">\n    <div class="modal-content">\n\n      <div class="modal-header">\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\n        <h4 class="modal-title">' +
 	((__t = (it.header)) == null ? '' : __t) +
-	'</h4>\r\n      </div>\r\n      <div class="modal-body">\r\n        ' +
+	'</h4>\n      </div>\n      <div class="modal-body">\n        ' +
 	((__t = (it.body)) == null ? '' : __t) +
-	'\r\n      </div>\r\n      <div class="modal-footer">\r\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>';
+	'\n      </div>\n      <div class="modal-footer">\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\n      </div>\n\n    </div>\n  </div>\n</div>';
 
 	}
 	return __p

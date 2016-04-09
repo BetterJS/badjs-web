@@ -23,7 +23,7 @@ var logConfig = {
     },
 
     formatMsg = function (str){
-        return str.replace(/@/gi , "<br/>@ ")
+        return str.replace(/@/gi , '<br/><b style="color:#A78830">@</b> ')
     };
 
 var maxDate = 60 * 60 * 1000 * 24 * 2;
