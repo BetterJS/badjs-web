@@ -1,15 +1,15 @@
-webpackJsonp([8],{
+webpackJsonp([9],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var projectTotal = __webpack_require__(16);
+	var projectTotal = __webpack_require__(15);
 
 	projectTotal.init();
 
 /***/ },
 
-/***/ 16:
+/***/ 15:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {/* global _ */
@@ -19,10 +19,10 @@ webpackJsonp([8],{
 	 *
 	 */
 	__webpack_require__(20);
-	__webpack_require__(108);
-	__webpack_require__(109);
-	var Dialog = __webpack_require__(107);
-	var statisticsTpl = __webpack_require__(116);
+	__webpack_require__(123);
+	__webpack_require__(124);
+	var Dialog = __webpack_require__(122);
+	var statisticsTpl = __webpack_require__(132);
 
 	var dayNumber = 0,
 	    days = [];
@@ -2193,11 +2193,11 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 107:
+/***/ 122:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
-	var modal = __webpack_require__(119);
+	var modal = __webpack_require__(134);
 
 	    var container;
 
@@ -2245,7 +2245,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 108:
+/***/ 123:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/*
@@ -2558,7 +2558,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 109:
+/***/ 124:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2661,7 +2661,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 116:
+/***/ 132:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {module.exports = function (obj) {
@@ -2669,35 +2669,35 @@ webpackJsonp([8],{
 	var __t, __p = '', __j = Array.prototype.join;
 	function print() { __p += __j.call(arguments, '') }
 	with (obj) {
-	__p += '<thead>\n    <th style="width:200px;">#</th>\n';
+	__p += '<thead>\r\n    <th style="width:200px;">#</th>\r\n';
 
 	$.each(item[0].date , function (key, value){
 	;
-	__p += '\n    <th>' +
+	__p += '\r\n    <th>' +
 	((__t = ( value )) == null ? '' : __t) +
-	'</th>\n';
+	'</th>\r\n';
 
 	})
 	;
-	__p += '\n</thead>\n<tbody>\n';
+	__p += '\r\n</thead>\r\n<tbody>\r\n';
 
 
 	var totalArray = []
 	$.each(item , function (key, value){
 	;
-	__p += '\n<tr>\n    <td><span class="textOverflow" style="width:200px" title="' +
+	__p += '\r\n<tr>\r\n    <td><span class="textOverflow" style="width:200px" title="' +
 	((__t = ( value.name )) == null ? '' : __t) +
 	'">' +
 	((__t = ( value.name )) == null ? '' : __t) +
-	'</span></td>\n    ';
+	'</span></td>\r\n    ';
 
 	    var dataIndex = 0;
 	    $.each(value.data , function (totalKey, total){
 
 	    ;
-	__p += '\n    <td>\n        ' +
+	__p += '\r\n    <td>\r\n        ' +
 	((__t = ( total )) == null ? '' : __t) +
-	'\n    </td>\n    ';
+	'\r\n    </td>\r\n    ';
 
 	        if(_.isNumber(totalArray[dataIndex])) {
 	            totalArray[dataIndex] +=total;
@@ -2707,21 +2707,21 @@ webpackJsonp([8],{
 	        dataIndex ++ ;
 	    });
 	    ;
-	__p += '\n</tr>\n';
+	__p += '\r\n</tr>\r\n';
 
 	});
 	;
-	__p += '\n\n<tr>\n<td>\n总计\n</td>\n';
+	__p += '\r\n\r\n<tr>\r\n<td>\r\n总计\r\n</td>\r\n';
 
 	$.each(totalArray , function (key, value){
 	;
-	__p += '\n<td>' +
+	__p += '\r\n<td>' +
 	((__t = (value)) == null ? '' : __t) +
-	'</td>\n';
+	'</td>\r\n';
 
 	})
 	;
-	__p += '\n</tr>\n</tbody>\n';
+	__p += '\r\n</tr>\r\n</tbody>\r\n';
 
 	}
 	return __p
@@ -2730,7 +2730,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 119:
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -2739,11 +2739,11 @@ webpackJsonp([8],{
 	with (obj) {
 	__p += '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="' +
 	((__t = (it.id || '' )) == null ? '' : __t) +
-	'">\n  <div class="modal-backdrop fade"></div>\n  <div class="modal-dialog">\n    <div class="modal-content">\n\n      <div class="modal-header">\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\n        <h4 class="modal-title">' +
+	'">\r\n  <div class="modal-backdrop fade"></div>\r\n  <div class="modal-dialog">\r\n    <div class="modal-content">\r\n\r\n      <div class="modal-header">\r\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\r\n        <h4 class="modal-title">' +
 	((__t = (it.header)) == null ? '' : __t) +
-	'</h4>\n      </div>\n      <div class="modal-body">\n        ' +
+	'</h4>\r\n      </div>\r\n      <div class="modal-body">\r\n        ' +
 	((__t = (it.body)) == null ? '' : __t) +
-	'\n      </div>\n      <div class="modal-footer">\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\n      </div>\n\n    </div>\n  </div>\n</div>';
+	'\r\n      </div>\r\n      <div class="modal-footer">\r\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>';
 
 	}
 	return __p

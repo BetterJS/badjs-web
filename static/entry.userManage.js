@@ -17,8 +17,8 @@ webpackJsonp([5],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(107);
-	var userTable = __webpack_require__(118);
+	var Dialog = __webpack_require__(122);
+	var userTable = __webpack_require__(133);
 
 
 	    var encodeHtml = function (str) {
@@ -347,11 +347,11 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 107:
+/***/ 122:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
-	var modal = __webpack_require__(119);
+	var modal = __webpack_require__(134);
 
 	    var container;
 
@@ -399,7 +399,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 118:
+/***/ 133:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -414,33 +414,33 @@ webpackJsonp([5],{
 	        role ="项目管理员";
 	    }
 	;
-	__p += '\n<tr class="listRow">\n    <td>' +
+	__p += '\r\n<tr class="listRow">\r\n    <td>' +
 	((__t = ( i+1)) == null ? '' : __t) +
-	'</td>\n    <td>' +
+	'</td>\r\n    <td>' +
 	((__t = ( it[i].loginName)) == null ? '' : __t) +
-	'</td>\n    <td>' +
+	'</td>\r\n    <td>' +
 	((__t = ( it[i].chineseName?it[i].chineseName:"无")) == null ? '' : __t) +
-	'</td>\n    <td>' +
+	'</td>\r\n    <td>' +
 	((__t = ( it[i].name)) == null ? '' : __t) +
-	'</td>\n    <td>' +
+	'</td>\r\n    <td>' +
 	((__t = ( role)) == null ? '' : __t) +
-	' </td>\n    <td>\n        ';
+	' </td>\r\n    <td>\r\n        ';
 	if(it[i].role != 1 ){;
-	__p += '\n            <button class="user-authBtn btn-default modifyBtn" data-uaid = "' +
+	__p += '\r\n            <button class="user-authBtn btn-default modifyBtn" data-uaid = "' +
 	((__t = ( it[i].id)) == null ? '' : __t) +
-	'">授权管理员</button>\n            <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
+	'">授权管理员</button>\r\n            <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
 	((__t = ( it[i].id)) == null ? '' : __t) +
-	'">删除</button>\n        ';
+	'">删除</button>\r\n        ';
 	};
-	__p += '\n\n        ';
+	__p += '\r\n\r\n        ';
 	if(it[i].role ==1 && opt.isAdmin){;
-	__p += '\n        <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
+	__p += '\r\n        <button class="user-deleteBtn btn-default modifyBtn" data-uaid = "' +
 	((__t = ( it[i].id)) == null ? '' : __t) +
-	'">删除</button>\n        ';
+	'">删除</button>\r\n        ';
 	};
-	__p += '\n\n    </td>\n</tr>\n';
+	__p += '\r\n\r\n    </td>\r\n</tr>\r\n';
 	};
-	__p += '\n';
+	__p += '\r\n';
 
 	}
 	return __p
@@ -448,7 +448,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 119:
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -457,11 +457,11 @@ webpackJsonp([5],{
 	with (obj) {
 	__p += '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="' +
 	((__t = (it.id || '' )) == null ? '' : __t) +
-	'">\n  <div class="modal-backdrop fade"></div>\n  <div class="modal-dialog">\n    <div class="modal-content">\n\n      <div class="modal-header">\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\n        <h4 class="modal-title">' +
+	'">\r\n  <div class="modal-backdrop fade"></div>\r\n  <div class="modal-dialog">\r\n    <div class="modal-content">\r\n\r\n      <div class="modal-header">\r\n        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\r\n        <h4 class="modal-title">' +
 	((__t = (it.header)) == null ? '' : __t) +
-	'</h4>\n      </div>\n      <div class="modal-body">\n        ' +
+	'</h4>\r\n      </div>\r\n      <div class="modal-body">\r\n        ' +
 	((__t = (it.body)) == null ? '' : __t) +
-	'\n      </div>\n      <div class="modal-footer">\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\n      </div>\n\n    </div>\n  </div>\n</div>';
+	'\r\n      </div>\r\n      <div class="modal-footer">\r\n        <button type="button" class="btn btn-default" data-event-click="close">Close</button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>';
 
 	}
 	return __p

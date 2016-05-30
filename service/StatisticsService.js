@@ -36,7 +36,7 @@ var StatisticsService = function() {
     this.statisticsDao = global.models.statisticsDao;
     this.applyDao = global.models.applyDao;
 
-    this.triggerUrl = GLOBAL.pjconfig.storage.errorMsgTopCacheUrl;
+    //this.triggerUrl = GLOBAL.pjconfig.storage.errorMsgTopCacheUrl;
     this.url = GLOBAL.pjconfig.storage.errorMsgTopUrl;
 
     logger.debug('query url : ' + this.url);
@@ -149,24 +149,24 @@ StatisticsService.prototype = {
         });
     },
 
-    triggerStorageCache: function(ids, startDate, cb) {
-        http.get((this.triggerUrl + '?ids=' + ids + '&startDate=' + (startDate - 0)), function(res) {
-            //  res.on("end" , function (){
-            cb();
-            // });
-        }).on('error', function(err) {
-            cb(err);
-            logger.error('triggerStorageCache error :' + err);
-        });
-    },
+    //triggerStorageCache: function(ids, startDate, cb) {
+    //    http.get((this.triggerUrl + '?ids=' + ids + '&startDate=' + (startDate - 0)), function(res) {
+    //        //  res.on("end" , function (){
+    //        cb();
+    //        // });
+    //    }).on('error', function(err) {
+    //        cb(err);
+    //        logger.error('triggerStorageCache error :' + err);
+    //    });
+    //},
 
     startMonitor: function() {
         var self = this;
 
 
-        var getTomorrowDay = function() {
+        var getFetchDate = function() {
             var tomorrow = new Date(nowDate);
-            tomorrow.setHours(1, 0, 0, 0);
+            tomorrow.setHours(2, 0, 0, 0);
             tomorrow.setDate(tomorrow.getDate() + 1);
             return tomorrow;
         };
@@ -178,7 +178,7 @@ StatisticsService.prototype = {
         };
 
         var nowDate = new Date;
-        var targetDate = getTomorrowDay();
+        var targetDate = getFetchDate();
 
         var startTimeout = function() {
             var afterDate = targetDate - nowDate;
@@ -201,21 +201,21 @@ StatisticsService.prototype = {
                         ids += "_" + value.id;
                     });
 
-                    self.triggerStorageCache(ids, startDate, function(err) {
-                        logger.info("trigger success and after 5400000s fetch result");
-                        if (!err) {
-                            setTimeout(function() {
+                    //self.triggerStorageCache(ids, startDate, function(err) {
+                    //    logger.info("trigger success and after 5400000s fetch result");
+                        //if (!err) {
+                        //    setTimeout(function() {
                                 logger.info("start fetching result ... ");
                                 _.each(item, function(value, key) {
                                     self.fetchAndSave(value.id, startDate);
                                 });
-                            }, 5400000); // 1个半小时候后，拉取统计
+                            //}, 5400000); // 1个半小时候后，拉取统计
 
-                        }
-                    });
+                        //}
+                    //});
 
                     nowDate = new Date();
-                    targetDate = getTomorrowDay();
+                    targetDate = getFetchDate();
 
                     startTimeout();
                 });
