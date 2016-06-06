@@ -1,10 +1,11 @@
 /* global process */
-var zmq = require('zmq');
+
+var mq = require(process.env.mqModule);
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
 
-var port = process.env.port;
+var mqUrl = process.env.mqUrl;
 var service = process.env.service;
 var isDebug = process.env.debug == "false" ? false : true;
 
@@ -40,6 +41,13 @@ var isExclude = function(str, regs) {
     return result;
 };
 
+var getSubscribe = function (str){
+    if(process.env.mqModule == "axon") {
+            return str + "*"
+    }
+    return str;
+}
+
 
 
 var monitorWorker = {
@@ -50,7 +58,7 @@ var monitorWorker = {
 
     monitorKey: '',
 
-    zmqClient: null,
+    mqClient: null,
 
     _resetTimeoutFlag: function() {
         this.wbClient._keepalive = new Date - 0;
@@ -140,10 +148,10 @@ var monitorWorker = {
 
         this.monitorKey = service + data.id + "|";
 
-        this.zmqClient = zmq.socket('sub');
+        this.mqClient = mq.socket('sub');
 
-        this.zmqClient.connect(port);
-        this.zmqClient.subscribe(this.monitorKey);
+        this.mqClient.connect(mqUrl);
+        this.mqClient.subscribe(getSubscribe(this.monitorKey));
 
         filter = {
             level: data.level,
@@ -154,7 +162,7 @@ var monitorWorker = {
         logger.info("worker(" + process.pid + ") start accept service:" + this.monitorKey);
 
 
-        this.zmqClient.on("message", function(data) {
+        this.mqClient.on("message", function(data) {
             var dataStr = data.toString();
             data = dataStr.substring(dataStr.indexOf(' '));
             try {
@@ -175,9 +183,9 @@ var monitorWorker = {
     stopMonitor: function() {
         logger.info("worker(" + process.pid + ") stop accept, service:" + this.monitorKey);
         try {
-            this.zmqClient && this.zmqClient.close();
+            this.mqClient && this.mqClient.close();
         } catch (ex) {
-            logger.error('zmq client close error!');
+            logger.error('mq client close error!');
         }
         this.wbClient = {};
         clearInterval(this._monitorTimeoutId);

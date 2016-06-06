@@ -1,7 +1,7 @@
-var  zmq = require('zmq')
-    , client = zmq.socket('sub')
-    , port = GLOBAL.pjconfig.zmq.url
-    , service = GLOBAL.pjconfig.zmq.subscribe;
+var  mq = require(GLOBAL.pjconfig.mq.module)
+    , client = mq.socket('sub')
+    , mqUrl = GLOBAL.pjconfig.mq.url
+    , service = GLOBAL.pjconfig.mq.subscribe;
 
 
 var log4js = require('log4js'),
@@ -26,7 +26,7 @@ var log4js = require('log4js'),
     logger = log4js.getLogger();
 
 var Processor = function (){
-    this.worker = cluster.fork({port : port , service :service , debug :  !!GLOBAL.DEBUG  });
+    this.worker = cluster.fork({mqUrl : mqUrl , service :service , debug :  !!GLOBAL.DEBUG , mqModule : GLOBAL.pjconfig.mq.module });
     this.__pid__ = this.worker.process.pid;
 
 

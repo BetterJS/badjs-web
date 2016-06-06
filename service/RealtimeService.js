@@ -1,11 +1,6 @@
 /**
  * Created by chriscai on 2015/4/29.
  */
-var  zmq = require('zmq')
-    , client = zmq.socket('sub')
-    , port = GLOBAL.pjconfig.zmq.url
-    , service = GLOBAL.pjconfig.zmq.subscribe;
-
 
 var ProcessorThread = require("../service/worker/ProcessorPool");
 
@@ -29,7 +24,7 @@ var log4js = require('log4js'),
 module.exports = function (app) {
 
 
-    logger.info("starting zmq : " + service);
+    logger.info("starting mq ..." );
 
 
     var server = http.createServer(app);
@@ -43,8 +38,6 @@ module.exports = function (app) {
 
 
     ProcessorThread.createPool();
-
-
 
     webSocketServer.on('connection', function (ws) {
         try{

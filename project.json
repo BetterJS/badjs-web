@@ -14,9 +14,10 @@
     "openapi": {
         "pushProjectUrl" : "http://127.0.0.1:9002/getProjects"
     },
-    "zmq" : {
-      "url" : "tcp://127.0.0.1:10000",
-      "subscribe" : "badjs"
+    "mq": {
+        "url": "tcp://127.0.0.1:10000",
+        "subscribe": "badjs",
+        "module": "axon"
     },
     "email": {
         "homepage": "http://badjs.server.com/user/index.html",
@@ -27,5 +28,5 @@
         "top": 20,
         "module": "email"
     }
-    
+
 }
