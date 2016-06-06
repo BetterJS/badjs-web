@@ -42,9 +42,10 @@ db/create.sql 是需要初始化到 mysql 的中。其中默认的超级管理�
      "openapi": {        //badjs-acceptor 模块的地址， 这里用于同步审核通过的业务的appkey 到openapi 进行验证
         "pushProjectUrl" : "http://127.0.0.1:9002/getProjects"
     },
-    "zmq" : {       // badjs-mq 的地址
-         "url" : "tcp://127.0.0.1:10000",
+    "mq" : {       // badjs-mq 的地址
+        "url" : "tcp://127.0.0.1:10000",
         "subscribe" : "badjs"     // 跟 badjs-aceptor 中的subscribe 对应
+         "module": "axon"      // 指定 mq 模块， 
     },
     "email": {      // 发送 email 配置
         "homepage": "http://badjs.server.com/user/index.html",  // 邮件中的 快捷入口
