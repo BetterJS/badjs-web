@@ -100,11 +100,12 @@ var StatisticsAction = {
         if (!req.query.projectId || isNaN(req.query.projectId) || !req.query.startDate) {
             res.json({
                 ret: 0,
-                msg: 'success',
+                msg: 'query invalid！',
                 data: {}
             });
             return;
         }
+        //console.log(param);
         statisticsService.queryById({
             userName: param.user.loginName,
             projectId: req.query.projectId - 0,

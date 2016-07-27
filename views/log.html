@@ -9,13 +9,13 @@
                 <table class="main-table">
                     <thead>
                         <tr>
-                            <th class="td-1">#</th>
-                            <th class="td-2">时间</th>
-                            <th class="td-3">信息</th>
-                            <th class="td-4">uin</th>
-                            <th class="td-5">ip</th>
-                            <th class="td-6">类型</th>
-                            <th class="td-7"><div class="source_page_trigger"><input type="checkbox" checked="checked" id="show_source_page"><label for="show_source_page">展示页面来源</label></div></th>
+                            <th class="td-1 active">#</th>
+                            <th class="td-2 active">Time</th>
+                            <th class="td-3 active">Information</th>
+                            <th class="td-4 active">uin</th>
+                            <th class="td-5 active">ip</th>
+                            <th class="td-6 active">Agent</th>
+                            <th class="td-7 active">Source</th>
                         </tr>
                     </thead>
                     <tbody id="log-table">
@@ -25,6 +25,16 @@
             </div>
         </div>
         <div class="right-side">
+            <section>
+                <div class="setting-show">
+                    <span class="item active td-2" data-td="td-2" data-event-click="showTd">Time</span>
+                    <span class="item active td-3" data-td="td-3" data-event-click="showTd">Information</span>
+                    <span class="item active td-4" data-td="td-4" data-event-click="showTd">uin</span>
+                    <span class="item active td-5" data-td="td-5" data-event-click="showTd">ip</span>
+                    <span class="item active td-6" data-td="td-6" data-event-click="showTd">Agent</span>
+                    <span class="item active td-7" data-td="td-7" data-event-click="showTd">Source</span>
+                </div>
+            </section>
             <section>
                 <div class="log-select">
                     <!--  <input type="text" class="head-input" placeholder="选择业务"/>
@@ -53,10 +63,10 @@
             </section>
             <section>
                 <p class="setting-title">起始时间</p>
-                <input type="text" value="" readonly class="datetimepicker" id="startTime"/><br><br>
-
+                <input type="text" value="" readonly class="datetimepicker" id="startTime"/><br>
+                
                 <p class="setting-title">结束时间</p>
-                <input type="text" value="" readonly class="datetimepicker" id="endTime"/><br><br>
+                <input type="text" value="" readonly class="datetimepicker" id="endTime"/>
             </section>
             <section>
                 <p class="setting-title">包含关键词</p>
@@ -80,6 +90,33 @@
         </div>
     </div>
 </main>
+<div id="detailModal" data-event-click="closeModal" class="click">
+    <div class="content">
+        <h4>
+            <span class="id"></span>
+            <a href="javascript:void(0);" class="pull-right click" data-event-click="closeModal" title="关闭弹窗">X</a>
+        </h4>
+        <p>
+            <b>Time：</b><span class="time"></span>
+        </p>
+        <p>
+            <b>Info：</b><div class="info"></div>
+        </p>
+        <p>
+            <b>uin：</b><span class="uin"></span>
+        </p>
+        <p>
+            <b>ip：</b><span class="ip"></span>
+        </p>
+        <p>
+            <b>agent：</b><div class="agent"></div>
+        </p>
+        <p>
+            <b>Source：</b><div class="source"></div>
+        </p>
+        <div class="click button" data-event-click="closeModal">关闭弹窗</button>
+    </div>
+</div>
 <%=include('./common/footer.html')(it)%>
 <script src="/static/entry.log.js"></script>
 </body>
