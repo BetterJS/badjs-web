@@ -108,8 +108,27 @@ function bindEvent() {
                 showLogs(logConfig, false);
             }
         })
-        .on('click', 'showSource', function(e, data) {
-            // 内网服务器，拉取不到 外网数据,所以屏蔽掉请求
+        .on('click', 'alertModal', function(e) {
+            var $target=$(e.currentTarget);
+            $("#detailModal .id").text("#"+$target.text());
+            $("#detailModal .time").text($target.siblings('.td-2').text());
+            $("#detailModal .info").html($target.siblings('.td-3').html());
+            $("#detailModal .uin").text($target.siblings('.td-4').text());
+            $("#detailModal .ip").text($target.siblings('.td-5').text());
+            $("#detailModal .agent").text($target.siblings('.td-6').children("span:first-of-type").attr("title"));
+            $("#detailModal .source").html($target.siblings('.td-7').html());
+            $("#detailModal").show();
+            console.log(document.documentElement.style.overflow);
+            document.documentElement.style.overflow='hidden';
+            document.body.style.overflow='hidden';
+        }).on('click', 'closeModal', function(e){
+            if($(e.target).hasClass('click')){
+                $("#detailModal").hide();
+                document.documentElement.style.overflow='';
+                document.body.style.overflow='';
+            }
+            e.stopPropagation();
+            e.preventDefault();
         }).on('change', 'selectBusiness', function() {
             var val = $(this).val() - 0;
             currentSelectId = val;
@@ -117,6 +136,14 @@ function bindEvent() {
             currentIndex = 0;
             noData = false;
             logConfig.id = val;
+        }).on('click', 'showTd', function(e) {
+            var $target=$(e.currentTarget).toggleClass('active');
+            $('.main-table .'+$target.data('td')).toggleClass('active');
+            //保存用户偏好，隐藏为true
+            //console.log($target.data('td'));
+            localStorage.setItem($target.data('td'),!$target.hasClass('active'));
+            //console.log(localStorage);
+            window.classes[$target.data('td')]=$target.hasClass('active')?'active':'';
         }).on('click', 'errorTypeClick', function() {
             if ($(this).hasClass('msg-dis')) {
                 logConfig.level.push(4);
@@ -156,7 +183,6 @@ function bindEvent() {
     }, 100);
 
     $('.main-mid').scroll(throttled);
-
 }
 
 function isTimeRight(begin, end) {
@@ -184,7 +210,6 @@ function removeValue(value, arr) {
         }
     }
 }
-
 
 function showLogs(opts, isAdd) {
     opts.id = $('#select-business').val() >> 0; // jshint ignore:line
@@ -233,12 +258,14 @@ function showLogs(opts, isAdd) {
                 if (isAdd) {
                     $('#log-table').append(logTable({
                         it: data.data,
-                        opt: param
+                        opt: param,
+                        classes: window.classes
                     }));
                 } else {
                     $('#log-table').html(logTable({
                         it: data.data,
-                        opt: param
+                        opt: param,
+                        classes: window.classes
                     }));
                 }
 
@@ -263,6 +290,23 @@ function showLogs(opts, isAdd) {
 
 function init() {
     bindEvent();
+    //读取用户偏好
+    var items=$("#content .right-side .setting-show .item");
+    window.classes={};
+    //console.log(localStorage);
+    for(var i=0;i<items.length;i++){
+        var item=$(items[i]);
+        if(localStorage.getItem(item.data("td"))==='true'){
+            item.removeClass('active');
+            $('.main-table .'+item.data('td')).removeClass('active');
+            window.classes[item.data('td')]='';
+        }else{
+            window.classes[item.data('td')]='active';
+        }
+    }
+    $('#content .mid-side .main-table thead tr').show();
+    $('#content .right-side .setting-show').show();
+
     $(".datetimepicker").datetimepicker({
         format: 'YYYY-MM-DD HH:mm'
     }).data("DateTimePicker").setMaxDate(new Date());

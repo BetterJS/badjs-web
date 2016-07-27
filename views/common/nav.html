@@ -29,15 +29,14 @@
             <a><%= it.manageTitle?it.manageTitle:"管理" %></a>
             <ul class="subNav">
                 <li class="item">
-                    <a  href="userManage.html">用户列表</a>
+                    <a  href="applyList.html">申请项目列表</a>
                 </li>
                 <li class="item">
-                    <a  href="applyList.html">申请列表</a>
+                    <a  href="userManage.html">项目用户权限</a>
                 </li>
-
                 <% if(it.user.role == 1){ %>
                 <li class="item">
-                    <a  href="authUserManage.html">用户授权</a>
+                    <a  href="authUserManage.html">注册用户列表</a>
                 </li>
                 <% } %>
                 <li class="item">

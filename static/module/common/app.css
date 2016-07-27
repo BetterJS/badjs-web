@@ -153,10 +153,7 @@ form
     position: absolute;
     top: 71px;
     bottom: 0;
-
     width: 100%;
-    min-height: 800px;
-
     background: #f7f7f7;
 }
 
@@ -228,7 +225,6 @@ form
 #content .mid-side
 {
     position: relative;
-
     height: 100%;
     margin-right: 250px;
     padding-top: 10px;
@@ -278,9 +274,49 @@ form
 {
     height: 35px;
 }
+#content .mid-side .main-table td.td-1{
+    cursor: pointer;
+}
+#detailModal{
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(0,0,0,0.5);
+    padding: 10px;
+}
+#detailModal .content{
+    z-index: 10000;
+    background-color: white;
+    width: 500px;
+    height: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+    padding: 20px;
+    word-break:break-all;
+}
+#detailModal .button{
+    line-height: 36px;
+    width: 137px;
+    height: 37px;
+    cursor: pointer;
+    text-align: center;
+    font-size:14px;
+    color: #fff;
+    border-radius: 3px;
+    background: #2d82f2;
+    margin: 0 auto;
+}
+#detailModal .content h4 .id{
+    color: #2d82f2; 
+}
 #content .mid-side .main-table thead tr
 {
     background: #f8f8f8;
+    display: none;
 }
 #content .mid-side .main-table tbody tr:hover
 {
@@ -290,8 +326,24 @@ form
 #content .mid-side .main-table th
 {
     padding: 0 10px;
-
     border: 1px solid #dedede;
+    word-break: break-all;
+    display: none;
+}
+#content .mid-side .main-table td.td-1,
+#content .mid-side .main-table th.td-1
+{
+    width: 50px;
+}
+#content .mid-side .main-table td.td-4,
+#content .mid-side .main-table th.td-4
+{
+    width: 100px;
+}
+#content .mid-side .main-table td.active,
+#content .mid-side .main-table th.active
+{
+    display:table-cell;
 }
 #content .mid-side .main-table td.info-type-err,
 #content .mid-side .main-table td.info-type-4
@@ -389,11 +441,10 @@ form
     position: absolute;
     top: 0;
     right: 0;
-
     width: 250px;
     height: 100%;
-
     color: #333;
+    //overflow-y: scroll;
     background: #ededed;
 }
 
@@ -482,7 +533,7 @@ form
 
     width: 46px;
     height: 46px;
-    margin-right: 15px;
+    margin-right: 5px;
 
     list-style: none;
 
@@ -512,7 +563,7 @@ form
 }
 #content .right-side .keyword-ctn .keyword-ipt
 {
-    width: 90px;
+    width: 70px;
     height: 25px;
     padding: 5px;
 
@@ -541,6 +592,24 @@ form
     color: #fff;
     border-radius: 3px;
     background: #2d82f2;
+}
+#content .right-side .setting-show
+{
+    display: none;
+}
+#content .right-side .setting-show .item
+{
+    display: inline-block;
+    color: white;
+    cursor: pointer;
+    background-color: gray;
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+}
+#content .right-side .setting-show .item.active
+{
+    background-color: #2d82f2;
+    
 }
 
 #content .right-side .setting-search.stop
@@ -962,43 +1031,6 @@ form
     margin: 0;
 }
 
-.td-1
-{
-    width: 50px;
-}
-
-.td-2
-{
-    width: 180px;
-}
-
-.td-3
-{
-    word-break: break-all;
-}
-
-.td-4
-{
-    width: 130px;
-}
-
-.td-5
-{
-    width: 135px;
-}
-
-.td-6
-{
-    width: 50px;
-}
-
-.td-7
-{
-    width: 500px;
-
-    word-break: break-all;
-}
-
 .main-table-hidefrom .td-7
 {
     width: 135px;
@@ -1129,30 +1161,6 @@ form
     background: #e5e5e5;
 }
 
-.source_page_trigger
-{
-    display: inline-block;
-
-    height: 20px;
-
-    vertical-align: middle;
-}
-
-.source_page_trigger input
-{
-    margin: 0 3px 0 0;
-
-    cursor: pointer;
-    vertical-align: -1px;
-}
-
-.source_page_trigger label
-{
-    margin: 0;
-
-    cursor: pointer;
-}
-
 .input-tips
 {
     line-height: 1.8em;
@@ -1174,4 +1182,62 @@ form
 
 .modal-body {
     word-break: break-all;
+}
+
+@media (max-width: 500px) {
+    #content .mid-side{
+        margin-right: 200px;
+    }
+    #content .mid-side .main-table td.td-3,
+    #content .mid-side .main-table th.td-3,
+    #content .mid-side .main-table td.td-4,
+    #content .mid-side .main-table th.td-4,
+    #content .mid-side .main-table td.td-5,
+    #content .mid-side .main-table th.td-5,
+    #content .mid-side .main-table td.td-6,
+    #content .mid-side .main-table th.td-6,
+    #content .mid-side .main-table td.td-7,
+    #content .mid-side .main-table th.td-7{
+        display: none;
+    }
+    #content .right-side{
+        width: 200px;
+    }
+    #content .right-side section:first-child{
+        display: none;
+    }
+    #content .right-side section{
+        padding: 5px 10px;
+    }
+    #content .right-side section br{
+        display: none;
+    }
+    #content .right-side section p{
+        margin: 0;
+    }
+    #content .right-side .setting-show{
+        display: none;
+    }
+    #detailModal .content{
+        width: 100%;
+        padding: 10px;
+    }
+    #content .right-side .setting-title
+    {
+        display: inline-block;
+        margin-right: 5px;
+    }
+    #content .right-side .setting-msg
+    {
+        display: inline-block;
+        margin: 0;
+    }
+    #content .right-side .setting-msg li
+    {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+        margin-bottom: -7px;
+    }
 }

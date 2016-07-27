@@ -182,6 +182,8 @@ StatisticsService.prototype = {
 
         var startTimeout = function() {
             var afterDate = targetDate - nowDate;
+            afterDate = 600000;//调试，10min统计一次
+            logger.info("after " + ((afterDate) / 1000) + "s will fetch again ");
             // after date 有误，取消循环
             if (isNaN(afterDate) || afterDate < 1000 * 60 * 60) {
                 logger.info("afterDate error : targetDate" + targetDate + " , now:" + nowDate);

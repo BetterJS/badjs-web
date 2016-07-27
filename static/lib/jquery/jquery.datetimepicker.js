@@ -1616,7 +1616,7 @@
 			current_time_index = 0;
 
 			setPos = function () {
-				var offset = datetimepicker.data('input').offset(), top = offset.top + datetimepicker.data('input')[0].offsetHeight - 1, left = offset.left, position = "absolute";
+				var offset = datetimepicker.data('input').offset(), top = offset.top + datetimepicker.data('input')[0].offsetHeight - 1, left = offset.left, position = "position";
 				if (options.fixed) {
 					top -= $(window).scrollTop();
 					left -= $(window).scrollLeft();

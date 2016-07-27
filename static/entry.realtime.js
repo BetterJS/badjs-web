@@ -6,56 +6,15 @@ webpackJsonp([1],{
 	var log = __webpack_require__(16);
 	log.init();
 
-	var source_trigger = __webpack_require__(12);
+	var source_trigger = __webpack_require__(17);
 	source_trigger.init();
 
-	var last_select = __webpack_require__(13);
+	var last_select = __webpack_require__(14);
 	last_select.init();
 
 /***/ },
 
-/***/ 12:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
-		var not_show_source_page = false;
-		var hideform_class_name = 'main-table-hidefrom';
-
-		try {
-			not_show_source_page = !!localStorage.not_show_source_page;
-			$('.main-table')[not_show_source_page ? 'addClass' : 'removeClass'](hideform_class_name);
-		} catch (ex) {}
-
-		var update_source = function(show_source_page) {
-			if (show_source_page) {
-				$('.main-table').removeClass(hideform_class_name);
-				$('#log-table .source_page_link').each(function() {
-					var $this = $(this);
-					$this.text($this.data('viewlink'));
-				});
-			} else {
-				$('.main-table').addClass(hideform_class_name);
-				$('#log-table .source_page_link').each(function() {
-					var $this = $(this);
-					$this.text($this.data('viewtext'));
-				});
-			}
-		};
-
-		var $ssp = $('#show_source_page');
-		$ssp.prop('checked', !not_show_source_page).on('change', function() {
-			try {
-				var show_source_page = $ssp.prop('checked');
-				localStorage.not_show_source_page = show_source_page ? '' : '1';
-				update_source(show_source_page);
-			} catch (ex) {}
-		});
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-
-/***/ 13:
+/***/ 14:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
@@ -76,19 +35,19 @@ webpackJsonp([1],{
 		} catch (ex) {}
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
 /***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(122);
-	var Delegator = __webpack_require__(21);
+	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(125);
+	var Delegator = __webpack_require__(126);
 
-	var logTable = __webpack_require__(127);
-	var keyword = __webpack_require__(128);
-	var debar = __webpack_require__(129);
+	var logTable = __webpack_require__(132);
+	var keyword = __webpack_require__(133);
+	var debar = __webpack_require__(134);
 
 
 	var logConfig = {
@@ -202,10 +161,27 @@ webpackJsonp([1],{
 	            }
 
 	        })
-	        .on('click', 'showSource', function(e, data) {
-	            // 内网服务器，拉取不到 外网数据,所以屏蔽掉请求
-	            return;
-
+	        .on('click', 'alertModal', function(e, data) {
+	            var $target=$(e.currentTarget);
+	            $("#detailModal .id").text("#"+$target.text());
+	            $("#detailModal .time").text($target.siblings('.td-2').text());
+	            $("#detailModal .info").html($target.siblings('.td-3').html());
+	            $("#detailModal .uin").text($target.siblings('.td-4').text());
+	            $("#detailModal .ip").text($target.siblings('.td-5').text());
+	            $("#detailModal .agent").text($target.siblings('.td-6').children("span:first-of-type").attr("title"));
+	            $("#detailModal .source").html($target.siblings('.td-7').html());
+	            $("#detailModal").show();
+	            console.log(document.documentElement.style.overflow);
+	            document.documentElement.style.overflow='hidden';
+	            document.body.style.overflow='hidden';
+	        }).on('click', 'closeModal', function(e){
+	            if($(e.target).hasClass('click')){
+	                $("#detailModal").hide();
+	                document.documentElement.style.overflow='';
+	                document.body.style.overflow='';
+	            }
+	            e.stopPropagation();
+	            e.preventDefault();
 	        }).on('change', 'selectBusiness', function() {
 	            var val = $(this).val() - 0;
 	            currentSelectId = val;
@@ -213,7 +189,14 @@ webpackJsonp([1],{
 	            currentIndex = 0;
 	            noData = false;
 	            logConfig.id = val;
-
+	        }).on('click', 'showTd', function(e) {
+	            var $target=$(e.currentTarget).toggleClass('active');
+	            $('.main-table .'+$target.data('td')).toggleClass('active');
+	            //保存用户偏好，隐藏为true
+	            //console.log($target.data('td'));
+	            localStorage.setItem($target.data('td'),!$target.hasClass('active'));
+	            //console.log(localStorage);
+	            window.classes[$target.data('td')]=$target.hasClass('active')?'active':'';
 	        }).on('click', 'errorTypeClick', function() {
 	            if ($(this).hasClass('msg-dis')) {
 	                logConfig.level.push(4);
@@ -312,19 +295,126 @@ webpackJsonp([1],{
 	    currentIndex++;
 	}
 
-
-
 	function init() {
 	    bindEvent();
+	    //读取用户偏好
+	    var items=$("#content .right-side .setting-show .item");
+	    window.classes={};
+	    //console.log(localStorage);
+	    for(var i=0;i<items.length;i++){
+	        var item=$(items[i]);
+	        if(localStorage.getItem(item.data("td"))==='true'){
+	            item.removeClass('active');
+	            $('.main-table .'+item.data('td')).removeClass('active');
+	            window.classes[item.data('td')]='';
+	        }else{
+	            window.classes[item.data('td')]='active';
+	        }
+	    }
+	    $('#content .mid-side .main-table thead tr').show();
+	    $('#content .right-side .setting-show').show();
 	}
 
 	exports.init = init;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
-/***/ 21:
+/***/ 17:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
+		var not_show_source_page = false;
+		var hideform_class_name = 'main-table-hidefrom';
+
+		try {
+			not_show_source_page = !!localStorage.not_show_source_page;
+			$('.main-table')[not_show_source_page ? 'addClass' : 'removeClass'](hideform_class_name);
+		} catch (ex) {}
+
+		var update_source = function(show_source_page) {
+			if (show_source_page) {
+				$('.main-table').removeClass(hideform_class_name);
+				$('#log-table .source_page_link').each(function() {
+					var $this = $(this);
+					$this.text($this.data('viewlink'));
+				});
+			} else {
+				$('.main-table').addClass(hideform_class_name);
+				$('#log-table .source_page_link').each(function() {
+					var $this = $(this);
+					$this.text($this.data('viewtext'));
+				});
+			}
+		};
+
+		var $ssp = $('#show_source_page');
+		$ssp.prop('checked', !not_show_source_page).on('change', function() {
+			try {
+				var show_source_page = $ssp.prop('checked');
+				localStorage.not_show_source_page = show_source_page ? '' : '1';
+				update_source(show_source_page);
+			} catch (ex) {}
+		});
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+
+/***/ 125:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(126);
+	var modal = __webpack_require__(135);
+
+	    var container;
+
+	    function hide() {
+	        container.removeClass('in');
+	        container.find('.modal-backdrop').removeClass('in');
+	        setTimeout(function () {
+	            container.remove();
+	            container = undefined;
+	        }, 300);
+	    }
+
+	    function Dialog (param) {
+	        if (container) {
+	            container.remove();
+	            container = undefined;
+	        }
+	        container = $(modal({it :param}))
+	            .appendTo(document.body)
+	            .show();
+
+	        var key,
+	            action,
+	            delegator,
+	            on = param.on || {};
+
+	        delegator = (new Delegator(container))
+	            .on('click', 'close', hide);
+
+	        for (key in on) {
+	            action = key.split('/');
+	            delegator.on(action[0], action[1], on[key]);
+	        }
+
+	        setTimeout(function () {
+	            container.addClass('in');
+	            container.find('.modal-backdrop').addClass('in');
+	        }, 0);
+	    }
+
+	    Dialog.hide = hide;
+
+	module.exports =  Dialog;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+
+/***/ 126:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -500,63 +590,11 @@ webpackJsonp([1],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
-/***/ 122:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
-	var modal = __webpack_require__(134);
-
-	    var container;
-
-	    function hide() {
-	        container.removeClass('in');
-	        container.find('.modal-backdrop').removeClass('in');
-	        setTimeout(function () {
-	            container.remove();
-	            container = undefined;
-	        }, 300);
-	    }
-
-	    function Dialog (param) {
-	        if (container) {
-	            container.remove();
-	            container = undefined;
-	        }
-	        container = $(modal({it :param}))
-	            .appendTo(document.body)
-	            .show();
-
-	        var key,
-	            action,
-	            delegator,
-	            on = param.on || {};
-
-	        delegator = (new Delegator(container))
-	            .on('click', 'close', hide);
-
-	        for (key in on) {
-	            action = key.split('/');
-	            delegator.on(action[0], action[1], on[key]);
-	        }
-
-	        setTimeout(function () {
-	            container.addClass('in');
-	            container.find('.modal-backdrop').addClass('in');
-	        }, 0);
-	    }
-
-	    Dialog.hide = hide;
-
-	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-
-/***/ 127:
+/***/ 132:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -567,10 +605,6 @@ webpackJsonp([1],{
 
 
 	var urls;
-	var not_show_source_page = false;
-	try {
-	    not_show_source_page = !!localStorage.not_show_source_page;
-	} catch (ex) {}
 
 	function getBrowserType(ua){
 	    if(!ua){
@@ -612,8 +646,7 @@ webpackJsonp([1],{
 	    if (/view/.test(type)) {
 	        var view = ['页面查看', opt.encodeHtml(from)];
 	        return 'viewtext' === type ? view[0] :
-	            'viewlink' === type ? view[1] :
-	            not_show_source_page ? view[0] : view[1];
+	            'viewlink' === type ? view[1] : view[0];
 	    } else {
 	        var href = opt.encodeHtml(from);
 	        var msg = [data._target, data.rowNum, data.colNum].join(':') + ' ' + data.msg;
@@ -651,25 +684,39 @@ webpackJsonp([1],{
 	;
 	__p += '\r\n<tr id="tr-' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'">\r\n    <td  class="td-1 info-type-' +
+	'">\r\n    <td  class="td-1 active info-type-' +
 	((__t = (type)) == null ? '' : __t) +
-	'">' +
+	'" data-event-click="alertModal" title="点击查看#' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-2">' +
+	'详情">\r\n        ' +
+	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
+	'\r\n    </td>\r\n    <td  class="td-2 ' +
+	((__t = (classes['td-2'] )) == null ? '' : __t) +
+	'">\r\n        ' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'</td>\r\n    <td  style="" class="td-3">' +
+	'\r\n        </td>\r\n    <td  style="" class="td-3 ' +
+	((__t = (classes['td-3'] )) == null ? '' : __t) +
+	'">\r\n        ' +
 	((__t = ( opt.formatMsg(opt.encodeHtml(it[i].msg)) )) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-4" title="' +
+	'\r\n        </td>\r\n    <td  class="td-4 ' +
+	((__t = (classes['td-4'] )) == null ? '' : __t) +
+	'" title="' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
 	'" style="text-overflow: ellipsis;overflow: hidden;" >\r\n        ' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
-	'\r\n    </td>\r\n    <td  class="td-5">' +
+	'\r\n    </td>\r\n    <td  class="td-5 ' +
+	((__t = (classes['td-5'] )) == null ? '' : __t) +
+	'">\r\n        ' +
 	((__t = (it[i].ip )) == null ? '' : __t) +
-	'</td>\r\n    <td  class="td-6">\r\n        <span\r\n            class="ico-browser ' +
+	'\r\n    </td>\r\n    <td  class="td-6 ' +
+	((__t = (classes['td-6'] )) == null ? '' : __t) +
+	'">\r\n        <span\r\n            class="ico-browser ' +
 	((__t = (getBrowserType(it[i].userAgent))) == null ? '' : __t) +
 	'"\r\n            title="' +
 	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"\r\n        ></span>\r\n    </td>\r\n    <td class="td-7">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
+	'"\r\n        ></span>\r\n    </td>\r\n    <td class="td-7 ' +
+	((__t = (classes['td-7'] )) == null ? '' : __t) +
+	'">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
 	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
 	'"\r\n            target="_blank"\r\n            data-event-click="showSource"\r\n            data-event-data="' +
 	((__t = (opt.set(it[i]))) == null ? '' : __t) +
@@ -698,11 +745,11 @@ webpackJsonp([1],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 128:
+/***/ 133:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -721,7 +768,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 129:
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -740,7 +787,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 134:
+/***/ 135:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

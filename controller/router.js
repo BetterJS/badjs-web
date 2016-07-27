@@ -55,7 +55,7 @@ module.exports = function(app){
     });
     app.get('/user/applyList.html', function(req, res){
         var user = req.session.user;
-        res.render('applyList', { layout: false, user: user, index:'manage', manageTitle: '申请列表'});
+        res.render('applyList', { layout: false, user: user, index:'manage', manageTitle: '申请项目列表'});
     });
 
     app.get('/user/userManage.html', function (req , res){

@@ -12,3 +12,14 @@
     <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon" />
 </head>
 <body>
+
+	<script src="/static/badjs/bj-report.js"></script>
+	<script src="/static/badjs/bj-wrap.js"></script>
+    <script>
+        BJ_REPORT.init({
+            id: 2,
+            url: "http://127.0.0.1/badjs"
+        });
+
+        BJ_REPORT.tryJs().spyAll();
+    </script>
