@@ -1,20 +1,61 @@
-webpackJsonp([1],{
+webpackJsonp([7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log = __webpack_require__(16);
+	var log = __webpack_require__(13);
 	log.init();
 
-	var source_trigger = __webpack_require__(17);
+	var source_trigger = __webpack_require__(11);
 	source_trigger.init();
 
-	var last_select = __webpack_require__(14);
+	var last_select = __webpack_require__(12);
 	last_select.init();
 
 /***/ },
 
-/***/ 14:
+/***/ 11:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
+		var not_show_source_page = false;
+		var hideform_class_name = 'main-table-hidefrom';
+
+		try {
+			not_show_source_page = !!localStorage.not_show_source_page;
+			$('.main-table')[not_show_source_page ? 'addClass' : 'removeClass'](hideform_class_name);
+		} catch (ex) {}
+
+		var update_source = function(show_source_page) {
+			if (show_source_page) {
+				$('.main-table').removeClass(hideform_class_name);
+				$('#log-table .source_page_link').each(function() {
+					var $this = $(this);
+					$this.text($this.data('viewlink'));
+				});
+			} else {
+				$('.main-table').addClass(hideform_class_name);
+				$('#log-table .source_page_link').each(function() {
+					var $this = $(this);
+					$this.text($this.data('viewtext'));
+				});
+			}
+		};
+
+		var $ssp = $('#show_source_page');
+		$ssp.prop('checked', !not_show_source_page).on('change', function() {
+			try {
+				var show_source_page = $ssp.prop('checked');
+				localStorage.not_show_source_page = show_source_page ? '' : '1';
+				update_source(show_source_page);
+			} catch (ex) {}
+		});
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+
+/***/ 12:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
@@ -35,15 +76,15 @@ webpackJsonp([1],{
 		} catch (ex) {}
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 16:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(125);
-	var Delegator = __webpack_require__(126);
+	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(23);
+	var Delegator = __webpack_require__(24);
 
 	var logTable = __webpack_require__(132);
 	var keyword = __webpack_require__(133);
@@ -317,55 +358,14 @@ webpackJsonp([1],{
 
 	exports.init = init;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 17:
+/***/ 23:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
-		var not_show_source_page = false;
-		var hideform_class_name = 'main-table-hidefrom';
-
-		try {
-			not_show_source_page = !!localStorage.not_show_source_page;
-			$('.main-table')[not_show_source_page ? 'addClass' : 'removeClass'](hideform_class_name);
-		} catch (ex) {}
-
-		var update_source = function(show_source_page) {
-			if (show_source_page) {
-				$('.main-table').removeClass(hideform_class_name);
-				$('#log-table .source_page_link').each(function() {
-					var $this = $(this);
-					$this.text($this.data('viewlink'));
-				});
-			} else {
-				$('.main-table').addClass(hideform_class_name);
-				$('#log-table .source_page_link').each(function() {
-					var $this = $(this);
-					$this.text($this.data('viewtext'));
-				});
-			}
-		};
-
-		var $ssp = $('#show_source_page');
-		$ssp.prop('checked', !not_show_source_page).on('change', function() {
-			try {
-				var show_source_page = $ssp.prop('checked');
-				localStorage.not_show_source_page = show_source_page ? '' : '1';
-				update_source(show_source_page);
-			} catch (ex) {}
-		});
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-
-/***/ 125:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(126);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(24);
 	var modal = __webpack_require__(135);
 
 	    var container;
@@ -410,11 +410,11 @@ webpackJsonp([1],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 126:
+/***/ 24:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -590,7 +590,7 @@ webpackJsonp([1],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
@@ -605,6 +605,10 @@ webpackJsonp([1],{
 
 
 	var urls;
+	var not_show_source_page = true;
+	try {
+	    not_show_source_page = !!localStorage.not_show_source_page;
+	} catch (ex) {}
 
 	function getBrowserType(ua){
 	    if(!ua){
@@ -646,7 +650,8 @@ webpackJsonp([1],{
 	    if (/view/.test(type)) {
 	        var view = ['页面查看', opt.encodeHtml(from)];
 	        return 'viewtext' === type ? view[0] :
-	            'viewlink' === type ? view[1] : view[0];
+	            'viewlink' === type ? view[1] :
+	            not_show_source_page ? view[0] : view[1];
 	    } else {
 	        var href = opt.encodeHtml(from);
 	        var msg = [data._target, data.rowNum, data.colNum].join(':') + ' ' + data.msg;
@@ -694,11 +699,11 @@ webpackJsonp([1],{
 	((__t = (classes['td-2'] )) == null ? '' : __t) +
 	'">\r\n        ' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'\r\n        </td>\r\n    <td  style="" class="td-3 ' +
+	'\r\n    </td>\r\n    <td  style="" class="td-3 ' +
 	((__t = (classes['td-3'] )) == null ? '' : __t) +
 	'">\r\n        ' +
 	((__t = ( opt.formatMsg(opt.encodeHtml(it[i].msg)) )) == null ? '' : __t) +
-	'\r\n        </td>\r\n    <td  class="td-4 ' +
+	'\r\n    </td>\r\n    <td  class="td-4 ' +
 	((__t = (classes['td-4'] )) == null ? '' : __t) +
 	'" title="' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
@@ -745,7 +750,7 @@ webpackJsonp([1],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
