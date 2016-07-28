@@ -5,39 +5,54 @@ try {
     not_show_source_page = !!localStorage.not_show_source_page;
 } catch (ex) {}
 
-function getBrowserType(ua){
-    if(!ua){
+// 手Q
+var RE_MQQ = /(ipad|iphone|ipod).*? (ipad)?qq\/([\d.]+)|\bv1_and_sqi?_([\d.]+)(.*? qq\/([\d.]+))?/;
+
+function getBrowserType(ua) {
+    if (!ua) {
         return '';
     }
     ua = ua.toLowerCase();
 
-    if(ua.indexOf('qqbrowser')>-1){
-        return  'ico-qb';
-    }else if(ua.indexOf('metasr')>-1){
-        return  'ico-sougou';
-    }else if(ua.indexOf('maxthon')>-1){
-        return  'ico-maxthon';
-    }else if(ua.indexOf('360se')>-1){
-        return  'ico-360';
-    }else if(ua.indexOf('qq/')>-1){
-        return  'ico-qq';
-    }else if(ua.indexOf('micromessenger')>-1){
-        return  'ico-wx';
-    }else if(ua.indexOf('edge')>-1){
-        return  'ico-edge';
-    }else if(ua.indexOf('chrome')>-1){
-        return  'ico-chrome';
-    }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
-        return 'ico-ie';
-    }else if(ua.indexOf('firefox')>-1){
-        return 'ico-ff';
-    }else if(ua.indexOf('safari')>-1){
-        return 'ico-safari';
-    }else if(ua.indexOf('android')>-1){
-        return  'ico-android';
-    }else if(ua.indexOf('iphone')>-1){
-        return  'ico-ios';
+    var osIcon = '', browserIcon = '';
+
+    // os
+    if (ua.indexOf('android') > -1)
+        osIcon = 'ico-android';
+    else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1)
+        osIcon = 'ico-ios';
+    else if (ua.indexOf('windows') > -1)
+        osIcon = 'ico-windows';
+
+
+    // 手Q
+    if (RE_MQQ.test(ua)) {
+        browserIcon = 'ico-qq';
+    } else if (ua.indexOf('qqbrowser') > -1) {
+        browserIcon = 'ico-qb';
+    } else if (ua.indexOf('metasr') > -1) {
+        browserIcon = 'ico-sougou';
+    } else if (ua.indexOf('maxthon') > -1) {
+        browserIcon = 'ico-maxthon';
+    } else if (ua.indexOf('360se') > -1) {
+        browserIcon = 'ico-360';
+    } else if (ua.indexOf('qq/') > -1) {
+        browserIcon = 'ico-qq';
+    } else if (ua.indexOf('micromessenger') > -1) {
+        browserIcon = 'ico-wx';
+    } else if (ua.indexOf('edge') > -1) {
+        browserIcon = 'ico-edge';
+    } else if (ua.indexOf('chrome') > -1) {
+        browserIcon = 'ico-chrome';
+    } else if (ua.indexOf('msie') > -1 || ua.indexOf('trident') > -1) {
+        browserIcon = 'ico-ie';
+    } else if (ua.indexOf('firefox') > -1) {
+        browserIcon = 'ico-ff';
+    } else if (ua.indexOf('safari') > -1) {
+        browserIcon = 'ico-safari';
     }
+
+    return [osIcon, browserIcon];
 }
 
 function sourcePage(data, type, opt) {

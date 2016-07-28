@@ -311,7 +311,7 @@ form
     margin: 0 auto;
 }
 #detailModal .content h4 .id{
-    color: #2d82f2; 
+    color: #2d82f2;
 }
 #content .mid-side .main-table thead tr
 {
@@ -609,7 +609,7 @@ form
 #content .right-side .setting-show .item.active
 {
     background-color: #2d82f2;
-    
+
 }
 
 #content .right-side .setting-search.stop
