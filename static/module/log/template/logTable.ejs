@@ -1,5 +1,9 @@
 <%
 var urls;
+var not_show_source_page = true;
+try {
+    not_show_source_page = !!localStorage.not_show_source_page;
+} catch (ex) {}
 
 function getBrowserType(ua){
     if(!ua){
@@ -41,7 +45,8 @@ function sourcePage(data, type, opt) {
     if (/view/.test(type)) {
         var view = ['页面查看', opt.encodeHtml(from)];
         return 'viewtext' === type ? view[0] :
-            'viewlink' === type ? view[1] : view[0];
+            'viewlink' === type ? view[1] :
+            not_show_source_page ? view[0] : view[1];
     } else {
         var href = opt.encodeHtml(from);
         var msg = [data._target, data.rowNum, data.colNum].join(':') + ' ' + data.msg;
@@ -83,10 +88,10 @@ for (var i = 0 , l = it.length, type = ''; i < l; i++) {
     </td>
     <td  class="td-2 <%=classes['td-2'] %>">
         <%= _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') %>
-        </td>
+    </td>
     <td  style="" class="td-3 <%=classes['td-3'] %>">
         <%= opt.formatMsg(opt.encodeHtml(it[i].msg)) %>
-        </td>
+    </td>
     <td  class="td-4 <%=classes['td-4'] %>" title="<%=  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin )%>" style="text-overflow: ellipsis;overflow: hidden;" >
         <%=  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin )%>
     </td>
