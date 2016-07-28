@@ -311,7 +311,7 @@ form
     margin: 0 auto;
 }
 #detailModal .content h4 .id{
-    color: #2d82f2; 
+    color: #2d82f2;
 }
 #content .mid-side .main-table thead tr
 {
@@ -431,6 +431,10 @@ form
 #content .mid-side .main-table .ico-ios
 {
     background: url(/static/img/ico-ios.png) no-repeat;
+}
+#content .mid-side .main-table .ico-windows
+{
+    background: url(/static/img/ico-windows.png) no-repeat;
 }
 #content .mid-side .main-table .ico-wx
 {
@@ -609,7 +613,7 @@ form
 #content .right-side .setting-show .item.active
 {
     background-color: #2d82f2;
-    
+
 }
 
 #content .right-side .setting-search.stop
