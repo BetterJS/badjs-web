@@ -1,9 +1,9 @@
-webpackJsonp([3],{
+webpackJsonp([2],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log = __webpack_require__(15);
+	var log = __webpack_require__(18);
 	log.init();
 
 	var source_trigger = __webpack_require__(12);
@@ -51,7 +51,7 @@ webpackJsonp([3],{
 			} catch (ex) {}
 		});
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
@@ -76,19 +76,19 @@ webpackJsonp([3],{
 		} catch (ex) {}
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 15:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(22);
-	var Delegator = __webpack_require__(19);
+	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(122);
+	var Delegator = __webpack_require__(20);
 
-	var logTable = __webpack_require__(128);
-	var keyword = __webpack_require__(129);
-	var debar = __webpack_require__(130);
+	var logTable = __webpack_require__(126);
+	var keyword = __webpack_require__(127);
+	var debar = __webpack_require__(128);
 
 
 	var logConfig = {
@@ -358,11 +358,11 @@ webpackJsonp([3],{
 
 	exports.init = init;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 19:
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -538,14 +538,14 @@ webpackJsonp([3],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 22:
+/***/ 122:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(20);
 	var modal = __webpack_require__(134);
 
 	    var container;
@@ -590,11 +590,11 @@ webpackJsonp([3],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 
-/***/ 128:
+/***/ 126:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -728,13 +728,20 @@ webpackJsonp([3],{
 	((__t = (classes['td-5'] )) == null ? '' : __t) +
 	'">\r\n        ' +
 	((__t = (it[i].ip )) == null ? '' : __t) +
-	'\r\n    </td>\r\n    <td  class="td-6 ' +
-	((__t = (classes['td-6'] )) == null ? '' : __t) +
-	'">\r\n        <span\r\n            class="ico-browser ' +
-	((__t = (getBrowserType(it[i].userAgent))) == null ? '' : __t) +
-	'"\r\n            title="' +
-	((__t = (it[i].userAgent)) == null ? '' : __t) +
-	'"\r\n        ></span>\r\n    </td>\r\n    <td class="td-7 ' +
+	'\r\n    </td>\r\n    <td class="td-6 ' +
+	((__t = ( classes['td-6'] )) == null ? '' : __t) +
+	'" title="' +
+	((__t = ( it[i].userAgent )) == null ? '' : __t) +
+	'">  \r\n            ';
+
+	            var browserTypes = getBrowserType(it[i].userAgent);      
+	            for(var x = 0; x < browserTypes.length; x++) {
+	             ;
+	__p += '\r\n             <span class="ico-browser ' +
+	((__t = ( browserTypes[x] )) == null ? '' : __t) +
+	'"></span>\r\n             ';
+	};
+	__p += '\r\n     </td>\r\n    <td class="td-7 ' +
 	((__t = (classes['td-7'] )) == null ? '' : __t) +
 	'">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
 	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
@@ -765,11 +772,11 @@ webpackJsonp([3],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
-/***/ 129:
+/***/ 127:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -788,7 +795,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 130:
+/***/ 128:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

@@ -330,16 +330,36 @@ form
     word-break: break-all;
     display: none;
 }
+
 #content .mid-side .main-table td.td-1,
 #content .mid-side .main-table th.td-1
 {
     width: 50px;
 }
+
+#content .mid-side .main-table td.td-2,
+#content .mid-side .main-table th.td-2
+{
+    width: 200px;
+}
+#content .mid-side .main-table td.td-5,
+#content .mid-side .main-table th.td-5
+{
+    width: 150px;
+}
+#content .mid-side .main-table td.td-6,
+#content .mid-side .main-table th.td-6
+{
+    width: 80px;
+}
+
 #content .mid-side .main-table td.td-4,
 #content .mid-side .main-table th.td-4
 {
-    width: 100px;
+    width: 120px;
 }
+
+
 #content .mid-side .main-table td.active,
 #content .mid-side .main-table th.active
 {
@@ -436,6 +456,10 @@ form
 {
     background: url(/static/img/ico-wx.png) no-repeat;
 }
+#content .mid-side .main-table .ico-windows
+ {
+     background: url(/static/img/ico-windows.png) no-repeat;
+ }
 #content .right-side
 {
     position: absolute;
