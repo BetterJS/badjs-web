@@ -90,7 +90,6 @@ ApproveService.prototype = {
         this.applyDao.one({
             id: target.id
         }, function(err, apply) {
-            console.log('dfdddddddddd', apply, target)
             // SQL: "SELECT * FROM b_apply WHERE name = 'xxxx'"
             for (key in target) {
                 apply[key] = target[key];
