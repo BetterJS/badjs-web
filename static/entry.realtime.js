@@ -1,20 +1,20 @@
-webpackJsonp([7],{
+webpackJsonp([3],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log = __webpack_require__(13);
+	var log = __webpack_require__(15);
 	log.init();
 
-	var source_trigger = __webpack_require__(11);
+	var source_trigger = __webpack_require__(12);
 	source_trigger.init();
 
-	var last_select = __webpack_require__(12);
+	var last_select = __webpack_require__(13);
 	last_select.init();
 
 /***/ },
 
-/***/ 11:
+/***/ 12:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
@@ -51,11 +51,11 @@ webpackJsonp([7],{
 			} catch (ex) {}
 		});
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
-/***/ 12:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
@@ -76,19 +76,19 @@ webpackJsonp([7],{
 		} catch (ex) {}
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
-/***/ 13:
+/***/ 15:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(23);
-	var Delegator = __webpack_require__(24);
+	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(22);
+	var Delegator = __webpack_require__(19);
 
-	var logTable = __webpack_require__(132);
-	var keyword = __webpack_require__(133);
-	var debar = __webpack_require__(134);
+	var logTable = __webpack_require__(128);
+	var keyword = __webpack_require__(129);
+	var debar = __webpack_require__(130);
 
 
 	var logConfig = {
@@ -358,63 +358,11 @@ webpackJsonp([7],{
 
 	exports.init = init;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
-/***/ 23:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(24);
-	var modal = __webpack_require__(135);
-
-	    var container;
-
-	    function hide() {
-	        container.removeClass('in');
-	        container.find('.modal-backdrop').removeClass('in');
-	        setTimeout(function () {
-	            container.remove();
-	            container = undefined;
-	        }, 300);
-	    }
-
-	    function Dialog (param) {
-	        if (container) {
-	            container.remove();
-	            container = undefined;
-	        }
-	        container = $(modal({it :param}))
-	            .appendTo(document.body)
-	            .show();
-
-	        var key,
-	            action,
-	            delegator,
-	            on = param.on || {};
-
-	        delegator = (new Delegator(container))
-	            .on('click', 'close', hide);
-
-	        for (key in on) {
-	            action = key.split('/');
-	            delegator.on(action[0], action[1], on[key]);
-	        }
-
-	        setTimeout(function () {
-	            container.addClass('in');
-	            container.find('.modal-backdrop').addClass('in');
-	        }, 0);
-	    }
-
-	    Dialog.hide = hide;
-
-	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-
-/***/ 24:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -590,11 +538,63 @@ webpackJsonp([7],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 
-/***/ 132:
+/***/ 22:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(19);
+	var modal = __webpack_require__(134);
+
+	    var container;
+
+	    function hide() {
+	        container.removeClass('in');
+	        container.find('.modal-backdrop').removeClass('in');
+	        setTimeout(function () {
+	            container.remove();
+	            container = undefined;
+	        }, 300);
+	    }
+
+	    function Dialog (param) {
+	        if (container) {
+	            container.remove();
+	            container = undefined;
+	        }
+	        container = $(modal({it :param}))
+	            .appendTo(document.body)
+	            .show();
+
+	        var key,
+	            action,
+	            delegator,
+	            on = param.on || {};
+
+	        delegator = (new Delegator(container))
+	            .on('click', 'close', hide);
+
+	        for (key in on) {
+	            action = key.split('/');
+	            delegator.on(action[0], action[1], on[key]);
+	        }
+
+	        setTimeout(function () {
+	            container.addClass('in');
+	            container.find('.modal-backdrop').addClass('in');
+	        }, 0);
+	    }
+
+	    Dialog.hide = hide;
+
+	module.exports =  Dialog;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+
+/***/ 128:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -610,39 +610,54 @@ webpackJsonp([7],{
 	    not_show_source_page = !!localStorage.not_show_source_page;
 	} catch (ex) {}
 
-	function getBrowserType(ua){
-	    if(!ua){
+	// 手Q
+	var RE_MQQ = /(ipad|iphone|ipod).*? (ipad)?qq\/([\d.]+)|\bv1_and_sqi?_([\d.]+)(.*? qq\/([\d.]+))?/;
+
+	function getBrowserType(ua) {
+	    if (!ua) {
 	        return '';
 	    }
 	    ua = ua.toLowerCase();
 
-	    if(ua.indexOf('qqbrowser')>-1){
-	        return  'ico-qb';
-	    }else if(ua.indexOf('metasr')>-1){
-	        return  'ico-sougou';
-	    }else if(ua.indexOf('maxthon')>-1){
-	        return  'ico-maxthon';
-	    }else if(ua.indexOf('360se')>-1){
-	        return  'ico-360';
-	    }else if(ua.indexOf('qq/')>-1){
-	        return  'ico-qq';
-	    }else if(ua.indexOf('micromessenger')>-1){
-	        return  'ico-wx';
-	    }else if(ua.indexOf('edge')>-1){
-	        return  'ico-edge';
-	    }else if(ua.indexOf('chrome')>-1){
-	        return  'ico-chrome';
-	    }else if(ua.indexOf('msie')>-1 || ua.indexOf('trident')>-1 ){
-	        return 'ico-ie';
-	    }else if(ua.indexOf('firefox')>-1){
-	        return 'ico-ff';
-	    }else if(ua.indexOf('safari')>-1){
-	        return 'ico-safari';
-	    }else if(ua.indexOf('android')>-1){
-	        return  'ico-android';
-	    }else if(ua.indexOf('iphone')>-1){
-	        return  'ico-ios';
+	    var osIcon = '', browserIcon = '';
+
+	    // os
+	    if (ua.indexOf('android') > -1)
+	        osIcon = 'ico-android';
+	    else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1)
+	        osIcon = 'ico-ios';
+	    else if (ua.indexOf('windows') > -1)
+	        osIcon = 'ico-windows';
+
+
+	    // 手Q
+	    if (RE_MQQ.test(ua)) {
+	        browserIcon = 'ico-qq';
+	    } else if (ua.indexOf('qqbrowser') > -1) {
+	        browserIcon = 'ico-qb';
+	    } else if (ua.indexOf('metasr') > -1) {
+	        browserIcon = 'ico-sougou';
+	    } else if (ua.indexOf('maxthon') > -1) {
+	        browserIcon = 'ico-maxthon';
+	    } else if (ua.indexOf('360se') > -1) {
+	        browserIcon = 'ico-360';
+	    } else if (ua.indexOf('qq/') > -1) {
+	        browserIcon = 'ico-qq';
+	    } else if (ua.indexOf('micromessenger') > -1) {
+	        browserIcon = 'ico-wx';
+	    } else if (ua.indexOf('edge') > -1) {
+	        browserIcon = 'ico-edge';
+	    } else if (ua.indexOf('chrome') > -1) {
+	        browserIcon = 'ico-chrome';
+	    } else if (ua.indexOf('msie') > -1 || ua.indexOf('trident') > -1) {
+	        browserIcon = 'ico-ie';
+	    } else if (ua.indexOf('firefox') > -1) {
+	        browserIcon = 'ico-ff';
+	    } else if (ua.indexOf('safari') > -1) {
+	        browserIcon = 'ico-safari';
 	    }
+
+	    return [osIcon, browserIcon];
 	}
 
 	function sourcePage(data, type, opt) {
@@ -750,11 +765,11 @@ webpackJsonp([7],{
 	}
 	return __p
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ },
 
-/***/ 133:
+/***/ 129:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -773,7 +788,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 134:
+/***/ 130:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -792,7 +807,7 @@ webpackJsonp([7],{
 
 /***/ },
 
-/***/ 135:
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
