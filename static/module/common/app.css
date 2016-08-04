@@ -334,7 +334,7 @@ form
 #content .mid-side .active-table.main-table td,
 #content .mid-side .active-table.main-table th
 {
-    display: block;
+    display: table-column;
 }
 
 #content .mid-side .main-table td.td-1,
