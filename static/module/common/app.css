@@ -331,6 +331,8 @@ form
     display: none;
 }
 
+#content .mid-side .active-table.main-table td,
+#content .mid-side .active-table.main-table th
 {
     display: block;
 }
