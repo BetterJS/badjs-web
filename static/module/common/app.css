@@ -331,6 +331,10 @@ form
     display: none;
 }
 
+{
+    display: block;
+}
+
 #content .mid-side .main-table td.td-1,
 #content .mid-side .main-table th.td-1
 {
