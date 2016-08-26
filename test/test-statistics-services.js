@@ -28,6 +28,7 @@ orm.connect( mysql, function(err , db) {
     var startDate = new Date('2015-09-23 00:00:00');
     var nowDate = new Date;
 
+    //fetch data until today
     var fetch = function (id , startDate){
         aa.fetchAndSave(id , startDate , function (){
             console.log(startDate.toLocaleDateString() + " ok ");

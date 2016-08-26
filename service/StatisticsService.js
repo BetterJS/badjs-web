@@ -127,7 +127,7 @@ StatisticsService.prototype = {
                         total: result.pv
                     };
                 } catch (err) {
-                    logger.error('error :' + err);
+                    logger.error('parse statistic result error('+id+') :' + err);
                     saveModel = {
                         startDate: startDate,
                         endDate: startDate + 86400000,
