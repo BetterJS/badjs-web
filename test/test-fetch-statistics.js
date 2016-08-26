@@ -1,16 +1,16 @@
 var _ = require("underscore")
 var http = require('http');
-var id = 2;
+var id = 1;
 
 var startDate = 1472054400000
-        http.get((  'http://127.0.0.1:9000/errorMsgTop?id=2&startDate=' + (startDate)), function(res) {
+        http.get((  'http://127.0.0.1:9000/errorMsgTop?id='+id+'&startDate=' + (startDate)), function(res) {
             var buffer = '';
             res.on('data', function(chunk) {
                 buffer += chunk.toString();
             }).on('end', function() {
+                    console.log(buffer.length)
                 try {
                     var result = JSON.parse(buffer);
-                    console.log(buffer.length)
                     _.forEach(result.item, function(value, key) {
                         value.title = value._id;
                         delete value._id;
