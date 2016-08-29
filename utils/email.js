@@ -23,6 +23,8 @@ module.exports = function(from, to, cc, title, content) {
         if (!EmailServer) {
             EmailServer = emailjs.server.connect({
                 host: GLOBAL.pjconfig.email.smtp,
+                user:   GLOBAL.pjconfig.email.smtpUser, 
+                password: GLOBAL.pjconfig.email.smtpPassword ,  
                 ssl: false
             });
         }
