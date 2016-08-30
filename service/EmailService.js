@@ -229,7 +229,7 @@ EmailService.prototype = {
                                     }
                                 });
                             } else {
-                                logger.error('Send email data format error');
+                                logger.error('Send email data format error by ' + applyId );
                             }
                         }); // jshint ignore:line
                     })(orderByApplyId[applyId], applyId); // jshint ignore:line
