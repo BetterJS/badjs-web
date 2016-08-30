@@ -190,7 +190,7 @@ EmailService.prototype = {
                             projectId: applyId,
                             startDate: that.date
                         }, function(err, data) {
-                            if (err) return logger.error('Send email statisticsService queryById error');
+                            if (err) return logger.error('Send email statisticsService queryById error ' + applyId);
                             if (data && data.length > 0) {
                                 that.statisticsService.queryByChart({
                                     projectId: applyId,
