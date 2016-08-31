@@ -1,25 +1,47 @@
-var _ = require("underscore")
-var http = require('http');
-var id = 1;
 
-var startDate = 1472054400000
-        http.get((  'http://127.0.0.1:9000/errorMsgTop?id='+id+'&startDate=' + (startDate)), function(res) {
-            var buffer = '';
-            res.on('data', function(chunk) {
-                buffer += chunk.toString();
-            }).on('end', function() {
-                    console.log(buffer.length)
-                try {
-                    var result = JSON.parse(buffer);
-                    _.forEach(result.item, function(value, key) {
-                        value.title = value._id;
-                        delete value._id;
-                    });
-                } catch (err) {
-                    console.error('parse statistic result error('+id+') :' + err);
-                }
-            });
+var mysql = require('mysql'),
+    StatisticsService = require('../service/StatisticsService'),
+    orm = require('orm');
 
-        }).on('error', function(err) {
-            console.error('error :' + err);
-        });
+GLOBAL.pjconfig = require('../project.json');
+//GLOBAL.DEBUG = true;
+var mysqlUrl = GLOBAL.pjconfig.mysql.url
+
+orm.connect( mysqlUrl, function(err , db) {
+    if(err){
+        throw err;
+    }
+
+    global.models = {
+        userDao : require('../dao/UserDao')(db),
+        applyDao : require('../dao/ApplyDao')(db),
+        approveDao : require('../dao/ApproveDao')(db),
+        statisticsDao : require('../dao/StatisticsDao')(db),
+        db : db
+    }
+
+
+    var aa = new StatisticsService();
+
+
+    var startDate = new Date('2015-09-23 00:00:00');
+    var nowDate = new Date;
+
+    //fetch data until today
+    var fetch = function (id , startDate){
+        aa.fetchAndSave(id , startDate , function (){
+            console.log(startDate.toLocaleDateString() + " ok ");
+            if((startDate -0) > (nowDate - 0) ){
+                console.log("out today");
+                return ;
+            }
+
+        })
+    }
+
+    fetch(24 , startDate);
+
+});
+
+
+

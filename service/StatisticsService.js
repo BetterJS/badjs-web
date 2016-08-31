@@ -127,11 +127,12 @@ StatisticsService.prototype = {
                         total: result.pv
                     };
                 } catch (err) {
-                    logger.error('parse statistic result error('+id+') :' + err);
+                    logger.error('parse statistic result error(id='+id+') :' + err);
                     saveModel = {
                         startDate: startDate,
-                        endDate: startDate + 86400000,
+                        endDate: new Date(+startDate + 86400000-1),
                         content: "[]",
+                        projectId: id,
                         total: 0
                     };
                 }

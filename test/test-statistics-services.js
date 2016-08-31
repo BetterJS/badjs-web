@@ -5,10 +5,9 @@ var mysql = require('mysql'),
 
 GLOBAL.pjconfig = require('../project.json');
 //GLOBAL.DEBUG = true;
-var mysql = "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs";
-//var mysql = "mysql://root:root@localhost:3306/badjs";
+var mysqlUrl = GLOBAL.pjconfig.mysql.url
 
-orm.connect( mysql, function(err , db) {
+orm.connect( mysqlUrl, function(err , db) {
     if(err){
         throw err;
     }
