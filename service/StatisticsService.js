@@ -113,6 +113,8 @@ StatisticsService.prototype = {
             }).on('end', function() {
                 var saveModel = {};
                 try {
+                    //replace emoji to empty , mysql unsupported emoji code
+                    buffer=buffer.replace(/\ud83d[\udc00-\udfff]/gi , "")
                     var result = JSON.parse(buffer);
 
                     _.forEach(result.item, function(value, key) {

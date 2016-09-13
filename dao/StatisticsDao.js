@@ -11,7 +11,7 @@ module.exports  = function (db){
         projectId   : Number,
         startDate   : Date,
         endDate     : Date,
-        content     : Number,
+        content     : String,
         total       : Number
     });
 
