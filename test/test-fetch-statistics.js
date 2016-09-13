@@ -26,20 +26,14 @@ orm.connect( mysqlUrl, function(err , db) {
 
     var startDate = new Date('2015-09-23 00:00:00');
     var nowDate = new Date;
-
+    var id = 991;
     //fetch data until today
-    var fetch = function (id , startDate){
         aa.fetchAndSave(id , startDate , function (){
             console.log(startDate.toLocaleDateString() + " ok ");
-            if((startDate -0) > (nowDate - 0) ){
-                console.log("out today");
-                return ;
-            }
 
         })
-    }
 
-    fetch(24 , startDate);
+    //fetch(24 , startDate);
 
 });
 
