@@ -86,7 +86,7 @@ userApplyService.prototype = {
                     callback(err);
                     return;
                 }
-                if (GLOBAL.DEBUG) {
+                if (global.DEBUG) {
                     logger.info("remove success item: " + item);
                 }
                 callback(null);
@@ -109,7 +109,7 @@ userApplyService.prototype = {
                     callback(err);
                     return;
                 }
-                if (GLOBAL.DEBUG) {
+                if (global.DEBUG) {
                     logger.info("auth success item: " + item);
                 }
                 callback(null);

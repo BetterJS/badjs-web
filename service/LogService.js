@@ -1,4 +1,4 @@
-/* global GLOBAL */
+/* global global */
 /**
  * Created by chriscai on 2014/12/16.
  */
@@ -17,7 +17,7 @@ var request = require("request");
 var LogService = function() {
 
     /*
-        if(GLOBAL.DEBUG){
+        if(global.DEBUG){
             this.queryUrl = 'http://localhost:9000/query';
         }else {
             this.queryUrl = 'http://10.143.132.205:9000/query';
@@ -25,9 +25,9 @@ var LogService = function() {
         }
     */
 
-    this.queryUrl = GLOBAL.pjconfig.storage.queryUrl;
-    this.pushProjectUrl = GLOBAL.pjconfig.acceptor.pushProjectUrl;
-    this.pushProjectUrl2 = GLOBAL.pjconfig.openapi.pushProjectUrl;
+    this.queryUrl = global.pjconfig.storage.queryUrl;
+    this.pushProjectUrl = global.pjconfig.acceptor.pushProjectUrl;
+    this.pushProjectUrl2 = global.pjconfig.openapi.pushProjectUrl;
 
     // this.url = 'http://127.0.0.1:9000/query';
     logger.debug('query url : ' + this.queryUrl);

@@ -50,7 +50,7 @@ var userAction = {
 
             userDao.one({ loginName : req.body.username } ,function (err , user) {
                 if(err || !user || (crypto.createHash("md5").update(req.body.password).digest('hex') != user.password)){
-                    res.render('login', { name:req.body.username,   isUseOA : !! GLOBAL.pjconfig.oos, index:"login"   , message : "帐号或则密码错误"} );
+                    res.render('login', { name:req.body.username,   isUseOA : !! global.pjconfig.oos, index:"login"   , message : "帐号或则密码错误"} );
                 }else {
                     req.session.user = {
                         role : user.role,
@@ -64,7 +64,7 @@ var userAction = {
             });
 
         }else {
-            res.render('login', {  isUseOA : !! GLOBAL.pjconfig.oos, message : "" } );
+            res.render('login', {  isUseOA : !! global.pjconfig.oos, message : "" } );
         }
 
     },
@@ -75,10 +75,10 @@ var userAction = {
         if(method == "post"){
 
             if( !req.body.username || !req.body.password) {
-                res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos, name: req.body.username ,  message : "帐号密码不能为空"} );
+                res.render('register', { isUseOA : !! global.pjconfig.oos, name: req.body.username ,  message : "帐号密码不能为空"} );
                 return ;
             }else if( req.body.password != req.body.password2) {
-                res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos, name: req.body.username ,  message : "密码和确认密码不一致"} );
+                res.render('register', { isUseOA : !! global.pjconfig.oos, name: req.body.username ,  message : "密码和确认密码不一致"} );
                 return ;
             }
 
@@ -87,24 +87,24 @@ var userAction = {
             userDao.one({ loginName : req.body.username } ,function (err , user) {
                 if(err){
                    logger.error("register user error : " + err.toString());
-                    res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos,  name: req.body.username ,  message : "系统错误，请联系管理员"} );
+                    res.render('register', { isUseOA : !! global.pjconfig.oos,  name: req.body.username ,  message : "系统错误，请联系管理员"} );
                 } else if(user){
-                    res.render('register', {isUseOA : !! GLOBAL.pjconfig.oos,  name: req.body.username ,  message : "用户已经存在"} );
+                    res.render('register', {isUseOA : !! global.pjconfig.oos,  name: req.body.username ,  message : "用户已经存在"} );
                     return ;
                 } else {
                     var newUser = { chineseName: req.body.username, role : 0 ,loginName : req.body.username ,password : crypto.createHash("md5").update(req.body.password).digest('hex')};
                     userDao.create(newUser  , function (err) {
                         if(err){
-                            res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos,     message : "系统错误，请联系管理员"} );
+                            res.render('register', { isUseOA : !! global.pjconfig.oos,     message : "系统错误，请联系管理员"} );
                         }
-                        res.render('register', { isUseOA : !! GLOBAL.pjconfig.oos,  type : "1", message : '注册成功 '} )
+                        res.render('register', { isUseOA : !! global.pjconfig.oos,  type : "1", message : '注册成功 '} )
 
                     });
                 }
             });
 
         }else {
-            res.render('register', {   isUseOA : !! GLOBAL.pjconfig.oos, message : "" } );
+            res.render('register', {   isUseOA : !! global.pjconfig.oos, message : "" } );
         }
 
     },

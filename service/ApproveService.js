@@ -10,8 +10,8 @@ var log4js = require('log4js'),
 
 
 var ApproveService = function() {
-    this.approveDao = GLOBAL.models.approveDao;
-    this.applyDao = GLOBAL.models.applyDao;
+    this.approveDao = global.models.approveDao;
+    this.applyDao = global.models.applyDao;
 
 };
 

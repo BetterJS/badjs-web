@@ -1,4 +1,4 @@
-/* global global, GLOBAL, module, __dirname, Buffer */
+/* global global, global, module, __dirname, Buffer */
 /**
  * Created by kaelyang on 2015/5/19.
  */
@@ -12,16 +12,16 @@ var UserService = require('./UserService');
 var dateFormat = require("../utils/dateFormat");
 var exporting = require('node-highcharts-exporting');
 var StatisticsService = require('./StatisticsService');
-var sendEmail = require("../utils/" + GLOBAL.pjconfig.email.module);
+var sendEmail = require("../utils/" + global.pjconfig.email.module);
 
 var DAY_LENGTH = 30;
 
 var EmailService = function() {
     this.userService = new UserService();
     this.statisticsService = new StatisticsService();
-    this.top = parseInt(GLOBAL.pjconfig.email.top, 10) || 20;
-    this.from = GLOBAL.pjconfig.email.from || "noreply-badjs@tencent.com";
-    this.homepage = GLOBAL.pjconfig.email.homepage;
+    this.top = parseInt(global.pjconfig.email.top, 10) || 20;
+    this.from = global.pjconfig.email.from || "noreply-badjs@tencent.com";
+    this.homepage = global.pjconfig.email.homepage;
 };
 
 var getYesterday = function() {
@@ -107,7 +107,7 @@ EmailService.prototype = {
 
             if (imagePath) {
                 html.push('<h4>最近' + DAY_LENGTH + '天图表统计</h4>');
-                html.push('<p><img src="' + GLOBAL.pjconfig.host + imagePath + '"></p>');
+                html.push('<p><img src="' + global.pjconfig.host + imagePath + '"></p>');
             }
 
             html.push('<table style="border-collapse:collapse;;width:95%"><tr style="background-color:#188eee;text-align:left;color:#fff"><th style="padding:2px 0 2px 10px;border:1px solid #dedede;width:60px">#</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede;;width:120px">出现次数</th><th style="padding:2px 0 2px 10px;border:1px solid #dedede">错误内容</th></tr>');
@@ -156,7 +156,7 @@ EmailService.prototype = {
                 userlist.forEach(function(v) {
                     // 兼容没有登陆过的用户，自动拼接 邮箱后缀
                     if (!v.email) {
-                        v.email = v.loginName + GLOBAL.pjconfig.email.emailSuffix;
+                        v.email = v.loginName + global.pjconfig.email.emailSuffix;
                     }
                     if (orderByApplyId[v.applyId]) {
                         orderByApplyId[v.applyId].push(v);
@@ -252,7 +252,7 @@ EmailService.prototype = {
         var that = this;
         var date = new Date();
         date.setDate(date.getDate() + 1);
-        var time = GLOBAL.pjconfig.email.time.toString().split(':');
+        var time = global.pjconfig.email.time.toString().split(':');
         date.setHours(parseInt(time[0], 10) || 9, parseInt(time[1], 10) || 0, parseInt(time[2], 10) || 0, 0);
         var timeDiff = date.valueOf() - (new Date()).valueOf();
         setTimeout(function() {

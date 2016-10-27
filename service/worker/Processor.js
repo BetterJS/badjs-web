@@ -1,7 +1,7 @@
-var  mq = require(GLOBAL.pjconfig.mq.module)
+var  mq = require(global.pjconfig.mq.module)
     , client = mq.socket('sub')
-    , mqUrl = GLOBAL.pjconfig.mq.url
-    , service = GLOBAL.pjconfig.mq.subscribe;
+    , mqUrl = global.pjconfig.mq.url
+    , service = global.pjconfig.mq.subscribe;
 
 
 var log4js = require('log4js'),
@@ -26,7 +26,7 @@ var log4js = require('log4js'),
     logger = log4js.getLogger();
 
 var Processor = function (){
-    this.worker = cluster.fork({mqUrl : mqUrl , service :service , debug :  !!GLOBAL.DEBUG , mqModule : GLOBAL.pjconfig.mq.module });
+    this.worker = cluster.fork({mqUrl : mqUrl , service :service , debug :  !!global.DEBUG , mqModule : global.pjconfig.mq.module });
     this.__pid__ = this.worker.process.pid;
 
 

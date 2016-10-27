@@ -36,8 +36,8 @@ var StatisticsService = function() {
     this.statisticsDao = global.models.statisticsDao;
     this.applyDao = global.models.applyDao;
 
-    //this.triggerUrl = GLOBAL.pjconfig.storage.errorMsgTopCacheUrl;
-    this.url = GLOBAL.pjconfig.storage.errorMsgTopUrl;
+    //this.triggerUrl = global.pjconfig.storage.errorMsgTopCacheUrl;
+    this.url = global.pjconfig.storage.errorMsgTopUrl;
 
     logger.debug('query url : ' + this.url);
 };
@@ -84,7 +84,7 @@ StatisticsService.prototype = {
         param.startTime = new Date() - oneDay * day;
         param.startTime = dateFormat(new Date(param.startTime), 'yyyy-MM-dd');
 
-        if (GLOBAL.DEBUG) {
+        if (global.DEBUG) {
             logger.debug("query start time is " + param.startTime);
         }
         this.statisticsDao.find(s_params)
