@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use('/static' , serveStatic(path.join(__dirname , ".." , "static")));
 
 
-var msqlUrl = GLOBAL.pjconfig.mysql.url;
+var msqlUrl = global.pjconfig.mysql.url;
 
 
 logger.info('connect mysql: ' + msqlUrl);
@@ -49,8 +49,8 @@ app.use(orm.express(msqlUrl, {
 }}));
 
 
-if(GLOBAL.pjconfig.oos && GLOBAL.pjconfig.oos.module){
-    app.use("/user" ,require("../oos/" + GLOBAL.pjconfig.oos.module));
+if(global.pjconfig.oos && global.pjconfig.oos.module){
+    app.use("/user" ,require("../oos/" + global.pjconfig.oos.module));
 }
 
 

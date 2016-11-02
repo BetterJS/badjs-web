@@ -80,7 +80,7 @@ LogService.prototype = {
                 var projectsInfo = {};
 
                 _.each(item, function(value) {
-                    projectsInfo[value.id] = {id : value.id , url : value.url , appkey : value.appkey};
+                    projectsInfo[value.id] = {id : value.id , url : value.url , blacklist : value.blacklist , appkey : value.appkey};
                 });
 
                 var result = [0, 0];

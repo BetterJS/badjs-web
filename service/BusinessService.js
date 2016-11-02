@@ -57,7 +57,7 @@ BusinessService.prototype = {
 
     findBusiness: function(callback) {
 
-        var string = "select a.id, a.url, a.appkey, u.loginName, u.chineseName, a.name " +
+        var string = "select a.id, a.url, a.blacklist , a.appkey, u.loginName, u.chineseName, a.name " +
             "from b_apply a join b_user u on (a.userName=u.loginName) " +
             "where a.status=?";
         var condition = [Apply.STATUS_PASS];

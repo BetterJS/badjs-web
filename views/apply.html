@@ -36,6 +36,7 @@
 
 
                 </div>
+
                 <!--<div class="form-group">-->
                 <!--<label class="col-sm-4 control-label">通知邮箱</label>-->
                 <!--<div class="col-sm-6">-->
@@ -43,11 +44,40 @@
                 <!--</div>-->
                 <!--</div>-->
                 <div class="form-group">
-                    <label  class="col-sm-4 control-label" >业务描述&nbsp;</label>
+                    <label  class="col-sm-4 control-label" >业务描述&nbsp;  </label>
                     <div class="col-sm-6">
                         <textarea  placeholder="业务描述" class="apply-description form-control" rows="4"><%=it.apply.description%></textarea>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">IP 限制</label>
+                    <div class="col-sm-6">
+                        <input
+                            class="apply-name form-control apply-blacklist-ip"
+                            placeholder="拦截指定IP上报"
+                            value="<%=it.apply.blacklist && it.apply.blacklist.ip ? it.apply.blacklist.ip.join(',') : ''%>" type="text" />
+                        <p class="input-tips">
+                            格式如下：
+                            <code>127.0.0.5 , 132.5.3.* , 132.4.* </code>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">userAgent 限制</label>
+                    <div class="col-sm-6">
+                        <input
+                            class="apply-name form-control apply-blacklist-ua"
+                            placeholder="拦截指定userAgent上报"
+                            value="<%=it.apply.blacklist && it.apply.blacklist.ua ? it.apply.blacklist.ua.join(',') : ''%>" type="text" />
+                        <p class="input-tips">
+                            格式如下：
+                            <code> Baiduspider,Googlespider  </code>
+                        </p>
+                    </div>
+                </div>
+
+
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-6">
                         <button class="col-sm-3 btn btn-primary apply-submit" >

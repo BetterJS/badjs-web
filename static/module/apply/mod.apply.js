@@ -24,12 +24,19 @@ function bindEvent() {
             return;
         }
 
-        var params = {};
+    var blackListIP = $('.apply-blacklist-ip').val();
+    var blackListUA = $('.apply-blacklist-ua').val();
+    var blackList = {ip : blackListIP.split(",") , ua : blackListUA.split(",") }
+
+
+
+    var params = {};
         //申请数据
         $.extend(params, {
             name: $('.apply-name').val(),
             description: $('.apply-description').val(),
             url: mainpage,
+            blacklist: JSON.stringify(blackList),
             id: $("#applyId").val()
         });
 

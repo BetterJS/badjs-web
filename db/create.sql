@@ -40,6 +40,7 @@ CREATE TABLE `b_apply` (
   `name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `appkey` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `blacklist` text COLLATE utf8_unicode_ci ,
   `description` text COLLATE utf8_unicode_ci,
   `mail` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
   `createTime` datetime DEFAULT NULL,

@@ -13,6 +13,7 @@ module.exports  = function (db){
         name        : String,
         appkey      : String,
         url         : String,
+        blacklist   : String,
         description : String,
         mail        : String,
         createTime  : Date,

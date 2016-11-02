@@ -14,8 +14,8 @@
     <th >名称</th>
     <th>申请人</th>
     <th style="width:120px;">申请时间</th>
-    <th >业务描述</th>
-    <th >业务网址</th>
+   <!-- <th >业务描述</th>-->
+    <th >详情</th>
     <th style="width:120px;"><%= it.role ==1 ? '操作' : '状态'%></th>
     <%if (it.role != 1) { %>
     <th style="width:120px;">操作</th>
@@ -35,6 +35,19 @@ for(var i = 0; i<len ; i++){
     var status = 'applying-active';
     var statusText = '待审核';
     var statusClass = 'applyingBtn'
+    var blacklistIPStr = '';
+    var blacklistUAStr = '';
+
+    if(one.blacklist){
+        try {
+            one.blacklist = JSON.parse(one.blacklist)
+        }catch(e){
+            one.blacklist = {};
+        }
+        blacklistIPStr = one.blacklist &&  one.blacklist.ip ? one.blacklist.ip.join(',') : ''
+        blacklistUAStr = one.blacklist &&  one.blacklist.ua ? one.blacklist.ua.join(',') : ''
+    }
+
     if(one.status != 0){
         status = one.status ==1 ? 'agree-active' : 'disagree-active';
         statusText = one.status ==1 ? '已通过' : '已拒绝';
@@ -57,11 +70,18 @@ for(var i = 0; i<len ; i++){
         </td>
         <td class="apply_userName"><%=one.userName%></td>
         <td class="apply_createTime"><%= _.formatDate( new Date(one.createTime) , 'YYYY-MM-DD' )%></td>
-        <td  class="apply_description">
+       <!-- <td  class="apply_description">
             <span style="width:250px;" class="textOverflow" title="<%=one.description%>"> <%=one.description%></span>
-        </td>
+        </td>-->
         <td class="apply_url" >
-            <span style="width:250px;" class="textOverflow" title="<%=one.url%>"> <%=one.url%></span>
+            <span style="width:270px;" class="textOverflow" title="<%=one.url%>"><b>url：</b><%=one.url%></span>
+            <span style="width:270px;" class="textOverflow" >
+                <b>ip：</b><%= blacklistIPStr    %>
+            </span>
+             <span style="width:270px;" class="textOverflow" >
+                <b>userAgent：</b><%= blacklistUAStr    %>
+              </span>
+            <span style="width:270px;" class="textOverflow" title="<%=one.description%>"><b>描述：</b><%=one.description%></span>
         </td>
 
         <td class="apply_operation">
