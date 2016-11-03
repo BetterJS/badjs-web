@@ -26,7 +26,7 @@ function bindEvent() {
 
     var blackListIP = $('.apply-blacklist-ip').val();
     var blackListUA = $('.apply-blacklist-ua').val();
-    var blackList = {ip : blackListIP.split(",") , ua : blackListUA.split(",") }
+    var blackList = {ip : blackListIP ? blackListIP.split(",") : [] , ua : blackListUA ? blackListUA.split(","): [] }
 
 
 

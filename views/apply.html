@@ -53,23 +53,34 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">IP 限制</label>
                     <div class="col-sm-6">
+                        <%
+                            try {
+                                it.apply.blacklist = JSON.parse(it.apply.blacklist || {})
+                            }catch(e){
+                                it.apply.blacklist = {}
+                            }
+                            var blacklistIPStr =  it.apply.blacklist.ip ? it.apply.blacklist.ip.join(',') : ''
+                            var blacklistUAStr =  it.apply.blacklist.ua ? it.apply.blacklist.ua.join(',') : ''
+                        %>
+
                         <input
                             class="apply-name form-control apply-blacklist-ip"
                             placeholder="拦截指定IP上报"
-                            value="<%=it.apply.blacklist && it.apply.blacklist.ip ? it.apply.blacklist.ip.join(',') : ''%>" type="text" />
+                            value="<%= blacklistIPStr %>" type="text" />
                         <p class="input-tips">
                             格式如下：
-                            <code>127.0.0.5 , 132.5.3.* , 132.4.* </code>
+                            <code>127.0.0.5,132.5.3.*,132.4.* </code>
                         </p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">userAgent 限制</label>
                     <div class="col-sm-6">
+
                         <input
                             class="apply-name form-control apply-blacklist-ua"
                             placeholder="拦截指定userAgent上报"
-                            value="<%=it.apply.blacklist && it.apply.blacklist.ua ? it.apply.blacklist.ua.join(',') : ''%>" type="text" />
+                            value="<%= blacklistUAStr %>" type="text" />
                         <p class="input-tips">
                             格式如下：
                             <code> Baiduspider,Googlespider  </code>

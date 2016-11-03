@@ -1,15 +1,15 @@
-webpackJsonp([10],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var applyList = __webpack_require__(8);
+	var applyList = __webpack_require__(9);
 
 	applyList.init();
 
 /***/ },
 
-/***/ 8:
+/***/ 9:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -18,8 +18,8 @@ webpackJsonp([10],{
 	 * */
 
 
-	var Dialog = __webpack_require__(126);
-	var applyTable = __webpack_require__(130);
+	var Dialog = __webpack_require__(122);
+	var applyTable = __webpack_require__(126);
 
 
 	    var maxDate = 60*60*1000*24 *2;
@@ -369,11 +369,11 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 126:
+/***/ 122:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
-	var modal = __webpack_require__(138);
+	var modal = __webpack_require__(134);
 
 	    var container;
 
@@ -421,7 +421,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 130:
+/***/ 126:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -457,15 +457,13 @@ webpackJsonp([10],{
 	    var blacklistIPStr = '';
 	    var blacklistUAStr = '';
 
-	    if(one.blacklist){
-	        try {
-	            one.blacklist = JSON.parse(one.blacklist)
-	        }catch(e){
-	            one.blacklist = {};
-	        }
-	        blacklistIPStr = one.blacklist &&  one.blacklist.ip ? one.blacklist.ip.join(',') : ''
-	        blacklistUAStr = one.blacklist &&  one.blacklist.ua ? one.blacklist.ua.join(',') : ''
+	    try {
+	        one.blacklist = JSON.parse(one.blacklist || {})
+	    }catch(e){
+	        one.blacklist = {};
 	    }
+	    blacklistIPStr =  one.blacklist.ip ? one.blacklist.ip.join(',') : ''
+	    blacklistUAStr =  one.blacklist.ua ? one.blacklist.ua.join(',') : ''
 
 	    if(one.status != 0){
 	        status = one.status ==1 ? 'agree-active' : 'disagree-active';
@@ -549,7 +547,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 138:
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

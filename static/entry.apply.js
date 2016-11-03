@@ -1,15 +1,15 @@
-webpackJsonp([1],{
+webpackJsonp([10],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(9);
+	var apply = __webpack_require__(8);
 
 	apply.init();
 
 /***/ },
 
-/***/ 9:
+/***/ 8:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -20,7 +20,7 @@ webpackJsonp([1],{
 	var REG_REFERER = /^https?:\/\/[^\/]+\//i;
 	var REG_DOMAIN_STAR = /^\*(\.[^\/]+)?$/;
 
-	var Dialog = __webpack_require__(126);
+	var Dialog = __webpack_require__(122);
 
 
 	var applyBox = $("#applyContainer");
@@ -40,7 +40,7 @@ webpackJsonp([1],{
 
 	    var blackListIP = $('.apply-blacklist-ip').val();
 	    var blackListUA = $('.apply-blacklist-ua').val();
-	    var blackList = {ip : blackListIP.split(",") , ua : blackListUA.split(",") }
+	    var blackList = {ip : blackListIP ? blackListIP.split(",") : [] , ua : blackListUA ? blackListUA.split(","): [] }
 
 
 
@@ -264,11 +264,11 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 126:
+/***/ 122:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
-	var modal = __webpack_require__(138);
+	var modal = __webpack_require__(134);
 
 	    var container;
 
@@ -316,7 +316,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 138:
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

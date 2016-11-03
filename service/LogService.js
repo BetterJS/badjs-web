@@ -80,6 +80,13 @@ LogService.prototype = {
                 var projectsInfo = {};
 
                 _.each(item, function(value) {
+
+                    try{
+                        value.blacklist =  JSON.parse(value.blacklist || {})
+                    }catch(e){
+                        value.blacklist = {}
+                    }
+
                     projectsInfo[value.id] = {id : value.id , url : value.url , blacklist : value.blacklist , appkey : value.appkey};
                 });
 

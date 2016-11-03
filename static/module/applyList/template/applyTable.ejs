@@ -38,15 +38,13 @@ for(var i = 0; i<len ; i++){
     var blacklistIPStr = '';
     var blacklistUAStr = '';
 
-    if(one.blacklist){
-        try {
-            one.blacklist = JSON.parse(one.blacklist)
-        }catch(e){
-            one.blacklist = {};
-        }
-        blacklistIPStr = one.blacklist &&  one.blacklist.ip ? one.blacklist.ip.join(',') : ''
-        blacklistUAStr = one.blacklist &&  one.blacklist.ua ? one.blacklist.ua.join(',') : ''
+    try {
+        one.blacklist = JSON.parse(one.blacklist || {})
+    }catch(e){
+        one.blacklist = {};
     }
+    blacklistIPStr =  one.blacklist.ip ? one.blacklist.ip.join(',') : ''
+    blacklistUAStr =  one.blacklist.ua ? one.blacklist.ua.join(',') : ''
 
     if(one.status != 0){
         status = one.status ==1 ? 'agree-active' : 'disagree-active';

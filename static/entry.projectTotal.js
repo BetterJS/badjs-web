@@ -1,15 +1,15 @@
-webpackJsonp([8],{
+webpackJsonp([9],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var projectTotal = __webpack_require__(16);
+	var projectTotal = __webpack_require__(17);
 
 	projectTotal.init();
 
 /***/ },
 
-/***/ 16:
+/***/ 17:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {/* global _ */
@@ -19,10 +19,10 @@ webpackJsonp([8],{
 	 *
 	 */
 	__webpack_require__(20);
-	__webpack_require__(127);
-	__webpack_require__(128);
-	var Dialog = __webpack_require__(126);
-	var statisticsTpl = __webpack_require__(135);
+	__webpack_require__(123);
+	__webpack_require__(124);
+	var Dialog = __webpack_require__(122);
+	var statisticsTpl = __webpack_require__(132);
 
 	var dayNumber = 0,
 	    days = [];
@@ -2193,11 +2193,11 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 126:
+/***/ 122:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
-	var modal = __webpack_require__(138);
+	var modal = __webpack_require__(134);
 
 	    var container;
 
@@ -2245,7 +2245,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 127:
+/***/ 123:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/*
@@ -2558,7 +2558,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 128:
+/***/ 124:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2661,7 +2661,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 135:
+/***/ 132:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, _) {module.exports = function (obj) {
@@ -2730,7 +2730,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 138:
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
