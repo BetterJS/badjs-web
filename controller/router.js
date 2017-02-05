@@ -13,6 +13,8 @@ var LogAction = require('./action/LogAction'),
     realtimeService = require("../service/RealtimeService"),
     UserApplyAction = require("./action/UserApplyAction");
 
+var _ = require("underscore");
+
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
@@ -115,7 +117,11 @@ module.exports = function(app){
             //判断是get还是post请求， 获取参数params
             var method = req.method.toLowerCase();
             var params = method =="post"? req.body : req.query;
+
+            params = _.extend({} , params );
+
             params.user = req.session.user;
+
 
             if( !params.user ){
                 res.json({ret : -2 , msg : "should login"});
