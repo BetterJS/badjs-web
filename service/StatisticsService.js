@@ -209,8 +209,12 @@ StatisticsService.prototype = {
                         //if (!err) {
                         //    setTimeout(function() {
                                 logger.info("start fetching result ... ");
+                                var count = 0;
                                 _.each(item, function(value, key) {
-                                    self.fetchAndSave(value.id, startDate);
+                                    setTimeout(function (){
+                                        self.fetchAndSave(value.id, startDate);
+                                    }, count * 500)
+                                     count ++;
                                 });
                             //}, 5400000); // 1个半小时候后，拉取统计
 
