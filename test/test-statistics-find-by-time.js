@@ -1,12 +1,12 @@
-var mysql = require('mysql'),
+  var mysql = require('mysql'),
     StatisticsService = require('../service/StatisticsService'),
     orm = require('orm');
 
-GLOBAL.DEBUG = true;
-//var mysql = "mysql://badjs:pass4badjs@10.134.5.103:3306/badjs";
-var mysql = "mysql://root:root@localhost:3306/badjs";
+GLOBAL.pjconfig = require('../project.json');
+//GLOBAL.DEBUG = true;
+var mysqlUrl = GLOBAL.pjconfig.mysql.url
 
-orm.connect( mysql, function(err , db) {
+orm.connect( mysqlUrl, function(err , db) {
     if(err){
         throw err;
     }
@@ -20,21 +20,54 @@ orm.connect( mysql, function(err , db) {
     }
 
 
-    var aa = new StatisticsService();
+    var ss = new StatisticsService();
+    
 
 
-    var startDate = new Date('2014-12-09 00:00:00');
-    var nowDate = new Date;
+    var startDate = new Date('2017-01-15 00:00:00');
+    var endDate = new Date('2017-02-19 08:00:00');
+    
+    //fetch data until today
+   var ss = new StatisticsService();
+    
 
-    console.log(new Date('2014-12-02 00:00:00'))
 
-    aa.queryById({projectId: "990" , startDate : new Date('2014-12-02 00:00:00')} , function (err, items){
-        console.log(items);
+    var startDate = new Date('2017-01-15 00:00:00');
+    var endDate = new Date('2017-02-19 08:00:00');
+    
+    //fetch data until today
+    var fetch = function (id , startDate){
+        ss.fetchAndSave(id , startDate , function (){ 
+            console.log(id +" : "+  startDate.toLocaleDateString() + " ok ");
+            if((startDate -0) > (endDate - 0)  ){  
+                console.log("out today");
+                return ;
+            }   
+
+            setTimeout(function (){ 
+                    var a = new Date(startDate)
+                    a.setDate( a.getDate() +1) 
+                    fetch(id , a); 
+            },100)
+
+        })  
+    }   
+
+
+    global.models.applyDao.find({
+                    status: 1
+                }, function(err, items) {
+
+                var count = 0;
+                items.forEach(function (item){
+                        count ++ ;
+                        setTimeout(function (){
+                                fetch(item.id , startDate)
+                        },3500 * count )
+                        //console.log(item.id)
+                })
+
     })
+   // fetch(8 , startDate);
 
 });
-
-
-
-
-
