@@ -21,12 +21,12 @@ var ApplyService = function() {
 
 
 var logService = new LogService();
-var pushProject = function() {
+var pushProject = function(from) {
     logService.pushProject(function(err) {
         if (err) {
             logger.warn('push project  error ' + err);
         } else {
-            logger.info('push project success from remove .');
+            logger.info('push project success from ' + from + ' .');
         }
     });
 }
@@ -125,7 +125,7 @@ ApplyService.prototype = {
 
                 });
 
-                pushProject();
+                pushProject('remove');
 
             });
         });
@@ -147,7 +147,7 @@ ApplyService.prototype = {
                 });
 
                 // update project.db
-                pushProject();
+                pushProject('update');
             });
         });
     },
