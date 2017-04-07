@@ -48,11 +48,11 @@ var ProcessorPool = function (){
     var monitorError = function (){
         process.on("exit" , function (){
             _.each(runningPool , function (value){
-                value.destroy(true);
+                value.processor.destroy(true);
             });
 
             _.each(idlePool , function (value){
-                value.destroy(true);
+                value.processor.destroy(true);
             });
         })
     }
