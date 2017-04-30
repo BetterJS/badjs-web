@@ -22,11 +22,12 @@ app.post("/offlineLogReport" , function (req, res){
     if(param && param.offline_log){
         try{
             var offline_log = JSON.parse(param.offline_log);
-            if(!/[\w]{1,7}/.test(offline_log.id)){
+            if(!/[\w]{1,7}/.test(offline_log.id) ){
                 throw new Error("invalid id " + offline_log.id)
             }
             var filePath = path.join(__dirname , '..'  , 'offline_log' , offline_log.id +"");
-            var fileName = offline_log.uin + "_" + (new Date-0);
+            var fileName = offline_log.uin +"_"+ offline_log.startDate + "_" + offline_log.endDate;
+
             if(!fs.existsSync(filePath)){
                 fs.mkdirSync(filePath)
             }
