@@ -28,7 +28,10 @@ module.exports = function (){
 
         pushProject();
 
-        
+
+         require("../service/OfflineLogService")();
+
+
         // 邮件报表
         var EmailService = require("../service/EmailService");
         logger.info('start email report ...');
