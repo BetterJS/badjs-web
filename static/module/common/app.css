@@ -382,6 +382,11 @@ form
     color: #fff;
     background: #aad7d8;
 }
+#content .mid-side .main-table td.info-type-offline
+{
+    color: #fff;
+    background: #808080;
+}
 #content .mid-side .main-table td.info-type-info
 {
     color: #fff;
@@ -574,6 +579,14 @@ form
     border-radius: 100px;
     background: #d6d6d6;
 }
+#content .right-side .setting-msg.offline-type li
+{
+
+    width: 42px;
+    height: 42px;
+    font-size: 12px;
+}
+
 #content .right-side .setting-msg li.msg-error
 {
     background: #f68e8e;
@@ -585,6 +598,10 @@ form
 #content .right-side .setting-msg li.msg-debug
 {
     background: #aad7d8;
+}
+#content .right-side .setting-msg li.msg-offline
+{
+    background: #808080;
 }
 #content .right-side .setting-msg li.msg-dis
 {

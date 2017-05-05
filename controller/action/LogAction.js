@@ -16,6 +16,9 @@ var LogService = require('../../service/LogService'),
         return false;
     };
 
+var fs = require("fs")
+var path = require("path")
+
 var LogAction = {
     queryLogList : function (params, req , res) {
 
@@ -32,6 +35,59 @@ var LogAction = {
 
             res.json({ret:0, msg:"success-query", data:items });
         });
+    },
+    showOfflineFiles : function (params, req , res) {
+
+        if(!params.id){
+            res.json({ret:0, msg:"success-query", data:[] });
+            return
+        }
+
+        var filePath = path.join(__dirname , '..' , '..'  , 'offline_log' , 7 +"");
+
+
+        if(!fs.existsSync(filePath)){
+            res.json({ret:0, msg:"success-query", data:[] });
+            return
+        }
+
+
+        var offlineFiles = fs.readdirSync(filePath);
+        var offlineFilesList = [];
+
+
+        offlineFiles.forEach(function (item){
+            offlineFilesList.push({
+                id : item
+            })
+        })
+
+        res.json({ret:0, msg:"success-query", data:offlineFilesList });
+
+
+    },
+
+    showOfflineLog : function (params, req , res) {
+
+        if(!params.fileId || !params.id){
+            res.json({ret:0, msg:"success-query", data:[] });
+            return
+        }
+
+        var filePath = path.join(__dirname , '..' , '..'  , 'offline_log' , 7 +"" , params.fileId);
+
+
+        if(!fs.existsSync(filePath)){
+            res.json({ret:0, msg:"success-query", data:[] });
+            return
+        }
+
+
+        var offlineFiles = fs.readFileSync(filePath);
+
+        res.json({ret:0, msg:"success-query", data:offlineFiles.toString() });
+
+
     },
 
     code : function (params, req , res){

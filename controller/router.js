@@ -77,6 +77,12 @@ module.exports = function(app){
     app.get('/user/realtimelog.html' , function (req , res){
         IndexAction.realtime({} , req , res);
     });
+
+    app.get('/user/offlinelog.html' , function (req , res){
+        IndexAction.offline({} , req , res);
+    });
+
+
     app.get('/user/charts.html' , function (req , res){
         StatisticsAction.index({tpl:"charts", statisticsTitle: "图表统计"} , req , res);
     });

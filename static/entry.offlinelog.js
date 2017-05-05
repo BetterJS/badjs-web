@@ -1,16 +1,17 @@
-webpackJsonp([2],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var log = __webpack_require__(16);
+	var log = __webpack_require__(14);
 	log.init();
 
 	var source_trigger = __webpack_require__(12);
 	source_trigger.init();
 
-	var last_select = __webpack_require__(13);
-	last_select.init();
+	//var last_select = require("../common/last.select");
+	//last_select.init();
+
 
 /***/ },
 
@@ -55,40 +56,17 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 13:
+/***/ 14:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
-		var last_select = -1;
-		
-		try {
-
-		    last_select = localStorage.last_select >> 0; // jshint ignore:line
-			
-			var $sb = $('#select-business');
-			
-			last_select > 0 && $sb.find('[value=' + last_select + ']').length && $sb.val(last_select);
-
-			$sb.on('change', function(){
-				localStorage.last_select = $sb.val();
-			});
-
-		} catch (ex) {}
-
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ },
-
-/***/ 16:
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(23);
+	/* WEBPACK VAR INJECTION */(function($, _) {var dialog = __webpack_require__(23);
 	var Delegator = __webpack_require__(21);
 
 	var logTable = __webpack_require__(128);
 	var keyword = __webpack_require__(129);
 	var debar = __webpack_require__(130);
+
+	var offlineLogCache = {};
 
 
 	var logConfig = {
@@ -98,7 +76,7 @@ webpackJsonp([2],{
 	        include: [],
 	        exclude: [],
 	        index: 0,
-	        level: [1, 2, 4]
+	        level: [1, 2, 4 , 20]
 	    },
 
 	    encodeHtml = function(str) {
@@ -109,7 +87,6 @@ webpackJsonp([2],{
 	        return str.replace(/@/gi , '<br/><b style="color:#A78830;">@</b> ')
 	    };
 
-	var websocket;
 
 	var currentSelectId = -1,
 	    currentIndex = 0,
@@ -181,25 +158,71 @@ webpackJsonp([2],{
 	            $(this).closest('.keyword-tag').remove();
 	            removeValue(value, logConfig.exclude);
 	        }).on('click', 'showLogs', function() {
-	            logConfig.id = $('#select-business').val() >> 0; // jshint ignore:line
-	            if (logConfig.id <= 0 || loading) {
-	                !loading && dialog({
-	                    header: '警告',
-	                    body: '请选择一个项目'
-	                });
-	                return;
+	            var fileId = logConfig.fileId = $('#select-offline-logs').val(); // jshint ignore:line
+
+	            if(loading){
+	                return ;
 	            }
 
-	            if (!$(this).data("stop")) {
-	                $(this).data("stop", true);
-	                $('#log-table').html('');
-	                startMonitor(logConfig.id);
-	                $(this).addClass("stop").text('停止监听');
-	            } else {
-	                $(this).data("stop", false);
-	                websocket.close();
-	                $(this).removeClass("stop").text('开始监听');
+	        /*    if (logConfig.fileId <= 0 || logConfig.id <= 0 ) {
+	                !loading && dialog({
+	                    header: '警告',
+	                    body: '请选择一个项目或日志'
+	                });
+	                return;
+	            }*/
+
+
+	            loading = true;
+	            $(".setting-search").text("正在加载...")
+
+	            if(offlineLogCache[fileId]){
+	                showLogs(offlineLogCache[fileId] , logConfig)
+	                $(".setting-search").text("查询日志");
+	                loading = false;
+	                return ;
 	            }
+
+	            var url = '/controller/logAction/showOfflineLog.do';
+	            $.ajax({
+	                url: url,
+	                data: {
+	                    id: logConfig.id,
+	                    fileId: fileId,
+	                },
+	                success : function (data){
+	                    loading = false;
+
+	                    $(".setting-search").text("查询日志")
+	                    var offlineLogs = JSON.parse(data.data);
+	                    var newLogs = []
+	                    offlineLogs.logs.forEach(function (item){
+	                        var  date = new Date(item.time);
+	                        item.userAgent = offlineLogs.userAgent;
+	                        item.date = _.formatDate(date , 'YYYY-MM-DD hh:mm:ss');
+	                        var all = "";
+	                        for(var key in item ) {
+	                            if(key == 'time'){
+	                                continue
+	                            }
+	                            all += ';'+key+'=' + item[key];
+	                        }
+	                        item.date = date;
+	                        item.all = all;
+	                        newLogs.push(item)
+	                    })
+
+	                    offlineLogCache[fileId] = newLogs
+
+	                    showLogs(offlineLogCache[fileId] , logConfig)
+	                },
+	                error : function (){
+
+	                }
+	            })
+
+
+
 
 	        })
 	        .on('click', 'alertModal', function(e, data) {
@@ -230,6 +253,7 @@ webpackJsonp([2],{
 	            currentIndex = 0;
 	            noData = false;
 	            logConfig.id = val;
+	            fetchOfflineFile(val)
 	        }).on('click', 'showTd', function(e) {
 	            var $target=$(e.currentTarget).toggleClass('active');
 	            $('.main-table .'+$target.data('td')).toggleClass('active');
@@ -266,8 +290,15 @@ webpackJsonp([2],{
 	                logConfig.level.splice($.inArray(1, logConfig.level), 1);
 	                $(this).addClass('msg-dis');
 	            }
+	        }).on('click', 'offlineTypeClick', function() {
+	            if ($(this).hasClass('msg-dis')) {
+	                logConfig.level.push(20);
+	                $(this).removeClass('msg-dis');
+	            } else {
+	                logConfig.level.splice($.inArray(20, logConfig.level), 1);
+	                $(this).addClass('msg-dis');
+	            }
 	        });
-
 
 
 	}
@@ -280,85 +311,126 @@ webpackJsonp([2],{
 	    }
 	}
 
-	var keepAliveTimeoutId;
-	var currentIndex;
-	var maxShow = 100;
-	var startMonitor = function(id) {
-
-	    websocket = new WebSocket("ws://" + location.host + "/ws/realtimeLog");
-
-	    currentIndex = 0;
-	    websocket.onmessage = function(evt) {
-	        showLogs(JSON.parse(evt.data).message);
-	    };
-
-	    websocket.onclose = function() {
-	        clearTimeout(keepAliveTimeoutId);
-	    };
-
-	    websocket.onopen = function() {
-
-	        websocket.send(JSON.stringify({
-	            type: "INIT",
-	            include: logConfig.include,
-	            exclude: logConfig.exclude,
-	            level: logConfig.level,
-	            id: id
-	        }));
-
-	        keepAliveTimeoutId = setInterval(function() {
-	            websocket.send(JSON.stringify({
-	                type: "KEEPALIVE"
-	            }));
-	        }, 5000);
-	    };
-	};
 
 
-	function showLogs(data) {
+	function fetchOfflineFile (id){
+	    if(id == -1 || !id){
+	        $("#select-offline-logs").attr("disabled").html('<option value="-1">-- 选择日志 --</option>')
+	        return;
+	    }
+	    var url = '/controller/logAction/showOfflineFiles.do';
+	    $.ajax({
+	        url: url,
+	        data: {
+	            id: id,
+	        },
+	        success : function (data){
+	            if(data.data.length <= 0){
+	                $("#select-offline-logs").attr("disabled" , "disabled").html('<option value="-1">-- 无日志 --</option>')
+	            }else {
+	                $("#select-offline-logs").removeAttr("disabled").html("")
+	                $.each(data.data, function (key , item){
+	                    var arr = item.id.split("_");
+	                    var itemName = arr[0];
+	                    if(arr[2]  ){
+	                        var dateStr = _.formatDate(new Date(arr[2]-0) , 'YYYY-MM-DD');
+	                        itemName += " (" + dateStr +")";
+	                    }
+
+
+	                    $("#select-offline-logs").append('<option value="'+item.id +'">'+itemName+'</option>')
+	                })
+	            }
+	        },
+	        error : function (){
+
+	        }
+	    })
+	}
+
+	function showLogs(data , opt) {
+
+
+
+	    var includeJSON = [];
+	    opt.include.forEach(function(value, key) {
+	        includeJSON.push(value);
+	    });
+
+
+	    var excludeJSON = [];
+	    opt.exclude.forEach(function(value, key) {
+	        excludeJSON.push(value);
+	    });
+
+
+	    var newData = [];
+	    data.forEach(function (value){
+	        var matched = false;
+
+	        if($.inArray( value.level , opt.level ) == -1){
+	            return ;
+	        }
+	        if(includeJSON.length || excludeJSON.length){
+	            for(var i = 0 ; i < includeJSON.length ; i++){
+	                if(value.all.indexOf(includeJSON[i]) > -1){
+	                    matched = true;
+	                }
+	            }
+
+	            for(var i = 0 ; i < excludeJSON.length ; i++){
+	                if(value.all.indexOf(excludeJSON[i]) > -1){
+	                   matched = false;
+	                }else {
+	                    matched = true;
+	                }
+	            }
+	        }else  {
+	            matched = true;
+	        }
+
+	        if(matched){
+	            newData.push(value)
+	        }
+
+
+	    });
 
 	    var param = {
 	        encodeHtml: encodeHtml,
 	        set: Delegator.set,
-	        startIndex: currentIndex,
+	        startIndex: 1,
 	        formatMsg : formatMsg
 	    };
 
-	    var $table = $('#log-table');
-
-	    if (maxShow % 100 === 0) {
-	        $table.html($table.html().split("</tr>").slice(0, maxShow).join("</tr>"));
-	    }
-	    $table.prepend(logTable({
-	        it: [data],
-	        opt: param
+	    $('#log-table').html(logTable({
+	        it: newData,
+	        opt: param,
+	        classes: {
+	            'td-1':'active',
+	            'td-2':'active',
+	            'td-3':'active',
+	            'td-6':'active',
+	            'td-7':'active',
+	        }
 	    }));
-	    currentIndex++;
 	}
 
 	function init() {
 	    bindEvent();
 	    //读取用户偏好
-	    var items=$("#content .right-side .setting-show .item");
-	    window.classes={};
-	    //console.log(localStorage);
-	    for(var i=0;i<items.length;i++){
-	        var item=$(items[i]);
-	        if(localStorage.getItem(item.data("td"))==='true'){
-	            item.removeClass('active');
-	            $('.main-table .'+item.data('td')).removeClass('active');
-	            window.classes[item.data('td')]='';
-	        }else{
-	            window.classes[item.data('td')]='active';
-	        }
-	    }
+
+	    $('.main-table .td-4').removeClass('active');
+	    $('.main-table .td-5').removeClass('active');
+
+
 	    $('#content .mid-side .main-table thead tr').show();
 	    $('#content .right-side .setting-show').show();
 	}
 
 	exports.init = init;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(4)))
 
 /***/ },
 
