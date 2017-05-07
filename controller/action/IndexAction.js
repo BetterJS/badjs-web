@@ -48,7 +48,7 @@ var IndexAction = {
         var businessService =  new BusinessService();
 
         businessService.findBusinessByUser(user.loginName , function (err, item){
-            res.render('offlinelog', { layout: false, user: user, index:"offline" , items : item , systime : new Date - 0} );
+            res.render('offlinelog', { layout: false, user: user, index:"offlinelog" , items : item , systime : new Date - 0} );
         });
     }
 

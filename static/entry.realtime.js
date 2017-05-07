@@ -1,4 +1,4 @@
-webpackJsonp([2],{
+webpackJsonp([1],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -6,15 +6,15 @@ webpackJsonp([2],{
 	var log = __webpack_require__(16);
 	log.init();
 
-	var source_trigger = __webpack_require__(12);
+	var source_trigger = __webpack_require__(13);
 	source_trigger.init();
 
-	var last_select = __webpack_require__(13);
+	var last_select = __webpack_require__(14);
 	last_select.init();
 
 /***/ },
 
-/***/ 12:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
@@ -51,11 +51,11 @@ webpackJsonp([2],{
 			} catch (ex) {}
 		});
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 13:
+/***/ 14:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
@@ -76,20 +76,20 @@ webpackJsonp([2],{
 		} catch (ex) {}
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
 /***/ 16:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(23);
+	/* WEBPACK VAR INJECTION */(function($) {var dialog = __webpack_require__(25);
 	var Delegator = __webpack_require__(21);
 
-	var logTable = __webpack_require__(128);
-	var keyword = __webpack_require__(129);
-	var debar = __webpack_require__(130);
-
+	var logTable = __webpack_require__(146);
+	var keyword = __webpack_require__(147);
+	var debar = __webpack_require__(148);
+	var logDetailDialog = __webpack_require__(22);
 
 	var logConfig = {
 	        id: 0,
@@ -204,25 +204,17 @@ webpackJsonp([2],{
 	        })
 	        .on('click', 'alertModal', function(e, data) {
 	            var $target=$(e.currentTarget);
-	            $("#detailModal .id").text("#"+$target.text());
-	            $("#detailModal .time").text($target.siblings('.td-2').text());
-	            $("#detailModal .info").html($target.siblings('.td-3').html());
-	            $("#detailModal .uin").text($target.siblings('.td-4').text());
-	            $("#detailModal .ip").text($target.siblings('.td-5').text());
-	            $("#detailModal .agent").text($target.siblings('.td-6').children("span:first-of-type").attr("title"));
-	            $("#detailModal .source").html($target.siblings('.td-7').html());
-	            $("#detailModal").show();
-	            console.log(document.documentElement.style.overflow);
-	            document.documentElement.style.overflow='hidden';
-	            document.body.style.overflow='hidden';
-	        }).on('click', 'closeModal', function(e){
-	            if($(e.target).hasClass('click')){
-	                $("#detailModal").hide();
-	                document.documentElement.style.overflow='';
-	                document.body.style.overflow='';
-	            }
-	            e.stopPropagation();
-	            e.preventDefault();
+
+	            logDetailDialog({
+	                id :$target.text(),
+	                time :$target.siblings('.td-2').text(),
+	                info :$target.siblings('.td-3').html(),
+	                uin :$target.siblings('.td-4').text(),
+	                ip :$target.siblings('.td-5').text(),
+	                agent : $target.siblings('.td-6').attr("title"),
+	                source :   $target.siblings('.td-7').html() ,
+	            })
+
 	        }).on('change', 'selectBusiness', function() {
 	            var val = $(this).val() - 0;
 	            currentSelectId = val;
@@ -358,7 +350,7 @@ webpackJsonp([2],{
 
 	exports.init = init;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
@@ -538,15 +530,70 @@ webpackJsonp([2],{
 
 	module.exports = Delegator;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 23:
+/***/ 22:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
-	var modal = __webpack_require__(135);
+	var dialogTpl = __webpack_require__(152);
+
+	    var container;
+
+	    function hide() {
+	        container.removeClass('in');
+	        container.find('.modal-backdrop').removeClass('in');
+	        setTimeout(function () {
+	            container.remove();
+	            container = undefined;
+	        }, 300);
+	    }
+
+
+	    function Dialog (param) {
+	        if (container) {
+	            container.remove();
+	            container = undefined;
+	        }
+	        container = $(dialogTpl(param))
+	            .appendTo(document.body)
+	            .show();
+
+	        var key,
+	            action,
+	            delegator,
+	            on =  {};
+
+	        delegator = (new Delegator(container))
+	            .on('click', 'close', hide);
+
+	        for (key in on) {
+	            action = key.split('/');
+	            delegator.on(action[0], action[1], on[key]);
+	        }
+
+	        setTimeout(function () {
+	            container.addClass('in');
+	            container.find('.modal-backdrop').addClass('in');
+
+	        }, 0);
+	    }
+
+	    Dialog.hide = hide;
+
+	module.exports =  Dialog;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+
+/***/ 25:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);
+	var modal = __webpack_require__(155);
 
 	    var container;
 
@@ -590,11 +637,11 @@ webpackJsonp([2],{
 	    Dialog.hide = hide;
 
 	module.exports =  Dialog;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 
-/***/ 128:
+/***/ 146:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function (obj) {
@@ -705,72 +752,72 @@ webpackJsonp([2],{
 	    var isHtml = /^.+?\.html\??/.test(it[i].target);
 	    var _target = it[i]._target = (it[i].target || it[i].url || '').replace(/\)/g, '');
 	;
-	__p += '\n<tr id="tr-' +
+	__p += '\r\n<tr id="tr-' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'">\n    <td  class="td-1 active info-type-' +
+	'">\r\n    <td  class="td-1 active info-type-' +
 	((__t = (type)) == null ? '' : __t) +
 	'" data-event-click="alertModal" title="点击查看#' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'详情">\n        ' +
+	'详情">\r\n        ' +
 	((__t = (i + 1 + opt.startIndex)) == null ? '' : __t) +
-	'\n    </td>\n    <td  class="td-2 ' +
+	'\r\n    </td>\r\n    <td  class="td-2 ' +
 	((__t = (classes['td-2'] )) == null ? '' : __t) +
-	'">\n        ' +
+	'">\r\n        ' +
 	((__t = ( _.formatDate(new Date(it[i].date) , 'YYYY-MM-DD hh:mm:ss') )) == null ? '' : __t) +
-	'\n    </td>\n    <td  style="" class="td-3 ' +
+	'\r\n    </td>\r\n    <td  style="" class="td-3 ' +
 	((__t = (classes['td-3'] )) == null ? '' : __t) +
-	'">\n        ' +
+	'">\r\n        ' +
 	((__t = ( opt.formatMsg(opt.encodeHtml(it[i].msg)) )) == null ? '' : __t) +
-	'\n    </td>\n    <td  class="td-4 ' +
+	'\r\n    </td>\r\n    <td  class="td-4 ' +
 	((__t = (classes['td-4'] )) == null ? '' : __t) +
 	'" title="' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
-	'" style="text-overflow: ellipsis;overflow: hidden;" >\n        ' +
+	'" style="text-overflow: ellipsis;overflow: hidden;" >\r\n        ' +
 	((__t = (  opt.encodeHtml(it[i].uin == 'NaN' ? '-' : it[i].uin ))) == null ? '' : __t) +
-	'\n    </td>\n    <td  class="td-5 ' +
+	'\r\n    </td>\r\n    <td  class="td-5 ' +
 	((__t = (classes['td-5'] )) == null ? '' : __t) +
-	'">\n        ' +
+	'">\r\n        ' +
 	((__t = (it[i].ip )) == null ? '' : __t) +
-	'\n    </td>\n    <td class="td-6 ' +
+	'\r\n    </td>\r\n    <td class="td-6 ' +
 	((__t = ( classes['td-6'] )) == null ? '' : __t) +
 	'" title="' +
 	((__t = ( it[i].userAgent )) == null ? '' : __t) +
-	'">\n            ';
+	'">\r\n            ';
 
 	            var browserTypes = getBrowserType(it[i].userAgent);
 	            for(var x = 0; x < browserTypes.length; x++) {
 	             ;
-	__p += '\n             <span class="ico-browser ' +
+	__p += '\r\n             <span class="ico-browser ' +
 	((__t = ( browserTypes[x] )) == null ? '' : __t) +
-	'"></span>\n             ';
+	'"></span>\r\n             ';
 	};
-	__p += '\n     </td>\n    <td class="td-7 ' +
+	__p += '\r\n     </td>\r\n    <td class="td-7 ' +
 	((__t = (classes['td-7'] )) == null ? '' : __t) +
-	'">\n        <a\n            style="word-break:break-all;display:block"\n            href="' +
+	'">\r\n        <a\r\n            style="word-break:break-all;display:block"\r\n            href="' +
 	((__t = ( opt.encodeHtml(_target))) == null ? '' : __t) +
-	'"\n            target="_blank"\n            data-event-click="showSource"\n            data-event-data="' +
+	'"\r\n            target="_blank"\r\n            data-event-click="showSource"\r\n            data-event-data="' +
 	((__t = (opt.set(it[i]))) == null ? '' : __t) +
-	'"\n        >\n            ' +
+	'"\r\n        >\r\n            ' +
 	((__t = (opt.encodeHtml(_target))) == null ? '' : __t) +
-	'\n            <span\n                class="err-where"\n                style="height:24px;line-height:24px;border-radius:3px"\n            >\n                ' +
+	'\r\n            <span\r\n                class="err-where"\r\n                style="height:24px;line-height:24px;border-radius:3px"\r\n            >\r\n                ' +
 	((__t = (opt.encodeHtml(it[i].rowNum || 0))) == null ? '' : __t) +
-	'行\n                ' +
+	'行\r\n                ' +
 	((__t = (opt.encodeHtml(it[i].colNum || 0))) == null ? '' : __t) +
-	'列\n            </span>\n        </a>\n        <a\n            class="source_page_link"\n            style="font-size:12px"\n            target="_blank"\n            href="' +
+	'列\r\n            </span>\r\n        </a>\r\n        <a\r\n            class="source_page_link"\r\n            style="font-size:12px"\r\n            target="_blank"\r\n            href="' +
 	((__t = (sourcePage(it[i], 'href', opt))) == null ? '' : __t) +
-	'"\n            data-viewtext="' +
+	'"\r\n            data-viewtext="' +
 	((__t = (sourcePage(it[i], 'viewtext', opt))) == null ? '' : __t) +
-	'"\n            data-viewlink="' +
+	'"\r\n            data-viewlink="' +
 	((__t = (sourcePage(it[i], 'viewlink', opt))) == null ? '' : __t) +
-	'"\n        >' +
+	'"\r\n        >' +
 	((__t = (sourcePage(it[i], 'view', opt))) == null ? '' : __t) +
-	'</a>\n    </td>\n</tr>\n';
+	'</a>\r\n    </td>\r\n</tr>\r\n';
 	 } ;
-	__p += '\n\n';
+	__p += '\r\n\r\n';
 	 if(it.length === 0 ){;
-	__p += '\n<td colspan="7" style="\n    text-align: center;\n    background: rgb(221, 221, 221);\n">无更多数据</td>\n';
+	__p += '\r\n<td colspan="7" style="\r\n    text-align: center;\r\n    background: rgb(221, 221, 221);\r\n">无更多数据</td>\r\n';
 	};
-	__p += '\n';
+	__p += '\r\n';
 
 	}
 	return __p
@@ -779,7 +826,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 129:
+/***/ 147:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -798,7 +845,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 130:
+/***/ 148:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {
@@ -817,7 +864,34 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 135:
+/***/ 152:
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function (obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '\n\n<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="logDetailModal">\n    <div class="modal-backdrop fade"></div>\n    <div class="modal-dialog">\n        <div class="modal-content">\n\n            <div class="modal-header">\n                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>\n                <h4 class="modal-title">日志详情</h4>\n            </div>\n            <div class="modal-body">\n                <p>\n                    <b>Time：</b><span class="time">' +
+	((__t = (time)) == null ? '' : __t) +
+	'</span>\n                </p>\n                <p>\n                    <b>Info：</b><div class="info">' +
+	((__t = (info)) == null ? '' : __t) +
+	'</div>\n                </p>\n                <p>\n                    <b>uin：</b><span class="uin">' +
+	((__t = (uin)) == null ? '' : __t) +
+	'</span>\n                </p>\n                <p>\n                    <b>ip：</b><span class="ip">' +
+	((__t = (ip)) == null ? '' : __t) +
+	'</span>\n                </p>\n                <p>\n                    <b>agent：</b><div class="userAgent">' +
+	((__t = (agent)) == null ? '' : __t) +
+	'</div>\n                </p>\n                <p>\n                    <b>Source：</b><div class="source">' +
+	((__t = (source)) == null ? '' : __t) +
+	'</div>\n                </p>\n            </div>\n            <div class="modal-footer">\n                <button type="button" class="btn btn-default" data-event-click="close">Close</button>\n            </div>\n\n        </div>\n    </div>\n</div>\n';
+
+	}
+	return __p
+	}
+
+/***/ },
+
+/***/ 155:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function (obj) {

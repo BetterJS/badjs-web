@@ -1,0 +1,38 @@
+
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="logDetailModal">
+    <div class="modal-backdrop fade"></div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" data-event-click="close">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">日志详情</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <b>Time：</b><span class="time"><%=time%></span>
+                </p>
+                <p>
+                    <b>Info：</b><div class="info"><%=info%></div>
+                </p>
+                <p>
+                    <b>uin：</b><span class="uin"><%=uin%></span>
+                </p>
+                <p>
+                    <b>ip：</b><span class="ip"><%=ip%></span>
+                </p>
+                <p>
+                    <b>agent：</b><div class="userAgent"><%=agent%></div>
+                </p>
+                <p>
+                    <b>Source：</b><div class="source"><%=source%></div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-event-click="close">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

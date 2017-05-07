@@ -43,7 +43,7 @@ var LogAction = {
             return
         }
 
-        var filePath = path.join(__dirname , '..' , '..'  , 'offline_log' , 7 +"");
+        var filePath = path.join(__dirname , '..' , '..'  , 'offline_log' , params.id +"");
 
 
         if(!fs.existsSync(filePath)){
@@ -74,7 +74,7 @@ var LogAction = {
             return
         }
 
-        var filePath = path.join(__dirname , '..' , '..'  , 'offline_log' , 7 +"" , params.fileId);
+        var filePath = path.join(__dirname , '..' , '..'  , 'offline_log' ,params.id +"" , params.fileId);
 
 
         if(!fs.existsSync(filePath)){
@@ -88,6 +88,48 @@ var LogAction = {
         res.json({ret:0, msg:"success-query", data:offlineFiles.toString() });
 
 
+    },
+
+    deleteOfflineLogConfig : function (params, req , res){
+        if(!params.id ||  !params.uin ){
+            res.json({ret:0, msg:"", data:{} });
+            return
+        }
+
+
+        if (global.offlineLogMonitorInfo[params.id] && global.offlineLogMonitorInfo[params.id][params.uin] ){
+            delete global.offlineLogMonitorInfo[params.id][params.uin]
+        }
+
+        res.json({ret:0, msg:"", data:{} });
+    },
+
+    getOfflineLogConfig : function (params, req , res){
+        if(!params.id ){
+            res.json({ret:0, msg:"", data:{}});
+            return
+        }
+
+        var result = {};
+        if (global.offlineLogMonitorInfo[params.id]  ){
+            result = global.offlineLogMonitorInfo[params.id];
+        }
+
+        res.json({ret:0, msg:"", data:result});
+    },
+
+    addOfflineLogConfig : function (params, req , res){
+        if(!params.id || !params.uin){
+            res.json({ret:0, msg:"", data:{} });
+            return
+        }
+
+        if(!global.offlineLogMonitorInfo[params.id]){
+            global.offlineLogMonitorInfo[params.id] = {}
+        }
+        global.offlineLogMonitorInfo[params.id][params.uin] = true;
+
+        res.json({ret:0, msg:"success-query", data:[] });
     },
 
     code : function (params, req , res){

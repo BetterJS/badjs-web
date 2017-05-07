@@ -9,10 +9,24 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
-global.offlineAutoInfo = {}
+
+
+global.offlineLogMonitorInfo = {}
 
 var log4js = require('log4js'),
     logger = log4js.getLogger();
+
+var offlineLogMonitorPath = path.join(__dirname , '..'  , 'offline_log' , "offline_log_monitor.db");
+try{
+    global.offlineLogMonitorInfo = JSON.parse( fs.readFileSync(offlineLogMonitorPath).toString());
+    logger.info("offline_log_monitor.db success " )
+}catch(e){
+    logger.error("offline_log_monitor.db error " , e)
+}
+
+setInterval(function (){
+    fs.writeFileSync(offlineLogMonitorPath , JSON.stringify(global.offlineLogMonitorInfo));
+},3600000 )
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -45,8 +59,9 @@ app.post("/offlineLogReport" , function (req, res){
 app.use("/offlineLogCheck" , function (req, res){
 
     var param = req.query;
-    if(param.id && param.uin && global.offlineAutoInfo[param.id + "_" + param.uin]){
-        logger.info('reponse auto offline auto  : ' + (param.id + "_" + param.uin));
+    if(param.id && param.uin && global.offlineLogMonitorInfo[param.id] && global.offlineLogMonitorInfo[param.id][param.uin]){
+        delete global.offlineLogMonitorInfo[param.id][param.uin]
+        logger.info('should download offline log: ' + (param.id + "_" + param.uin));
         res.end("true")
     }else {
         res.end("false")

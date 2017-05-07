@@ -6,6 +6,8 @@ var logTable = require("./template/logTable.ejs");
 var keyword = require("./template/keyword.ejs");
 var debar = require("./template/debar.ejs");
 
+var logDetailDialog = require("./logDetailDialog/logDetailDialog");
+
 require("jquery/jquery.datetimepicker");
 
 var logConfig = {
@@ -110,25 +112,17 @@ function bindEvent() {
         })
         .on('click', 'alertModal', function(e) {
             var $target=$(e.currentTarget);
-            $("#detailModal .id").text("#"+$target.text());
-            $("#detailModal .time").text($target.siblings('.td-2').text());
-            $("#detailModal .info").html($target.siblings('.td-3').html());
-            $("#detailModal .uin").text($target.siblings('.td-4').text());
-            $("#detailModal .ip").text($target.siblings('.td-5').text());
-            $("#detailModal .agent").text($target.siblings('.td-6').children("span:first-of-type").attr("title"));
-            $("#detailModal .source").html($target.siblings('.td-7').html());
-            $("#detailModal").show();
-            console.log(document.documentElement.style.overflow);
-            document.documentElement.style.overflow='hidden';
-            document.body.style.overflow='hidden';
-        }).on('click', 'closeModal', function(e){
-            if($(e.target).hasClass('click')){
-                $("#detailModal").hide();
-                document.documentElement.style.overflow='';
-                document.body.style.overflow='';
-            }
-            e.stopPropagation();
-            e.preventDefault();
+
+            logDetailDialog({
+                id :$target.text(),
+                time :$target.siblings('.td-2').text(),
+                info :$target.siblings('.td-3').html(),
+                uin :$target.siblings('.td-4').text(),
+                ip :$target.siblings('.td-5').text(),
+                agent : $target.siblings('.td-6').attr("title"),
+                source :   $target.siblings('.td-7').html() ,
+            })
+
         }).on('change', 'selectBusiness', function() {
             var val = $(this).val() - 0;
             currentSelectId = val;

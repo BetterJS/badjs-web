@@ -4,6 +4,8 @@ var Delegator = require("delegator");
 var logTable = require("./template/logTable.ejs");
 var keyword = require("./template/keyword.ejs");
 var debar = require("./template/debar.ejs");
+var offlineDialog = require("./offlineDialog/offlineDialog");
+var logDetailDialog = require("./logDetailDialog/logDetailDialog");
 
 var offlineLogCache = {};
 
@@ -96,6 +98,19 @@ function bindEvent() {
         }).on('click', 'removeDebar', function(e, value) {
             $(this).closest('.keyword-tag').remove();
             removeValue(value, logConfig.exclude);
+        }).on('click', 'configOfflineMonitor', function(e, value) {
+
+            if ( logConfig.id <= 0 ) {
+                !loading && dialog({
+                    header: '警告',
+                    body: '请选择一个项目'
+                });
+                return;
+            }
+
+            offlineDialog(logConfig)
+
+
         }).on('click', 'showLogs', function() {
             var fileId = logConfig.fileId = $('#select-offline-logs').val(); // jshint ignore:line
 
@@ -103,13 +118,13 @@ function bindEvent() {
                 return ;
             }
 
-        /*    if (logConfig.fileId <= 0 || logConfig.id <= 0 ) {
+            if (logConfig.fileId <= 0 || logConfig.id <= 0 ) {
                 !loading && dialog({
                     header: '警告',
-                    body: '请选择一个项目或日志'
+                    body: '请选择一个离线日志'
                 });
                 return;
-            }*/
+            }
 
 
             loading = true;
@@ -166,25 +181,16 @@ function bindEvent() {
         })
         .on('click', 'alertModal', function(e, data) {
             var $target=$(e.currentTarget);
-            $("#detailModal .id").text("#"+$target.text());
-            $("#detailModal .time").text($target.siblings('.td-2').text());
-            $("#detailModal .info").html($target.siblings('.td-3').html());
-            $("#detailModal .uin").text($target.siblings('.td-4').text());
-            $("#detailModal .ip").text($target.siblings('.td-5').text());
-            $("#detailModal .agent").text($target.siblings('.td-6').children("span:first-of-type").attr("title"));
-            $("#detailModal .source").html($target.siblings('.td-7').html());
-            $("#detailModal").show();
-            console.log(document.documentElement.style.overflow);
-            document.documentElement.style.overflow='hidden';
-            document.body.style.overflow='hidden';
-        }).on('click', 'closeModal', function(e){
-            if($(e.target).hasClass('click')){
-                $("#detailModal").hide();
-                document.documentElement.style.overflow='';
-                document.body.style.overflow='';
-            }
-            e.stopPropagation();
-            e.preventDefault();
+
+            logDetailDialog({
+                id :$target.text(),
+                time :$target.siblings('.td-2').text(),
+                info :$target.siblings('.td-3').html(),
+                uin :$target.siblings('.td-4').text(),
+                ip :$target.siblings('.td-5').text(),
+                agent : $target.siblings('.td-6').attr("title"),
+                source :   $target.siblings('.td-7').html() ,
+            })
         }).on('change', 'selectBusiness', function() {
             var val = $(this).val() - 0;
             currentSelectId = val;
@@ -254,7 +260,7 @@ function removeValue(value, arr) {
 
 function fetchOfflineFile (id){
     if(id == -1 || !id){
-        $("#select-offline-logs").attr("disabled").html('<option value="-1">-- 选择日志 --</option>')
+        $("#select-offline-logs").attr("disabled").html('<option value="-1">-- 选择离线日志 --</option>')
         return;
     }
     var url = '/controller/logAction/showOfflineFiles.do';
@@ -265,7 +271,7 @@ function fetchOfflineFile (id){
         },
         success : function (data){
             if(data.data.length <= 0){
-                $("#select-offline-logs").attr("disabled" , "disabled").html('<option value="-1">-- 无日志 --</option>')
+                $("#select-offline-logs").attr("disabled" , "disabled").html('<option value="-1">-- 无离线日志 --</option>')
             }else {
                 $("#select-offline-logs").removeAttr("disabled").html("")
                 $.each(data.data, function (key , item){

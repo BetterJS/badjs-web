@@ -147,6 +147,7 @@ module.exports = function(app){
                     default  : next();
                 }
             }catch(e){
+                logger.warn(e)
                 res.send(404, 'Sorry! can not found action.');
             }
             return;
