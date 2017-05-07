@@ -1,4 +1,4 @@
-webpackJsonp([10],{
+webpackJsonp([9],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -6,7 +6,7 @@ webpackJsonp([10],{
 	var log = __webpack_require__(15);
 	log.init();
 
-	var source_trigger = __webpack_require__(13);
+	var source_trigger = __webpack_require__(14);
 	source_trigger.init();
 
 	//var last_select = require("../common/last.select");
@@ -15,7 +15,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 13:
+/***/ 14:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function() {
@@ -59,7 +59,7 @@ webpackJsonp([10],{
 /***/ 15:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($, _) {var dialog = __webpack_require__(25);
+	/* WEBPACK VAR INJECTION */(function($, _) {var dialog = __webpack_require__(140);
 	var Delegator = __webpack_require__(21);
 
 	var logTable = __webpack_require__(146);
@@ -739,8 +739,11 @@ webpackJsonp([10],{
 	                        uin: val,
 	                        id : param.id
 	                    },
-	                    success : function (){
-	                        $("#offlineConfigModal table").append(offline_monitor_row({uin : val}))
+	                    success : function (data){
+	                        if(!data.data.hadAdd && data.ret == 0){
+	                            $("#offlineConfigModal table").append(offline_monitor_row({uin : val}))
+	                        }
+
 	                        $("#addUin").val("")
 	                    },
 	                    error : function (){
@@ -790,7 +793,7 @@ webpackJsonp([10],{
 
 /***/ },
 
-/***/ 25:
+/***/ 140:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);

@@ -10,7 +10,6 @@ var express = require('express');
 var app = express();
 
 
-
 global.offlineLogMonitorInfo = {}
 
 var log4js = require('log4js'),
@@ -39,17 +38,32 @@ app.post("/offlineLogReport" , function (req, res){
             if(!/[\w]{1,7}/.test(offline_log.id) ){
                 throw new Error("invalid id " + offline_log.id)
             }
-            var filePath = path.join(__dirname , '..'  , 'offline_log' , offline_log.id +"");
-            var fileName = offline_log.uin +"_"+ offline_log.startDate + "_" + offline_log.endDate;
 
-            if(!fs.existsSync(filePath)){
-                fs.mkdirSync(filePath)
-            }
-            fs.writeFile( path.join(filePath , fileName ) , param.offline_log)
 
-            logger.info('get offline log : ' + path.join(filePath , fileName ));
+
+            global.models.applyDao.one({
+                id: offline_log.id
+            }, function(err, apply) {
+
+                if(!apply || err || apply.status != 1){
+                    logger.info('invaild offlineLog  id: ' + offline_log.id);
+                    return ;
+                }
+
+                var filePath = path.join(__dirname , '..'  , 'offline_log' , offline_log.id +"");
+                var fileName = offline_log.uin +"_"+ offline_log.startDate + "_" + offline_log.endDate;
+
+                if(!fs.existsSync(filePath)){
+                    fs.mkdirSync(filePath)
+                }
+                fs.writeFile( path.join(filePath , fileName ) , param.offline_log)
+
+                logger.info('get offline log : ' + path.join(filePath , fileName ));
+            });
+
+
         }catch(e){
-            logger.warn(e);
+            logger.warn("invaild offlineLog error  "+ e);
         }
     }
 

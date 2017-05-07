@@ -6,12 +6,12 @@ webpackJsonp([8],{
 	var statistics = __webpack_require__(18);
 	statistics.init();
 
-	var last_select = __webpack_require__(14);
+	var last_select = __webpack_require__(13);
 	last_select.init();
 
 /***/ },
 
-/***/ 14:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {exports.init = function(){
@@ -46,7 +46,7 @@ webpackJsonp([8],{
 
 
 	__webpack_require__(23);
-	var Dialog = __webpack_require__(25);
+	var Dialog = __webpack_require__(140);
 	var statisticsTpl = __webpack_require__(150);
 
 	var encodeHtml = function (str) {
@@ -2134,7 +2134,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 25:
+/***/ 140:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);

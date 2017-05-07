@@ -59,8 +59,11 @@ var dialogTpl = require("./tpl/dialog.ejs");
                         uin: val,
                         id : param.id
                     },
-                    success : function (){
-                        $("#offlineConfigModal table").append(offline_monitor_row({uin : val}))
+                    success : function (data){
+                        if(!data.data.hadAdd && data.ret == 0){
+                            $("#offlineConfigModal table").append(offline_monitor_row({uin : val}))
+                        }
+
                         $("#addUin").val("")
                     },
                     error : function (){

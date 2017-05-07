@@ -1,4 +1,4 @@
-webpackJsonp([5],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -17,7 +17,7 @@ webpackJsonp([5],{
 	 * @author coverguo
 	 * */
 
-	var Dialog = __webpack_require__(25);
+	var Dialog = __webpack_require__(140);
 	var userTable = __webpack_require__(151);
 
 
@@ -347,7 +347,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 25:
+/***/ 140:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var Delegator = __webpack_require__(21);

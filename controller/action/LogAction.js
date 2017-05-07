@@ -120,16 +120,23 @@ var LogAction = {
 
     addOfflineLogConfig : function (params, req , res){
         if(!params.id || !params.uin){
-            res.json({ret:0, msg:"", data:{} });
+            res.json({ret:-1, msg:"", data:{} });
             return
         }
 
         if(!global.offlineLogMonitorInfo[params.id]){
             global.offlineLogMonitorInfo[params.id] = {}
         }
-        global.offlineLogMonitorInfo[params.id][params.uin] = true;
 
-        res.json({ret:0, msg:"success-query", data:[] });
+        var hadAdd = false;
+        if(!global.offlineLogMonitorInfo[params.id][params.uin]){
+            global.offlineLogMonitorInfo[params.id][params.uin] = true;
+        }else {
+            hadAdd = true;
+        }
+
+
+        res.json({ret:0, msg:"success-query", data:{hadAdd : hadAdd } });
     },
 
     code : function (params, req , res){
