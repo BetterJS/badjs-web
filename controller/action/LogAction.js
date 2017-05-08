@@ -54,7 +54,15 @@ var LogAction = {
 
         var offlineFiles = fs.readdirSync(filePath);
         var offlineFilesList = [];
+        offlineFiles.sort(function (a, b){
+            if(a < b ){
+                return 1;
+            }else {
+                return -1;
+            }
+        })
 
+        offlineFiles = offlineFiles.slice(0,50);
 
         offlineFiles.forEach(function (item){
             offlineFilesList.push({
