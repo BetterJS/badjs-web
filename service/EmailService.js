@@ -89,7 +89,7 @@ var getImageData = function(name, data) {
 };
 
 var encodeHtml = function(str) {
-    return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;');
+    return (str + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\x60/g, '&#96;').replace(/\x27/g, '&#39;').replace(/\x22/g, '&quot;').replace(/\u0000/g, ' ');
 };
 
 EmailService.prototype = {
