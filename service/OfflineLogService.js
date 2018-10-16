@@ -56,7 +56,12 @@ app.post("/offlineLogReport" , function (req, res){
                 if(!fs.existsSync(filePath)){
                     fs.mkdirSync(filePath)
                 }
-                fs.writeFile( path.join(filePath , fileName ) , param.offline_log)
+                fs.writeFile(path.join(filePath , fileName ) , param.offline_log, function(err) {
+                    if (err) {
+                        logger.info('write offline log error', err);
+                        throw err;
+                    }
+                });
 
                 logger.info('get offline log : ' + path.join(filePath , fileName ));
             });
