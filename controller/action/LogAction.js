@@ -42,6 +42,11 @@ var LogAction = {
             res.json({ret:0, msg:"success-query", data:[] });
             return
         }
+        
+        if(!/^\w+$/i.test( params.id)){
+              res.json({ret:0, msg:"success-query", data:[] });
+            return ;
+        }
 
         var filePath = path.join(__dirname , '..' , '..'  , 'offline_log' , params.id +"");
 
@@ -80,6 +85,16 @@ var LogAction = {
         if(!params.fileId || !params.id){
             res.json({ret:0, msg:"success-query", data:[] });
             return
+        }
+        
+        if(!/^\w+$/i.test( params.id)){
+              res.json({ret:0, msg:"success-query", data:[] });
+            return ;
+        }
+        
+         if(!/^\w+$/i.test( params.fileId)){
+           res.json({ret:0, msg:"success-query", data:[] });
+            return ;
         }
 
         var filePath = path.join(__dirname , '..' , '..'  , 'offline_log' ,params.id +"" , params.fileId);
