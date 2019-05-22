@@ -49,6 +49,11 @@ app.post("/offlineLogReport" , function (req, res){
                     logger.info('invaild offlineLog  id: ' + offline_log.id);
                     return ;
                 }
+                
+                if(!/^\w+$/i.test( offline_log.id )){
+                    logger.info('error log_id: ' + offline_log.id);
+                    return ;
+                }
 
                 var filePath = path.join(__dirname , '..'  , 'offline_log' , offline_log.id +"");
                 var fileName = offline_log.uin +"_"+ offline_log.startDate + "_" + offline_log.endDate;
